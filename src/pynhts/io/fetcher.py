@@ -89,6 +89,7 @@ def fetch(
     offline: bool = False,
     keep_archives: bool = False,
     progressbar: bool = False,
+    names: tuple[str, ...] | None = None,
 ) -> dict[str, Path]:
     """Make the raw files of ``groups`` available in the cache and return their paths.
 
@@ -100,6 +101,7 @@ def fetch(
         offline: Never touch the network; raise if a file is missing.
         keep_archives: Keep the downloaded zip files after extraction.
         progressbar: Show a download progress bar.
+        names: Restrict to these member file names (e.g. ``("hhwgt.csv",)``).
 
     Returns:
         Mapping from member file name (e.g. ``"trippub.csv"``) to its verified local path.
@@ -114,15 +116,17 @@ def fetch(
     result: dict[str, Path] = {}
     missing: dict[str, list[Member]] = {}
     for m in reg.members_in(groups):
+        if names is not None and m.name not in names:
+            continue
         path = out_dir / m.name
         if _is_verified(path, m):
             result[m.name] = path
         else:
             missing.setdefault(m.archive, []).append(m)
     if missing and offline:
-        names = ", ".join(sorted(m.name for ms in missing.values() for m in ms))
+        listed = ", ".join(sorted(m.name for ms in missing.values() for m in ms))
         raise FileNotFoundError(
-            f"offline mode and these NHTS {wave} files are not in {out_dir}: {names}. "
+            f"offline mode and these NHTS {wave} files are not in {out_dir}: {listed}. "
             "Run fetch() online once, or adopt local copies with register_local()."
         )
     for archive_name, members in missing.items():

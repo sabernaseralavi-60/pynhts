@@ -1977,6 +1977,7 @@ columns:
     length: 3
     owner: vehicle
     missing_codes:
+      '-88': dont_know
       '-8': dont_know
     skip_code: null
     range: null
@@ -2215,6 +2216,7 @@ columns:
     length: 5
     owner: vehicle
     missing_codes:
+      '-88': dont_know
       '-8': dont_know
     skip_code: null
     range: null
@@ -4194,6 +4196,8 @@ columns:
     length: 6
     owner: vehicle
     missing_codes:
+      '-88': dont_know
+      '-77': refused
       '-9': not_ascertained
     skip_code: null
     range: 0-4000000

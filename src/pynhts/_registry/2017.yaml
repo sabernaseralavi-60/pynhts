@@ -46,11 +46,13 @@ members:
     group: replicates
     sha256: 48b75be9f3295ecbe71af058de2dd478f53cff44df2f91af2b67ddd440c35c74
     size: 216482462
+    rows: 129696
   perwgt.csv:
     archive: ReplicatesCSV.zip
     group: replicates
     sha256: 21214547541f26fdbfeef5b2028ccb1b25d0b0a3f5eb5e4bdee7ae9da4874a6d
     size: 880244436
+    rows: 264234
 documentation:
   codebook_v1.2.xlsx:
     url: https://nhts.ornl.gov/assets/codebook_v1.2.xlsx

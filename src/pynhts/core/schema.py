@@ -56,6 +56,7 @@ class TableSchema:
     table: str
     csv: str
     columns: dict[str, Column]
+    codebook_sha256: str = ""
 
     @property
     def key(self) -> tuple[str, ...]:
@@ -102,4 +103,10 @@ def load_schema(table: str, wave: int = 2017) -> TableSchema:
         )
         for name, c in raw["columns"].items()
     }
-    return TableSchema(wave=int(raw["wave"]), table=table, csv=raw["csv"], columns=cols)
+    return TableSchema(
+        wave=int(raw["wave"]),
+        table=table,
+        csv=raw["csv"],
+        columns=cols,
+        codebook_sha256=str(raw["codebook"]["sha256"]),
+    )

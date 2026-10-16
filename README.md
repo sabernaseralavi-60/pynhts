@@ -15,11 +15,13 @@ Phase 1 covers the NHTS **2017** wave only.
 - `pynhts.io.fetch()`: hash-verified download of the official 2017 files into a local cache
   (offline mode supported); `pynhts.io.register_local()` adopts files you already have, after
   proving they are the official ones.
+- `pynhts.io.convert()`: deterministic, idempotent conversion to typed Parquet (original survey
+  codes kept; replicate weights in separate float32 files).
 - `pynhts.core.schema`: typed column schema generated from the official codebook
   (dtypes, missing-value codes, owner table of each column).
 
 ## Planned
-`pynhts.io` Parquet cache, `pynhts.core` leak-free merges and missing-value handling,
+`pynhts.core` leak-free merges and missing-value handling,
 `pynhts.stats` jackknife (JKn, 98 replicates) estimators, `pynhts.recipes` replication of published
 tables (first target: FHWA *Summary of Travel Trends: 2017 NHTS*), `pynhts.ml` array/tensor export.
 
@@ -32,6 +34,7 @@ The NHTS microdata are public data of the US Federal Highway Administration
 uv venv && uv pip install -e ".[dev]"
 pytest              # unit tests (no data needed)
 pytest -m data      # needs the real files in the pynhts cache
+pytest -m network -o addopts=-ra   # live ORNL download (~80 MB), manual only
 ```
 
 License: BSD-3-Clause.

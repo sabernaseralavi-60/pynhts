@@ -25,7 +25,14 @@ SHEETS = {
 }
 # A column that appears in several tables is owned by the first table in this order.
 OWNER_ORDER = ["household", "person", "trip", "vehicle"]
-MISSING = {"-9": "not_ascertained", "-8": "dont_know", "-7": "refused"}
+# -88 and -77 are the codebook's "I don't know" / "I prefer not to answer" in fields where -8/-7 could be real values.
+MISSING = {
+    "-9": "not_ascertained",
+    "-8": "dont_know",
+    "-7": "refused",
+    "-88": "dont_know",
+    "-77": "refused",
+}
 SKIP = "-1"
 OUT = Path(__file__).resolve().parents[1] / "src" / "pynhts" / "_schema" / "2017"
 

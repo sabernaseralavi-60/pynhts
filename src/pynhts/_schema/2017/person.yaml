@@ -6252,6 +6252,8 @@ columns:
     length: 6
     owner: person
     missing_codes:
+      '-88': dont_know
+      '-77': refused
       '-9': not_ascertained
     skip_code: '-1'
     range: 0-200000
