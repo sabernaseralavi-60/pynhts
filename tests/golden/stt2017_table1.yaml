@@ -6,7 +6,7 @@
 # Units: thousands. "moe" is the published 95% margin of error (kept for the JKn tests to come;
 # null = the report prints "-" or does not give it).
 source:
-  pdf_page_numbers: {table_1a: 12, table_1b: 13, table_1c: 14}   # PDF page index (printed pp. 5-7)
+  pdf_page_numbers: {table_1a: 12, table_1b: 13, table_1c: 14, table_3a: 19, table_3b: 20}   # PDF page index (printed pp. 5-7)
   weights: {household: WTHHFIN, person: WTPERFIN}
 table_1a_households:
   all:        {value: 118208, moe: null}
@@ -24,6 +24,16 @@ table_1b_persons_by_imputed_age:      # variable R_AGE_IMP (R_AGE leaves 496 row
 table_1c_drivers_workers:
   drivers: {value: 223277, moe: 827}
   workers: {value: 156988, moe: 1012}
+# Tables 3a/3b, "2017 orig." rows (trip distance as in the public TRPMILES variable).
+# Per-household rates are person-weighted trips (WTPERFIN, i.e. WTTRDFIN/365) divided by
+# household-weighted households (WTHHFIN): a ratio across two weight systems.
+table_3a_household_rates:
+  daily_person_trips_per_household: {value: 8.60,  moe: 0.10}
+  daily_pmt_per_household:          {value: 92.02, moe: 3.50}
+table_3b_person_rates:
+  daily_person_trips_per_person:    {value: 3.37,  moe: 0.04}
+  daily_pmt_per_person:             {value: 36.07, moe: 1.47}   # MOE not reproduced, see below
+  average_person_trip_length_miles: {value: 10.70, moe: 0.40}
 documented_discrepancy:
   persons_all:
     published: 321419
@@ -32,3 +42,12 @@ documented_discrepancy:
       The printed "All" persons (also printed as "All 5+") exceeds the sum of the report's own
       age bands by 19,820 thousand. The public file has no persons under age 5. Cause not
       established; do not treat as a pynhts failure without further evidence.
+  pmt_per_person_moe:
+    published: 1.47
+    reproduced: 1.371           # JKn MOE; the estimate itself (36.066) matches 36.07
+    note: >-
+      Person-weighted PMT per person reproduces, but its margin of error is 6.7 percent smaller
+      than published, while the MOE of PMT per household (3.50), of trips per person (0.04) and
+      of average trip length (0.40) all reproduce. WTTRDFIN equals 365 x WTPERFIN in the full
+      weights and in all 98 replicates (relative difference below 1.1e-7, float32 storage), so the
+      weight system is not the cause. Cause not established.

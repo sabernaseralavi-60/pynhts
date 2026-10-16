@@ -20,6 +20,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Literal
 
+import numpy as np
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -27,6 +28,7 @@ import pyarrow.parquet as pq
 from pynhts.core.schema import KEYS, TABLES, Column, TableSchema, load_schema
 from pynhts.io.converter import convert, parquet_dir, replicate_columns
 from pynhts.io.fetcher import NHTSIntegrityError
+from pynhts.stats.survey import Survey
 
 MissingMode = Literal["nan", "keep"]
 SkipMode = Literal["keep", "nan"]
@@ -43,6 +45,12 @@ _ANCESTORS = {
     "person": ("household",),
     "trip": ("person", "household"),
     "vehicle": ("household",),
+}
+_REPLICATE_LEVEL = {
+    "household": "household",
+    "vehicle": "household",
+    "person": "person",
+    "trip": "trip",
 }
 _REPLICATE_FILE = {
     "household": ("repw_household.parquet", "WTHHFIN"),
@@ -239,6 +247,70 @@ class NHTSData:
         return self.table(
             "vehicle", columns, missing=missing, skip=skip, weight=weight, keys=keys
         )
+
+    def survey(
+        self,
+        table: str,
+        columns: Sequence[str] | None = None,
+        *,
+        missing: MissingMode = "nan",
+        skip: SkipMode = "keep",
+        level: float = 0.95,
+    ) -> Survey:
+        """Rows of ``table`` bound to their 98 jackknife replicate weights.
+
+        Household and vehicle rows use the household replicates, person rows the person
+        replicates, and trip rows the person-day (``WTTRDFIN``) replicates. The result offers
+        ``total``, ``mean``, ``proportion`` and ``ratio`` with JKn standard errors, margins of
+        error and confidence intervals (see :class:`pynhts.stats.Survey`).
+
+        Raises:
+            NHTSIntegrityError: a row has no replicate-weight unit, or its weight differs from
+                the replicate file's full-sample weight.
+        """
+        rows = self.table(table, columns, missing=missing, skip=skip, weight=True, keys=True)
+        level_name = _REPLICATE_LEVEL[self._check_table(table)]
+        rep = self.replicate_weights(level_name)
+        wcol = _REPLICATE_FILE[level_name][1]
+        keys = list(KEYS["household" if level_name == "household" else "person"])
+        index = pd.MultiIndex.from_frame(rep[keys]) if len(keys) > 1 else pd.Index(rep[keys[0]])
+        wanted = pd.MultiIndex.from_frame(rows[keys]) if len(keys) > 1 else pd.Index(rows[keys[0]])
+        unit = index.get_indexer(wanted)
+        if (unit < 0).any():
+            raise NHTSIntegrityError(f"{table} rows without a replicate-weight unit")
+        unit_w = rep[wcol].to_numpy(dtype=np.float64)
+        if not np.allclose(rows[DEFAULT_WEIGHT[table]].to_numpy(dtype=np.float64), unit_w[unit],
+                           rtol=1e-12, atol=0):
+            raise NHTSIntegrityError(f"{table} weights differ from the replicate file's weights")
+        reps = rep[replicate_columns(wcol)].to_numpy(dtype=np.float64)
+        return Survey(rows, unit.astype(np.int64), unit_w, reps, level=level)
+
+    def decode_labels(
+        self, frame: pd.DataFrame, columns: Sequence[str] | None = None, *, table: str
+    ) -> pd.DataFrame:
+        """Return a copy of ``frame`` with coded columns replaced by codebook labels.
+
+        Args:
+            frame: A DataFrame obtained from ``table`` (``table`` selects the codebook, which
+                matters for names that differ by table such as ``PERSONID`` in vehicles).
+            columns: Columns to decode; default every coded string column of ``frame``.
+            table: ``"household"``, ``"person"``, ``"trip"`` or ``"vehicle"``.
+
+        Codes without a label (including masked NA) are left unchanged. Numeric columns and
+        range-valued columns (age, miles, ...) have no labels and are skipped.
+        """
+        cols_schema = self.schema(table).columns
+        todo = list(columns) if columns is not None else list(frame.columns)
+        out = frame.copy()
+        for name in todo:
+            spec = cols_schema.get(name)
+            if spec is None or not spec.is_string or name not in out.columns:
+                continue
+            mapping = {c.code: c.label for c in spec.codes if c.label}
+            if mapping:
+                out[name] = out[name].map(mapping).fillna(out[name])
+        result: pd.DataFrame = out
+        return result
 
     def replicate_weights(self, level: str, *, dtype: str = "float64") -> pd.DataFrame:
         """Full-sample weight plus the 98 jackknife replicates for ``level``.

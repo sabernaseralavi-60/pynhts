@@ -26,14 +26,28 @@ Phase 1 covers the NHTS **2017** wave only.
   data = pynhts.load(2017)                      # downloads + converts on first use
   trips = data.trips(["TRPMILES", "TRPTRANS", "HHFAMINC", "R_AGE"])
   ```
+- `data.survey(table, columns)`: totals, means, proportions and ratios with **JKn standard
+  errors, 95 % margins of error and confidence intervals** from the 98 replicate weights
+  (variance = 6/7 * sum of squared replicate deviations; MOE = t(0.975, 98) * SE, as FHWA).
+  Trip estimates run on person-day replicates, so 923,572 trips need no trips x 98 matrix.
+
+  ```python
+  s = data.survey("person", ["R_AGE_IMP", "DRIVER"])
+  s.total(domain=s.rows["DRIVER"] == "01")        # 223,277 thousand drivers, MOE 827
+  trips = data.survey("trip", ["TRPMILES"])
+  trips.mean("TRPMILES")                          # 10.70 miles, MOE 0.40
+  ```
+- `data.decode_labels(df, table=...)`: replace codes by the codebook's labels.
 - Golden tests: the loader reproduces all 3,811 code frequencies (counts and weighted totals) of
   the official codebook, and the 2017 *Summary of Travel Trends* Table 1 totals for households,
-  persons by age, drivers and workers (see `tests/golden/`).
+  persons by age, drivers and workers, **including their published margins of error**, and the
+  Table 3 travel rates (trips and miles per person and per household). Two small gaps are documented
+  openly in `tests/golden/stt2017_table1.yaml` (printed total of persons; MOE of miles per person).
 - `pynhts.core.schema`: typed column schema generated from the official codebook
   (dtypes, missing-value codes, owner table of each column).
 
 ## Planned
-`pynhts.stats` jackknife (JKn, 98 replicates) estimators, `pynhts.recipes` replication of published
+`pynhts.recipes` replication of published
 tables (first target: FHWA *Summary of Travel Trends: 2017 NHTS*), `pynhts.ml` array/tensor export.
 
 ## Data
