@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use pynhts, please cite it as below."
+title: "pynhts: survey-weight-aware access to US National Household Travel Survey microdata"
+version: 0.1.0
+date-released: 2026-10-17
+license: BSD-3-Clause
+repository-code: "https://github.com/sabernaseralavi-60/pynhts"
+authors:
+  - family-names: Naseralavi
+    given-names: Seyed Saber
+    orcid: "https://orcid.org/0000-0002-5392-910X"
+    affiliation: "Department of Civil Engineering, Shahid Bahonar University of Kerman, Kerman, Iran"
+keywords: [NHTS, travel survey, transportation, replicate weights, jackknife]
+abstract: >-
+  Python library that downloads and verifies the 2017 NHTS public-use files, converts them to
+  typed Parquet, merges the tables without silent errors, computes jackknife (JKn) standard errors
+  and margins of error, and reproduces published FHWA tables.

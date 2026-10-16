@@ -1,0 +1,11 @@
+site_name: pynhts
+site_description: Survey-weight-aware access to NHTS microdata
+repo_url: https://github.com/sabernaseralavi-60/pynhts
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Validation: validation.md
+  - Methods: methods.md
+  - Data notes: data_notes.md
+  - Roadmap: roadmap.md
