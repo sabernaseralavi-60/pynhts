@@ -330,9 +330,8 @@ class NHTSData:
                 "or load(..., replicates=True)"
             )
         df = _to_pandas(pq.read_table(path))
-        rep = replicate_columns(wcol)
-        df[rep] = df[rep].astype(dtype)
-        return df
+        converted: pd.DataFrame = df.astype({c: dtype for c in replicate_columns(wcol)})
+        return converted
 
     # -- internals -----------------------------------------------------------------------
     def _find_ancestor(self, table: str, column: str) -> str:

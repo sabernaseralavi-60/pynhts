@@ -149,9 +149,9 @@ class Survey:
             return np.zeros(len(self.rows), dtype=np.int64), 1, None
         cols = [by] if isinstance(by, str) else list(by)
         grouped = self.rows.groupby(cols, sort=True, dropna=True, observed=True)
-        codes = grouped.ngroup().to_numpy()
-        codes = np.where(pd.isna(codes), -1, codes).astype(np.int64)
-        labels = grouped.size().reset_index()[cols]
+        raw = np.asarray(grouped.ngroup().to_numpy(), dtype=np.float64)
+        codes: NDArray[np.int64] = np.where(np.isnan(raw), -1, raw).astype(np.int64)
+        labels: pd.DataFrame = grouped.size().reset_index()[cols]
         return codes, len(labels), labels
 
     def _unit_matrix(
@@ -160,8 +160,9 @@ class Survey:
         """Sum row values into a ``(n_units, k)`` matrix (rows with code -1 are dropped)."""
         keep = codes >= 0
         flat = codes[keep] * self.n_units + self._unit[keep]
-        out = np.bincount(flat, weights=values[keep], minlength=k * self.n_units)
-        mat: NDArray[np.float64] = out.reshape(k, self.n_units).T
+        counts = np.bincount(flat, weights=values[keep], minlength=k * self.n_units)
+        mat: NDArray[np.float64] = np.asarray(counts, dtype=np.float64).reshape(
+            k, self.n_units).T
         return mat
 
     def _run(
