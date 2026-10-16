@@ -1,0 +1,106 @@
+# Replication targets: published 2017 NHTS figures, transcribed by hand from
+#   McGuckin, N. & Fucci, A. (2018). Summary of Travel Trends: 2017 National Household Travel Survey.
+#   Federal Highway Administration. https://nhts.ornl.gov/assets/2017_nhts_summary_travel_trends.pdf
+#   (PDF sha256 2171916f9929a593a7d86a3a1c97445094271a91cd5dba186ecdfd594e51aa58, read 2026-10-17;
+#   Table 1: PDF pages 12-14, Table 3: PDF pages 19-20; rows "2017" / "2017 orig." and "MOE").
+#
+# Fields
+#   id        stable identifier
+#   table     table number in the report
+#   label     what is estimated
+#   scale     the estimate is divided by this before comparison (1000 = report is in thousands)
+#   decimals  precision of the printed figure; tolerance is half a unit in the last place
+#   published printed estimate
+#   moe       printed 95 % margin of error (null: the report prints "-"; 0: controlled total)
+#   compute   name of the function in pynhts.recipes.stt2017
+#   expected  status the library must produce: reproduced | estimate_only | not_reproduced
+#   note      what is known about any gap
+#
+# Status rule (pynhts.recipes.base.classify):
+#   estimate matches  = |estimate - published| <= 0.5 * 10**-decimals
+#   MOE matches       = |moe - published_moe| <= max(0.5 * 10**-decimals, 0.001 * published_moe)
+#   reproduced        = estimate and MOE match
+#   estimate_only     = estimate matches, MOE does not
+#   not_reproduced    = estimate does not match
+source: stt2017
+title: "Summary of Travel Trends: 2017 NHTS (Tables 1 and 3, 2017 rows)"
+citation: "McGuckin, N. and Fucci, A. (2018). Summary of Travel Trends: 2017 National Household Travel Survey. Federal Highway Administration."
+targets:
+  # ---- Table 1a: households (thousands) ------------------------------------------------
+  - {id: hh_all,        table: 1a, label: "Households, all (thousands)",       scale: 1000, decimals: 0, published: 118208, moe: null, compute: hh_all,        expected: reproduced}
+  - {id: hh_size1,      table: 1a, label: "Households, 1 person (thousands)",  scale: 1000, decimals: 0, published: 32952,  moe: null, compute: hh_size1,      expected: reproduced}
+  - {id: hh_size2,      table: 1a, label: "Households, 2 persons (thousands)", scale: 1000, decimals: 0, published: 40056,  moe: null, compute: hh_size2,      expected: reproduced}
+  - {id: hh_size3,      table: 1a, label: "Households, 3 persons (thousands)", scale: 1000, decimals: 0, published: 18521,  moe: 97,   compute: hh_size3,      expected: reproduced}
+  - {id: hh_size4plus,  table: 1a, label: "Households, 4+ persons (thousands)",scale: 1000, decimals: 0, published: 26679,  moe: 97,   compute: hh_size4plus,  expected: reproduced}
+  # ---- Table 1b: persons (thousands); age bands use the imputed age R_AGE_IMP ------------
+  - id: persons_all
+    table: 1b
+    label: "Persons, all (thousands)"
+    scale: 1000
+    decimals: 0
+    published: 321419
+    moe: 0
+    compute: persons_all
+    expected: not_reproduced
+    note: >-
+      The printed total exceeds the sum of the report's own five age bands (301,599) by 19,820
+      thousand; the weights reproduce that sum exactly and the public file has no persons under
+      age 5. Cause not established (a population-control baseline is a plausible but unverified
+      explanation).
+  - {id: age_under16,   table: 1b, label: "Persons under 16 (thousands)",      scale: 1000, decimals: 0, published: 45498,  moe: 756,  compute: age_under16,   expected: reproduced}
+  - {id: age_16_19,     table: 1b, label: "Persons 16-19 (thousands)",         scale: 1000, decimals: 0, published: 17755,  moe: 945,  compute: age_16_19,     expected: reproduced}
+  - {id: age_20_34,     table: 1b, label: "Persons 20-34 (thousands)",         scale: 1000, decimals: 0, published: 64339,  moe: 954,  compute: age_20_34,     expected: reproduced}
+  - {id: age_35_64,     table: 1b, label: "Persons 35-64 (thousands)",         scale: 1000, decimals: 0, published: 126350, moe: 985,  compute: age_35_64,     expected: reproduced}
+  - {id: age_65plus,    table: 1b, label: "Persons 65+ (thousands)",           scale: 1000, decimals: 0, published: 47657,  moe: 0,    compute: age_65plus,    expected: reproduced}
+  - {id: age_16plus,    table: 1b, label: "Persons 16+ (thousands)",           scale: 1000, decimals: 0, published: 256101, moe: 756,  compute: age_16plus,    expected: reproduced}
+  # ---- Table 1c: drivers and workers (thousands) -----------------------------------------
+  - {id: drivers,       table: 1c, label: "Drivers (thousands)",               scale: 1000, decimals: 0, published: 223277, moe: 827,  compute: drivers,       expected: reproduced}
+  - {id: workers,       table: 1c, label: "Workers (thousands)",               scale: 1000, decimals: 0, published: 156988, moe: 1012, compute: workers,       expected: reproduced}
+  # ---- Table 3a: daily travel per household, "2017 orig." ---------------------------------
+  # Rates per household are person-weighted totals divided by household-weighted households.
+  - {id: trips_per_hh,  table: 3a, label: "Daily person trips per household",  scale: 1, decimals: 2, published: 8.60,  moe: 0.10, compute: trips_per_hh,  expected: reproduced}
+  - {id: pmt_per_hh,    table: 3a, label: "Daily person miles per household",  scale: 1, decimals: 2, published: 92.02, moe: 3.50, compute: pmt_per_hh,    expected: reproduced}
+  - {id: vtrips_per_hh, table: 3a, label: "Daily vehicle trips per household", scale: 1, decimals: 2, published: 5.11,  moe: 0.06, compute: vtrips_per_hh, expected: reproduced}
+  - {id: vmt_per_hh,    table: 3a, label: "Daily vehicle miles per household", scale: 1, decimals: 2, published: 48.81, moe: 2.04, compute: vmt_per_hh,    expected: reproduced}
+  # ---- Table 3b: daily travel per person / driver, "2017 orig." ----------------------------
+  - {id: trips_per_person, table: 3b, label: "Daily person trips per person",  scale: 1, decimals: 2, published: 3.37,  moe: 0.04, compute: trips_per_person, expected: reproduced}
+  - id: pmt_per_person
+    table: 3b
+    label: "Daily person miles per person"
+    scale: 1
+    decimals: 2
+    published: 36.07
+    moe: 1.47
+    compute: pmt_per_person
+    expected: estimate_only
+    note: >-
+      Estimate reproduces (36.07) but the JKn margin of error is 1.37, 6.7 percent below the
+      printed 1.47, while the MOE of person miles per household (3.50) and of trip length (0.40)
+      reproduce. WTTRDFIN equals 365 x WTPERFIN in the full weights and in all 98 replicates
+      (relative difference below 1.1e-7), so the weight system is not the cause. Not established.
+  - {id: person_trip_length, table: 3b, label: "Average person trip length (miles)", scale: 1, decimals: 2, published: 10.70, moe: 0.40, compute: person_trip_length, expected: reproduced}
+  - id: vtrips_per_driver
+    table: 3b
+    label: "Daily vehicle trips per driver"
+    scale: 1
+    decimals: 2
+    published: 2.70
+    moe: 0.03
+    compute: vtrips_per_driver
+    expected: not_reproduced
+    note: >-
+      We obtain 2.7064, which rounds to 2.71 against the printed 2.70 (0.2 percent). The MOE (0.0295)
+      matches. Vehicle trips are defined here as trips on which the respondent drove
+      (DRVR_FLG = 01); a slightly different definition in the report is the likely cause but is
+      not established.
+  - id: vmt_per_driver
+    table: 3b
+    label: "Daily vehicle miles per driver"
+    scale: 1
+    decimals: 2
+    published: 25.84
+    moe: 1.04
+    compute: vmt_per_driver
+    expected: estimate_only
+    note: "Estimate reproduces (25.84); JKn MOE is 1.055 against the printed 1.04 (1.4 percent)."
+  - {id: vehicle_trip_length, table: 3b, label: "Average vehicle trip length (miles)", scale: 1, decimals: 2, published: 9.55, moe: 0.37, compute: vehicle_trip_length, expected: reproduced}

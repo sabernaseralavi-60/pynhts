@@ -2,18 +2,14 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
 import numpy as np
 import pandas as pd
 import pytest
-import yaml
 
 import pynhts
 from pynhts.core.schema import KEYS, TABLES
 
 pytestmark = pytest.mark.data
-GOLDEN = Path(__file__).resolve().parents[1] / "golden" / "stt2017_table1.yaml"
 GLOBAL_CODES = ["-9", "-8", "-7", "-88", "-77"]
 # The codebook counts -88 / -77 together with the rows holding -8 / -7 in the same column.
 LUMPED = {"-88": "-8", "-77": "-7"}
@@ -107,50 +103,6 @@ def test_inherited_columns_equal_parent_values(data, child):
             merged[cols].reset_index(drop=True),
             check_dtype=False,
         )
-
-
-def test_golden_table1_households(data):
-    g = yaml.safe_load(GOLDEN.read_text(encoding="utf-8"))["table_1a_households"]
-    hh = data.households(["HHSIZE"])
-    w = hh["WTHHFIN"] / 1000
-    got = {
-        "all": w.sum(),
-        "size_1": w[hh.HHSIZE == 1].sum(),
-        "size_2": w[hh.HHSIZE == 2].sum(),
-        "size_3": w[hh.HHSIZE == 3].sum(),
-        "size_4plus": w[hh.HHSIZE >= 4].sum(),
-    }
-    for key, val in got.items():
-        assert val == pytest.approx(g[key]["value"], abs=0.51), key
-
-
-def test_golden_table1_persons_drivers_workers(data):
-    gold = yaml.safe_load(GOLDEN.read_text(encoding="utf-8"))
-    pe = data.persons(["R_AGE_IMP", "DRIVER", "WORKER"])
-    w, a = pe["WTPERFIN"] / 1000, pe["R_AGE_IMP"]
-    bands = {
-        "under_16": a < 16,
-        "age_16_19": a.between(16, 19),
-        "age_20_34": a.between(20, 34),
-        "age_35_64": a.between(35, 64),
-        "age_65plus": a >= 65,
-        "age_16plus": a >= 16,
-    }
-    for key, mask in bands.items():
-        pub = gold["table_1b_persons_by_imputed_age"][key]["value"]
-        assert w[mask].sum() == pytest.approx(pub, abs=0.51), key
-    c = gold["table_1c_drivers_workers"]
-    assert w[pe.DRIVER == "01"].sum() == pytest.approx(c["drivers"]["value"], abs=0.51)
-    assert w[pe.WORKER == "01"].sum() == pytest.approx(c["workers"]["value"], abs=0.51)
-
-
-def test_documented_discrepancy_persons_all(data):
-    """Pins the unresolved Table 1b 'All' mismatch so that any change in it is noticed."""
-    gold = yaml.safe_load(GOLDEN.read_text(encoding="utf-8"))
-    d = gold["documented_discrepancy"]["persons_all"]
-    pe = data.persons([])
-    assert pe["WTPERFIN"].sum() / 1000 == pytest.approx(d["reproduced"], abs=0.51)
-    assert d["published"] - d["reproduced"] == 19_820
 
 
 def test_replicate_weights_available_for_loader(data):
