@@ -1,0 +1,5117 @@
+wave: 2017
+table: vehicle
+csv: vehpub.csv
+codebook:
+  file: codebook_v1.2.xlsx
+  sha256: 075e7bf217fa2cf868f372b59564262afe105a4afd6c786376b88f9c52ce95e1
+n_columns: 60
+columns:
+  ANNMILES:
+    label: Self-reported annualized mile estimate
+    dtype: float64
+    length: 6
+    owner: vehicle
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: 0-200000
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 66311
+      weighted: 65794912.3292208
+  BESTMILE:
+    label: Best estimate of annual miles
+    dtype: float64
+    length: 8
+    owner: vehicle
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: 0-200000
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 4023
+      weighted: 3491217.85319769
+  BEST_EDT:
+    label: Flag any edits/adjustments to BESTMILE
+    dtype: string
+    length: 2
+    owner: vehicle
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Skip
+      n: 250629
+      weighted: 217894996.932921
+    - code: '01'
+      label: BESTMILE > Annualized Odom Reading and Self-Repted VMT; set to Annualized Odom Reading
+      n: 4495
+      weighted: 3740984.00213095
+    - code: '02'
+      label: BESTMILE > Annualized Odom Reading (No Self-Repted VMT); set to Annualized Odom Reading
+      n: 835
+      weighted: 808788.066916467
+    - code: '04'
+      label: BESTMILE > 200,000; set to 200,000
+      n: 42
+      weighted: 45835.1561734
+    - code: '05'
+      label: BESTMILE > 200,000 after edit 1 or 2; set to 200,000
+      n: 114
+      weighted: 88342.4974362661
+  BEST_FLG:
+    label: How BESTMILE was computed
+    dtype: string
+    length: 2
+    owner: vehicle
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: BESTMILE based on odometer reading, self-reported VMT, and info on primary driver
+      n: 201432
+      weighted: 169741957.018072
+    - code: '02'
+      label: Used same model as in 1; no odometer reading present
+      n: 32987
+      weighted: 35102623.2361147
+    - code: '03'
+      label: Used model relating self-estimated VMT to annualized estimates
+      n: 4962
+      weighted: 4469460.81928654
+    - code: '04'
+      label: BESTMILE based on odometer reading and info on primary driver
+      n: 910
+      weighted: 722558.843780319
+    - code: '05'
+      label: Used model relating info on primary driver to annualized estimates
+      n: 996
+      weighted: 915683.448041758
+    - code: '06'
+      label: Used travel day information multiplied by adjustment factors for probability of driving
+      n: 174
+      weighted: 192964.338615279
+    - code: '07'
+      label: Assigned ANNMILES value (other truck, RV, motorcycle and other vehicle type)
+      n: 10631
+      weighted: 7942481.09847221
+    - code: 08
+      label: No BESTMILE present
+      n: 4023
+      weighted: 3491217.85319769
+  BEST_OUT:
+    label: Flag identifying BESTMILE outlier values
+    dtype: string
+    length: 2
+    owner: vehicle
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Skip
+      n: 238404
+      weighted: 207136470.538472
+    - code: '01'
+      label: BESTMILE < Crude Estimate/4 and Difference > 10,000
+      n: 5758
+      weighted: 4751699.95514057
+    - code: '02'
+      label: BESTMILE < Self Estimate/4 and Difference > 10,000
+      n: 906
+      weighted: 790260.285474446
+    - code: '03'
+      label: BESTMILE < Crude Estimate*4 and Difference > 10,000
+      n: 3549
+      weighted: 3411181.08601393
+    - code: '04'
+      label: BESTMILE < Self Estimate*4 and Difference > 10,000
+      n: 7498
+      weighted: 6489334.79047981
+  CDIVMSAR:
+    label: Grouping of household by combination of census division, MSA status, and presence of a subway
+      system when population greater than 1 million
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '11'
+      label: New England (ME, NH, VT, CT, MA, RI) MSA or CMSA of 1 million or more with heavy rail
+      n: 1129
+      weighted: 3755900.92715375
+    - code: '12'
+      label: New England (ME, NH, VT, CT, MA, RI) MSA or CMSA of 1 million or more without heavy rail
+      n: 176
+      weighted: 818786.688611855
+    - code: '13'
+      label: New England (ME, NH, VT, CT, MA, RI) MSA of less than 1 million
+      n: 1372
+      weighted: 4059065.20250734
+    - code: '14'
+      label: New England (ME, NH, VT, CT, MA, RI) Not in a MSA
+      n: 969
+      weighted: 1483038.51969437
+    - code: '21'
+      label: Mid-Atlantic (NY, NJ, PA) MSA or CMSA of 1 million or more with heavy rail
+      n: 10019
+      weighted: 12451392.4153301
+    - code: '22'
+      label: Mid-Atlantic (NY, NJ, PA) MSA or CMSA of 1 million or more without heavy rail
+      n: 3683
+      weighted: 3217856.03391984
+    - code: '23'
+      label: Mid-Atlantic (NY, NJ, PA) MSA of less than 1 million
+      n: 14500
+      weighted: 6056210.10007222
+    - code: '24'
+      label: Mid-Atlantic (NY, NJ, PA) Not in a MSA
+      n: 5671
+      weighted: 2329762.96214498
+    - code: '31'
+      label: East North Central (IL, IN, MI, OH, WI) MSA or CMSA of 1 million or more with heavy rail
+      n: 2018
+      weighted: 7274876.04660997
+    - code: '32'
+      label: East North Central (IL, IN, MI, OH, WI) MSA or CMSA of 1 million or more without heavy rail
+      n: 7852
+      weighted: 9542808.66798566
+    - code: '33'
+      label: East North Central (IL, IN, MI, OH, WI) MSA of less than 1 million
+      n: 12183
+      weighted: 10001869.8342638
+    - code: '34'
+      label: East North Central (IL, IN, MI, OH, WI) Not in a MSA
+      n: 8343
+      weighted: 7762791.37573549
+    - code: '41'
+      label: West North Central (IA, KS, MO, MN, ND, NE, SD) MSA or CMSA of 1 million or more with heavy
+        rail
+      n: 1
+      weighted: 561.612361750921
+    - code: '42'
+      label: West North Central (IA, KS, MO, MN, ND, NE, SD) MSA or CMSA of 1 million or more without
+        heavy rail
+      n: 1530
+      weighted: 5847311.18799669
+    - code: '43'
+      label: West North Central (IA, KS, MO, MN, ND, NE, SD) MSA of less than 1 million
+      n: 6932
+      weighted: 5343522.17101611
+    - code: '44'
+      label: West North Central (IA, KS, MO, MN, ND, NE, SD) Not in a MSA
+      n: 2061
+      weighted: 6051276.30779486
+    - code: '51'
+      label: South Atlantic (DE, FL, GA, MD, NC, SC, WV, VA) MSA or CMSA of 1 million or more with heavy
+        rail
+      n: 8644
+      weighted: 13699630.0784731
+    - code: '52'
+      label: South Atlantic (DE, FL, GA, MD, NC, SC, WV, VA) MSA or CMSA of 1 million or more without
+        heavy rail
+      n: 4434
+      weighted: 9521712.78145915
+    - code: '53'
+      label: South Atlantic (DE, FL, GA, MD, NC, SC, WV, VA) MSA of less than 1 million
+      n: 33738
+      weighted: 15088926.8192214
+    - code: '54'
+      label: South Atlantic (DE, FL, GA, MD, NC, SC, WV, VA) Not in a MSA
+      n: 10570
+      weighted: 5621008.4326839
+    - code: '62'
+      label: East South Central (AL, KY, MS, TN) MSA or CMSA of 1 million or more without heavy rail
+      n: 745
+      weighted: 4015393.61185801
+    - code: '63'
+      label: East South Central (AL, KY, MS, TN) MSA of less than 1 million
+      n: 1067
+      weighted: 5516305.25812231
+    - code: '64'
+      label: East South Central (AL, KY, MS, TN) Not in a MSA
+      n: 812
+      weighted: 4504229.38523238
+    - code: '71'
+      label: West South Central (AR, LA, OK, TX) MSA or CMSA of 1 million or more with heavy rail
+      n: 6
+      weighted: 1929.70463532563
+    - code: '72'
+      label: West South Central (AR, LA, OK, TX) MSA or CMSA of 1 million or more without heavy rail
+      n: 35090
+      weighted: 13800097.9671141
+    - code: '73'
+      label: West South Central (AR, LA, OK, TX) MSA of less than 1 million
+      n: 11376
+      weighted: 8006468.49875609
+    - code: '74'
+      label: West South Central (AR, LA, OK, TX) Not in a MSA
+      n: 4914
+      weighted: 4534547.72985266
+    - code: '81'
+      label: Mountain (AZ, CO, ID, MT, NM, NV, UT, WY) MSA or CMSA of 1 million or more with heavy rail
+      n: 3
+      weighted: 2906.85682122977
+    - code: '82'
+      label: Mountain (AZ, CO, ID, MT, NM, NV, UT, WY) MSA or CMSA of 1 million or more without heavy
+        rail
+      n: 2449
+      weighted: 7133770.24192797
+    - code: '83'
+      label: Mountain (AZ, CO, ID, MT, NM, NV, UT, WY) MSA of less than 1 million
+      n: 6182
+      weighted: 6772636.52594063
+    - code: '84'
+      label: Mountain (AZ, CO, ID, MT, NM, NV, UT, WY) Not in a MSA
+      n: 2384
+      weighted: 3450787.28694556
+    - code: '91'
+      label: Pacific (AK, CA, HI, OR, WA) MSA or CMSA of 1 million or more with heavy rail
+      n: 13888
+      weighted: 14967683.9549897
+    - code: '92'
+      label: Pacific (AK, CA, HI, OR, WA) MSA or CMSA of 1 million or more without heavy rail
+      n: 14427
+      weighted: 8583663.82686812
+    - code: '93'
+      label: Pacific (AK, CA, HI, OR, WA) MSA of less than 1 million
+      n: 18782
+      weighted: 9137133.08815648
+    - code: '94'
+      label: Pacific (AK, CA, HI, OR, WA) Not in a MSA
+      n: 8165
+      weighted: 2223084.55332173
+  CENSUS_D:
+    label: 2010 Census division classification for the respondent's home address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: New England
+      n: 3646
+      weighted: 10116791.3379672
+    - code: '02'
+      label: Middle Atlantic
+      n: 33873
+      weighted: 24055221.5114671
+    - code: '03'
+      label: East North Central
+      n: 30396
+      weighted: 34582345.9245951
+    - code: '04'
+      label: West North Central
+      n: 10524
+      weighted: 17242671.2791695
+    - code: '05'
+      label: South Atlantic
+      n: 57386
+      weighted: 43931278.1118373
+    - code: '06'
+      label: East South Central
+      n: 2624
+      weighted: 14035928.2552127
+    - code: '07'
+      label: West South Central
+      n: 51386
+      weighted: 26343043.9003583
+    - code: 08
+      label: Mountain
+      n: 11018
+      weighted: 17360100.9116354
+    - code: 09
+      label: Pacific
+      n: 55262
+      weighted: 34911565.4233361
+  CENSUS_R:
+    label: Census region classification for home address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Northeast
+      n: 37519
+      weighted: 34172012.8494346
+    - code: '02'
+      label: Midwest
+      n: 40920
+      weighted: 51825017.2037652
+    - code: '03'
+      label: South
+      n: 111396
+      weighted: 84310250.2674071
+    - code: '04'
+      label: West
+      n: 66280
+      weighted: 52271666.3349712
+  DRVRCNT:
+    label: Number of drivers in household
+    dtype: float64
+    length: 3
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '0'
+      label: ''
+      n: 528
+      weighted: 461039.614291818
+    - code: '1'
+      label: ''
+      n: 61903
+      weighted: 46395451.262148
+    - code: '2'
+      label: ''
+      n: 152966
+      weighted: 121727935.486141
+    - code: '3'
+      label: ''
+      n: 29420
+      weighted: 36376872.4165632
+    - code: '4'
+      label: ''
+      n: 9063
+      weighted: 13893397.1780675
+    - code: '5'
+      label: ''
+      n: 1776
+      weighted: 2962645.89498565
+    - code: '6'
+      label: ''
+      n: 372
+      weighted: 649402.8406642
+    - code: '7'
+      label: ''
+      n: 80
+      weighted: 106016.670254959
+    - code: '9'
+      label: ''
+      n: 7
+      weighted: 6185.29246069704
+  FEGEMPG:
+    label: Fuel Economy.gov EIA-Derived 55/45 fuel economy
+    dtype: float64
+    length: 8
+    owner: vehicle
+    missing_codes: {}
+    skip_code: null
+    range: 6-124
+    codes: []
+  FEGEMPGA:
+    label: Fuel Economy.gov 55/45 alternative fuel economy
+    dtype: float64
+    length: 8
+    owner: vehicle
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: 46-133
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 255634
+      weighted: 222220768.0
+  FEGEMPGF:
+    label: Flag for FEGEMPG
+    dtype: string
+    length: 2
+    owner: vehicle
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Linked on available manufacturer, model, model year and fuel type information
+      n: 227527
+      weighted: 200185196.0
+    - code: '02'
+      label: Hot-deck imputation
+      n: 11214
+      weighted: 9006805.0
+    - code: '03'
+      label: Matched manually based on vehicle type or other available information
+      n: 17374
+      weighted: 13386945.0
+  FUELTYPE:
+    label: Fuel Type
+    dtype: string
+    length: 2
+    owner: vehicle
+    missing_codes:
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: I don't know
+      n: 154
+      weighted: 169741.375605116
+    - code: '-7'
+      label: I prefer not to answer
+      n: 171
+      weighted: 167851.636604349
+    - code: '01'
+      label: Gas
+      n: 241759
+      weighted: 211899838.920625
+    - code: '02'
+      label: Diesel
+      n: 7422
+      weighted: 5441249.28922299
+    - code: '03'
+      label: Hybrid, electric or alternative fuel
+      n: 6416
+      weighted: 4766107.51463744
+    - code: '97'
+      label: Some other fuel
+      n: 193
+      weighted: 134157.918883885
+  GSCOST:
+    label: Annualized fuel cost in US cents per equivalent gallon
+    dtype: float64
+    length: 8
+    owner: vehicle
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: 2.1261666667-9.85875
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 5967
+      weighted: 4883846.0
+  GSTOTCST:
+    label: Annual fuel expenditures in US dollars
+    dtype: float64
+    length: 8
+    owner: vehicle
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: 0.0186780947-78897.222222
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 5967
+      weighted: 4883846.0
+  GSYRGAL:
+    label: Annual fuel consumption in US gallons
+    dtype: float64
+    length: 8
+    owner: vehicle
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: 0.0065332771-33333.333333
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 5938
+      weighted: 4854921.0
+  HBHTNRNT:
+    label: Category of the percent of renter-occupied housing in the census block group of the household's
+      home location
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 204
+      weighted: 68271.9636253487
+    - code: '0'
+      label: 0-4%
+      n: 14147
+      weighted: 12897374.564023
+    - code: '05'
+      label: 5-14%
+      n: 80125
+      weighted: 69076766.623621
+    - code: '20'
+      label: 15-24%
+      n: 63252
+      weighted: 49963363.3862437
+    - code: '30'
+      label: 25-34%
+      n: 35498
+      weighted: 28992010.5154148
+    - code: '40'
+      label: 35-44%
+      n: 23795
+      weighted: 20998146.0539012
+    - code: '50'
+      label: 45-54%
+      n: 15885
+      weighted: 14924119.3082222
+    - code: '60'
+      label: 55-64%
+      n: 10286
+      weighted: 11251920.4712299
+    - code: '70'
+      label: 65-74%
+      n: 6290
+      weighted: 6866321.25670654
+    - code: '80'
+      label: 75-84%
+      n: 4248
+      weighted: 4554188.40247188
+    - code: '90'
+      label: 85-94%
+      n: 2097
+      weighted: 2518095.62445041
+    - code: '95'
+      label: 95-100%
+      n: 288
+      weighted: 468368.485666069
+  HBHUR:
+    label: Urban / Rural indicator - Block group
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: C
+      label: Second City
+      n: 45821
+      weighted: 40530348.1978209
+    - code: R
+      label: Rural
+      n: 69222
+      weighted: 50920870.2793769
+    - code: S
+      label: Suburban
+      n: 56328
+      weighted: 51404653.050602
+    - code: T
+      label: Small Town
+      n: 60393
+      weighted: 48095851.2673127
+    - code: U
+      label: Urban
+      n: 24147
+      weighted: 31558951.8968401
+    - code: '-9'
+      label: Not ascertained
+      n: 204
+      weighted: 68271.9636253487
+  HBPPOPDN:
+    label: Category of population density (persons per square mile) in the census block group of the household's
+      home location
+    dtype: string
+    length: 5
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 204
+      weighted: 68271.9636253487
+    - code: '50'
+      label: 0-99
+      n: 40452
+      weighted: 29799593.2373181
+    - code: '300'
+      label: 100-499
+      n: 45144
+      weighted: 33736984.5098823
+    - code: '750'
+      label: 500-999
+      n: 23865
+      weighted: 18876335.3242079
+    - code: '1500'
+      label: 1,000-1,999
+      n: 32738
+      weighted: 27106462.5900827
+    - code: '3000'
+      label: 2,000-3,999
+      n: 46250
+      weighted: 41278735.4082308
+    - code: '7000'
+      label: 4,000-9,999
+      n: 53802
+      weighted: 52519862.2355749
+    - code: '17000'
+      label: 10,000-24,999
+      n: 11421
+      weighted: 14468329.9528884
+    - code: '30000'
+      label: 25,000-999,999
+      n: 2239
+      weighted: 4724371.43376799
+  HBRESDN:
+    label: Category of housing units per square mile in the census block group of the household's home
+      location
+    dtype: string
+    length: 5
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 204
+      weighted: 68271.9636253487
+    - code: '50'
+      label: 0-99
+      n: 62983
+      weighted: 46158268.3189963
+    - code: '300'
+      label: 100-499
+      n: 53759
+      weighted: 42474068.8002441
+    - code: '750'
+      label: 500-999
+      n: 35958
+      weighted: 30018202.9637504
+    - code: '1500'
+      label: 1,000-1,999
+      n: 48956
+      weighted: 44351135.6239862
+    - code: '3000'
+      label: 2,000-3,999
+      n: 38789
+      weighted: 38783634.6040044
+    - code: '7000'
+      label: 4,000-9,999
+      n: 12189
+      weighted: 14776625.6845477
+    - code: '17000'
+      label: 10,000-24,999
+      n: 2638
+      weighted: 4397246.98477136
+    - code: '30000'
+      label: 25,000-999,999
+      n: 639
+      weighted: 1551491.71165295
+  HFUEL:
+    label: Type of Hybrid Vehicle
+    dtype: string
+    length: 2
+    owner: vehicle
+    missing_codes:
+      '-9': not_ascertained
+      '-8': dont_know
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 131
+      weighted: 81743.9818786098
+    - code: '-8'
+      label: I don't know
+      n: 4
+      weighted: 683.368123334804
+    - code: '-1'
+      label: Appropriate skip
+      n: 249699
+      weighted: 217812839.140941
+    - code: '01'
+      label: Biodiesel
+      n: 34
+      weighted: 19485.2174387357
+    - code: '02'
+      label: Plug-in Hybrid (gas/electric e.g., Chevy Volt)
+      n: 482
+      weighted: 358528.139394456
+    - code: '03'
+      label: Electric (e.g. Nissan Leaf)
+      n: 607
+      weighted: 423096.456167
+    - code: '04'
+      label: Hybrid (gas/electric, not plug-in e.g., Toyota Prius)
+      n: 4996
+      weighted: 3743495.09925701
+    - code: '97'
+      label: Some other fuel
+      n: 162
+      weighted: 139075.252378289
+  HHFAMINC:
+    label: Household income
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 42
+      weighted: 32401.0758277008
+    - code: '-8'
+      label: I don't know
+      n: 1067
+      weighted: 859864.261503784
+    - code: '-7'
+      label: I prefer not to answer
+      n: 7000
+      weighted: 5323866.84748256
+    - code: '01'
+      label: Less than $10,000
+      n: 6124
+      weighted: 6863478.38335415
+    - code: '02'
+      label: $10,000 to $14,999
+      n: 7401
+      weighted: 7167351.31633954
+    - code: '03'
+      label: $15,000 to $24,999
+      n: 16130
+      weighted: 14844959.0246578
+    - code: '04'
+      label: $25,000 to $34,999
+      n: 20097
+      weighted: 18000153.7873189
+    - code: '05'
+      label: $35,000 to $49,999
+      n: 28647
+      weighted: 25747877.4385941
+    - code: '06'
+      label: $50,000 to $74,999
+      n: 46141
+      weighted: 38985583.956114
+    - code: '07'
+      label: $75,000 to $99,999
+      n: 38069
+      weighted: 31643222.1262082
+    - code: 08
+      label: $100,000 to $124,999
+      n: 30778
+      weighted: 26382393.1577825
+    - code: 09
+      label: $125,000 to $149,999
+      n: 17678
+      weighted: 15480414.1658906
+    - code: '10'
+      label: $150,000 to $199,999
+      n: 17580
+      weighted: 14983535.1953903
+    - code: '11'
+      label: $200,000 or more
+      n: 19361
+      weighted: 16263845.9191151
+  HHSIZE:
+    label: Count of household members
+    dtype: float64
+    length: 3
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '1'
+      label: ''
+      n: 49576
+      weighted: 32512098.6488005
+    - code: '2'
+      label: ''
+      n: 122506
+      weighted: 79634127.1873328
+    - code: '3'
+      label: ''
+      n: 38381
+      weighted: 43023475.1118987
+    - code: '4'
+      label: ''
+      n: 29577
+      weighted: 41624895.2222451
+    - code: '5'
+      label: ''
+      n: 10834
+      weighted: 16704141.9049734
+    - code: '6'
+      label: ''
+      n: 3406
+      weighted: 6347872.23682948
+    - code: '7'
+      label: ''
+      n: 1115
+      weighted: 1531319.67886659
+    - code: '8'
+      label: ''
+      n: 419
+      weighted: 818414.516114097
+    - code: '9'
+      label: ''
+      n: 155
+      weighted: 211053.457091901
+    - code: '10'
+      label: ''
+      n: 117
+      weighted: 116740.469145308
+    - code: '11'
+      label: ''
+      n: 15
+      weighted: 33819.2491168511
+    - code: '12'
+      label: ''
+      n: 11
+      weighted: 10830.5472280711
+    - code: '13'
+      label: ''
+      n: 3
+      weighted: 10158.4259340333
+  HHSTATE:
+    label: Household state
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: AK
+      label: ''
+      n: 479
+      weighted: 437407.318427101
+    - code: AL
+      label: ''
+      n: 673
+      weighted: 3673617.20609371
+    - code: AR
+      label: ''
+      n: 408
+      weighted: 2511722.82649226
+    - code: AZ
+      label: ''
+      n: 6153
+      weighted: 4581309.95748482
+    - code: CA
+      label: ''
+      n: 52215
+      weighted: 25138098.3992129
+    - code: CO
+      label: ''
+      n: 953
+      weighted: 3985891.569839
+    - code: CT
+      label: ''
+      n: 473
+      weighted: 2251018.41932235
+    - code: DC
+      label: ''
+      n: 285
+      weighted: 370515.977905895
+    - code: DE
+      label: ''
+      n: 511
+      weighted: 673203.676691425
+    - code: FL
+      label: ''
+      n: 2636
+      weighted: 12470556.422028
+    - code: GA
+      label: ''
+      n: 16965
+      weighted: 7000840.76785687
+    - code: HI
+      label: ''
+      n: 491
+      weighted: 844636.405862906
+    - code: IA
+      label: ''
+      n: 5541
+      weighted: 3051916.87953084
+    - code: ID
+      label: ''
+      n: 783
+      weighted: 1564401.29928654
+    - code: IL
+      label: ''
+      n: 1816
+      weighted: 8497340.85254767
+    - code: IN
+      label: ''
+      n: 1046
+      weighted: 5023181.07418862
+    - code: KS
+      label: ''
+      n: 600
+      weighted: 2139931.96366584
+    - code: KY
+      label: ''
+      n: 605
+      weighted: 3288891.82922362
+    - code: LA
+      label: ''
+      n: 419
+      weighted: 2583967.12980599
+    - code: MA
+      label: ''
+      n: 815
+      weighted: 4048258.26325197
+    - code: MD
+      label: ''
+      n: 2952
+      weighted: 4168839.72161634
+    - code: ME
+      label: ''
+      n: 609
+      weighted: 1305422.21558599
+    - code: MI
+      label: ''
+      n: 1557
+      weighted: 7315309.40052617
+    - code: MN
+      label: ''
+      n: 1328
+      weighted: 4977166.85521229
+    - code: MO
+      label: ''
+      n: 1009
+      weighted: 4297969.87414843
+    - code: MS
+      label: ''
+      n: 414
+      weighted: 2145599.08762846
+    - code: MT
+      label: ''
+      n: 840
+      weighted: 1206464.19436374
+    - code: NC
+      label: ''
+      n: 18071
+      weighted: 7543729.09969082
+    - code: ND
+      label: ''
+      n: 716
+      weighted: 652884.103280835
+    - code: NE
+      label: ''
+      n: 608
+      weighted: 1412780.59836265
+    - code: NH
+      label: ''
+      n: 573
+      weighted: 1155209.9113328
+    - code: NJ
+      label: ''
+      n: 999
+      weighted: 5730982.28264211
+    - code: NM
+      label: ''
+      n: 487
+      weighted: 1456674.92764065
+    - code: NV
+      label: ''
+      n: 371
+      weighted: 1550828.95309882
+    - code: NY
+      label: ''
+      n: 30831
+      weighted: 9528322.50227418
+    - code: OH
+      label: ''
+      n: 2002
+      weighted: 9121357.76406674
+    - code: OK
+      label: ''
+      n: 2591
+      weighted: 3111744.95929832
+    - code: OR
+      label: ''
+      n: 785
+      weighted: 3284138.94960583
+    - code: PA
+      label: ''
+      n: 1999
+      weighted: 8854736.21828543
+    - code: RI
+      label: ''
+      n: 419
+      weighted: 710095.858462361
+    - code: SC
+      label: ''
+      n: 14104
+      weighted: 3598702.25471441
+    - code: SD
+      label: ''
+      n: 751
+      weighted: 717054.635094572
+    - code: TN
+      label: ''
+      n: 940
+      weighted: 4975254.97443753
+    - code: TX
+      label: ''
+      n: 47946
+      weighted: 18081512.1024835
+    - code: UT
+      label: ''
+      n: 741
+      weighted: 2471929.27310322
+    - code: VA
+      label: ''
+      n: 1476
+      weighted: 6679979.81005521
+    - code: VT
+      label: ''
+      n: 759
+      weighted: 644984.821178598
+    - code: WA
+      label: ''
+      n: 1306
+      weighted: 5211121.63212121
+    - code: WI
+      label: ''
+      n: 23959
+      weighted: 4609748.01577977
+    - code: WV
+      label: ''
+      n: 424
+      weighted: 1378254.32095647
+    - code: WY
+      label: ''
+      n: 681
+      weighted: 543439.099812884
+  HHSTFIPS:
+    label: State FIPS for household address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Alabama
+      n: 673
+      weighted: 3673617.20609371
+    - code: '02'
+      label: Alaska
+      n: 479
+      weighted: 437407.318427101
+    - code: '04'
+      label: Arizona
+      n: 6153
+      weighted: 4581309.95748482
+    - code: '05'
+      label: Arkansas
+      n: 408
+      weighted: 2511722.82649226
+    - code: '06'
+      label: California
+      n: 52215
+      weighted: 25138098.3992129
+    - code: 08
+      label: Colorado
+      n: 953
+      weighted: 3985891.569839
+    - code: 09
+      label: Connecticut
+      n: 473
+      weighted: 2251018.41932235
+    - code: '10'
+      label: Delaware
+      n: 511
+      weighted: 673203.676691425
+    - code: '11'
+      label: District of Columbia
+      n: 285
+      weighted: 370515.977905895
+    - code: '12'
+      label: Florida
+      n: 2636
+      weighted: 12470556.422028
+    - code: '13'
+      label: Georgia
+      n: 16965
+      weighted: 7000840.76785687
+    - code: '15'
+      label: Hawaii
+      n: 491
+      weighted: 844636.405862906
+    - code: '16'
+      label: Idaho
+      n: 783
+      weighted: 1564401.29928654
+    - code: '17'
+      label: Illinois
+      n: 1816
+      weighted: 8497340.85254767
+    - code: '18'
+      label: Indiana
+      n: 1046
+      weighted: 5023181.07418862
+    - code: '19'
+      label: Iowa
+      n: 5541
+      weighted: 3051916.87953084
+    - code: '20'
+      label: Kansas
+      n: 600
+      weighted: 2139931.96366584
+    - code: '21'
+      label: Kentucky
+      n: 605
+      weighted: 3288891.82922362
+    - code: '22'
+      label: Louisiana
+      n: 419
+      weighted: 2583967.12980599
+    - code: '23'
+      label: Maine
+      n: 609
+      weighted: 1305422.21558599
+    - code: '24'
+      label: Maryland
+      n: 2952
+      weighted: 4168839.72161634
+    - code: '25'
+      label: Massachusetts
+      n: 815
+      weighted: 4048258.26325197
+    - code: '26'
+      label: Michigan
+      n: 1557
+      weighted: 7315309.40052617
+    - code: '27'
+      label: Minnesota
+      n: 1328
+      weighted: 4977166.85521229
+    - code: '28'
+      label: Mississippi
+      n: 414
+      weighted: 2145599.08762846
+    - code: '29'
+      label: Missouri
+      n: 1009
+      weighted: 4297969.87414843
+    - code: '30'
+      label: Montana
+      n: 840
+      weighted: 1206464.19436374
+    - code: '31'
+      label: Nebraska
+      n: 608
+      weighted: 1412780.59836265
+    - code: '32'
+      label: Nevada
+      n: 371
+      weighted: 1550828.95309882
+    - code: '33'
+      label: New Hampshire
+      n: 573
+      weighted: 1155209.9113328
+    - code: '34'
+      label: New Jersey
+      n: 999
+      weighted: 5730982.28264211
+    - code: '35'
+      label: New Mexico
+      n: 487
+      weighted: 1456674.92764065
+    - code: '36'
+      label: New York
+      n: 30831
+      weighted: 9528322.50227418
+    - code: '37'
+      label: North Carolina
+      n: 18071
+      weighted: 7543729.09969082
+    - code: '38'
+      label: North Dakota
+      n: 716
+      weighted: 652884.103280835
+    - code: '39'
+      label: Ohio
+      n: 2002
+      weighted: 9121357.76406674
+    - code: '40'
+      label: Oklahoma
+      n: 2591
+      weighted: 3111744.95929832
+    - code: '41'
+      label: Oregon
+      n: 785
+      weighted: 3284138.94960583
+    - code: '42'
+      label: Pennsylvania
+      n: 1999
+      weighted: 8854736.21828543
+    - code: '44'
+      label: Rhode Island
+      n: 419
+      weighted: 710095.858462361
+    - code: '45'
+      label: South Carolina
+      n: 14104
+      weighted: 3598702.25471441
+    - code: '46'
+      label: South Dakota
+      n: 751
+      weighted: 717054.635094572
+    - code: '47'
+      label: Tennessee
+      n: 940
+      weighted: 4975254.97443753
+    - code: '48'
+      label: Texas
+      n: 47946
+      weighted: 18081512.1024835
+    - code: '49'
+      label: Utah
+      n: 741
+      weighted: 2471929.27310322
+    - code: '50'
+      label: Vermont
+      n: 759
+      weighted: 644984.821178598
+    - code: '51'
+      label: Virginia
+      n: 1476
+      weighted: 6679979.81005521
+    - code: '53'
+      label: Washington
+      n: 1306
+      weighted: 5211121.63212121
+    - code: '54'
+      label: West Virginia
+      n: 424
+      weighted: 1378254.32095647
+    - code: '55'
+      label: Wisconsin
+      n: 23959
+      weighted: 4609748.01577977
+    - code: '56'
+      label: Wyoming
+      n: 681
+      weighted: 543439.099812884
+  HHVEHCNT:
+    label: Count of household vehicles
+    dtype: float64
+    length: 3
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '1'
+      label: ''
+      n: 41534
+      weighted: 39647572.4862432
+    - code: '2'
+      label: ''
+      n: 99872
+      weighted: 78249764.6253991
+    - code: '3'
+      label: ''
+      n: 60801
+      weighted: 52794323.8651743
+    - code: '4'
+      label: ''
+      n: 30248
+      weighted: 28776342.9013541
+    - code: '5'
+      label: ''
+      n: 12705
+      weighted: 12895521.6096827
+    - code: '6'
+      label: ''
+      n: 5658
+      weighted: 5089207.2918569
+    - code: '7'
+      label: ''
+      n: 2471
+      weighted: 2646014.23148116
+    - code: '8'
+      label: ''
+      n: 1184
+      weighted: 1040136.49824524
+    - code: '9'
+      label: ''
+      n: 657
+      weighted: 554340.259879371
+    - code: '10'
+      label: ''
+      n: 390
+      weighted: 262468.571689999
+    - code: '11'
+      label: ''
+      n: 187
+      weighted: 229900.869626569
+    - code: '12'
+      label: ''
+      n: 408
+      weighted: 393353.444947232
+  HH_CBSA:
+    label: Core Based Statistical Area (CBSA) FIPS code for the respondent's home address
+    dtype: string
+    length: 5
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '12060'
+      label: Atlanta-Sandy Springs-Roswell, GA
+      n: 5423
+      weighted: 3860687.88858261
+    - code: '12420'
+      label: Austin-Round Rock, TX
+      n: 4120
+      weighted: 1580811.23519431
+    - code: '12580'
+      label: Baltimore-Columbia-Towson, MD
+      n: 796
+      weighted: 1864296.49168102
+    - code: '13820'
+      label: Birmingham-Hoover, AL
+      n: 173
+      weighted: 958493.206015987
+    - code: '14460'
+      label: Boston-Cambridge-Newton, MA-NH
+      n: 652
+      weighted: 2766722.34258767
+    - code: '15380'
+      label: Buffalo-Cheektowaga-Niagara Falls, NY
+      n: 1472
+      weighted: 741136.316635973
+    - code: '16740'
+      label: Charlotte-Concord-Gastonia, NC-SC
+      n: 1725
+      weighted: 1628184.86990082
+    - code: '16980'
+      label: Chicago-Naperville-Elgin, IL-IN-WI
+      n: 1688
+      weighted: 5752125.19409052
+    - code: '17140'
+      label: Cincinnati, OH-KY-IN
+      n: 337
+      weighted: 1461681.13195072
+    - code: '17460'
+      label: Cleveland-Elyria, OH
+      n: 336
+      weighted: 1525269.94578884
+    - code: '18140'
+      label: Columbus, OH
+      n: 344
+      weighted: 1572310.08470054
+    - code: '19100'
+      label: Dallas-Fort Worth-Arlington, TX
+      n: 17671
+      weighted: 4812866.5580746
+    - code: '19740'
+      label: Denver-Aurora-Lakewood, CO
+      n: 492
+      weighted: 2017941.65502068
+    - code: '19820'
+      label: Detroit-Warren-Dearborn, MI
+      n: 574
+      weighted: 2681230.61538236
+    - code: '24340'
+      label: Grand Rapids-Wyoming, MI
+      n: 174
+      weighted: 787288.370882228
+    - code: '25540'
+      label: Hartford-West Hartford-East Hartford, CT
+      n: 174
+      weighted: 818016.646165548
+    - code: '26420'
+      label: Houston-The Woodlands-Sugar Land, TX
+      n: 9232
+      weighted: 3986430.30895981
+    - code: '26900'
+      label: Indianapolis-Carmel-Anderson, IN
+      n: 282
+      weighted: 1341870.45619391
+    - code: '27260'
+      label: Jacksonville, FL
+      n: 211
+      weighted: 899978.307848842
+    - code: '28140'
+      label: Kansas City, MO-KS
+      n: 336
+      weighted: 1348299.21889781
+    - code: '29820'
+      label: Las Vegas-Henderson-Paradise, NV
+      n: 277
+      weighted: 1230203.78158268
+    - code: '31080'
+      label: Los Angeles-Long Beach-Anaheim, CA
+      n: 5959
+      weighted: 7801903.75821083
+    - code: '31140'
+      label: Louisville/Jefferson County, KY-IN
+      n: 169
+      weighted: 864743.331990512
+    - code: '32820'
+      label: Memphis, TN-MS-AR
+      n: 143
+      weighted: 809378.277001175
+    - code: '33100'
+      label: Miami-Fort Lauderdale-West Palm Beach, FL
+      n: 529
+      weighted: 2931767.09395189
+    - code: '33340'
+      label: Milwaukee-Waukesha-West Allis, WI
+      n: 5442
+      weighted: 1099989.238963
+    - code: '33460'
+      label: Minneapolis-St. Paul-Bloomington, MN-WI
+      n: 1390
+      weighted: 3142288.84513976
+    - code: '34980'
+      label: Nashville-Davidson--Murfreesboro--Franklin, TN
+      n: 264
+      weighted: 1398008.86336019
+    - code: '35380'
+      label: New Orleans-Metairie, LA
+      n: 117
+      weighted: 657616.398020745
+    - code: '35620'
+      label: New York-Newark-Jersey City, NY-NJ-PA
+      n: 9397
+      weighted: 9333718.14751513
+    - code: '36420'
+      label: Oklahoma City, OK
+      n: 223
+      weighted: 1122114.79680448
+    - code: '36740'
+      label: Orlando-Kissimmee-Sanford, FL
+      n: 295
+      weighted: 1668135.48892849
+    - code: '37980'
+      label: Philadelphia-Camden-Wilmington, PA-NJ-DE-MD
+      n: 1141
+      weighted: 3600114.94461774
+    - code: '38060'
+      label: Phoenix-Mesa-Scottsdale, AZ
+      n: 1407
+      weighted: 2974363.80173298
+    - code: '38300'
+      label: Pittsburgh, PA
+      n: 414
+      weighted: 1736077.72904857
+    - code: '38900'
+      label: Portland-Vancouver-Hillsboro, OR-WA
+      n: 439
+      weighted: 1818715.3157149
+    - code: '39300'
+      label: Providence-Warwick, RI-MA
+      n: 480
+      weighted: 989687.434239518
+    - code: '39580'
+      label: Raleigh, NC
+      n: 1120
+      weighted: 1085207.2876239
+    - code: '40060'
+      label: Richmond, VA
+      n: 223
+      weighted: 838491.308261422
+    - code: '40140'
+      label: Riverside-San Bernardino-Ontario, CA
+      n: 1991
+      weighted: 2556289.65807088
+    - code: '40380'
+      label: Rochester, NY
+      n: 1792
+      weighted: 750527.321495774
+    - code: '40900'
+      label: Sacramento--Roseville--Arden-Arcade, CA
+      n: 7961
+      weighted: 1813903.00753651
+    - code: '41180'
+      label: St. Louis, MO-IL
+      n: 487
+      weighted: 1943690.10103832
+    - code: '41620'
+      label: Salt Lake City, UT
+      n: 267
+      weighted: 906014.899250617
+    - code: '41700'
+      label: San Antonio-New Braunfels, TX
+      n: 3733
+      weighted: 1650338.01386661
+    - code: '41740'
+      label: San Diego-Carlsbad, CA
+      n: 5375
+      weighted: 2357786.66128728
+    - code: '41860'
+      label: San Francisco-Oakland-Hayward, CA
+      n: 4036
+      weighted: 3316222.83831879
+    - code: '41940'
+      label: San Jose-Sunnyvale-Santa Clara, CA
+      n: 1912
+      weighted: 1290984.58296014
+    - code: '42660'
+      label: Seattle-Tacoma-Bellevue, WA
+      n: 656
+      weighted: 2592642.34694024
+    - code: '45300'
+      label: Tampa-St. Petersburg-Clearwater, FL
+      n: 449
+      weighted: 2013930.4012959
+    - code: '47260'
+      label: Virginia Beach-Norfolk-Newport News, VA-NC
+      n: 426
+      weighted: 1370694.80903296
+    - code: '47900'
+      label: Washington-Arlington-Alexandria, DC-VA-MD-WV
+      n: 1368
+      weighted: 4565091.27575933
+    - code: XXXXX
+      label: Suppressed, in an MSA of less than 1 million
+      n: 150021
+      weighted: 107942664.051458
+  HH_HISP:
+    label: Hispanic status of household respondent
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: Don't Know
+      n: 9
+      weighted: 4746.49032672869
+    - code: '-7'
+      label: Refused
+      n: 324
+      weighted: 177384.871514178
+    - code: '01'
+      label: 'Yes'
+      n: 17334
+      weighted: 27350561.6891489
+    - code: '02'
+      label: 'No'
+      n: 238448
+      weighted: 195046253.604591
+  HH_RACE:
+    label: Race of household respondent
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: Don't know
+      n: 176
+      weighted: 254832.719735189
+    - code: '-7'
+      label: Refused
+      n: 1111
+      weighted: 1078681.88289767
+    - code: '01'
+      label: White
+      n: 218578
+      weighted: 178380284.028417
+    - code: '02'
+      label: Black or African American
+      n: 14721
+      weighted: 18712785.1459367
+    - code: '03'
+      label: Asian
+      n: 8785
+      weighted: 9150035.074897
+    - code: '04'
+      label: American Indian or Alaska Native
+      n: 1449
+      weighted: 1606756.75562978
+    - code: '05'
+      label: Native Hawaiian or other Pacific Islander
+      n: 474
+      weighted: 527341.902185247
+    - code: '06'
+      label: Multiple responses selected
+      n: 7027
+      weighted: 6938228.87918373
+    - code: '97'
+      label: Some other race
+      n: 3794
+      weighted: 5930000.26669893
+  HOMEOWN:
+    label: Home Ownership
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: I don't know
+      n: 1
+      weighted: 458.824881082712
+    - code: '-7'
+      label: I prefer not to answer
+      n: 61
+      weighted: 55856.2240541307
+    - code: '01'
+      label: Own
+      n: 215291
+      weighted: 167952266.720225
+    - code: '02'
+      label: Rent
+      n: 39187
+      weighted: 52598276.5478285
+    - code: '97'
+      label: Some other arrangement
+      n: 1575
+      weighted: 1972088.33859371
+  HOUSEID:
+    label: Household Identifier
+    dtype: string
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: 30000007-40794301
+    codes: []
+  HTEEMPDN:
+    label: Category of workers per square mile in the census tract of the household's home location
+    dtype: string
+    length: 4
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 204
+      weighted: 68271.9636253487
+    - code: '25'
+      label: 0-49
+      n: 48384
+      weighted: 35422076.19205
+    - code: '75'
+      label: 50-99
+      n: 20288
+      weighted: 13638544.8340917
+    - code: '150'
+      label: 100-249
+      n: 27797
+      weighted: 22239730.9175687
+    - code: '350'
+      label: 250-499
+      n: 24983
+      weighted: 21245027.9353512
+    - code: '750'
+      label: 500-999
+      n: 34476
+      weighted: 29026239.2744288
+    - code: '1500'
+      label: 1,000-1,999
+      n: 44680
+      weighted: 41168529.3176988
+    - code: '3000'
+      label: 2,000-3,999
+      n: 39266
+      weighted: 38036006.120431
+    - code: '5000'
+      label: 4,000-999,999
+      n: 16037
+      weighted: 21734520.1003336
+  HTHTNRNT:
+    label: Category of the percent of renter-occupied housing in the census tract of the household's home
+      location
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 204
+      weighted: 68271.9636253487
+    - code: '0'
+      label: 0-4%
+      n: 5740
+      weighted: 5571087.69282484
+    - code: '05'
+      label: 5-14%
+      n: 63036
+      weighted: 55776446.9362741
+    - code: '20'
+      label: 15-24%
+      n: 73073
+      weighted: 58539515.0262923
+    - code: '30'
+      label: 25-34%
+      n: 47011
+      weighted: 37923255.2742922
+    - code: '40'
+      label: 35-44%
+      n: 29351
+      weighted: 26665530.129322
+    - code: '50'
+      label: 45-54%
+      n: 17619
+      weighted: 17599236.0967949
+    - code: '60'
+      label: 55-64%
+      n: 10389
+      weighted: 9859817.20935966
+    - code: '70'
+      label: 65-74%
+      n: 5883
+      weighted: 6083280.86239462
+    - code: '80'
+      label: 75-84%
+      n: 2726
+      weighted: 3066009.66810898
+    - code: '90'
+      label: 85-94%
+      n: 968
+      weighted: 1268000.84655811
+    - code: '95'
+      label: 95-100%
+      n: 115
+      weighted: 158494.949730438
+  HTPPOPDN:
+    label: Category of population density (persons per square mile) in the census tract of the household's
+      home location
+    dtype: string
+    length: 5
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 204
+      weighted: 68271.9636253487
+    - code: '50'
+      label: 0-99
+      n: 44897
+      weighted: 32928232.3996097
+    - code: '300'
+      label: 100-499
+      n: 48486
+      weighted: 35842914.9973528
+    - code: '750'
+      label: 500-999
+      n: 24853
+      weighted: 20818307.9320625
+    - code: '1500'
+      label: 1,000-1,999
+      n: 33511
+      weighted: 27803424.2932772
+    - code: '3000'
+      label: 2,000-3,999
+      n: 45832
+      weighted: 42368150.3656897
+    - code: '7000'
+      label: 4,000-9,999
+      n: 47906
+      weighted: 47203072.2828111
+    - code: '17000'
+      label: 10,000-24,999
+      n: 8851
+      weighted: 12003092.741006
+    - code: '30000'
+      label: 25,000-999,999
+      n: 1575
+      weighted: 3543479.68014378
+  HTRESDN:
+    label: Category of housing units per square mile in the census tract of the household's home location
+    dtype: string
+    length: 5
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 204
+      weighted: 68271.9636253487
+    - code: '50'
+      label: 0-99
+      n: 70749
+      weighted: 50852228.648836
+    - code: '300'
+      label: 100-499
+      n: 55045
+      weighted: 45684826.0278027
+    - code: '750'
+      label: 500-999
+      n: 36763
+      weighted: 30977948.7607955
+    - code: '1500'
+      label: 1,000-1,999
+      n: 47770
+      weighted: 44015110.9359114
+    - code: '3000'
+      label: 2,000-3,999
+      n: 34006
+      weighted: 34434943.7347851
+    - code: '7000'
+      label: 4,000-9,999
+      n: 9211
+      weighted: 11978259.4899202
+    - code: '17000'
+      label: 10,000-24,999
+      n: 1904
+      weighted: 3368354.63240995
+    - code: '30000'
+      label: 25,000-999,999
+      n: 463
+      weighted: 1199002.46149222
+  HYBRID:
+    label: Hybrid vehicle
+    dtype: string
+    length: 2
+    owner: vehicle
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: 'Yes'
+      n: 6416
+      weighted: 4766107.51463744
+    - code: '02'
+      label: 'No'
+      n: 249699
+      weighted: 217812839.140941
+  LIF_CYC:
+    label: Life Cycle classification for the household, derived by attributes pertaining to age, relationship,
+      and work status.
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2
+      weighted: 985.877237581298
+    - code: '01'
+      label: one adult, no children
+      n: 27992
+      weighted: 21156108.773664
+    - code: '02'
+      label: 2+ adults, no children
+      n: 66366
+      weighted: 57065487.7001928
+    - code: '03'
+      label: one adult, youngest child 0-5
+      n: 1090
+      weighted: 1791970.2657845
+    - code: '04'
+      label: 2+ adults, youngest child 0-5
+      n: 20952
+      weighted: 28963812.0877575
+    - code: '05'
+      label: one adult, youngest child 6-15
+      n: 3116
+      weighted: 3730677.12457704
+    - code: '06'
+      label: 2+ adults, youngest child 6-15
+      n: 25770
+      weighted: 33725925.2548766
+    - code: '07'
+      label: one adult, youngest child 16-21
+      n: 2064
+      weighted: 1928780.31758312
+    - code: 08
+      label: 2+ adults, youngest child 16-21
+      n: 14566
+      weighted: 18287791.4194573
+    - code: 09
+      label: one adult, retired, no children
+      n: 21584
+      weighted: 11357512.1836373
+    - code: '10'
+      label: 2+ adults, retired, no children
+      n: 72613
+      weighted: 44569895.6508106
+  MAKE:
+    label: Vehicle Make
+    dtype: string
+    length: 3
+    owner: vehicle
+    missing_codes:
+      '-8': dont_know
+    skip_code: null
+    range: null
+    codes:
+    - code: '-88'
+      label: I don't know
+      n: 431
+      weighted: 469499.026447965
+    - code: '-8'
+      label: I don't know
+      n: 1352
+      weighted: 1237941.73514307
+    - code: '01'
+      label: American Motors
+      n: 78
+      weighted: 57963.5470612467
+    - code: '02'
+      label: Jeep (Includes Willys/Kaiser-Jeep)
+      n: 7537
+      weighted: 6946350.69831148
+    - code: '03'
+      label: AM General
+      n: 148
+      weighted: 98474.8122675109
+    - code: '06'
+      label: Chrysler/Daimler Chrysler
+      n: 4882
+      weighted: 4785993.82830083
+    - code: '07'
+      label: Dodge
+      n: 12985
+      weighted: 12123994.6437916
+    - code: 09
+      label: Plymouth
+      n: 280
+      weighted: 256172.315482037
+    - code: '12'
+      label: Ford
+      n: 36187
+      weighted: 29942881.6243685
+    - code: '13'
+      label: Lincoln
+      n: 1889
+      weighted: 1436349.92550303
+    - code: '14'
+      label: Mercury
+      n: 1897
+      weighted: 1776421.9737151
+    - code: '18'
+      label: Buick
+      n: 5135
+      weighted: 4378578.18623455
+    - code: '19'
+      label: Cadillac
+      n: 2811
+      weighted: 2184310.23708782
+    - code: '20'
+      label: Chevrolet
+      n: 32376
+      weighted: 28812078.0197758
+    - code: '21'
+      label: Oldsmobile
+      n: 741
+      weighted: 711130.307445741
+    - code: '22'
+      label: Pontiac
+      n: 2741
+      weighted: 2594069.75514915
+    - code: '23'
+      label: GMC
+      n: 7189
+      weighted: 6121143.98566256
+    - code: '24'
+      label: Saturn
+      n: 1643
+      weighted: 1663717.33941953
+    - code: '29'
+      label: Other Domestic
+      n: 152
+      weighted: 88341.4416397043
+    - code: '30'
+      label: Volkswagen
+      n: 4768
+      weighted: 4332710.00011342
+    - code: '32'
+      label: Audi
+      n: 1552
+      weighted: 1325597.05011379
+    - code: '34'
+      label: BMW
+      n: 4722
+      weighted: 3717848.85694372
+    - code: '35'
+      label: Nissan/Datsun
+      n: 12104
+      weighted: 11826869.1527744
+    - code: '36'
+      label: Fiat
+      n: 282
+      weighted: 275281.881774027
+    - code: '37'
+      label: Honda
+      n: 24740
+      weighted: 21759001.1041922
+    - code: '38'
+      label: Isuzu
+      n: 303
+      weighted: 304471.785988472
+    - code: '39'
+      label: Jaguar
+      n: 500
+      weighted: 383529.526395034
+    - code: '41'
+      label: Mazda
+      n: 4481
+      weighted: 4297695.29312396
+    - code: '42'
+      label: Mercedes Benz
+      n: 3804
+      weighted: 2736567.87882219
+    - code: '43'
+      label: MG
+      n: 147
+      weighted: 81215.6845461445
+    - code: '45'
+      label: Porsche
+      n: 708
+      weighted: 540470.049928016
+    - code: '47'
+      label: Saab
+      n: 295
+      weighted: 254585.854133499
+    - code: '48'
+      label: Subaru
+      n: 7221
+      weighted: 5955632.91836001
+    - code: '49'
+      label: Toyota
+      n: 34937
+      weighted: 28374105.3873044
+    - code: '50'
+      label: Triumph
+      n: 279
+      weighted: 204202.555233084
+    - code: '51'
+      label: Volvo
+      n: 1882
+      weighted: 1590541.30325445
+    - code: '52'
+      label: Mitsubishi
+      n: 1276
+      weighted: 1407927.03793813
+    - code: '53'
+      label: Suzuki
+      n: 1187
+      weighted: 1099172.95806353
+    - code: '54'
+      label: Acura
+      n: 2646
+      weighted: 2417641.99909101
+    - code: '55'
+      label: Hyundai
+      n: 7011
+      weighted: 6945716.28881569
+    - code: '58'
+      label: Infiniti
+      n: 1461
+      weighted: 1244461.36735784
+    - code: '59'
+      label: Lexus
+      n: 5222
+      weighted: 4023759.90716905
+    - code: '62'
+      label: Land Rover
+      n: 381
+      weighted: 371390.247751414
+    - code: '63'
+      label: KIA
+      n: 4780
+      weighted: 4657401.01107357
+    - code: '65'
+      label: Smart
+      n: 126
+      weighted: 93604.6552001726
+    - code: '67'
+      label: Scion
+      n: 517
+      weighted: 410925.378853717
+    - code: '69'
+      label: Other Import
+      n: 514
+      weighted: 341493.444576687
+    - code: '71'
+      label: Ducati
+      n: 102
+      weighted: 58955.0269933529
+    - code: '72'
+      label: Harley-Davidson
+      n: 3181
+      weighted: 2485023.96850167
+    - code: '73'
+      label: Kawasaki
+      n: 763
+      weighted: 659937.909871008
+    - code: '76'
+      label: Yamaha
+      n: 1031
+      weighted: 774331.147395654
+    - code: '77'
+      label: Victory
+      n: 71
+      weighted: 64720.0189980082
+    - code: '82'
+      label: Freightliner
+      n: 62
+      weighted: 72682.6607252723
+    - code: '84'
+      label: International Harvester/Navistar
+      n: 105
+      weighted: 88588.9533700652
+    - code: '98'
+      label: Other
+      n: 1992
+      weighted: 1364597.36500219
+    - code: '99'
+      label: Unknown
+      n: 240
+      weighted: 181093.642839896
+    - code: XX
+      label: Suppressed for confidential reason
+      n: 268
+      weighted: 169781.98018284
+  MODEL:
+    label: Vehicle Model
+    dtype: string
+    length: 5
+    owner: vehicle
+    missing_codes:
+      '-8': dont_know
+    skip_code: null
+    range: null
+    codes:
+    - code: '-88'
+      label: I don't know
+      n: 2900
+      weighted: 2919347.46859007
+    - code: '-8'
+      label: I don't know
+      n: 1644
+      weighted: 1477018.98052223
+    - code: '2001'
+      label: Compass
+      n: 362
+      weighted: 438948.962542098
+    - code: '2401'
+      label: CJ-2/CJ-3/CJ-4
+      n: 54
+      weighted: 31816.7361874689
+    - code: '2402'
+      label: CJ-5/CJ-6/CJ-7/CJ-8
+      n: 226
+      weighted: 178556.611784091
+    - code: '2403'
+      label: YJ series/Wrangler
+      n: 1851
+      weighted: 1565597.59234878
+    - code: '2404'
+      label: Cherokee (1984 on)
+      n: 1900
+      weighted: 1759841.20548052
+    - code: '2405'
+      label: Liberty
+      n: 839
+      weighted: 858632.359773197
+    - code: '2406'
+      label: Commander
+      n: 105
+      weighted: 83165.9014112868
+    - code: '2407'
+      label: Patriot
+      n: 503
+      weighted: 496465.441472303
+    - code: '2408'
+      label: Renegade
+      n: 137
+      weighted: 131006.671637633
+    - code: '2421'
+      label: Cherokee (thru 1983)
+      n: 82
+      weighted: 63425.6552789365
+    - code: '2422'
+      label: Grand Cherokee (2014 on)
+      n: 1252
+      weighted: 1160978.38438117
+    - code: '3402'
+      label: Hummer H3
+      n: 56
+      weighted: 35899.6022125354
+    - code: '6018'
+      label: '200'
+      n: 457
+      weighted: 461571.471275877
+    - code: '6041'
+      label: Concorde
+      n: 86
+      weighted: 67563.2977042352
+    - code: '6043'
+      label: Sebring
+      n: 504
+      weighted: 429492.697241615
+    - code: '6051'
+      label: 300M/300/300C/300S
+      n: 738
+      weighted: 743649.484586742
+    - code: '6052'
+      label: PT Cruiser
+      n: 678
+      weighted: 636154.589058018
+    - code: '6054'
+      label: Pacifica
+      n: 240
+      weighted: 288972.15504034
+    - code: '6055'
+      label: Crossfire
+      n: 63
+      weighted: 44209.7478558168
+    - code: '6441'
+      label: Town and Country
+      n: 1770
+      weighted: 1790367.20642094
+    - code: '6442'
+      label: Voyager (2000 on)
+      n: 51
+      weighted: 54781.4752585446
+    - code: '7020'
+      label: Neon
+      n: 223
+      weighted: 322417.090146976
+    - code: '7021'
+      label: Magnum
+      n: 80
+      weighted: 53604.6485683376
+    - code: '7024'
+      label: Charger (2006 on)
+      n: 493
+      weighted: 556940.963948763
+    - code: '7025'
+      label: Caliber
+      n: 279
+      weighted: 349012.938428618
+    - code: '7026'
+      label: Avenger (2008 on)
+      n: 309
+      weighted: 375503.69941647
+    - code: '7027'
+      label: Journey
+      n: 485
+      weighted: 549045.140779243
+    - code: '7028'
+      label: Challenger (2008 on)
+      n: 149
+      weighted: 113492.099430267
+    - code: '7029'
+      label: Dart (2013 on)
+      n: 187
+      weighted: 209566.16816457
+    - code: '7033'
+      label: Challenger
+      n: 103
+      weighted: 83348.2835067101
+    - code: '7041'
+      label: Intrepid
+      n: 114
+      weighted: 132602.300228187
+    - code: '7043'
+      label: Stratus
+      n: 230
+      weighted: 308668.066452044
+    - code: '7402'
+      label: Durango (1998-2003)
+      n: 252
+      weighted: 327759.159810265
+    - code: '7403'
+      label: Nitro
+      n: 118
+      weighted: 106960.626751751
+    - code: '7422'
+      label: Durango (2004 on)
+      n: 495
+      weighted: 554600.09888236
+    - code: '7442'
+      label: Caravan/Grand Caravan
+      n: 2129
+      weighted: 2183067.25097575
+    - code: '7443'
+      label: Ram C/V
+      n: 127
+      weighted: 110712.173203748
+    - code: '7461'
+      label: B-Series Van/fRam Van/Ram Wagon
+      n: 157
+      weighted: 112310.647020259
+    - code: '7471'
+      label: D50, Colt pickup, Ram 50/Ram 100
+      n: 147
+      weighted: 175020.290268361
+    - code: '7472'
+      label: Dakota
+      n: 1129
+      weighted: 959494.145070563
+    - code: '7481'
+      label: D, W-Series pickup
+      n: 98
+      weighted: 45736.1583635728
+    - code: '7482'
+      label: Ram Pickup
+      n: 4811
+      weighted: 3841277.58517788
+    - code: '7499'
+      label: Unknown (light truck)
+      n: 91
+      weighted: 50453.9070581959
+    - code: '7880'
+      label: Medium/Heavy Pickup (pickup-style only - over 10,000 lbs)
+      n: 207
+      weighted: 147593.878297933
+    - code: '9442'
+      label: Voyager (minivan)
+      n: 102
+      weighted: 105710.840923545
+    - code: '12003'
+      label: Mustang/Mustang II
+      n: 2065
+      weighted: 1649100.7975129
+    - code: '12004'
+      label: Thunderbird (all sizes)
+      n: 236
+      weighted: 155783.65827956
+    - code: '12006'
+      label: LTD/Custom/Galaxy (all sizes)
+      n: 53
+      weighted: 34794.5714237127
+    - code: '12013'
+      label: Escort/EXP/ZX2
+      n: 270
+      weighted: 297392.605831629
+    - code: '12016'
+      label: Crown Victoria
+      n: 319
+      weighted: 260671.235188368
+    - code: '12017'
+      label: Taurus/Taurus X
+      n: 1661
+      weighted: 1480583.75886441
+    - code: '12021'
+      label: Five Hundred
+      n: 172
+      weighted: 162528.194995432
+    - code: '12022'
+      label: Freestyle
+      n: 136
+      weighted: 111627.110204867
+    - code: '12023'
+      label: Fusion
+      n: 2202
+      weighted: 1981135.63319381
+    - code: '12024'
+      label: Edge
+      n: 1331
+      weighted: 977844.409593575
+    - code: '12025'
+      label: Flex
+      n: 242
+      weighted: 231216.392710921
+    - code: '12027'
+      label: C-Max
+      n: 198
+      weighted: 125334.315970601
+    - code: '12032'
+      label: Fiesta
+      n: 336
+      weighted: 316376.893812929
+    - code: '12035'
+      label: Contour
+      n: 71
+      weighted: 51992.8994580211
+    - code: '12037'
+      label: Focus
+      n: 2451
+      weighted: 2455554.21263207
+    - code: '12398'
+      label: Other (automobile)  Deluxe, Ford Six, Mainline,
+      n: 133
+      weighted: 79628.7720659528
+    - code: '12399'
+      label: Unknown (automobile)
+      n: 52
+      weighted: 49517.4040905703
+    - code: '12401'
+      label: Bronco (thru 1977)/Bronco II/Explorer/Explorer Sport
+      n: 970
+      weighted: 770402.798477618
+    - code: '12402'
+      label: Escape
+      n: 3213
+      weighted: 2793656.56942668
+    - code: '12421'
+      label: Bronco-full-size (1978 on)
+      n: 141
+      weighted: 111166.798275183
+    - code: '12422'
+      label: Expedition
+      n: 1161
+      weighted: 1060002.25131647
+    - code: '12423'
+      label: Excursion
+      n: 141
+      weighted: 153296.085243981
+    - code: '12441'
+      label: Aerostar
+      n: 68
+      weighted: 80577.2610672648
+    - code: '12442'
+      label: Windstar
+      n: 253
+      weighted: 261129.998780559
+    - code: '12443'
+      label: Freestar
+      n: 112
+      weighted: 148177.787549163
+    - code: '12444'
+      label: Transit Connect
+      n: 76
+      weighted: 57490.5572872792
+    - code: '12461'
+      label: E-Series Van/Econoline
+      n: 575
+      weighted: 581523.274577006
+    - code: '12462'
+      label: Transit
+      n: 60
+      weighted: 64468.7377731573
+    - code: '12470'
+      label: Van Derivative
+      n: 53
+      weighted: 23558.6654907267
+    - code: '12471'
+      label: Ranger
+      n: 2432
+      weighted: 1713480.98477023
+    - code: '12473'
+      label: Explorer Sport Trac
+      n: 2105
+      weighted: 1856029.34579907
+    - code: '12481'
+      label: F-Series pickup
+      n: 11159
+      weighted: 8439736.11241061
+    - code: '12499'
+      label: Unknown (light truck)
+      n: 130
+      weighted: 83872.0061659147
+    - code: '12850'
+      label: Motor Home
+      n: 215
+      weighted: 135002.866478371
+    - code: '12880'
+      label: Medium/Heavy Pickup (pickup-style only - over 10,000 lbs.)
+      n: 493
+      weighted: 372428.814705847
+    - code: '13001'
+      label: Continental (thru 1981)/ Town Car
+      n: 525
+      weighted: 320468.311753786
+    - code: '13005'
+      label: Continental (1982 on)
+      n: 155
+      weighted: 113845.752119371
+    - code: '13012'
+      label: LS
+      n: 72
+      weighted: 49866.4377412046
+    - code: '13013'
+      label: Zephyr/MKZ
+      n: 305
+      weighted: 264541.278853323
+    - code: '13014'
+      label: MKX
+      n: 262
+      weighted: 178798.817741851
+    - code: '13015'
+      label: MKS
+      n: 110
+      weighted: 81404.6529969266
+    - code: '13402'
+      label: MKC
+      n: 78
+      weighted: 45194.7514048101
+    - code: '13421'
+      label: Navigator
+      n: 191
+      weighted: 241113.715596094
+    - code: '14004'
+      label: Cougar (1967-1997) /XR7 (1967-1997)
+      n: 51
+      weighted: 58752.5978644006
+    - code: '14006'
+      label: Marquis/Monterey (car version) /Grand Marquis
+      n: 712
+      weighted: 634530.476536116
+    - code: '14017'
+      label: Sable
+      n: 322
+      weighted: 317717.908034012
+    - code: '14020'
+      label: Montego (2005 on)
+      n: 51
+      weighted: 21096.0832083468
+    - code: '14021'
+      label: Milan
+      n: 147
+      weighted: 165822.621476647
+    - code: '14401'
+      label: Mountaineer
+      n: 187
+      weighted: 183471.630974523
+    - code: '14402'
+      label: Mariner
+      n: 175
+      weighted: 167501.399975218
+    - code: '14443'
+      label: Villager
+      n: 57
+      weighted: 86510.9342546538
+    - code: '18002'
+      label: LeSabre/Centurion/Wildcat
+      n: 986
+      weighted: 868294.597871556
+    - code: '18003'
+      label: Electra/Electra 225/Park Avenue (1991 on)
+      n: 310
+      weighted: 222723.068607165
+    - code: '18004'
+      label: Roadmaster
+      n: 50
+      weighted: 29257.6515401924
+    - code: '18005'
+      label: Riviera
+      n: 50
+      weighted: 53733.6372063854
+    - code: '18007'
+      label: Century
+      n: 579
+      weighted: 532523.404735668
+    - code: '18010'
+      label: Regal (RWD only)
+      n: 64
+      weighted: 52343.3909453867
+    - code: '18019'
+      label: Regal (2011 on)
+      n: 115
+      weighted: 135259.18949554
+    - code: '18020'
+      label: Regal (FWD)
+      n: 222
+      weighted: 208743.17769902
+    - code: '18022'
+      label: LaCrosse
+      n: 822
+      weighted: 721972.780314495
+    - code: '18023'
+      label: Lucerne
+      n: 391
+      weighted: 230024.686644037
+    - code: '18024'
+      label: Enclave (2008-2012)
+      n: 306
+      weighted: 263211.522689346
+    - code: '18025'
+      label: Verano
+      n: 177
+      weighted: 165535.20643814
+    - code: '18401'
+      label: Rendezvous
+      n: 218
+      weighted: 225075.453602483
+    - code: '18404'
+      label: Encore
+      n: 268
+      weighted: 240086.187450332
+    - code: '18421'
+      label: Enclave (2013 on)
+      n: 313
+      weighted: 221218.675902179
+    - code: '19003'
+      label: Deville/Fleetwood (except Limousine)
+      n: 485
+      weighted: 420392.885418086
+    - code: '19005'
+      label: Eldorado
+      n: 90
+      weighted: 81745.1811580538
+    - code: '19014'
+      label: Seville
+      n: 82
+      weighted: 94698.3851481463
+    - code: '19018'
+      label: CTS/CTC
+      n: 582
+      weighted: 444162.500077802
+    - code: '19020'
+      label: SRX
+      n: 567
+      weighted: 391229.886458204
+    - code: '19021'
+      label: STS
+      n: 116
+      weighted: 122998.557982978
+    - code: '19022'
+      label: DTS
+      n: 185
+      weighted: 116734.435803471
+    - code: '19023'
+      label: XTS
+      n: 115
+      weighted: 73686.5811076707
+    - code: '19024'
+      label: ATS
+      n: 103
+      weighted: 46684.7154141369
+    - code: '19421'
+      label: Escalade/ESV (2004 on)
+      n: 171
+      weighted: 109431.074694751
+    - code: '19480'
+      label: Escalade EXT (2002 -2006)
+      n: 55
+      weighted: 77524.6798763468
+    - code: '19481'
+      label: Escalade EXT (2007)
+      n: 54
+      weighted: 40159.4425166291
+    - code: '20001'
+      label: Chevelle/Malibu (thru 1983)
+      n: 177
+      weighted: 169418.718145755
+    - code: '20002'
+      label: Impala/Caprice (2014 on)
+      n: 2362
+      weighted: 2253607.24219247
+    - code: '20004'
+      label: Corvette
+      n: 973
+      weighted: 608694.611138917
+    - code: '20007'
+      label: El Camino
+      n: 136
+      weighted: 115915.495054159
+    - code: '20008'
+      label: Nova (thru 1979)
+      n: 50
+      weighted: 31401.6619976736
+    - code: '20009'
+      label: Camaro
+      n: 759
+      weighted: 691403.283832945
+    - code: '20010'
+      label: Monte Carlo (thru 1988)
+      n: 62
+      weighted: 55476.2408936472
+    - code: '20016'
+      label: Cavalier
+      n: 490
+      weighted: 517624.633770578
+    - code: '20020'
+      label: Lumina
+      n: 181
+      weighted: 183907.942848443
+    - code: '20022'
+      label: Cobalt
+      n: 575
+      weighted: 684246.206146115
+    - code: '20023'
+      label: HHR
+      n: 459
+      weighted: 472544.996615843
+    - code: '20024'
+      label: Traverse (2009-2012)
+      n: 384
+      weighted: 425473.675663282
+    - code: '20025'
+      label: Cruze
+      n: 1122
+      weighted: 1237695.17343238
+    - code: '20026'
+      label: Volt
+      n: 210
+      weighted: 140106.817734688
+    - code: '20027'
+      label: Caprice PPV
+      n: 80
+      weighted: 75810.1378186267
+    - code: '20028'
+      label: Sonic
+      n: 274
+      weighted: 324537.142358736
+    - code: '20029'
+      label: Spark
+      n: 150
+      weighted: 186946.662387135
+    - code: '20032'
+      label: Nova/Geo Prism/Prism
+      n: 115
+      weighted: 139564.830519386
+    - code: '20034'
+      label: Geo Metro/Metro
+      n: 74
+      weighted: 36639.7857102662
+    - code: '20036'
+      label: Monte Carlo (1995 on)
+      n: 217
+      weighted: 229439.272352219
+    - code: '20037'
+      label: Malibu/Malibu Maxx
+      n: 2016
+      weighted: 1997990.10116773
+    - code: '20039'
+      label: Aveo/Aveo 5
+      n: 241
+      weighted: 262736.471319378
+    - code: '20401'
+      label: S-10 Blazer/TrailBlazer (2002 only)
+      n: 317
+      weighted: 286103.245705699
+    - code: '20402'
+      label: Geo Tracker/Tracker
+      n: 122
+      weighted: 146460.884929896
+    - code: '20403'
+      label: TrailBlazer (2003 on)
+      n: 896
+      weighted: 943872.111121004
+    - code: '20404'
+      label: Equinox
+      n: 2080
+      weighted: 1662617.16060072
+    - code: '20405'
+      label: Captiva
+      n: 135
+      weighted: 118031.463882403
+    - code: '20406'
+      label: Trax
+      n: 122
+      weighted: 119089.896935977
+    - code: '20421'
+      label: Fullsize Blazer/Tahoe
+      n: 1907
+      weighted: 1640424.4612219
+    - code: '20422'
+      label: Suburban (2004 on)
+      n: 666
+      weighted: 593731.3039918
+    - code: '20423'
+      label: Traverse (2013 on)
+      n: 417
+      weighted: 516975.809408525
+    - code: '20431'
+      label: Suburban (1950-2003)
+      n: 618
+      weighted: 647102.821639385
+    - code: '20441'
+      label: Astro Van
+      n: 204
+      weighted: 156045.253402078
+    - code: '20443'
+      label: Venture
+      n: 174
+      weighted: 196472.575774051
+    - code: '20444'
+      label: Uplander
+      n: 130
+      weighted: 111272.676510581
+    - code: '20445'
+      label: City Express
+      n: 79
+      weighted: 76428.8885288887
+    - code: '20461'
+      label: G-series van
+      n: 179
+      weighted: 152541.82713336
+    - code: '20470'
+      label: Van derivative
+      n: 56
+      weighted: 39303.9026817158
+    - code: '20471'
+      label: S-10/T-10 Pickup
+      n: 1449
+      weighted: 1273381.65025442
+    - code: '20473'
+      label: Colorado
+      n: 747
+      weighted: 659198.725188672
+    - code: '20481'
+      label: C, K, R, V-Series pickup/Silverado
+      n: 7617
+      weighted: 5854989.75730689
+    - code: '20482'
+      label: Avalanche
+      n: 486
+      weighted: 403968.517601286
+    - code: '20498'
+      label: Other (light truck)
+      n: 55
+      weighted: 62159.3469643462
+    - code: '20499'
+      label: Unknown (light truck)
+      n: 321
+      weighted: 203420.554654231
+    - code: '20850'
+      label: Motor Home
+      n: 64
+      weighted: 39248.5518579713
+    - code: '20870'
+      label: Medium/Heavy Van-Based Vehicle
+      n: 110
+      weighted: 91174.4143129605
+    - code: '20880'
+      label: Medium/Heavy Pickup (pickup-style only - over 10,000 lbs)
+      n: 1300
+      weighted: 1063807.38284984
+    - code: '20881'
+      label: Medium/Heavy - CBE
+      n: 57
+      weighted: 38903.1793103738
+    - code: '21001'
+      label: Cutlass (RWD-only)
+      n: 78
+      weighted: 41654.0066473571
+    - code: '21002'
+      label: Delta 88/LSS
+      n: 98
+      weighted: 76247.0615278228
+    - code: '21020'
+      label: Cutlass (FWD)
+      n: 96
+      weighted: 109568.269257942
+    - code: '21021'
+      label: Achieva/Alero
+      n: 140
+      weighted: 143994.774124896
+    - code: '21023'
+      label: Intrigue
+      n: 74
+      weighted: 70398.3946970422
+    - code: '21401'
+      label: Bravada
+      n: 63
+      weighted: 76577.311997003
+    - code: '21441'
+      label: Silhouette
+      n: 54
+      weighted: 76637.5571875432
+    - code: '22002'
+      label: Bonneville/Catalina/ Parisienne
+      n: 185
+      weighted: 117077.47377957
+    - code: '22009'
+      label: Firebird/Trans AM
+      n: 208
+      weighted: 180845.917030999
+    - code: '22010'
+      label: Grand Prix (RWD)
+      n: 78
+      weighted: 68321.1067192505
+    - code: '22016'
+      label: Sunbird (1985-1994) /J-2000/Sunfire (1995 on)
+      n: 143
+      weighted: 102364.16522617
+    - code: '22018'
+      label: Grand AM
+      n: 327
+      weighted: 390020.216443176
+    - code: '22020'
+      label: Grand Prix (FWD)
+      n: 436
+      weighted: 454535.650754335
+    - code: '22022'
+      label: G6
+      n: 408
+      weighted: 398001.308853185
+    - code: '22023'
+      label: Solstice
+      n: 71
+      weighted: 54456.2837492119
+    - code: '22032'
+      label: Vibe
+      n: 403
+      weighted: 312343.535233123
+    - code: '22403'
+      label: Torrent
+      n: 77
+      weighted: 71278.1751085239
+    - code: '22441'
+      label: Trans Sport/ Montana/SV6
+      n: 137
+      weighted: 166306.967252386
+    - code: '23008'
+      label: Acadia (2007-2012)
+      n: 334
+      weighted: 333024.850532893
+    - code: '23401'
+      label: Jimmy/Typhoon/Envoy
+      n: 506
+      weighted: 538565.537667894
+    - code: '23402'
+      label: Terrain
+      n: 666
+      weighted: 569777.92463667
+    - code: '23421'
+      label: Full-size Jimmy/Yukon
+      n: 525
+      weighted: 427276.262866772
+    - code: '23422'
+      label: Suburban/Yukon XL (2004 on)
+      n: 379
+      weighted: 298282.880096266
+    - code: '23423'
+      label: Acadia (2013 on)
+      n: 336
+      weighted: 393283.841359252
+    - code: '23431'
+      label: Suburban/Yukon XL (1950-2003 only)
+      n: 274
+      weighted: 174903.418308631
+    - code: '23441'
+      label: Safari (Minivan)
+      n: 62
+      weighted: 59032.5632546573
+    - code: '23461'
+      label: G-series van/Savana
+      n: 105
+      weighted: 71781.1142850941
+    - code: '23471'
+      label: S15/T15/Sonoma
+      n: 220
+      weighted: 180513.874304695
+    - code: '23472'
+      label: Canyon
+      n: 259
+      weighted: 175247.824869618
+    - code: '23481'
+      label: C, K, R, V-series pickup/Sierra
+      n: 2543
+      weighted: 2022906.05110502
+    - code: '23499'
+      label: Unknown (light truck)
+      n: 122
+      weighted: 89300.9641668745
+    - code: '23880'
+      label: Medium/Heavy Pickup (pickup-style only - over 10,000 lbs)
+      n: 497
+      weighted: 435459.744221506
+    - code: '24001'
+      label: SL
+      n: 217
+      weighted: 267182.727856644
+    - code: '24002'
+      label: SC
+      n: 57
+      weighted: 56829.8541848981
+    - code: '24005'
+      label: LS
+      n: 155
+      weighted: 151068.398894937
+    - code: '24007'
+      label: Ion
+      n: 320
+      weighted: 309563.347047646
+    - code: '24009'
+      label: Aura
+      n: 133
+      weighted: 116300.634602002
+    - code: '24010'
+      label: Outlook
+      n: 55
+      weighted: 103739.173434673
+    - code: '24401'
+      label: Vue
+      n: 457
+      weighted: 432086.140292122
+    - code: '29005'
+      label: Tesla
+      n: 129
+      weighted: 78075.8228480137
+    - code: '30032'
+      label: Beetle 1300/1500
+      n: 521
+      weighted: 355428.852391964
+    - code: '30033'
+      label: Super Beetle
+      n: 50
+      weighted: 33879.7820377756
+    - code: '30036'
+      label: Rabbit
+      n: 57
+      weighted: 51987.7673352463
+    - code: '30040'
+      label: Jetta/Jetta SportsWagen
+      n: 1737
+      weighted: 1794706.26973601
+    - code: '30042'
+      label: Golf/Cabriolet/Cabrio/GTI/GLI
+      n: 569
+      weighted: 582370.052888774
+    - code: '30046'
+      label: Passat (CC 2008-2011)
+      n: 822
+      weighted: 716084.303726696
+    - code: '30047'
+      label: New Beetle
+      n: 186
+      weighted: 134802.271607946
+    - code: '30051'
+      label: Eos
+      n: 79
+      weighted: 68306.3403499631
+    - code: '30052'
+      label: CC (2012 on)
+      n: 86
+      weighted: 84277.0094080947
+    - code: '30402'
+      label: Tiguan
+      n: 227
+      weighted: 195793.111564733
+    - code: '30421'
+      label: Touareg/Touareg 2
+      n: 79
+      weighted: 96103.2428636046
+    - code: '30441'
+      label: Vanagon/Camper
+      n: 114
+      weighted: 81063.6808534457
+    - code: '30443'
+      label: Routan
+      n: 55
+      weighted: 40887.9663600471
+    - code: '32042'
+      label: A6
+      n: 190
+      weighted: 148136.292981675
+    - code: '32043'
+      label: A4
+      n: 444
+      weighted: 359065.29557164
+    - code: '32045'
+      label: TT/TTS
+      n: 74
+      weighted: 55158.1854666897
+    - code: '32048'
+      label: A3
+      n: 132
+      weighted: 138731.541309024
+    - code: '32049'
+      label: A5
+      n: 78
+      weighted: 38131.6851543196
+    - code: '32401'
+      label: Q7
+      n: 98
+      weighted: 88861.4015687508
+    - code: '32402'
+      label: Q5
+      n: 235
+      weighted: 229038.925246831
+    - code: '34034'
+      label: 3-series
+      n: 1614
+      weighted: 1279663.39340505
+    - code: '34035'
+      label: 5-series
+      n: 696
+      weighted: 608678.120099748
+    - code: '34036'
+      label: 6-series
+      n: 63
+      weighted: 48010.007287451
+    - code: '34037'
+      label: 7-series
+      n: 127
+      weighted: 103901.534750452
+    - code: '34039'
+      label: Z3
+      n: 150
+      weighted: 91335.8258294683
+    - code: '34042'
+      label: Z4
+      n: 118
+      weighted: 50832.7290513613
+    - code: '34043'
+      label: 1-Series
+      n: 82
+      weighted: 53151.1168442649
+    - code: '34047'
+      label: 4-Series
+      n: 110
+      weighted: 73387.7459878338
+    - code: '34401'
+      label: X5
+      n: 317
+      weighted: 276459.447289013
+    - code: '34402'
+      label: X3
+      n: 293
+      weighted: 215810.004115597
+    - code: '34403'
+      label: X1
+      n: 100
+      weighted: 97384.099613849
+    - code: '34705'
+      label: 450-749cc
+      n: 58
+      weighted: 34999.0121466766
+    - code: '34706'
+      label: 750cc and over
+      n: 284
+      weighted: 203077.601970336
+    - code: '35034'
+      label: Z-car, ZX
+      n: 88
+      weighted: 66906.8335681019
+    - code: '35039'
+      label: 810/Maxima
+      n: 775
+      weighted: 842187.004422861
+    - code: '35043'
+      label: Sentra
+      n: 1272
+      weighted: 1330036.25946963
+    - code: '35047'
+      label: Altima
+      n: 2770
+      weighted: 2963071.88348216
+    - code: '35048'
+      label: 350Z/370Z
+      n: 199
+      weighted: 124602.467314357
+    - code: '35049'
+      label: Murano
+      n: 770
+      weighted: 596663.122850337
+    - code: '35050'
+      label: Versa
+      n: 839
+      weighted: 857928.294256749
+    - code: '35051'
+      label: Rogue
+      n: 1341
+      weighted: 1316710.73780782
+    - code: '35052'
+      label: Cube
+      n: 67
+      weighted: 44411.736931991
+    - code: '35055'
+      label: Leaf
+      n: 191
+      weighted: 163385.849384801
+    - code: '35401'
+      label: Pathfinder
+      n: 691
+      weighted: 597977.975615901
+    - code: '35402'
+      label: Xterra
+      n: 437
+      weighted: 483378.263058957
+    - code: '35403'
+      label: Juke
+      n: 205
+      weighted: 222623.151590061
+    - code: '35421'
+      label: Pathfinder Armada
+      n: 162
+      weighted: 180952.625655026
+    - code: '35443'
+      label: Quest
+      n: 206
+      weighted: 281149.614682029
+    - code: '35471'
+      label: Datsun/Nissan Pickup (1955-1997)
+      n: 268
+      weighted: 205043.774222972
+    - code: '35472'
+      label: Frontier (1998 on)
+      n: 1092
+      weighted: 806605.554022856
+    - code: '35473'
+      label: Titan (2004-2006)
+      n: 159
+      weighted: 120394.305654522
+    - code: '35481'
+      label: Titan (2007 on)
+      n: 204
+      weighted: 207577.410268829
+    - code: '35499'
+      label: Unknown (light truck)
+      n: 56
+      weighted: 51121.9532494441
+    - code: '36038'
+      label: 500/500c
+      n: 201
+      weighted: 199475.246076372
+    - code: '37031'
+      label: Civic/CRX, del Sol
+      n: 5076
+      weighted: 4863728.59932517
+    - code: '37032'
+      label: Accord
+      n: 6466
+      weighted: 5491634.00914116
+    - code: '37033'
+      label: Prelude
+      n: 70
+      weighted: 50497.3903888198
+    - code: '37035'
+      label: S2000
+      n: 95
+      weighted: 65867.1882147655
+    - code: '37037'
+      label: Insight
+      n: 133
+      weighted: 131164.021950098
+    - code: '37039'
+      label: Fit
+      n: 937
+      weighted: 705600.334695389
+    - code: '37041'
+      label: CR-Z
+      n: 58
+      weighted: 48304.0308288223
+    - code: '37398'
+      label: Other (automobile)
+      n: 109
+      weighted: 75775.7158258768
+    - code: '37401'
+      label: Passport
+      n: 52
+      weighted: 54201.8203806738
+    - code: '37402'
+      label: CR-V
+      n: 4726
+      weighted: 3652680.99853601
+    - code: '37403'
+      label: Element
+      n: 358
+      weighted: 319766.265344179
+    - code: '37421'
+      label: Pilot
+      n: 1802
+      weighted: 1695364.67480849
+    - code: '37441'
+      label: Odyssey
+      n: 2312
+      weighted: 2471961.62360482
+    - code: '37471'
+      label: Ridgeline
+      n: 376
+      weighted: 301379.91922464
+    - code: '37701'
+      label: Motorcycle 0-50 cc
+      n: 131
+      weighted: 89785.3419325537
+    - code: '37702'
+      label: Motorcycle 51-124 cc
+      n: 80
+      weighted: 73009.7237014747
+    - code: '37703'
+      label: Motorcycle 125-349 cc
+      n: 256
+      weighted: 172447.725670024
+    - code: '37704'
+      label: Motorcycle 350-449 cc
+      n: 69
+      weighted: 73041.2631234935
+    - code: '37705'
+      label: Motorcycle 450-749 cc
+      n: 298
+      weighted: 271260.634041232
+    - code: '37706'
+      label: Motorcycle 750 cc or greater
+      n: 840
+      weighted: 682715.022530605
+    - code: '37709'
+      label: Unknown cc
+      n: 56
+      weighted: 36028.0384762975
+    - code: '37733'
+      label: ATV 125-349cc
+      n: 63
+      weighted: 43541.0129209885
+    - code: '37734'
+      label: ATV 350cc or greater
+      n: 111
+      weighted: 106868.245695411
+    - code: '38401'
+      label: Trooper/Trooper II
+      n: 66
+      weighted: 89743.2411611092
+    - code: '38402'
+      label: Rodeo/Rodeo Sport
+      n: 124
+      weighted: 120780.298181891
+    - code: '39031'
+      label: XJ-S, XK8 Coupe
+      n: 63
+      weighted: 44282.2129688076
+    - code: '39032'
+      label: XJ/XJL/XJ6/12/XJR/XJ8/XJ8L Sedan/Coupe
+      n: 132
+      weighted: 72576.4889538957
+    - code: '39034'
+      label: S-Type
+      n: 89
+      weighted: 106643.174301411
+    - code: '39036'
+      label: X-Type
+      n: 53
+      weighted: 70507.0620307873
+    - code: '41035'
+      label: 323/GLC/Protégé/ Protégé 5
+      n: 202
+      weighted: 226742.763346838
+    - code: '41037'
+      label: '626'
+      n: 90
+      weighted: 97416.9388087688
+    - code: '41045'
+      label: Miata/MX-5
+      n: 558
+      weighted: 353497.507705313
+    - code: '41050'
+      label: Mazda6
+      n: 512
+      weighted: 551357.027029652
+    - code: '41051'
+      label: Mazda3
+      n: 1162
+      weighted: 1144144.60116566
+    - code: '41052'
+      label: Mazda5
+      n: 213
+      weighted: 256966.892702921
+    - code: '41053'
+      label: CX-7
+      n: 121
+      weighted: 138384.149328305
+    - code: '41054'
+      label: CX-9 (2007-2012)
+      n: 122
+      weighted: 127860.414541949
+    - code: '41402'
+      label: Tribute
+      n: 186
+      weighted: 213622.45882495
+    - code: '41403'
+      label: CX-5
+      n: 558
+      weighted: 476991.992680033
+    - code: '41421'
+      label: CX-9 (2013 on)
+      n: 88
+      weighted: 118832.246827217
+    - code: '41441'
+      label: MPV
+      n: 107
+      weighted: 114925.283815213
+    - code: '41471'
+      label: Pickup/ B-Series Pickup
+      n: 254
+      weighted: 169756.657471277
+    - code: '42031'
+      label: 200/220/230/240/ 250/260/280/300/ 320/420
+      n: 329
+      weighted: 238843.79630136
+    - code: '42032'
+      label: 230/280 SL
+      n: 59
+      weighted: 24901.8742723263
+    - code: '42033'
+      label: 300/350/380/450/500/ 560 SL
+      n: 326
+      weighted: 211564.497446566
+    - code: '42034'
+      label: 350/380/420/450/560 SLC
+      n: 78
+      weighted: 36176.9204365828
+    - code: '42036'
+      label: 300/380/420/450/500/560/SEL & 500/560, 600 SEC & 300/350 SDL
+      n: 102
+      weighted: 50245.9758259547
+    - code: '42040'
+      label: '300'
+      n: 256
+      weighted: 211172.371053728
+    - code: '42042'
+      label: C Class (1994 on)
+      n: 394
+      weighted: 309535.046436947
+    - code: '42043'
+      label: S Class (1995 on)
+      n: 164
+      weighted: 108049.812813865
+    - code: '42044'
+      label: SL Class (1995 on)
+      n: 89
+      weighted: 68702.3110039616
+    - code: '42045'
+      label: SLK
+      n: 147
+      weighted: 86949.0752657842
+    - code: '42047'
+      label: CLK
+      n: 129
+      weighted: 89127.5872064788
+    - code: '42048'
+      label: E Class (1997 on)
+      n: 510
+      weighted: 383554.127049839
+    - code: '42401'
+      label: M/ML Class
+      n: 346
+      weighted: 262617.573228558
+    - code: '42403'
+      label: GLK Class
+      n: 177
+      weighted: 118846.966685831
+    - code: '42421'
+      label: GL Class
+      n: 160
+      weighted: 106263.205044532
+    - code: '42461'
+      label: Sprinter
+      n: 54
+      weighted: 23306.1022127817
+    - code: '45031'
+      label: 911/996
+      n: 283
+      weighted: 172442.269845811
+    - code: '45040'
+      label: 986/Boxster
+      n: 139
+      weighted: 97294.7371491888
+    - code: '45421'
+      label: Cayenne
+      n: 102
+      weighted: 133882.525739201
+    - code: '47035'
+      label: 9-3/9-3x
+      n: 139
+      weighted: 104178.387111771
+    - code: '47036'
+      label: 9-5
+      n: 64
+      weighted: 52801.9568126931
+    - code: '48034'
+      label: Legacy/Outback (thru 2003)
+      n: 990
+      weighted: 880676.350012564
+    - code: '48038'
+      label: Impreza
+      n: 923
+      weighted: 796990.374410252
+    - code: '48045'
+      label: Outback (2003 on)
+      n: 2253
+      weighted: 1750212.11123798
+    - code: '48047'
+      label: WRX (2015 on)
+      n: 76
+      weighted: 88150.0891017125
+    - code: '48401'
+      label: Forester
+      n: 2342
+      weighted: 1852879.81882897
+    - code: '48402'
+      label: B9 Tribeca
+      n: 55
+      weighted: 72921.6093843144
+    - code: '48403'
+      label: XV Crosstrek
+      n: 416
+      weighted: 390693.156807942
+    - code: '49032'
+      label: Corolla
+      n: 4398
+      weighted: 4390587.10139495
+    - code: '49033'
+      label: Celica
+      n: 134
+      weighted: 108671.727316291
+    - code: '49038'
+      label: Tercel
+      n: 77
+      weighted: 97863.5916692135
+    - code: '49040'
+      label: Camry
+      n: 7067
+      weighted: 5893835.43854333
+    - code: '49041'
+      label: MR-2/MR Spyder
+      n: 54
+      weighted: 44376.8779025278
+    - code: '49043'
+      label: Avalon
+      n: 1501
+      weighted: 975524.660061235
+    - code: '49044'
+      label: Solara
+      n: 284
+      weighted: 210940.702940144
+    - code: '49045'
+      label: ECHO
+      n: 98
+      weighted: 83037.9770820421
+    - code: '49046'
+      label: Prius
+      n: 3688
+      weighted: 2574436.97546979
+    - code: '49047'
+      label: Matrix
+      n: 480
+      weighted: 430148.362592376
+    - code: '49048'
+      label: Scion xA
+      n: 120
+      weighted: 101122.437888796
+    - code: '49049'
+      label: Scion xB (2004-2011)
+      n: 118
+      weighted: 96479.998207893
+    - code: '49050'
+      label: Scion tC (2005-2011)
+      n: 94
+      weighted: 81881.5406578985
+    - code: '49051'
+      label: Yaris
+      n: 439
+      weighted: 393023.29186881
+    - code: '49053'
+      label: Venza
+      n: 306
+      weighted: 296137.954166125
+    - code: '49401'
+      label: 4-Runner
+      n: 1647
+      weighted: 1283633.16862751
+    - code: '49402'
+      label: RAV4
+      n: 3162
+      weighted: 2622350.27737202
+    - code: '49403'
+      label: Highlander
+      n: 2348
+      weighted: 1708503.50771089
+    - code: '49404'
+      label: FJ Cruiser
+      n: 189
+      weighted: 190651.88344607
+    - code: '49421'
+      label: Land Cruiser
+      n: 152
+      weighted: 109869.248691092
+    - code: '49422'
+      label: Sequoia
+      n: 401
+      weighted: 352310.821639396
+    - code: '49442'
+      label: Sienna
+      n: 1959
+      weighted: 2019313.92497607
+    - code: '49471'
+      label: Pickup
+      n: 700
+      weighted: 415258.503652627
+    - code: '49472'
+      label: Tacoma
+      n: 3103
+      weighted: 2188877.92284197
+    - code: '49481'
+      label: T-100
+      n: 97
+      weighted: 41843.1250155818
+    - code: '49482'
+      label: Tundra
+      n: 1971
+      weighted: 1363997.09025401
+    - code: '49499'
+      label: Unknown (light truck)
+      n: 50
+      weighted: 48280.7659507062
+    - code: '50706'
+      label: 750cc or greater
+      n: 153
+      weighted: 120347.245999829
+    - code: '51034'
+      label: 240 series/DL/GL/GLT
+      n: 73
+      weighted: 38338.774497607
+    - code: '51042'
+      label: '850'
+      n: 52
+      weighted: 58998.7455681943
+    - code: '51043'
+      label: 70 Series (1998-2013)
+      n: 341
+      weighted: 238399.601021466
+    - code: '51045'
+      label: 80 Series
+      n: 110
+      weighted: 78178.7675206217
+    - code: '51046'
+      label: 40 Series
+      n: 141
+      weighted: 141788.375730377
+    - code: '51047'
+      label: 60 Series
+      n: 313
+      weighted: 275629.665942675
+    - code: '51050'
+      label: XC60
+      n: 156
+      weighted: 118551.040800361
+    - code: '51401'
+      label: XC90
+      n: 260
+      weighted: 262422.928706782
+    - code: '51402'
+      label: XC70 (2014 on)
+      n: 112
+      weighted: 93358.8809613207
+    - code: '52034'
+      label: Galant
+      n: 210
+      weighted: 301141.261769508
+    - code: '52037'
+      label: Eclipse
+      n: 204
+      weighted: 203667.423049943
+    - code: '52046'
+      label: Lancer/Lancer Sportback/Lancer Evolution
+      n: 199
+      weighted: 244166.54945601
+    - code: '52047'
+      label: Outlander
+      n: 288
+      weighted: 279569.609116193
+    - code: '52401'
+      label: Montero/MonteroSport
+      n: 112
+      weighted: 143660.459469889
+    - code: '52402'
+      label: Endeavor
+      n: 87
+      weighted: 101022.794921248
+    - code: '53034'
+      label: Forenza
+      n: 50
+      weighted: 89310.874044162
+    - code: '53040'
+      label: SX4/SX4 Crossover
+      n: 99
+      weighted: 92752.1144294303
+    - code: '53404'
+      label: Grand Vitara (2003 on)
+      n: 80
+      weighted: 82851.559565071
+    - code: '53405'
+      label: XL-7 (2003 on)
+      n: 69
+      weighted: 105666.056254928
+    - code: '53704'
+      label: Motorcycle 350-449cc
+      n: 63
+      weighted: 47192.0292838825
+    - code: '53705'
+      label: Motorcycle 450-749cc
+      n: 213
+      weighted: 135858.847661362
+    - code: '53706'
+      label: Motorcycle 750cc or greater
+      n: 260
+      weighted: 224267.708857372
+    - code: '54031'
+      label: Integra
+      n: 95
+      weighted: 120392.290699234
+    - code: '54032'
+      label: Legend
+      n: 55
+      weighted: 68388.3326551643
+    - code: '54035'
+      label: TL
+      n: 592
+      weighted: 536975.639145952
+    - code: '54036'
+      label: RL/RLX
+      n: 101
+      weighted: 93518.6853907256
+    - code: '54037'
+      label: CL
+      n: 66
+      weighted: 90974.7296751729
+    - code: '54038'
+      label: RSX
+      n: 76
+      weighted: 72387.2935611002
+    - code: '54039'
+      label: TSX
+      n: 316
+      weighted: 251866.781060128
+    - code: '54041'
+      label: ILX
+      n: 81
+      weighted: 57943.1076723821
+    - code: '54044'
+      label: TLX
+      n: 128
+      weighted: 104545.768341662
+    - code: '54402'
+      label: RDX
+      n: 363
+      weighted: 239769.989006959
+    - code: '54421'
+      label: MDX
+      n: 691
+      weighted: 695839.507115397
+    - code: '55033'
+      label: Sonata
+      n: 2036
+      weighted: 2205658.17908431
+    - code: '55035'
+      label: Elantra
+      n: 1829
+      weighted: 1848939.77930926
+    - code: '55036'
+      label: Accent
+      n: 541
+      weighted: 524643.351918285
+    - code: '55037'
+      label: Tiburon
+      n: 71
+      weighted: 69849.7367319941
+    - code: '55039'
+      label: Azera
+      n: 124
+      weighted: 142766.35166127
+    - code: '55041'
+      label: Genesis
+      n: 269
+      weighted: 181363.579450081
+    - code: '55042'
+      label: Veloster
+      n: 115
+      weighted: 85233.9407801691
+    - code: '55401'
+      label: Santa Fe
+      n: 1215
+      weighted: 1117153.54669338
+    - code: '55402'
+      label: Tucson
+      n: 585
+      weighted: 545903.205975379
+    - code: '55421'
+      label: Veracruz (2008 on)
+      n: 56
+      weighted: 62107.5951563696
+    - code: '58035'
+      label: I30
+      n: 59
+      weighted: 37788.7969592902
+    - code: '58037'
+      label: G25/G35/G37
+      n: 559
+      weighted: 474662.069283485
+    - code: '58038'
+      label: M35/M37/M45/M56
+      n: 120
+      weighted: 96239.2124151118
+    - code: '58039'
+      label: FX35/FX37/FX45/FX50
+      n: 94
+      weighted: 92559.6757987764
+    - code: '58041'
+      label: Q50
+      n: 91
+      weighted: 90755.1684670454
+    - code: '58403'
+      label: QX60
+      n: 76
+      weighted: 69810.2215203364
+    - code: '58421'
+      label: QX56
+      n: 57
+      weighted: 49639.6425953907
+    - code: '59031'
+      label: ES-250/300/300h/330/ 350
+      n: 1389
+      weighted: 1100344.04066674
+    - code: '59032'
+      label: LS-400/430/460/L/600h/L
+      n: 388
+      weighted: 269431.025439
+    - code: '59034'
+      label: GS-300/350/400/430/ 450h/460
+      n: 395
+      weighted: 296811.635855963
+    - code: '59035'
+      label: IS-250/300/350/500
+      n: 451
+      weighted: 369915.063389807
+    - code: '59036'
+      label: SC-430
+      n: 90
+      weighted: 49155.1140056477
+    - code: '59038'
+      label: CT 200h
+      n: 119
+      weighted: 107115.357906404
+    - code: '59401'
+      label: RX300/350
+      n: 1102
+      weighted: 791546.774818312
+    - code: '59402'
+      label: GX470
+      n: 116
+      weighted: 92331.1624895218
+    - code: '59403'
+      label: RX330/350/400h/450h
+      n: 645
+      weighted: 466133.335975364
+    - code: '59404'
+      label: GX460
+      n: 98
+      weighted: 102241.967803533
+    - code: '59405'
+      label: NX
+      n: 95
+      weighted: 71282.1296810154
+    - code: '59421'
+      label: LX450/470/570
+      n: 85
+      weighted: 74169.3969541851
+    - code: '62421'
+      label: Range Rover
+      n: 175
+      weighted: 154675.617669671
+    - code: '62423'
+      label: LR3/LR4
+      n: 61
+      weighted: 47642.4433256843
+    - code: '63032'
+      label: Rio/Rio5
+      n: 295
+      weighted: 339471.073150894
+    - code: '63033'
+      label: Spectra/Spectra5
+      n: 280
+      weighted: 226742.71403898
+    - code: '63034'
+      label: Optima
+      n: 873
+      weighted: 876809.062869366
+    - code: '63035'
+      label: Amanti
+      n: 56
+      weighted: 55616.1254919569
+    - code: '63036'
+      label: Rondo
+      n: 71
+      weighted: 76002.7422849451
+    - code: '63037'
+      label: Soul
+      n: 784
+      weighted: 754553.657467087
+    - code: '63038'
+      label: Forte
+      n: 408
+      weighted: 423572.193856153
+    - code: '63401'
+      label: Sportage
+      n: 493
+      weighted: 476018.44437632
+    - code: '63402'
+      label: Sorento
+      n: 1032
+      weighted: 887660.624869128
+    - code: '63441'
+      label: Sedona
+      n: 348
+      weighted: 418701.852986394
+    - code: '65031'
+      label: Fortwo
+      n: 117
+      weighted: 85813.8043476466
+    - code: '67031'
+      label: xB (2012 on)
+      n: 210
+      weighted: 167155.161067358
+    - code: '67032'
+      label: tC (2012 on)
+      n: 145
+      weighted: 117859.827019441
+    - code: '67033'
+      label: xD (2012 on)
+      n: 56
+      weighted: 39906.2756463672
+    - code: '69054'
+      label: Mini-Cooper
+      n: 634
+      weighted: 500116.329656855
+    - code: '71706'
+      label: 750cc or greater
+      n: 83
+      weighted: 42783.6883821866
+    - code: '72706'
+      label: 750cc or greater
+      n: 2584
+      weighted: 1923406.02062423
+    - code: '73703'
+      label: Motorcycle 125-349cc
+      n: 81
+      weighted: 85535.70808046
+    - code: '73705'
+      label: Motorcycle 450-749cc
+      n: 193
+      weighted: 165226.689772302
+    - code: '73706'
+      label: Motorcycle 750cc or greater
+      n: 306
+      weighted: 285576.148300223
+    - code: '76701'
+      label: Motorcycle 0-50cc
+      n: 66
+      weighted: 34413.9416738501
+    - code: '76703'
+      label: Motorcycle 125-349cc
+      n: 114
+      weighted: 90558.7129864652
+    - code: '76705'
+      label: Motorcycle 450-749cc
+      n: 212
+      weighted: 170361.072134362
+    - code: '76706'
+      label: Motorcycle 750cc or greater
+      n: 356
+      weighted: 254374.958290893
+    - code: '76734'
+      label: ATV 350cc or greater
+      n: 63
+      weighted: 67746.324318292
+    - code: '77706'
+      label: 750cc or greater
+      n: 61
+      weighted: 58403.4554099444
+    - code: '98701'
+      label: 0-50cc
+      n: 70
+      weighted: 76466.8631989448
+    - code: '98703'
+      label: 125-349cc
+      n: 141
+      weighted: 109645.89181262
+    - code: '98705'
+      label: 450-749cc
+      n: 55
+      weighted: 34018.4175516511
+    - code: '98706'
+      label: 750cc or greater
+      n: 125
+      weighted: 88561.2764151422
+    - code: '98709'
+      label: Unknown cc
+      n: 270
+      weighted: 210322.7504358
+    - code: '98734'
+      label: 350cc or greater
+      n: 101
+      weighted: 91271.7790836294
+    - code: '98739'
+      label: Unknown cc
+      n: 86
+      weighted: 58385.2368306899
+    - code: '98850'
+      label: Motor Home
+      n: 638
+      weighted: 315204.567306271
+    - code: '98998'
+      label: Other (vehicle)
+      n: 121
+      weighted: 59226.8781878886
+    - code: XXXXX
+      label: Suppressed for confidential reason
+      n: 10505
+      weighted: 8632268.06665832
+  MSACAT:
+    label: Metropolitan Statistical Area (MSA) category for the household's home address, based on household's
+      home geocode and TIGER/Line Shapefiles.
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: MSA of 1 million or more, with rail
+      n: 35708
+      weighted: 52154881.596375
+    - code: '02'
+      label: MSA of 1 million or more, and not in 1
+      n: 70386
+      weighted: 62481401.007741
+    - code: '03'
+      label: MSA less than 1 million
+      n: 106132
+      weighted: 69982137.4980567
+    - code: '04'
+      label: Not in MSA
+      n: 43889
+      weighted: 37960526.5534059
+  MSASIZE:
+    label: Population size category of the Metropolitan Statistical Area (MSA), from the 2010-2014 five-year
+      American Community Survey (ACS) API.
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: In an MSA of Less than 250,000
+      n: 43171
+      weighted: 21602347.9692638
+    - code: '02'
+      label: In an MSA of 250,000 - 499,999
+      n: 26533
+      weighted: 20985805.3714346
+    - code: '03'
+      label: In an MSA of 500,000 - 999,999
+      n: 36428
+      weighted: 27393984.1573582
+    - code: '04'
+      label: In an MSA or CMSA of 1,000,000 - 2,999,999
+      n: 37605
+      weighted: 45604030.3248935
+    - code: '05'
+      label: In an MSA or CMSA of 3 million or more
+      n: 68489
+      weighted: 69032252.2792225
+    - code: '06'
+      label: Not in MSA or CMSA
+      n: 43889
+      weighted: 37960526.5534059
+  NUMADLT:
+    label: Count of adult household members at least 18 years old
+    dtype: float64
+    length: 3
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '1'
+      label: ''
+      n: 54070
+      weighted: 38010937.7509152
+    - code: '2'
+      label: ''
+      n: 161376
+      weighted: 128375546.090574
+    - code: '3'
+      label: ''
+      n: 29380
+      weighted: 37847636.2800289
+    - code: '4'
+      label: ''
+      n: 8886
+      weighted: 14105473.5393728
+    - code: '5'
+      label: ''
+      n: 1790
+      weighted: 3136998.21671002
+    - code: '6'
+      label: ''
+      n: 464
+      weighted: 807171.298421848
+    - code: '7'
+      label: ''
+      n: 104
+      weighted: 210375.455148716
+    - code: '8'
+      label: ''
+      n: 27
+      weighted: 76144.0316386724
+    - code: '9'
+      label: ''
+      n: 7
+      weighted: 6185.29246069704
+    - code: '10'
+      label: ''
+      n: 11
+      weighted: 2478.70030645273
+  OD_READ:
+    label: Odometer Reading
+    dtype: float64
+    length: 6
+    owner: vehicle
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: 0-4000000
+    codes:
+    - code: '-88'
+      label: I don't know
+      n: 33041
+      weighted: 34397926.957215
+    - code: '-77'
+      label: I prefer not to answer
+      n: 7796
+      weighted: 7803336.72254221
+    - code: '-9'
+      label: Not ascertained
+      n: 12
+      weighted: 18381.1639409909
+  PERSONID:
+    label: Person ID of Main Driver of this vehicle
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: I don't know
+      n: 211
+      weighted: 224840.350638548
+    - code: '-7'
+      label: I prefer not to answer
+      n: 257
+      weighted: 232407.008640636
+    - code: '01'
+      label: ''
+      n: 152512
+      weighted: 124002632.25576
+    - code: '02'
+      label: ''
+      n: 83732
+      weighted: 74023992.8692157
+    - code: '03'
+      label: ''
+      n: 10755
+      weighted: 14077664.6780864
+    - code: '04'
+      label: ''
+      n: 2515
+      weighted: 4210411.85809481
+    - code: '05'
+      label: ''
+      n: 508
+      weighted: 839108.170863053
+    - code: '06'
+      label: ''
+      n: 126
+      weighted: 183511.202634035
+    - code: '07'
+      label: ''
+      n: 36
+      weighted: 46638.0233937419
+    - code: 08
+      label: ''
+      n: 15
+      weighted: 36344.0871388076
+    - code: 09
+      label: ''
+      n: 2
+      weighted: 3190.58339332941
+    - code: '10'
+      label: ''
+      n: 2
+      weighted: 1225.71488283133
+    - code: '97'
+      label: ''
+      n: 5444
+      weighted: 4696979.85283232
+  RAIL:
+    label: MSA heavy rail status for household
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: MSA has rail
+      n: 36509
+      weighted: 53629459.3923305
+    - code: '02'
+      label: MSA does not have rail, or hh not in an MSA
+      n: 219606
+      weighted: 168949487.26325
+  SMPLSRCE:
+    label: Sample where the case originated
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: National sample
+      n: 51182
+      weighted: 150441608.581129
+    - code: '02'
+      label: Add-on sample
+      n: 204933
+      weighted: 72137338.0744448
+  TDAYDATE:
+    label: Date of travel day (YYYYMM)
+    dtype: string
+    length: 6
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '201604'
+      label: ''
+      n: 2154
+      weighted: 2400207.94759258
+    - code: '201605'
+      label: ''
+      n: 13390
+      weighted: 19434913.7831162
+    - code: '201606'
+      label: ''
+      n: 12663
+      weighted: 18498986.7005047
+    - code: '201607'
+      label: ''
+      n: 26088
+      weighted: 18646487.682981
+    - code: '201608'
+      label: ''
+      n: 27108
+      weighted: 18801882.3758579
+    - code: '201609'
+      label: ''
+      n: 26383
+      weighted: 18689992.2748503
+    - code: '201610'
+      label: ''
+      n: 18806
+      weighted: 18528219.0222483
+    - code: '201611'
+      label: ''
+      n: 23233
+      weighted: 18276669.6478353
+    - code: '201612'
+      label: ''
+      n: 22437
+      weighted: 18901405.1963387
+    - code: '201701'
+      label: ''
+      n: 25472
+      weighted: 18567941.0729228
+    - code: '201702'
+      label: ''
+      n: 21282
+      weighted: 16893145.1180327
+    - code: '201703'
+      label: ''
+      n: 26168
+      weighted: 18720354.1991864
+    - code: '201704'
+      label: ''
+      n: 10931
+      weighted: 16218741.6341112
+  TRAVDAY:
+    label: Travel day - day of week
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Sunday
+      n: 28604
+      weighted: 31845021.575582
+    - code: '02'
+      label: Monday
+      n: 39452
+      weighted: 31538985.522363
+    - code: '03'
+      label: Tuesday
+      n: 39809
+      weighted: 31573697.3699072
+    - code: '04'
+      label: Wednesday
+      n: 39661
+      weighted: 31524799.5578019
+    - code: '05'
+      label: Thursday
+      n: 40686
+      weighted: 31684072.3584133
+    - code: '06'
+      label: Friday
+      n: 40193
+      weighted: 31828363.237434
+    - code: '07'
+      label: Saturday
+      n: 27710
+      weighted: 32584007.0340776
+  URBAN:
+    label: Household's urban area classification, based on home address and 2014 TIGER/Line Shapefile
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: In an urban area
+      n: 159091
+      weighted: 149966042.597868
+    - code: '02'
+      label: In an Urban cluster
+      n: 27383
+      weighted: 21434703.7222883
+    - code: '03'
+      label: In an area surrounded by urban areas
+      n: 109
+      weighted: 109650.962535371
+    - code: '04'
+      label: Not in urban area
+      n: 69532
+      weighted: 51068549.3728841
+  URBANSIZE:
+    label: Urban area size where home address is located
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: 50,000 - 199,999
+      n: 36234
+      weighted: 21080670.5141362
+    - code: '02'
+      label: 200,000 - 499,999
+      n: 28576
+      weighted: 22430648.1934307
+    - code: '03'
+      label: 500,000 - 999,999
+      n: 17430
+      weighted: 18843762.0592303
+    - code: '04'
+      label: 1 million or more without heavy rail
+      n: 50802
+      weighted: 43829454.228756
+    - code: '05'
+      label: 1 million or more with heavy rail
+      n: 26051
+      weighted: 43746696.271779
+    - code: '06'
+      label: Not in an urbanized area
+      n: 97022
+      weighted: 72647715.3882463
+  URBRUR:
+    label: Household in urban/rural area
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Urban
+      n: 186474
+      weighted: 171400746.32016
+    - code: '02'
+      label: Rural
+      n: 69641
+      weighted: 51178200.3354193
+  VEHAGE:
+    label: Age of vehicle, based on model year
+    dtype: float64
+    length: 3
+    owner: vehicle
+    missing_codes:
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: I don't know
+      n: 1209
+      weighted: 1184429.89969451
+    - code: '-7'
+      label: I prefer not to answer
+      n: 509
+      weighted: 481658.70185519
+    - code: '1'
+      label: ''
+      n: 16179
+      weighted: 13514652.0491287
+    - code: '2'
+      label: ''
+      n: 17823
+      weighted: 15230339.5918309
+    - code: '3'
+      label: ''
+      n: 17175
+      weighted: 14668375.6660184
+    - code: '4'
+      label: ''
+      n: 16705
+      weighted: 13746614.3410869
+    - code: '5'
+      label: ''
+      n: 14967
+      weighted: 12972725.1722286
+    - code: '6'
+      label: ''
+      n: 12291
+      weighted: 10616044.1434946
+    - code: '7'
+      label: ''
+      n: 12067
+      weighted: 10727583.4294323
+    - code: '8'
+      label: ''
+      n: 10250
+      weighted: 9261197.8205072
+    - code: '9'
+      label: ''
+      n: 13628
+      weighted: 12107597.7365736
+    - code: '10'
+      label: ''
+      n: 13636
+      weighted: 11661772.7859136
+    - code: '11'
+      label: ''
+      n: 13183
+      weighted: 11383177.3888703
+    - code: '12'
+      label: ''
+      n: 12782
+      weighted: 11875746.9508349
+    - code: '13'
+      label: ''
+      n: 11578
+      weighted: 10684027.5616952
+    - code: '14'
+      label: ''
+      n: 10359
+      weighted: 9435647.96791443
+    - code: '15'
+      label: ''
+      n: 9126
+      weighted: 8279873.76702192
+    - code: '16'
+      label: ''
+      n: 8242
+      weighted: 7389830.30145772
+    - code: '17'
+      label: ''
+      n: 7440
+      weighted: 6521833.35873377
+    - code: '18'
+      label: ''
+      n: 5875
+      weighted: 5357177.93908619
+    - code: '19'
+      label: ''
+      n: 4615
+      weighted: 4047396.10527828
+    - code: '20'
+      label: ''
+      n: 3873
+      weighted: 3450147.06593176
+    - code: '21'
+      label: ''
+      n: 2795
+      weighted: 2550968.62405549
+    - code: '22'
+      label: ''
+      n: 2731
+      weighted: 2399782.22535164
+    - code: '23'
+      label: ''
+      n: 2018
+      weighted: 1697528.47076701
+    - code: '24'
+      label: ''
+      n: 1574
+      weighted: 1313696.35278712
+    - code: '25'
+      label: ''
+      n: 1223
+      weighted: 1056444.45564492
+    - code: '26'
+      label: ''
+      n: 1002
+      weighted: 767739.042145165
+    - code: '27'
+      label: ''
+      n: 986
+      weighted: 824656.803957721
+    - code: '28'
+      label: ''
+      n: 866
+      weighted: 691442.492445755
+    - code: '29'
+      label: ''
+      n: 701
+      weighted: 520070.042776362
+    - code: '30'
+      label: ''
+      n: 687
+      weighted: 565755.651715189
+    - code: '31'
+      label: ''
+      n: 653
+      weighted: 476372.711254859
+    - code: '32'
+      label: ''
+      n: 602
+      weighted: 451053.28468189
+    - code: '40'
+      label: ''
+      n: 6765
+      weighted: 4665586.7534061
+  VEHID:
+    label: Vehicle Identifier
+    dtype: string
+    length: 2
+    owner: trip
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: ''
+      n: 123416
+      weighted: 107628789.436521
+    - code: '02'
+      label: ''
+      n: 81882
+      weighted: 67985483.0437023
+    - code: '03'
+      label: ''
+      n: 31979
+      weighted: 28863384.4372317
+    - code: '04'
+      label: ''
+      n: 11725
+      weighted: 11271008.0390786
+    - code: '05'
+      label: ''
+      n: 4166
+      weighted: 4088015.2118047
+    - code: '06'
+      label: ''
+      n: 1623
+      weighted: 1507716.67472622
+    - code: '07'
+      label: ''
+      n: 668
+      weighted: 653178.676021964
+    - code: 08
+      label: ''
+      n: 312
+      weighted: 271836.032328601
+    - code: 09
+      label: ''
+      n: 165
+      weighted: 142386.636679387
+    - code: '10'
+      label: ''
+      n: 91
+      weighted: 79828.7765311144
+    - code: '11'
+      label: ''
+      n: 52
+      weighted: 53940.6463540872
+    - code: '12'
+      label: ''
+      n: 36
+      weighted: 33379.0445957388
+  VEHOWNED:
+    label: Owned Vehicle Longer than a Year
+    dtype: string
+    length: 2
+    owner: vehicle
+    missing_codes:
+      '-9': not_ascertained
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 789
+      weighted: 739970.328636473
+    - code: '-8'
+      label: I don't know
+      n: 82
+      weighted: 58845.1543778355
+    - code: '-7'
+      label: I prefer not to answer
+      n: 100
+      weighted: 61680.7561694669
+    - code: '01'
+      label: 'Yes'
+      n: 219524
+      weighted: 186504593.17322
+    - code: '02'
+      label: 'No'
+      n: 35620
+      weighted: 35213857.2431768
+  VEHOWNMO:
+    label: Months of Vehicle Ownership
+    dtype: string
+    length: 2
+    owner: vehicle
+    missing_codes:
+      '-9': not_ascertained
+      '-8': dont_know
+      '-7': refused
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 5
+      weighted: 6240.55835241398
+    - code: '-8'
+      label: I don't know
+      n: 265
+      weighted: 282783.117144622
+    - code: '-7'
+      label: I prefer not to answer
+      n: 263
+      weighted: 356745.857463088
+    - code: '-1'
+      label: Appropriate skip
+      n: 220495
+      weighted: 187365089.412404
+    - code: '0'
+      label: ''
+      n: 1649
+      weighted: 1707518.2271669
+    - code: '01'
+      label: ''
+      n: 3820
+      weighted: 3620366.43601446
+    - code: '02'
+      label: ''
+      n: 3388
+      weighted: 3216870.79242715
+    - code: '03'
+      label: ''
+      n: 3545
+      weighted: 3408236.29064362
+    - code: '04'
+      label: ''
+      n: 3220
+      weighted: 3307410.17532858
+    - code: '05'
+      label: ''
+      n: 2774
+      weighted: 2911632.79832368
+    - code: '06'
+      label: ''
+      n: 4206
+      weighted: 4332474.62569046
+    - code: '07'
+      label: ''
+      n: 2339
+      weighted: 2389139.15370002
+    - code: 08
+      label: ''
+      n: 2879
+      weighted: 2849253.99555341
+    - code: 09
+      label: ''
+      n: 2412
+      weighted: 2199566.09241723
+    - code: '10'
+      label: ''
+      n: 2724
+      weighted: 2633131.6774168
+    - code: '11'
+      label: ''
+      n: 2131
+      weighted: 1992487.44553418
+  VEHTYPE:
+    label: Vehicle Type
+    dtype: string
+    length: 2
+    owner: trip
+    missing_codes:
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: I don't know
+      n: 153
+      weighted: 168720.18677431
+    - code: '-7'
+      label: I prefer not to answer
+      n: 179
+      weighted: 157383.649171055
+    - code: '01'
+      label: Automobile/Car/Station Wagon
+      n: 122391
+      weighted: 110231087.800399
+    - code: '02'
+      label: Van (Mini/Cargo/Passenger)
+      n: 13184
+      weighted: 13513231.6284247
+    - code: '03'
+      label: SUV (Santa Fe, Tahoe, Jeep, etc.)
+      n: 60353
+      weighted: 52669186.8746984
+    - code: '04'
+      label: Pickup Truck
+      n: 46232
+      weighted: 35429402.4608529
+    - code: '05'
+      label: Other Truck
+      n: 1414
+      weighted: 1126169.60661355
+    - code: '06'
+      label: RV (Recreational Vehicle)
+      n: 2097
+      weighted: 1401978.05767156
+    - code: '07'
+      label: Motorcycle/Motorbike
+      n: 9283
+      weighted: 7321358.53762942
+    - code: '97'
+      label: Something Else
+      n: 829
+      weighted: 560427.853342457
+  VEHYEAR:
+    label: Vehicle Year
+    dtype: float64
+    length: 4
+    owner: vehicle
+    missing_codes:
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: I don't know
+      n: 1209
+      weighted: 1184429.89969451
+    - code: '-7'
+      label: I prefer not to answer
+      n: 509
+      weighted: 481658.70185519
+    - code: '1977'
+      label: ''
+      n: 6765
+      weighted: 4665586.7534061
+    - code: '1985'
+      label: ''
+      n: 602
+      weighted: 451053.28468189
+    - code: '1986'
+      label: ''
+      n: 653
+      weighted: 476372.711254859
+    - code: '1987'
+      label: ''
+      n: 687
+      weighted: 565755.651715189
+    - code: '1988'
+      label: ''
+      n: 701
+      weighted: 520070.042776362
+    - code: '1989'
+      label: ''
+      n: 866
+      weighted: 691442.492445755
+    - code: '1990'
+      label: ''
+      n: 986
+      weighted: 824656.803957721
+    - code: '1991'
+      label: ''
+      n: 1002
+      weighted: 767739.042145165
+    - code: '1992'
+      label: ''
+      n: 1223
+      weighted: 1056444.45564492
+    - code: '1993'
+      label: ''
+      n: 1574
+      weighted: 1313696.35278712
+    - code: '1994'
+      label: ''
+      n: 2018
+      weighted: 1697528.47076701
+    - code: '1995'
+      label: ''
+      n: 2731
+      weighted: 2399782.22535164
+    - code: '1996'
+      label: ''
+      n: 2795
+      weighted: 2550968.62405549
+    - code: '1997'
+      label: ''
+      n: 3873
+      weighted: 3450147.06593176
+    - code: '1998'
+      label: ''
+      n: 4615
+      weighted: 4047396.10527828
+    - code: '1999'
+      label: ''
+      n: 5875
+      weighted: 5357177.93908619
+    - code: '2000'
+      label: ''
+      n: 7440
+      weighted: 6521833.35873377
+    - code: '2001'
+      label: ''
+      n: 8242
+      weighted: 7389830.30145772
+    - code: '2002'
+      label: ''
+      n: 9126
+      weighted: 8279873.76702192
+    - code: '2003'
+      label: ''
+      n: 10359
+      weighted: 9435647.96791443
+    - code: '2004'
+      label: ''
+      n: 11578
+      weighted: 10684027.5616952
+    - code: '2005'
+      label: ''
+      n: 12782
+      weighted: 11875746.9508349
+    - code: '2006'
+      label: ''
+      n: 13183
+      weighted: 11383177.3888703
+    - code: '2007'
+      label: ''
+      n: 13636
+      weighted: 11661772.7859136
+    - code: '2008'
+      label: ''
+      n: 13628
+      weighted: 12107597.7365736
+    - code: '2009'
+      label: ''
+      n: 10250
+      weighted: 9261197.8205072
+    - code: '2010'
+      label: ''
+      n: 12067
+      weighted: 10727583.4294323
+    - code: '2011'
+      label: ''
+      n: 12291
+      weighted: 10616044.1434946
+    - code: '2012'
+      label: ''
+      n: 14967
+      weighted: 12972725.1722286
+    - code: '2013'
+      label: ''
+      n: 16705
+      weighted: 13746614.3410869
+    - code: '2014'
+      label: ''
+      n: 17175
+      weighted: 14668375.6660184
+    - code: '2015'
+      label: ''
+      n: 17823
+      weighted: 15230339.5918309
+    - code: '2016'
+      label: ''
+      n: 13683
+      weighted: 11448777.9152672
+    - code: '2017'
+      label: ''
+      n: 2496
+      weighted: 2065874.13386151
+  WHOMAIN:
+    label: Vehicle Main Driver
+    dtype: string
+    length: 2
+    owner: vehicle
+    missing_codes:
+      '-8': dont_know
+      '-7': refused
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: I don't know
+      n: 211
+      weighted: 224840.350638548
+    - code: '-7'
+      label: I prefer not to answer
+      n: 257
+      weighted: 232407.008640636
+    - code: '01'
+      label: ''
+      n: 152512
+      weighted: 124002632.25576
+    - code: '02'
+      label: ''
+      n: 83732
+      weighted: 74023992.8692157
+    - code: '03'
+      label: ''
+      n: 10755
+      weighted: 14077664.6780864
+    - code: '04'
+      label: ''
+      n: 2515
+      weighted: 4210411.85809481
+    - code: '05'
+      label: ''
+      n: 508
+      weighted: 839108.170863053
+    - code: '06'
+      label: ''
+      n: 126
+      weighted: 183511.202634035
+    - code: '07'
+      label: ''
+      n: 36
+      weighted: 46638.0233937419
+    - code: 08
+      label: ''
+      n: 15
+      weighted: 36344.0871388076
+    - code: 09
+      label: ''
+      n: 2
+      weighted: 3190.58339332941
+    - code: '10'
+      label: ''
+      n: 2
+      weighted: 1225.71488283133
+    - code: '97'
+      label: Someone else
+      n: 5444
+      weighted: 4696979.85283232
+  WRKCOUNT:
+    label: Number of workers in household
+    dtype: float64
+    length: 3
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '0'
+      label: ''
+      n: 71788
+      weighted: 40297377.9023556
+    - code: '1'
+      label: ''
+      n: 83738
+      weighted: 73158348.8565384
+    - code: '2'
+      label: ''
+      n: 82186
+      weighted: 81618731.3091567
+    - code: '3'
+      label: ''
+      n: 14488
+      weighted: 20818914.7950643
+    - code: '4'
+      label: ''
+      n: 3283
+      weighted: 5414349.62086636
+    - code: '5'
+      label: ''
+      n: 558
+      weighted: 1076311.69383795
+    - code: '6'
+      label: ''
+      n: 53
+      weighted: 151359.645753766
+    - code: '7'
+      label: ''
+      n: 21
+      weighted: 43552.8320055117
+  WTHHFIN:
+    label: Final HH weight
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: 7.0766987086-22153.249013
+    codes: []

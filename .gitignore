@@ -1,0 +1,28 @@
+# data and caches: never commit microdata or third-party copyrighted PDFs
+local_data/
+data_raw/
+*.csv
+*.parquet
+*.zip
+*.feather
+*.arrow
+*.parquet.*
+*.sas7bdat
+*.xpt
+*.dbf
+*.RData
+*.rds
+lit/*.pdf
+.cache/
+# python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+.coverage
+htmlcov/
