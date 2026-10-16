@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "pytest-cov", "ruff", "mypy", "types-PyYAML", "openpyxl"]
+dev = ["pytest>=8", "pytest-cov", "ruff", "mypy", "types-PyYAML", "pandas-stubs", "openpyxl"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pynhts"]

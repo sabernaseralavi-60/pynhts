@@ -17,11 +17,22 @@ Phase 1 covers the NHTS **2017** wave only.
   proving they are the official ones.
 - `pynhts.io.convert()`: deterministic, idempotent conversion to typed Parquet (original survey
   codes kept; replicate weights in separate float32 files).
+- `pynhts.load(2017)`: lazy, validated access. Request any column from any table and it is
+  joined from the table that owns it (many-to-one, no orphans, row order kept), with
+  `missing="nan"|"keep"` and `skip="keep"|"nan"` control over the survey codes:
+
+  ```python
+  import pynhts
+  data = pynhts.load(2017)                      # downloads + converts on first use
+  trips = data.trips(["TRPMILES", "TRPTRANS", "HHFAMINC", "R_AGE"])
+  ```
+- Golden tests: the loader reproduces all 3,811 code frequencies (counts and weighted totals) of
+  the official codebook, and the 2017 *Summary of Travel Trends* Table 1 totals for households,
+  persons by age, drivers and workers (see `tests/golden/`).
 - `pynhts.core.schema`: typed column schema generated from the official codebook
   (dtypes, missing-value codes, owner table of each column).
 
 ## Planned
-`pynhts.core` leak-free merges and missing-value handling,
 `pynhts.stats` jackknife (JKn, 98 replicates) estimators, `pynhts.recipes` replication of published
 tables (first target: FHWA *Summary of Travel Trends: 2017 NHTS*), `pynhts.ml` array/tensor export.
 

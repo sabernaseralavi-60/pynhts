@@ -72,9 +72,10 @@ def env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(cv, "CORE_TABLES", {"hhpub.csv": "household"})
     fetch_calls: list[tuple] = []
 
-    def fake_fetch(wave, groups, cache=None, offline=False):
-        fetch_calls.append(groups)
-        return {m.name: raw / m.name for m in reg.members_in(groups)}
+    def fake_fetch(wave, groups, cache=None, offline=False, names=None):
+        fetch_calls.append(names)
+        return {m.name: raw / m.name for m in reg.members_in(groups)
+                if names is None or m.name in names}
 
     monkeypatch.setattr(cv, "fetch", fake_fetch)
     return {"cache": tmp_path / "cache", "reg": reg, "raw": raw, "schema": schema,
@@ -159,3 +160,13 @@ def test_replicates_idempotent(env):
     cv.convert(2017, ("replicates",), cache=env["cache"])
     again = cv.convert(2017, ("replicates",), cache=env["cache"])
     assert all(c.skipped for c in again.values())
+
+
+def test_up_to_date_outputs_need_no_raw_files(env):
+    cv.convert(2017, ("core", "replicates"), cache=env["cache"])
+    env["fetch_calls"].clear()
+    for f in env["raw"].iterdir():
+        f.unlink()  # user deleted the raw CSVs to save disk space
+    again = cv.convert(2017, ("core", "replicates"), cache=env["cache"], offline=True)
+    assert all(c.skipped for c in again.values())
+    assert env["fetch_calls"] == []

@@ -6255,6 +6255,8 @@ columns:
       '-88': dont_know
       '-77': refused
       '-9': not_ascertained
+      '-8': dont_know
+      '-7': refused
     skip_code: '-1'
     range: 0-200000
     codes:

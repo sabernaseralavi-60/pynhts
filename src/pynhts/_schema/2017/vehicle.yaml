@@ -4199,6 +4199,8 @@ columns:
       '-88': dont_know
       '-77': refused
       '-9': not_ascertained
+      '-8': dont_know
+      '-7': refused
     skip_code: null
     range: 0-4000000
     codes:
@@ -4218,7 +4220,7 @@ columns:
     label: Person ID of Main Driver of this vehicle
     dtype: string
     length: 2
-    owner: person
+    owner: vehicle
     missing_codes:
       '-8': dont_know
       '-7': refused
@@ -4639,7 +4641,7 @@ columns:
     label: Vehicle Identifier
     dtype: string
     length: 2
-    owner: trip
+    owner: vehicle
     missing_codes: {}
     skip_code: null
     range: null
@@ -4804,7 +4806,7 @@ columns:
     label: Vehicle Type
     dtype: string
     length: 2
-    owner: trip
+    owner: vehicle
     missing_codes:
       '-8': dont_know
       '-7': refused

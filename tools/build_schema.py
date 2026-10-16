@@ -23,8 +23,13 @@ SHEETS = {
     "CODEBOOK_TRIP": ("trip", "trippub.csv"),
     "CODEBOOK_VEH": ("vehicle", "vehpub.csv"),
 }
-# A column that appears in several tables is owned by the first table in this order.
-OWNER_ORDER = ["household", "person", "trip", "vehicle"]
+# Tables whose columns a table can inherit copies of, root first.
+ANCESTORS = {
+    "household": [],
+    "person": ["household"],
+    "trip": ["household", "person"],
+    "vehicle": ["household"],
+}
 # -88 and -77 are the codebook's "I don't know" / "I prefer not to answer" in fields where -8/-7 could be real values.
 MISSING = {
     "-9": "not_ascertained",
@@ -34,7 +39,15 @@ MISSING = {
     "-77": "refused",
 }
 SKIP = "-1"
+# Evidence (checked against the data, 2026-10-17): the codebook's count for -88 equals the number
+# of -88 plus -8 rows, and its count for -77 equals -77 plus -7 rows (YEARMILE, OD_READ). So a
+# column that lists -88 / -77 also carries -8 / -7 values, which must be masked as well.
+LUMPED = {"-88": "-8", "-77": "-7"}
 OUT = Path(__file__).resolve().parents[1] / "src" / "pynhts" / "_schema" / "2017"
+
+
+def _norm(label: str) -> str:
+    return " ".join(label.lower().split())
 
 
 def parse_sheet(ws: Any) -> dict[str, dict[str, Any]]:
@@ -73,22 +86,35 @@ def build(codebook: Path) -> None:
     digest = hashlib.sha256(codebook.read_bytes()).hexdigest()
     parsed = {sheet: parse_sheet(wb[sheet]) for sheet in SHEETS}
     tables = {SHEETS[s][0]: v for s, v in parsed.items()}
-    owner: dict[str, str] = {}
-    for t in OWNER_ORDER:
-        for var in tables[t]:
-            owner.setdefault(var, t)
+    def owner_of(table: str, var: str) -> str:
+        """Nearest-to-the-root ancestor table that carries the same variable, else ``table``.
+
+        Ownership is hierarchical (household > person > trip; household > vehicle), so a column
+        can only be a copy of a column in an ancestor. The label must also match: ``PERSONID``
+        is the person key in the person/trip files but the *main driver* in the vehicle file,
+        and ``VEHID`` is the vehicle key in the vehicle file.
+        """
+        for anc in ANCESTORS[table]:
+            other = tables[anc].get(var)
+            if other and _norm(other["label"]) == _norm(tables[table][var]["label"]):
+                return anc
+        return table
+
     OUT.mkdir(parents=True, exist_ok=True)
     for sheet, (table, csv_name) in SHEETS.items():
         cols: dict[str, Any] = {}
         for var, spec in tables[table].items():
             codes = spec["codes"]
+            missing = {c["code"]: MISSING[c["code"]] for c in codes if c["code"] in MISSING}
+            for big, small in LUMPED.items():
+                if big in missing:
+                    missing.setdefault(small, MISSING[small])
             cols[var] = {
                 "label": spec["label"],
                 "dtype": "string" if spec["type"] == "C" else "float64",
                 "length": spec["length"],
-                "owner": owner[var],
-                "missing_codes": {c["code"]: MISSING[c["code"]] for c in codes
-                                  if c["code"] in MISSING},
+                "owner": owner_of(table, var),
+                "missing_codes": missing,
                 "skip_code": SKIP if any(c["code"] == SKIP for c in codes) else None,
                 "range": spec.get("range"),
                 "codes": codes,

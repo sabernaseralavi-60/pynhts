@@ -219,7 +219,8 @@ def convert(
     """Fetch (if needed) and convert the raw files of ``groups`` to Parquet.
 
     Idempotent: an output whose recorded inputs, converter version, codebook hash and size all
-    still match is skipped. ``force=True`` rebuilds everything. Conversion of a file is atomic
+    still match is skipped, and then the raw CSV files are not needed (or fetched) at all.
+    ``force=True`` rebuilds everything. Conversion of a file is atomic
     (written to ``*.part`` and renamed), so an interrupted run never leaves a half-written file.
 
     Args:
@@ -236,8 +237,13 @@ def convert(
         ValueError: a CSV header does not match the schema, or a row count differs from the
             registry.
     """
-    raw = fetch(wave, groups, cache=cache, offline=offline)
     reg = load_registry(wave)
+
+    def raw(csv_name: str) -> Path:
+        """Verified raw file, fetched only now (so up-to-date outputs need no raw CSVs)."""
+        group = reg.members[csv_name].group
+        return fetch(wave, (group,), cache=cache, offline=offline, names=(csv_name,))[csv_name]
+
     directory = parquet_dir(wave, cache)
     directory.mkdir(parents=True, exist_ok=True)
     manifest = _read_manifest(directory)
@@ -254,7 +260,7 @@ def convert(
                 results[out.name] = Converted(out, int(str(rec["rows"])), str(rec["sha256"]), True)
                 continue
             results[out.name] = _convert_core(
-                raw[csv_name], schema, out, reg.members[csv_name].rows, inputs, codebook, manifest
+                raw(csv_name), schema, out, reg.members[csv_name].rows, inputs, codebook, manifest
             )
             _write_manifest(directory, manifest)
 
@@ -275,7 +281,7 @@ def convert(
             if todo:
                 results.update(
                     _convert_replicates(
-                        raw[csv_name], jobs, directory, inputs, codebook, manifest, todo,
+                        raw(csv_name), jobs, directory, inputs, codebook, manifest, todo,
                         reg.members[csv_name].rows,
                     )
                 )

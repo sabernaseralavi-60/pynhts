@@ -1,3 +1,6 @@
 """pynhts: typed, survey-weight-aware access to NHTS microdata."""
 
+from pynhts.core.data import NHTSData, load
+
 __version__ = "0.0.1.dev0"
+__all__ = ["NHTSData", "__version__", "load"]

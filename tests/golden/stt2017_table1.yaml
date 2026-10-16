@@ -1,0 +1,34 @@
+# Published control totals, transcribed by hand from
+#   McGuckin, N. & Fucci, A. (2018). Summary of Travel Trends: 2017 National Household Travel Survey.
+#   Federal Highway Administration. https://nhts.ornl.gov/assets/2017_nhts_summary_travel_trends.pdf
+# Local copy (git-ignored): lit/summary_travel_trends_2017.pdf
+#   sha256 2171916f9929a593a7d86a3a1c97445094271a91cd5dba186ecdfd594e51aa58, downloaded 2026-10-17
+# Units: thousands. "moe" is the published 95% margin of error (kept for the JKn tests to come;
+# null = the report prints "-" or does not give it).
+source:
+  pdf_page_numbers: {table_1a: 12, table_1b: 13, table_1c: 14}   # PDF page index (printed pp. 5-7)
+  weights: {household: WTHHFIN, person: WTPERFIN}
+table_1a_households:
+  all:        {value: 118208, moe: null}
+  size_1:     {value: 32952,  moe: null}
+  size_2:     {value: 40056,  moe: null}
+  size_3:     {value: 18521,  moe: 97}
+  size_4plus: {value: 26679,  moe: 97}
+table_1b_persons_by_imputed_age:      # variable R_AGE_IMP (R_AGE leaves 496 rows unbanded)
+  under_16:   {value: 45498,  moe: 756}
+  age_16_19:  {value: 17755,  moe: 945}
+  age_20_34:  {value: 64339,  moe: 954}
+  age_35_64:  {value: 126350, moe: 985}
+  age_65plus: {value: 47657,  moe: 0}
+  age_16plus: {value: 256101, moe: 756}
+table_1c_drivers_workers:
+  drivers: {value: 223277, moe: 827}
+  workers: {value: 156988, moe: 1012}
+documented_discrepancy:
+  persons_all:
+    published: 321419
+    reproduced: 301599        # WTPERFIN total; equals the sum of the five published age bands
+    note: >-
+      The printed "All" persons (also printed as "All 5+") exceeds the sum of the report's own
+      age bands by 19,820 thousand. The public file has no persons under age 5. Cause not
+      established; do not treat as a pynhts failure without further evidence.
