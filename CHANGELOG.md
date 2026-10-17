@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+* `pynhts.tours`: `TourConfig`, `build_tours` (tour numbering, completeness, HBW/HBO/NHB classes, work-tour
+  patterns and types) and `chain_ids` (FHWA-style chains, 30-minute rule).
+* `NHTSData.survey_rows`: bind any rows keyed by household or person-day (e.g. tours) to the replicate
+  weights for design-correct margins of error.
+* New recipe `mcnally_rafiq2021` (33 targets): the 4,994-person transit-user sample reproduces exactly;
+  12 figures are documented gaps. `docs/validation.md` now covers every recipe.
+
 ## 0.1.1 (2026-10-17)
 
 First version published on PyPI (0.1.0 exists only as a GitHub release). README links made absolute so

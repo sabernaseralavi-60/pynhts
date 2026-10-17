@@ -11,7 +11,7 @@ microdata.
 > **Scope and status (0.1.0, alpha).** Only the **2017** wave is supported; other waves come
 > after this one is solid. The API may still change. Results are validated
 > against FHWA's published tables: 20 of 24 figures reproduce completely and 4 gaps are reported
-> openly in [docs/validation.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md).
+> openly (tours: 21 of 33, see the validation page) in [docs/validation.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md).
 
 ## Install
 
@@ -52,6 +52,7 @@ arr = ml.to_arrays(trips, ["TRPMILES", "R_AGE"], target="TRPTRANS", weight="WTTR
 | `pynhts.core` | codebook-derived schema, `NHTSData` loader, missing-code handling |
 | `pynhts.stats` | JKn totals, means, proportions, ratios; margins of error |
 | `pynhts.recipes` | replication of published tables with honest status per figure |
+| `pynhts.tours` | tour formation (HBW/HBO/NHB, work-tour patterns), FHWA-style chains; flexible home/work rules |
 | `pynhts.ml` | NumPy / PyTorch / graph export (PyTorch optional) |
 
 ## Why a library
@@ -66,7 +67,10 @@ They are documented in [docs/data_notes.md](https://github.com/sabernaseralavi-6
 * All 3,807 coded values of the official codebook (counts and weighted totals) reproduce.
 * 24 figures from Tables 1 and 3 of FHWA's *Summary of Travel Trends: 2017 NHTS*, with margins
   of error: 20 reproduce completely, 2 reproduce the estimate but not the margin of error,
-  2 do not reproduce. See [docs/validation.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md).
+  2 do not reproduce.
+* The transit-user sample of McNally & Rafiq's tour study (4,994 persons, 20,222 trips, 10,011
+  transit trips) exactly, plus 33 of their figures in all: 21 reproduce, 12 gaps are documented
+  (`pynhts.tours`). See [docs/validation.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md).
 
 ## Documentation
 

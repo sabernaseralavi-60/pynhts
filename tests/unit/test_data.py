@@ -144,3 +144,13 @@ def test_weight_columns_and_replicate_error(d):
 def test_labels(d):
     assert d.labels("TRPTRANS")["03"]
     assert "Person ID" in d.schema("vehicle").columns["PERSONID"].label
+
+
+def test_survey_rows_validates_level_and_keys(d):
+    rows = pd.DataFrame({"HOUSEID": ["H1"], "PERSONID": ["01"], "x": [1.0]})
+    with pytest.raises(ValueError, match="level"):
+        d.survey_rows(rows, "vehicle")
+    with pytest.raises(KeyError, match="PERSONID"):
+        d.survey_rows(rows.drop(columns="PERSONID"), "trip")
+    with pytest.raises(FileNotFoundError, match="replicate"):
+        d.survey_rows(rows, "trip")  # keys fine, but this synthetic cache has no replicates

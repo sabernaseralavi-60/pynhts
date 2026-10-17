@@ -12,11 +12,12 @@
   (`pynhts.recipes`); 20 reproduce completely, 4 gaps are documented.
 * Arrays, PyTorch tensors and household graph edges (`pynhts.ml`); command line interface.
 
-## Next: `pynhts.tours`
+## In progress: `pynhts.tours`
 
-Paper-driven development: tour formation and trip chaining designed to replicate the sample of
-McNally & Rafiq's 2017 transit-tour study (probe reproduces the user sample exactly). See
-[tours design notes](tours_design_notes.md).
+First version done (tour formation, work-tour patterns, FHWA-style chains, weighted tour estimates),
+built by paper-driven development against McNally & Rafiq's 2017 transit-tour study: their user sample
+reproduces exactly. See [tours](tours.md) and [design notes](tours_design_notes.md). Still open: the
+rules behind the remaining gaps, validation of the chained-trip definition, and the replication paper.
 
 ## Not done yet
 

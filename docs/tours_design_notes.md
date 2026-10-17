@@ -1,7 +1,8 @@
 # Design notes for `pynhts.tours` (paper-driven development)
 
-*Status: planning note written 2026-10-17. Nothing here is implemented in the library yet. The only
-code is the throw-away probe `tools/probe_tours_replication.py`.*
+*Status: planning note written 2026-10-17. The first implementation followed the same day; see
+[tours](tours.md) for the user guide and [validation](validation.md) for the benchmark. The throw-away
+probe `tools/probe_tours_replication.py` is kept for reference.*
 
 ## 1. Candidate papers
 
@@ -50,7 +51,7 @@ definitions that the report does not spell out.
 2. **Two levels of completeness.** Day level (first trip leaves home, last trip arrives home) and tour
    level (each trip arriving home closes a tour). Both are needed.
 3. **Activity types.** H, W, N derived from `WHYTO`: work is code 03 only (adding 04, work-related
-   meeting, gives 2,551 tours, far from 2,454).
+   meeting, gives 2,535 tours with the same adults-only filter, further from 2,454).
 4. **Work-tour patterns.** The 3-tuple (stops before work, stops after work, stops between work
    activities) and the report's classes simple / complex / work-based; tours with several work stops
    and no other stop form a separate "other" class.

@@ -1,0 +1,161 @@
+# Replication targets: McNally, M. G. and Rafiq, R. (2021). Analysis of Activity-Travel Patterns and
+# Tour Formation of Transit Users. Final Report PSR-19-33, METRANS / ITS-Irvine (open access):
+#   https://www.metrans.org/assets/research/psr-19-33_to-033_mcnally_finalreport.pdf
+#   (sections 2.1-2.5, read 2026-10-17; companion journal papers: Rafiq & McNally, Transp. Res. A,
+#   doi 10.1016/j.tra.2020.10.018 and 10.1016/j.tra.2021.07.011, NOT read: paywalled.)
+# The report uses UNWEIGHTED counts and percentages: no margins of error (moe: null).
+# Status rule and fields: see stt2017.yaml. Percentages are compared at the printed precision.
+source: mcnally_rafiq2021
+title: "McNally & Rafiq (2021): transit users' work tours on the 2017 NHTS (sample, Figure 2.7, Table 2.1)"
+citation: "McNally, M. G. and Rafiq, R. (2021). Analysis of Activity-Travel Patterns and Tour Formation of Transit Users. Final Report PSR-19-33, METRANS / ITS-Irvine."
+targets:
+  # ---- Section 2.1: sample ---------------------------------------------------------------
+  - {id: users_persons,       table: "2.1", label: "Transit users (persons)",              scale: 1, decimals: 0, published: 4994,  moe: null, compute: users_persons,       expected: reproduced}
+  - {id: users_trips,         table: "2.1", label: "Trips of transit users",               scale: 1, decimals: 0, published: 20222, moe: null, compute: users_trips,         expected: reproduced}
+  - {id: users_transit_trips, table: "2.1", label: "Transit trips of transit users",       scale: 1, decimals: 0, published: 10011, moe: null, compute: users_transit_trips, expected: reproduced}
+  - id: hbw_tours
+    table: "2.1"
+    label: "Home-based work tours with transit (adults)"
+    scale: 1
+    decimals: 0
+    published: 2454
+    moe: null
+    compute: hbw_tours
+    expected: not_reproduced
+    note: >-
+      2,456 against 2,454 (0.08 percent). Tours closed by code 01 only, adults, work code 03. Closing
+      tours also at 02 gives 2,471; the report's exact rule is not stated.
+  - id: hbw_persons
+    table: "2.1"
+    label: "Persons with such tours"
+    scale: 1
+    decimals: 0
+    published: 2448
+    moe: null
+    compute: hbw_persons
+    expected: not_reproduced
+    note: "2,451 against 2,448; same cause as the tour count."
+  # ---- Figure 2.7: tour patterns (percent of home-based work tours with transit) ----------
+  - {id: pattern_000_share, table: "Fig 2.7", label: "Pattern (0,0,0), simple work tour (%)", scale: 1, decimals: 0, published: 49, moe: null, compute: pattern_000_share, expected: reproduced}
+  - id: complex_share
+    table: "Fig 2.7"
+    label: "Complex work tours (%)"
+    scale: 1
+    decimals: 0
+    published: 32
+    moe: null
+    compute: complex_share
+    expected: not_reproduced
+    note: >-
+      30.5 percent here, 33.2 if the two-work-stop tours are counted as complex. The report does not
+      say how tours with several work stops and no other stop are allocated.
+  - id: work_based_share
+    table: "Fig 2.7"
+    label: "Complex tours with a work-based sub-tour (%)"
+    scale: 1
+    decimals: 0
+    published: 19
+    moe: null
+    compute: work_based_share
+    expected: not_reproduced
+    note: "20.4 percent here: any stop between two work stops makes the tour work-based."
+  - id: multi_work_tours
+    table: "Fig 2.7"
+    label: "Tours with two work stops and no other stop"
+    scale: 1
+    decimals: 0
+    published: 70
+    moe: null
+    compute: multi_work_tours
+    expected: not_reproduced
+    note: "67 here; the report gives 70 observations (2.8 percent)."
+  # ---- Table 2.1: characteristics of the 4,994 transit users (percent) --------------------
+  - {id: t21_hh1,         table: "2.1", label: "Household size = 1 (%)",              scale: 1, decimals: 1, published: 29.4, moe: null, compute: t21_hh1,         expected: reproduced}
+  - {id: t21_hh2,         table: "2.1", label: "Household size = 2 (%)",              scale: 1, decimals: 1, published: 34.7, moe: null, compute: t21_hh2,         expected: reproduced}
+  - {id: t21_hh3plus,     table: "2.1", label: "Household size > 2 (%)",              scale: 1, decimals: 1, published: 35.9, moe: null, compute: t21_hh3plus,     expected: reproduced}
+  - {id: t21_veh0,        table: "2.1", label: "No household vehicle (%)",            scale: 1, decimals: 1, published: 36.2, moe: null, compute: t21_veh0,        expected: reproduced}
+  - {id: t21_veh1,        table: "2.1", label: "One household vehicle (%)",           scale: 1, decimals: 1, published: 29.7, moe: null, compute: t21_veh1,        expected: reproduced}
+  - {id: t21_veh2plus,    table: "2.1", label: "More than one vehicle (%)",           scale: 1, decimals: 1, published: 34.1, moe: null, compute: t21_veh2plus,    expected: reproduced}
+  - {id: t21_inc_low,     table: "2.1", label: "Income below $35K (%)",               scale: 1, decimals: 1, published: 37.3, moe: null, compute: t21_inc_low,     expected: reproduced}
+  - {id: t21_inc_mid,     table: "2.1", label: "Income $35K to under $100K (%)",      scale: 1, decimals: 1, published: 29.2, moe: null, compute: t21_inc_mid,     expected: reproduced}
+  - {id: t21_inc_high,    table: "2.1", label: "Income $100K or more (%)",            scale: 1, decimals: 1, published: 31.2, moe: null, compute: t21_inc_high,    expected: reproduced}
+  - id: t21_child
+    table: "2.1"
+    label: "Child aged 0-17 present (%)"
+    scale: 1
+    decimals: 1
+    published: 19.0
+    moe: null
+    compute: t21_child
+    expected: not_reproduced
+    note: "24.6 percent with household size above the number of adults (18+); the report's definition is not stated."
+  - {id: t21_veh_per_driver, table: "2.1", label: "At least one vehicle per licensed driver (%)", scale: 1, decimals: 1, published: 48.1, moe: null, compute: t21_veh_per_driver, expected: reproduced}
+  - {id: t21_age_u18,     table: "2.1", label: "Age below 18 (%)",                    scale: 1, decimals: 1, published: 6.6,  moe: null, compute: t21_age_u18,     expected: reproduced}
+  - id: t21_age_18_38
+    table: "2.1"
+    label: "Age 18-38, millennials (%)"
+    scale: 1
+    decimals: 1
+    published: 33.8
+    moe: null
+    compute: t21_age_18_38
+    expected: not_reproduced
+    note: >-
+      34.8 percent here. The report's four age shares sum to 98.8 percent, so this row is probably
+      misprinted (a 1.0-point slip); 18-37 would give 33.1.
+  - {id: t21_age_39_58,   table: "2.1", label: "Age 38-58 (reproduced as 39-58) (%)", scale: 1, decimals: 1, published: 32.3, moe: null, compute: t21_age_39_58,   expected: reproduced}
+  - {id: t21_age_59plus,  table: "2.1", label: "Age over 58 (%)",                     scale: 1, decimals: 1, published: 26.1, moe: null, compute: t21_age_59plus,  expected: reproduced}
+  - {id: t21_male,        table: "2.1", label: "Male (%)",                            scale: 1, decimals: 1, published: 48.6, moe: null, compute: t21_male,        expected: reproduced}
+  - {id: t21_employed,    table: "2.1", label: "Employed (%)",                        scale: 1, decimals: 1, published: 62.2, moe: null, compute: t21_employed,    expected: reproduced}
+  - id: t21_white
+    table: "2.1"
+    label: "White (%)"
+    scale: 1
+    decimals: 1
+    published: 59.3
+    moe: null
+    compute: t21_white
+    expected: not_reproduced
+    note: "59.8 percent with R_RACE = 01; non-Hispanic white would be 52.3. The report's coding is not stated."
+  - {id: t21_rail,        table: "2.1", label: "Used rail (subway/light rail or commuter rail) (%)", scale: 1, decimals: 1, published: 42.7, moe: null, compute: t21_rail, expected: reproduced}
+  - {id: t21_bus,         table: "2.1", label: "Used public or city-to-city bus (%)", scale: 1, decimals: 1, published: 62.4, moe: null, compute: t21_bus,         expected: reproduced}
+  - id: t21_dens_low
+    table: "2.1"
+    label: "Block-group density 0-2,000 per sq. mile (%)"
+    scale: 1
+    decimals: 1
+    published: 17.1
+    moe: null
+    compute: t21_dens_low
+    expected: not_reproduced
+    note: "16.2 with HBPPOPDN (block group); the tract variable HTPPOPDN gives 17.3. The report's variable is not stated."
+  - id: t21_dens_mid
+    table: "2.1"
+    label: "Density 2,000-10,000 (%)"
+    scale: 1
+    decimals: 1
+    published: 42.5
+    moe: null
+    compute: t21_dens_mid
+    expected: not_reproduced
+    note: "42.1 with HBPPOPDN; same open question as the low-density row."
+  - id: t21_dens_high
+    table: "2.1"
+    label: "Density above 10,000 (%)"
+    scale: 1
+    decimals: 1
+    published: 40.4
+    moe: null
+    compute: t21_dens_high
+    expected: not_reproduced
+    note: "41.7 with HBPPOPDN; same open question as the low-density row."
+  - id: t21_msa_rail
+    table: "2.1"
+    label: "MSA has a rail connection (%)"
+    scale: 1
+    decimals: 1
+    published: 50.7
+    moe: null
+    compute: t21_msa_rail
+    expected: not_reproduced
+    note: "50.8 percent with RAIL = 01 (0.1 point)."

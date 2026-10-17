@@ -81,7 +81,7 @@ def comparison_frame(spec: RecipeSpec, results: dict[str, tuple[float, float]]) 
         est, moe = results[t.id]
         rows.append({
             "id": t.id, "table": t.table, "label": t.label,
-            "published": t.published, "published_moe": t.moe,
+            "published": t.published, "published_moe": t.moe, "decimals": t.decimals,
             "estimate": est, "moe": moe,
             "estimate_diff": est - t.published,
             "moe_rel_diff": (moe - t.moe) / t.moe if t.moe else float("nan"),

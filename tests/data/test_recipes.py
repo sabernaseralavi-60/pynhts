@@ -15,7 +15,7 @@ def table():
     return recipes.run("stt2017", pynhts.load(2017, offline=True))
 
 
-def test_every_target_has_its_expected_status(table):
+def test_every_target_has_its_expected_status(table):  # stt2017
     wrong = table[table["status"] != table["expected"]]
     assert wrong.empty, wrong[["id", "published", "estimate", "moe", "status", "expected"]]
 
@@ -49,3 +49,25 @@ def test_documented_gaps_are_the_known_ones(table):
 def test_markdown_report_renders(table):
     md = recipes.to_markdown(table)
     assert md.count("\n") == len(table) + 2 and "reproduced" in md
+
+
+@pytest.fixture(scope="module")
+def mr_table():
+    return recipes.run("mcnally_rafiq2021", pynhts.load(2017, offline=True, replicates=True))
+
+
+def test_mcnally_rafiq_every_target_has_its_expected_status(mr_table):
+    wrong = mr_table[mr_table["status"] != mr_table["expected"]]
+    assert wrong.empty, wrong[["id", "published", "estimate", "status", "expected"]]
+
+
+def test_mcnally_rafiq_scorecard_and_exact_sample(mr_table):
+    assert mr_table["status"].value_counts().to_dict() == {"reproduced": 21,
+                                                           "not_reproduced": 12}
+    t = mr_table.set_index("id")
+    for key in ["users_persons", "users_trips", "users_transit_trips"]:
+        assert t.loc[key, "estimate"] == t.loc[key, "published"], key  # exact, to the unit
+    assert abs(t.loc["hbw_tours", "estimate_diff"]) <= 2          # 2,456 vs 2,454
+    assert mr_table["moe"].isna().all()                            # unweighted, so no MOE
+    md = recipes.to_markdown(mr_table)
+    assert md.count("\n") == len(mr_table) + 2 and "4,994" in md

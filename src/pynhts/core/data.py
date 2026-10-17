@@ -269,19 +269,43 @@ class NHTSData:
                 the replicate file's full-sample weight.
         """
         rows = self.table(table, columns, missing=missing, skip=skip, weight=True, keys=True)
-        level_name = _REPLICATE_LEVEL[self._check_table(table)]
+        return self._bind(rows, _REPLICATE_LEVEL[self._check_table(table)], DEFAULT_WEIGHT[table],
+                          level)
+
+    def survey_rows(self, rows: pd.DataFrame, level: str, *, level_conf: float = 0.95) -> Survey:
+        """Bind your own rows to replicate weights, e.g. tours (use ``level="trip"``).
+
+        ``rows`` must carry the keys of the weight unit: ``HOUSEID`` for ``"household"``,
+        ``HOUSEID`` and ``PERSONID`` for ``"person"`` and for ``"trip"`` (person-day). All rows
+        sharing a key share the unit's weight, so tour-level or stop-level tables get correct
+        jackknife standard errors without new variance code.
+
+        Raises:
+            NHTSIntegrityError: a row has no replicate-weight unit.
+        """
+        if level not in _REPLICATE_FILE:
+            raise ValueError(f"level must be one of {tuple(_REPLICATE_FILE)}")
+        return self._bind(rows, level, None, level_conf)
+
+    def _bind(
+        self, rows: pd.DataFrame, level_name: str, weight_col: str | None, level: float
+    ) -> Survey:
+        keys = list(KEYS["household" if level_name == "household" else "person"])
+        absent = [k for k in keys if k not in rows.columns]
+        if absent:
+            raise KeyError(f"rows lack the key columns {absent}")
         rep = self.replicate_weights(level_name)
         wcol = _REPLICATE_FILE[level_name][1]
-        keys = list(KEYS["household" if level_name == "household" else "person"])
         index = pd.MultiIndex.from_frame(rep[keys]) if len(keys) > 1 else pd.Index(rep[keys[0]])
         wanted = pd.MultiIndex.from_frame(rows[keys]) if len(keys) > 1 else pd.Index(rows[keys[0]])
         unit = index.get_indexer(wanted)
         if (unit < 0).any():
-            raise NHTSIntegrityError(f"{table} rows without a replicate-weight unit")
+            raise NHTSIntegrityError("rows without a replicate-weight unit")
         unit_w = rep[wcol].to_numpy(dtype=np.float64)
-        if not np.allclose(rows[DEFAULT_WEIGHT[table]].to_numpy(dtype=np.float64), unit_w[unit],
-                           rtol=1e-12, atol=0):
-            raise NHTSIntegrityError(f"{table} weights differ from the replicate file's weights")
+        if weight_col is not None and not np.allclose(
+            rows[weight_col].to_numpy(dtype=np.float64), unit_w[unit], rtol=1e-12, atol=0
+        ):
+            raise NHTSIntegrityError("row weights differ from the replicate file's weights")
         reps = rep[replicate_columns(wcol)].to_numpy(dtype=np.float64)
         return Survey(rows, unit.astype(np.int64), unit_w, reps, level=level)
 

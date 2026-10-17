@@ -31,6 +31,11 @@ def test_packaged_spec_is_well_formed():
     assert len(ids) == len(set(ids)) == 24
     from pynhts.recipes.stt2017 import COMPUTE
     assert {t.compute for t in spec.targets} <= set(COMPUTE)
+    mr = load_spec("mcnally_rafiq2021")
+    from pynhts.recipes.mcnally_rafiq2021 import COMPUTE as MR_COMPUTE
+    assert {t.compute for t in mr.targets} <= set(MR_COMPUTE)
+    assert len({t.id for t in mr.targets}) == len(mr.targets)
+    assert all(t.note for t in mr.targets if t.expected != "reproduced")
     assert all(t.expected in STATUSES for t in spec.targets)
     gaps = [t for t in spec.targets if t.expected != "reproduced"]
     assert all(t.note for t in gaps)  # every known gap is explained in the file
@@ -38,7 +43,7 @@ def test_packaged_spec_is_well_formed():
 
 
 def test_unknown_recipe_and_available():
-    assert recipes.available() == ["stt2017"]
+    assert recipes.available() == ["mcnally_rafiq2021", "stt2017"]
     with pytest.raises(ValueError):
         load_spec("nope")
     with pytest.raises(ValueError):

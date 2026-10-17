@@ -8,17 +8,21 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import pandas as pd
 
+from pynhts.recipes import mcnally_rafiq2021, stt2017
 from pynhts.recipes.base import RecipeSpec, Target, classify, comparison_frame, load_spec
-from pynhts.recipes.stt2017 import COMPUTE, Context
 
 if TYPE_CHECKING:
     from pynhts.core.data import NHTSData
 
-RECIPES = {"stt2017": COMPUTE}
+# name -> (target functions by name, context class that builds the surveys/tours once)
+RECIPES: dict[str, tuple[dict[str, Any], Any]] = {
+    "stt2017": (stt2017.COMPUTE, stt2017.Context),
+    "mcnally_rafiq2021": (mcnally_rafiq2021.COMPUTE, mcnally_rafiq2021.Context),
+}
 
 
 def available() -> list[str]:
@@ -37,10 +41,11 @@ def run(name: str, data: NHTSData) -> pd.DataFrame:
     if name not in RECIPES:
         raise ValueError(f"unknown recipe {name!r}; available: {available()}")
     spec = load_spec(name)
-    ctx = Context(data)
+    compute, context_class = RECIPES[name]
+    ctx = context_class(data)
     results: dict[str, tuple[float, float]] = {}
     for t in spec.targets:
-        est, moe = RECIPES[name][t.compute](ctx)
+        est, moe = compute[t.compute](ctx)
         results[t.id] = (est / t.scale, moe / t.scale)
     return comparison_frame(spec, results)
 
@@ -51,18 +56,19 @@ def to_markdown(table: pd.DataFrame) -> str:
     head += "|---|---|---:|---:|---:|---:|---:|---|\n"
     lines = []
     for r in table.to_dict("records"):
-        pub, est, moe = float(r["published"]), float(r["estimate"]), float(r["moe"])
-        dec = 0 if abs(pub) >= 1000 else 2
+        dec = int(r["decimals"])
+        pub, est = float(r["published"]), float(r["estimate"])
         pm = "" if pd.isna(r["published_moe"]) else f"{float(r['published_moe']):,.{dec}f}"
+        moe = "" if pd.isna(r["moe"]) else f"{float(r['moe']):,.{dec}f}"
         rel = "" if pd.isna(r["moe_rel_diff"]) else f"{float(r['moe_rel_diff']):+.1%}"
         lines.append(
             f"| {r['table']} | {r['label']} | {pub:,.{dec}f} | {pm} | {est:,.{dec}f} "
-            f"| {moe:,.{dec}f} | {rel} | {r['status']} |"
+            f"| {moe} | {rel} | {r['status']} |"
         )
     return head + "\n".join(lines) + "\n"
 
 
 __all__ = [
-    "RECIPES", "Context", "RecipeSpec", "Target", "available", "classify",
+    "RECIPES", "RecipeSpec", "Target", "available", "classify",
     "comparison_frame", "load_spec", "run", "to_markdown",
 ]

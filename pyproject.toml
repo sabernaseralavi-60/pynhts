@@ -64,6 +64,7 @@ ignore = ["D203", "D213"]
 "tests/*" = ["D"]
 "tools/*" = ["D"]
 "src/pynhts/recipes/stt2017.py" = ["D102", "D103"]  # one-line target functions, see module doc
+"src/pynhts/recipes/mcnally_rafiq2021.py" = ["D102", "D103"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
