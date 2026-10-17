@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+* `NHTSData.tours(config, columns, force_rebuild=False)`: tours cached as Parquet in
+  `<cache>/<wave>/derived/` (key = hash of parameters + source files; 11 s -> 0.9 s on 923,572 trips).
+* `pynhts.viz` (optional `matplotlib`, extra `pynhts[viz]`): `activity_profile` (weighted minute-by-minute
+  activity shares over the 04:00-03:59 diary day) and `plot_activity_diary` / `plot_profile` (stacked areas).
+* `pynhts.tables`: `Row`, `build`, `to_latex` (booktabs), `to_markdown` for estimate +/- MoE, SE or CI tables.
+* `tools/make_replication_artifacts.py`: Figure 1 and Table 1 of the McNally-Rafiq replication.
 * `pynhts.tours`: `TourConfig`, `build_tours` (tour numbering, completeness, HBW/HBO/NHB classes, work-tour
   patterns and types) and `chain_ids` (FHWA-style chains, 30-minute rule).
 * `NHTSData.survey_rows`: bind any rows keyed by household or person-day (e.g. tours) to the replicate

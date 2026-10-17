@@ -18,17 +18,21 @@ from __future__ import annotations
 import os
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from pynhts.core.cache import cached_frames, derived_dir, fingerprint
 from pynhts.core.schema import KEYS, TABLES, Column, TableSchema, load_schema
 from pynhts.io.converter import convert, parquet_dir, replicate_columns
 from pynhts.io.fetcher import NHTSIntegrityError
 from pynhts.stats.survey import Survey
+
+if TYPE_CHECKING:
+    from pynhts.tours import TourConfig, TourResult
 
 MissingMode = Literal["nan", "keep"]
 SkipMode = Literal["keep", "nan"]
@@ -308,6 +312,50 @@ class NHTSData:
             raise NHTSIntegrityError("row weights differ from the replicate file's weights")
         reps = rep[replicate_columns(wcol)].to_numpy(dtype=np.float64)
         return Survey(rows, unit.astype(np.int64), unit_w, reps, level=level)
+
+    def tours(
+        self,
+        config: TourConfig | None = None,
+        columns: Sequence[str] = (),
+        *,
+        force_rebuild: bool = False,
+    ) -> TourResult:
+        """Tours of every person-day (see :func:`pynhts.tours.build_tours`), cached as Parquet.
+
+        The first call forms the tours and stores them in ``<cache>/<wave>/derived/``; later
+        calls with the same ``config``, ``columns`` and source data read that file (about a
+        hundred times faster). The file name carries a hash of the parameters and of the source
+        Parquet files, so a changed parameter or a re-converted wave never returns stale tours.
+
+        Args:
+            config: Tour parameters (default :class:`~pynhts.tours.TourConfig`).
+            columns: Extra trip columns to carry on ``TourResult.trips``. ``WHYFROM``, ``WHYTO``,
+                ``TRPTRANS``, ``STRTTIME`` and ``ENDTIME`` are always included.
+            force_rebuild: Ignore and overwrite the cached file.
+
+        Returns:
+            The :class:`~pynhts.tours.TourResult` (``.tours`` and ``.trips`` are DataFrames). Trip
+            purposes are loaded with ``missing="keep"``, as tour formation needs.
+        """
+        from pynhts.tours import TourConfig, TourResult, build_tours
+
+        cfg = config or TourConfig()
+        cols = sorted({"WHYFROM", "WHYTO", "TRPTRANS", "STRTTIME", "ENDTIME", *columns})
+        key = fingerprint(
+            {"wave": self.wave, "config": cfg, "columns": cols},
+            [self.directory / "trip.parquet"],
+        )
+
+        def build() -> dict[str, pd.DataFrame]:
+            trips = self.trips(cols, weight=False, missing="keep")
+            res = build_tours(trips, cfg)
+            return {"tours": res.tours, "tour_trips": res.trips}
+
+        frames = cached_frames(
+            derived_dir(self.directory), ("tours", "tour_trips"), key, build,
+            force_rebuild=force_rebuild,
+        )
+        return TourResult(frames["tour_trips"], frames["tours"], cfg)
 
     def decode_labels(
         self, frame: pd.DataFrame, columns: Sequence[str] | None = None, *, table: str
