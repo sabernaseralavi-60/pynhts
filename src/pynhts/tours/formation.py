@@ -125,12 +125,12 @@ def build_tours(trips: pd.DataFrame, config: TourConfig | None = None) -> TourRe
     wt = np.select(
         [tours["n_during"] > 0, (tours["n_before"] + tours["n_after"]) > 0, tours["n_work"] > 1],
         ["work_based", "complex", "multi_work"], default="simple")
-    tours["work_type"] = pd.array(np.where(has_work, wt, None), dtype="string")
+    tours["work_type"] = pd.Series(wt, index=tours.index).where(has_work).astype("string")
     label = (
         "(" + tours["n_before"].astype(str) + "," + tours["n_after"].astype(str) + ","
         + tours["n_during"].astype(str) + ")"
     )
-    tours["pattern"] = pd.array(np.where(has_work, label, None), dtype="string")
+    tours["pattern"] = label.where(has_work).astype("string")
 
     drop = [c for c in df.columns if c.startswith("_")]
     df = df.drop(columns=drop)
