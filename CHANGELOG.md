@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 (2026-10-17)
+
+First version published on PyPI (0.1.0 exists only as a GitHub release). README links made absolute so
+that they work on the PyPI page; no code changes.
+
 ## 0.1.0 (2026-10-17)
 
 First release. Scope: NHTS **2017** only.

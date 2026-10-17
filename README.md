@@ -9,14 +9,14 @@ Typed, survey-weight-aware Python access to US National Household Travel Survey 
 microdata.
 
 > **Scope and status (0.1.0, alpha).** Only the **2017** wave is supported; other waves come
-> after this one is solid. The API may still change. Not yet on PyPI. Results are validated
+> after this one is solid. The API may still change. Results are validated
 > against FHWA's published tables: 20 of 24 figures reproduce completely and 4 gaps are reported
-> openly in [docs/validation.md](docs/validation.md).
+> openly in [docs/validation.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md).
 
 ## Install
 
 ```
-pip install git+https://github.com/sabernaseralavi-60/pynhts.git
+pip install pynhts
 pynhts fetch --replicates        # download, verify (SHA-256) and convert; about 0.4 GB of Parquet, plus 1.8 GB of raw CSV that you may delete afterwards
 ```
 
@@ -59,19 +59,19 @@ arr = ml.to_arrays(trips, ["TRPMILES", "R_AGE"], target="TRPTRANS", weight="WTTR
 Correct NHTS analysis has many silent traps (a data server that returns HTTP 200 for missing
 files, string codes with leading zeros, `-1` skips that are not missing data, 107 copied
 parent columns in the child tables, a vehicle `PERSONID` that is not the person key, ...).
-They are documented in [docs/data_notes.md](docs/data_notes.md) and each is covered by a test.
+They are documented in [docs/data_notes.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data_notes.md) and each is covered by a test.
 
 ## Validation
 
 * All 3,807 coded values of the official codebook (counts and weighted totals) reproduce.
 * 24 figures from Tables 1 and 3 of FHWA's *Summary of Travel Trends: 2017 NHTS*, with margins
   of error: 20 reproduce completely, 2 reproduce the estimate but not the margin of error,
-  2 do not reproduce. See [docs/validation.md](docs/validation.md).
+  2 do not reproduce. See [docs/validation.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md).
 
 ## Documentation
 
-[Methods](docs/methods.md) · [Data notes](docs/data_notes.md) · [Validation](docs/validation.md)
-· [Roadmap](docs/roadmap.md) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
+[Methods](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/methods.md) · [Data notes](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data_notes.md) · [Validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md)
+· [Roadmap](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/roadmap.md) · [Contributing](https://github.com/sabernaseralavi-60/pynhts/blob/main/CONTRIBUTING.md) · [Changelog](https://github.com/sabernaseralavi-60/pynhts/blob/main/CHANGELOG.md)
 
 ## Data
 
@@ -89,4 +89,4 @@ pytest -m network -o addopts=-ra   # live ORNL download, manual only
 
 ## Citation
 
-See [CITATION.cff](CITATION.cff). License: BSD-3-Clause.
+See [CITATION.cff](https://github.com/sabernaseralavi-60/pynhts/blob/main/CITATION.cff). License: BSD-3-Clause.

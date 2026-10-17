@@ -6,7 +6,7 @@ microdata. Phase 1 covers the **2017** wave.
 ## Install
 
 ```
-pip install git+https://github.com/sabernaseralavi-60/pynhts.git
+pip install pynhts
 ```
 
 ## Five-minute tour
