@@ -12,6 +12,12 @@
   (`pynhts.recipes`); 20 reproduce completely, 4 gaps are documented.
 * Arrays, PyTorch tensors and household graph edges (`pynhts.ml`); command line interface.
 
+## Next: `pynhts.tours`
+
+Paper-driven development: tour formation and trip chaining designed to replicate the sample of
+McNally & Rafiq's 2017 transit-tour study (probe reproduces the user sample exactly). See
+[tours design notes](tours_design_notes.md).
+
 ## Not done yet
 
 * **Other waves** (2022 NextGen, 2009, 2001, 1995). Deliberately postponed until the 2017
