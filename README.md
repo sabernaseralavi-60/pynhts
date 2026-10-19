@@ -8,7 +8,7 @@
 Typed, survey-weight-aware Python access to US National Household Travel Survey (NHTS)
 microdata.
 
-> **Scope and status (0.1.0, alpha).** Only the **2017** wave is supported; other waves come
+> **Scope and status (0.2.0, alpha).** Only the **2017** wave is supported; other waves come
 > after this one is solid. The API may still change. Results are validated
 > against FHWA's published tables: 20 of 24 figures reproduce completely and 4 gaps are reported
 > openly (tours: 21 of 33, see the validation page) in [docs/validation.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md).

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+(nothing yet)
+
+## 0.2.0 (2026-10-19)
+
+Adds the tours module, a derived-data cache, activity-diary plots and a table exporter. Scope is still NHTS **2017** only.
+
 * `NHTSData.tours(config, columns, force_rebuild=False)`: tours cached as Parquet in
   `<cache>/<wave>/derived/` (key = hash of parameters + source files; 11 s -> 0.9 s on 923,572 trips).
 * `pynhts.viz` (optional `matplotlib`, extra `pynhts[viz]`): `activity_profile` (weighted minute-by-minute
