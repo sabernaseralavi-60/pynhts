@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "colab-mcp": {
-      "command": "uvx",
-      "args": ["git+https://github.com/googlecolab/colab-mcp@b9ab3899e0f1fa493390b1fd6d54aa2e464ecdf1"],
+      "command": "C:\\Users\\admin\\.local\\bin\\colab-mcp.exe",
+      "args": [],
       "timeout": 60000
     }
   }
