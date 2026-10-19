@@ -41,12 +41,11 @@ leisure +4.3%, school -26.3% (15.6 SE). A model trained and scored unweighted re
 
 ## Literature status (docs/lit, first pass only)
 Keyword scans of the full text of Shone & Hillel, DeepAM, Kim & Bansal, Borysov et al., Abbasi et al. found no use of survey weights or survey
-sampling error in the evaluation; two treat the sample as the population. NOT a systematic proof. Closest neighbours: Mensah et al. 2025
-(bootstrap CIs for population-synthesis robustness; full text NOT read) and Snoke et al. 2018 (pMSE with analytic null). Novelty claim: to verify.
+sampling error in the evaluation; two treat the sample as the population. NOT a systematic proof. Closest neighbours: Mensah et al. 2025 (read 2026-10-19: i.i.d. bootstrap CIs of MAE/MSE/RMSE over retrained models on Montreal OD tabular attributes; no survey weights or design-based variance) and Snoke et al. 2018 (pMSE with analytic null). Novelty claim: to verify, but Mensah does not cover the design-based noise floor, the frame effect or schedules.
 
 ## Go/no-go
 Conditional GO as (a) a pynhts evaluation module + software paper (safest) and (b) a methods/benchmark paper only if: the rank-flip is confirmed on
->= 5 splits with a second trained model or a weighted caveat, Mensah et al. is read, and a second wave (2022) is added.
+>= 5 splits with a second trained model or a weighted caveat, Mensah et al. is differentiated (done, see docs/lit), and a second wave (2022) is added.
 
 ## Limits
 One survey wave; one deep model trained once at paper scale; C2ST/MIA from one synthetic draw; schedule-level (no travel state) comparison;

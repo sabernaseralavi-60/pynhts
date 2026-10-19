@@ -1,4 +1,4 @@
-- Mensah, Badu-Marfo, Farooq 2025 (Transp Res Procedia 82:3790-3806): needs the PDF in lit/ (publisher redirect blocked automated access).
+- (resolved 2026-10-19) Mensah et al. 2025: PDF supplied by the user, read; see matrix_findings.md item 2.
 - Liao et al. DeepAM: find the published-version DOI (currently arXiv 2405.17468).
 - Abbasi et al. 2026 (arXiv 2608.15867): preprint; check for a journal version.
 - Salvador et al. 2026 TRR (10.1177/03611981261456273), Anda et al. 2021, Joubert & de Waal 2020: not Crossref-verified yet.
