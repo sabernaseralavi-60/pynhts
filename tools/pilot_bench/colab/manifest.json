@@ -1,0 +1,71 @@
+{
+ "title": "Train UCL caveat at the paper's scale on NHTS 2017 (split 0)",
+ "accelerator": "T4",
+ "python": "3.12",
+ "system_pip": [
+  "pynhts==0.1.1",
+  "pyarrow"
+ ],
+ "files": [
+  {
+   "src": "../diary.py",
+   "dst": "/content/pb/diary.py"
+  },
+  {
+   "src": "../schedule.py",
+   "dst": "/content/pb/schedule.py"
+  },
+  {
+   "src": "export_inputs.py",
+   "dst": "/content/export_inputs.py"
+  },
+  {
+   "src": "run_full.yaml",
+   "dst": "/content/caveat_run/run_full.yaml"
+  }
+ ],
+ "setup_cmds": [
+  "python /content/export_inputs.py"
+ ],
+ "skip_if_exists": "/content/caveat_run/train_schedules.csv",
+ "repos": [
+  {
+   "url": "https://github.com/big-ucl/caveat.git",
+   "commit": "f4a231e79c24a60f0db9a003ea1ac1fd8eeaa194",
+   "dir": "/content/caveat",
+   "editable_nodeps": true
+  }
+ ],
+ "venv_packages": [
+  "torch",
+  "scipy<=1.13",
+  "numpy<2",
+  "pandas<3",
+  "pytorch-lightning",
+  "pot",
+  "click",
+  "tabulate",
+  "matplotlib",
+  "tensorboard",
+  "optuna",
+  "optuna-integration",
+  "pyproj",
+  "xlrd",
+  "acteval"
+ ],
+ "venv_nodeps": [
+  "cml-pam"
+ ],
+ "import_check": "import torch, pam, caveat.cli; print('torch', torch.__version__, 'cuda', torch.cuda.is_available())",
+ "run": "cd /content/caveat && {bin}/caveat run /content/caveat_run/run_full.yaml",
+ "run_filter": "Epoch [0-9]+: 100%|Generation took|Results saved|rror|Traceback",
+ "log": "/content/train.log",
+ "output_root": "/content/caveat_run",
+ "outputs": [
+  "./logs/*/synthetic_schedules.csv",
+  "./logs/*/synthetic_attributes.csv",
+  "./logs/*/hparams.yaml",
+  "./logs/*/timer.csv"
+ ],
+ "zip_name": "caveat_outputs.zip"
+}
