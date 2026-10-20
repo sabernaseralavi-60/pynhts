@@ -3,6 +3,9 @@
     "colab-mcp": {
       "command": "C:\\Users\\admin\\.local\\bin\\colab-mcp.exe",
       "args": [],
+      "env": {
+        "BROWSER": "C:/PROGRA~1/Google/Chrome/Application/chrome.exe"
+      },
       "timeout": 60000
     }
   }
