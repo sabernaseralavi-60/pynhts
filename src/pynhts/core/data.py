@@ -22,10 +22,9 @@ from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 import pandas as pd
-import pyarrow as pa
 import pyarrow.parquet as pq
 
-from pynhts.core.cache import cached_frames, derived_dir, fingerprint
+from pynhts.core.cache import arrow_to_pandas, cached_frames, derived_dir, fingerprint
 from pynhts.core.schema import KEYS, TABLES, Column, TableSchema, load_schema
 from pynhts.io.converter import convert, parquet_dir, replicate_columns
 from pynhts.io.fetcher import NHTSIntegrityError
@@ -61,11 +60,6 @@ _REPLICATE_FILE = {
     "person": ("repw_person.parquet", "WTPERFIN"),
     "trip": ("repw_trip.parquet", "WTTRDFIN"),
 }
-
-
-def _to_pandas(table: pa.Table) -> pd.DataFrame:
-    df: pd.DataFrame = table.to_pandas(types_mapper={pa.string(): pd.StringDtype()}.get)
-    return df
 
 
 class NHTSData:
@@ -176,12 +170,12 @@ class NHTSData:
         if any(anc_cols for anc_cols in pulled.values()):
             # join keys must be present even when the caller did not ask for keys
             read = list(dict.fromkeys([*KEYS[table], *read]))
-        df = _to_pandas(pq.read_table(self.directory / f"{table}.parquet", columns=read))
+        df = arrow_to_pandas(pq.read_table(self.directory / f"{table}.parquet", columns=read))
         n_rows = len(df)
 
         for anc, cols in pulled.items():
             on = list(KEYS[anc])
-            parent = _to_pandas(
+            parent = arrow_to_pandas(
                 pq.read_table(self.directory / f"{anc}.parquet", columns=[*on, *cols])
             )
             if parent.duplicated(on).any():
@@ -401,7 +395,7 @@ class NHTSData:
                 f"{path} missing; run pynhts.io.convert(groups=('replicates',)) "
                 "or load(..., replicates=True)"
             )
-        df = _to_pandas(pq.read_table(path))
+        df = arrow_to_pandas(pq.read_table(path))
         converted: pd.DataFrame = df.astype({c: dtype for c in replicate_columns(wcol)})
         return converted
 

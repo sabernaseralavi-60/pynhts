@@ -154,3 +154,10 @@ def test_survey_rows_validates_level_and_keys(d):
         d.survey_rows(rows.drop(columns="PERSONID"), "trip")
     with pytest.raises(FileNotFoundError, match="replicate"):
         d.survey_rows(rows, "trip")  # keys fine, but this synthetic cache has no replicates
+
+
+def test_string_columns_are_arrow_backed(d):
+    # Python-object strings needed ~3x the memory on the real trip table (OOM on a 13 GB runtime).
+    t = d.trips(["TRPTRANS"])
+    assert isinstance(t["TRPTRANS"].dtype, pd.StringDtype)
+    assert t["TRPTRANS"].dtype.storage == "pyarrow"

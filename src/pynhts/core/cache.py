@@ -16,8 +16,34 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+import pyarrow as pa
 
 CACHE_VERSION = 1
+
+
+def arrow_to_pandas(table: pa.Table) -> pd.DataFrame:
+    """Arrow table to DataFrame with Arrow-backed strings.
+
+    Python-object strings needed ~3x the memory on the 0.9M-row trip table. Every read of the NHTS
+    tables goes through here (derived frames use :func:`arrow_strings`).
+    """
+    # pandas metadata (written by DataFrame.to_parquet) would restore the stored Python-string dtype
+    plain = table.replace_schema_metadata(None)
+    arrow_str = pd.StringDtype("pyarrow")
+    mapper = {pa.string(): arrow_str, pa.large_string(): arrow_str}.get
+    df: pd.DataFrame = plain.to_pandas(types_mapper=mapper)
+    return df
+
+
+def arrow_strings(df: pd.DataFrame) -> pd.DataFrame:
+    """Give every ``string`` column Arrow storage (``object`` columns are left as they are).
+
+    pandas restores ``string`` columns read from Parquet with Python storage; applying this to the
+    fresh and the cached result alike keeps the two identical.
+    """
+    arrow_str = pd.StringDtype("pyarrow")
+    cols = [c for c in df.columns if isinstance(df[c].dtype, pd.StringDtype)]
+    return df.astype(dict.fromkeys(cols, arrow_str)) if cols else df
 
 
 def _plain(value: Any) -> Any:
@@ -66,10 +92,10 @@ def cached_frames(
     paths = {n: directory / f"{n}_{key}.parquet" for n in names}
     if not force_rebuild and all(p.exists() for p in paths.values()):
         try:
-            return {n: pd.read_parquet(p) for n, p in paths.items()}
+            return {n: arrow_strings(pd.read_parquet(p)) for n, p in paths.items()}
         except (OSError, ValueError):
             pass
-    frames = build()
+    frames = {n: arrow_strings(f) for n, f in build().items()}
     try:
         directory.mkdir(parents=True, exist_ok=True)
         for name, target in paths.items():
