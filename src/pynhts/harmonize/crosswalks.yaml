@@ -1,0 +1,139 @@
+# Code crosswalks between NHTS waves (2017 <-> 2022): trip purpose and trip mode.
+#
+# Sources (read 2026-10-21):
+#   * 2022 NHTS Data User Guide (V2.0.1, revised December 2024), Appendix 2, Tables 12 (trip purpose)
+#     and 13 (means of transportation): the only official 2017 -> 2022 code alignment.
+#   * the two codebooks (code labels), and the ORNL derived variables WHYTRP1S / TRIPMODE, which were
+#     used to settle a conflict between the guide and the codebook (see purpose, 2022 codes 18/19).
+#
+# One row per (wave, code). Fields
+#   hint      the start of the codebook label of the code (a test checks it against the codebook)
+#   category  harmonized category shared by both waves; rows of one category are comparable
+#   summary   (mode only) the "Summary Mode of Travel" group the guide's Table 13 puts the code in
+#   status    exact       the code means the same thing in both waves
+#             merge       several codes of this wave collapse into the category; the other wave is finer
+#             approximate the two waves do not define the category identically (see note)
+#             only_here   the other wave has no counterpart; kept so that coverage is complete
+#   note      what is known about the difference
+#
+# Codes -9, -8, -7 (not ascertained, don't know, refused) are missing values in both waves.
+
+purpose:
+  variable: WHYTO            # also applies to WHYFROM
+  source: "2022 NHTS Data User Guide, Table 12; codebooks 2017 v1.2 and 2022 v2.1"
+  rows:
+    - {wave: 2017, code: "01", hint: "Regular home activities", category: home_activities, status: exact}
+    - {wave: 2022, code: "01", hint: "Regular activities at home", category: home_activities, status: exact}
+    - {wave: 2017, code: "02", hint: "Work from home", category: work_from_home, status: exact}
+    - {wave: 2022, code: "02", hint: "Work from home", category: work_from_home, status: exact}
+    - {wave: 2017, code: "03", hint: "Work", category: work, status: exact}
+    - {wave: 2022, code: "03", hint: "Work at a non-home location", category: work, status: exact}
+    - wave: 2017
+      code: "04"
+      hint: "Work-related meeting"
+      category: work_related
+      status: approximate
+      note: "2017 'work-related meeting / trip'; 2022 splits work-related travel into 04 (drop-off/pick-up for work) and 05 (other work-related activities), so the scopes differ."
+    - {wave: 2022, code: "04", hint: "Work activity to drop-off", category: work_related, status: approximate}
+    - {wave: 2022, code: "05", hint: "Other work-related", category: work_related, status: approximate, note: "No 2017 counterpart listed in the guide (it aligns only code 04)."}
+    - {wave: 2017, code: "08", hint: "Attend school", category: school, status: exact}
+    - {wave: 2022, code: "06", hint: "Attend school", category: school, status: exact}
+    - {wave: 2017, code: "09", hint: "Attend child care", category: care, status: merge, note: "2017 separates child care (09) from adult care (10); 2022 has one code (07)."}
+    - {wave: 2017, code: "10", hint: "Attend adult care", category: care, status: merge}
+    - {wave: 2022, code: "07", hint: "Attend childcare or adult care", category: care, status: exact}
+    - {wave: 2017, code: "05", hint: "Volunteer activities", category: volunteer, status: exact}
+    - {wave: 2022, code: "08", hint: "Volunteer activities", category: volunteer, status: exact}
+    - {wave: 2017, code: "07", hint: "Change type of transportation", category: change_mode, status: exact}
+    - {wave: 2022, code: "09", hint: "Change type of transportation", category: change_mode, status: exact}
+    - {wave: 2017, code: "06", hint: "Drop off /pick up", category: dropoff_pickup, status: exact}
+    - {wave: 2022, code: "10", hint: "Drop off/pick up", category: dropoff_pickup, status: exact}
+    - {wave: 2017, code: "18", hint: "Health care visit", category: health_care, status: exact}
+    - {wave: 2022, code: "11", hint: "Health care visit", category: health_care, status: exact}
+    - {wave: 2017, code: "13", hint: "Buy meals", category: meals, status: exact}
+    - {wave: 2022, code: "12", hint: "Buy meals", category: meals, status: exact}
+    - wave: 2017
+      code: "11"
+      hint: "Buy goods"
+      category: shopping
+      status: approximate
+      note: "The guide aligns 2022 code 13 ('Shop/buy/pick-up or return goods') with both 2017 'Buy goods' (11) and 'Buy services' (12). Where 2017 'services' trips (dry cleaning, banking) are reported in 2022 is not stated; it may be code 14."
+    - {wave: 2017, code: "12", hint: "Buy services", category: shopping, status: approximate}
+    - {wave: 2022, code: "13", hint: "Shop/buy/pick-up or return goods", category: shopping, status: approximate}
+    - {wave: 2017, code: "14", hint: "Other general errands", category: other_errands, status: exact}
+    - {wave: 2022, code: "14", hint: "Other family/personal errands", category: other_errands, status: exact}
+    - {wave: 2017, code: "15", hint: "Recreational activities", category: recreation, status: exact}
+    - {wave: 2022, code: "15", hint: "Recreational activities", category: recreation, status: exact}
+    - {wave: 2017, code: "16", hint: "Exercise", category: exercise, status: exact}
+    - {wave: 2022, code: "16", hint: "Exercise", category: exercise, status: exact}
+    - {wave: 2017, code: "17", hint: "Visit friends or relatives", category: visit, status: exact}
+    - {wave: 2022, code: "17", hint: "Visit friends or relatives", category: visit, status: exact}
+    - {wave: 2017, code: "19", hint: "Religious or other community", category: religious_community, status: exact}
+    - wave: 2022
+      code: "19"
+      hint: "Religious or other community"
+      category: religious_community
+      status: exact
+      note: "The guide's Table 12 prints 18 for this category and 19 for 'Rest or relaxation'; the 2022 codebook and the data say the opposite (code 19 lands in WHYTRP1S 20 'School/Daycare/Religious', code 18 in 50 'Social/Recreational'). The codebook is followed."
+    - wave: 2022
+      code: "18"
+      hint: "Rest or relaxation"
+      category: other
+      status: merge
+      note: "The guide aligns 'Rest or relaxation/vacation' with 2017 'Something else'. Its code is 18 in the codebook (the guide prints 19)."
+    - {wave: 2017, code: "97", hint: "Something else", category: other, status: merge}
+    - {wave: 2022, code: "97", hint: "Something else", category: other, status: merge}
+
+mode:
+  variable: TRPTRANS
+  source: "2022 NHTS Data User Guide, Table 13; codebooks 2017 v1.2 and 2022 v2.1"
+  # WARNING: the same TRPTRANS code means different things in the two waves (02 is a bicycle in 2017
+  # and a van in 2022; 03 a car and an SUV; 20 a boat and walking). Never pool the raw codes.
+  rows:
+    - {wave: 2017, code: "01", hint: "Walk", category: walk, summary: walk, status: exact}
+    - {wave: 2022, code: "20", hint: "Walked", category: walk, summary: walk, status: exact}
+    - {wave: 2017, code: "02", hint: "Bicycle", category: bike, summary: bike, status: exact}
+    - {wave: 2022, code: "18", hint: "Bicycle", category: bike, summary: bike, status: exact, note: "2022 includes bikeshare and e-bikes in the label."}
+    - {wave: 2017, code: "03", hint: "Car", category: car, summary: private_vehicle, status: exact}
+    - {wave: 2017, code: "18", hint: "Rental car", category: car, summary: private_vehicle, status: merge, note: "The guide aligns 2017 rental car with 2022 'Car'."}
+    - {wave: 2022, code: "01", hint: "Car", category: car, summary: private_vehicle, status: exact}
+    - {wave: 2017, code: "04", hint: "SUV", category: suv, summary: private_vehicle, status: exact}
+    - {wave: 2022, code: "03", hint: "SUV", category: suv, summary: private_vehicle, status: exact}
+    - {wave: 2017, code: "05", hint: "Van", category: van, summary: private_vehicle, status: exact}
+    - {wave: 2022, code: "02", hint: "Van", category: van, summary: private_vehicle, status: exact}
+    - {wave: 2017, code: "06", hint: "Pickup truck", category: pickup, summary: private_vehicle, status: exact}
+    - {wave: 2022, code: "04", hint: "Pickup truck", category: pickup, summary: private_vehicle, status: exact}
+    - {wave: 2017, code: "08", hint: "Motorcycle", category: motorcycle, summary: private_vehicle, status: exact}
+    - {wave: 2022, code: "07", hint: "Motorcycle", category: motorcycle, summary: private_vehicle, status: exact}
+    - {wave: 2017, code: "09", hint: "RV", category: rv, summary: other_vehicle, status: exact}
+    - {wave: 2022, code: "06", hint: "Recreational Vehicle", category: rv, summary: other_vehicle, status: exact, note: "The guide's Table 13 puts RVs in 'Other Vehicle', but ORNL's own TRIPMODE (2022) counts RV trips as privately owned vehicle driver/passenger. The summary group follows the guide."}
+    - {wave: 2017, code: "07", hint: "Golf cart", category: golf_cart, summary: other_vehicle, status: only_here, note: "No 2022 code."}
+    - {wave: 2017, code: "17", hint: "Taxi", category: taxi_rideshare, summary: other_vehicle, status: exact}
+    - {wave: 2022, code: "15", hint: "Taxicab", category: taxi_rideshare, summary: other_vehicle, status: merge}
+    - {wave: 2022, code: "16", hint: "Other ride-sharing", category: taxi_rideshare, summary: other_vehicle, status: merge, note: "2017 'Taxi / limo (including Uber / Lyft)' covers both of these."}
+    - {wave: 2017, code: "10", hint: "School bus", category: school_bus, summary: school_bus, status: exact}
+    - {wave: 2022, code: "09", hint: "School bus", category: school_bus, summary: school_bus, status: exact}
+    - {wave: 2017, code: "11", hint: "Public or commuter bus", category: bus, summary: public_transit, status: exact}
+    - {wave: 2022, code: "08", hint: "Public or commuter bus", category: bus, summary: public_transit, status: exact}
+    - {wave: 2017, code: "16", hint: "Subway", category: rail_local, summary: public_transit, status: merge}
+    - {wave: 2022, code: "11", hint: "Subway", category: rail_local, summary: public_transit, status: merge}
+    - {wave: 2022, code: "10", hint: "Street car", category: rail_local, summary: public_transit, status: merge}
+    - wave: 2017
+      code: "15"
+      hint: "Amtrak"
+      category: rail_commuter_amtrak
+      summary: public_transit
+      status: approximate
+      note: "2017 has one code for Amtrak and commuter rail; 2022 splits it (commuter rail 12 is public transit, Amtrak 13 is 'other transit' in the guide's summary), so the summary group of 2017 code 15 is mixed."
+    - {wave: 2022, code: "12", hint: "Commuter rail", category: rail_commuter_amtrak, summary: public_transit, status: approximate}
+    - {wave: 2022, code: "13", hint: "Amtrak", category: rail_commuter_amtrak, summary: other_transit, status: approximate}
+    - {wave: 2017, code: "12", hint: "Paratransit", category: paratransit, summary: other_transit, status: exact}
+    - {wave: 2022, code: "17", hint: "Paratransit", category: paratransit, summary: other_transit, status: exact}
+    - {wave: 2017, code: "13", hint: "Private / Charter", category: charter_intercity_bus, summary: other_transit, status: merge, note: "No 2022 code; the guide gives no 2022 home for charter or intercity buses."}
+    - {wave: 2017, code: "14", hint: "City-to-city bus", category: charter_intercity_bus, summary: other_transit, status: merge}
+    - {wave: 2017, code: "20", hint: "Boat", category: ferry, summary: other_transit, status: exact}
+    - {wave: 2022, code: "22", hint: "Ferry", category: ferry, summary: other_transit, status: exact, note: "Listed in the guide's Table 13; absent from the public file (the 2022 codebook lists only observed codes)."}
+    - {wave: 2017, code: "19", hint: "Airplane", category: air, summary: other, status: exact}
+    - {wave: 2022, code: "14", hint: "Airplane", category: air, summary: other, status: exact}
+    - {wave: 2022, code: "19", hint: "E-scooter", category: escooter, summary: other, status: only_here, note: "No 2017 code (new mode)."}
+    - {wave: 2017, code: "97", hint: "Something Else", category: other, summary: other, status: exact}
+    - {wave: 2022, code: "21", hint: "Other", category: other, summary: other, status: exact}

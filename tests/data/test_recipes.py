@@ -22,8 +22,21 @@ def test_every_target_has_its_expected_status(table):  # stt2017
 
 def test_reproduction_scorecard(table):
     counts = table["status"].value_counts().to_dict()
-    assert counts == {"reproduced": 20, "estimate_only": 2, "not_reproduced": 2}
-    assert len(table) == 24
+    assert counts == {"reproduced": 31, "estimate_only": 3, "not_reproduced": 3}
+    assert len(table) == 37
+
+
+def test_adjusted_trip_length_rows_and_annual_totals_reproduce(table):
+    """TRPMILAD (adjusted miles, V1.2) reproduces the report's "2017 adj." rows and Table 1d."""
+    t = table.set_index("id")
+    for key in ["pmt_adj_per_hh", "vmt_adj_per_hh", "pmt_adj_per_person",
+                "person_trip_length_adj", "vehicle_trip_length_adj", "vehicles_total",
+                "person_trips_total", "pmt_total", "pmt_adj_total", "vmt_total",
+                "vmt_adj_total"]:
+        assert t.loc[key, "status"] == "reproduced", key
+    # the only unexplained vehicle-trip figures are the same definition problem
+    assert t.loc["hh_vehicle_trips_total", "status"] == "not_reproduced"
+    assert abs(t.loc["hh_vehicle_trips_total", "estimate_diff"]) / 220_430 < 0.001
 
 
 def test_households_and_persons_reproduce_to_the_thousand(table):
@@ -41,7 +54,8 @@ def test_controlled_totals_have_zero_variance(table):
 def test_documented_gaps_are_the_known_ones(table):
     gaps = table[table["status"] != "reproduced"].set_index("id")
     assert set(gaps.index) == {"persons_all", "pmt_per_person", "vmt_per_driver",
-                               "vtrips_per_driver"}
+                               "vtrips_per_driver", "vmt_adj_per_driver",
+                               "hh_vehicle_trips_total"}
     assert gaps.loc["persons_all", "estimate"] == pytest.approx(301_599, abs=1)
     assert gaps.loc["pmt_per_person", "moe_rel_diff"] == pytest.approx(-0.0676, abs=0.002)
 

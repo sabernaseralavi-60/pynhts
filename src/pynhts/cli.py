@@ -1,4 +1,4 @@
-"""Command line interface: ``pynhts fetch | register | info | validate``."""
+"""Command line interface: ``pynhts fetch | docs | register | info | validate``."""
 
 from __future__ import annotations
 
@@ -26,6 +26,10 @@ def _build_parser() -> argparse.ArgumentParser:
     r.add_argument("--wave", type=int, default=2017)
     r.add_argument("--link", action="store_true", help="hard-link instead of copying")
 
+    d = sub.add_parser("docs", help="download the official documents of a wave (hash-checked)")
+    d.add_argument("--wave", type=int, default=2017)
+    d.add_argument("--offline", action="store_true", help="only verify what is already there")
+
     i = sub.add_parser("info", help="show the cache location and what it contains")
     i.add_argument("--wave", type=int, default=2017)
 
@@ -44,8 +48,9 @@ def _info(wave: int, cache: str | None) -> int:
     for m in reg.members.values():
         state = "present" if (raw / m.name).is_file() else "absent"
         print(f"  {m.name:<12} {state:<8} {m.size / 1e6:>8.1f} MB")
-    for stem in ("household", "person", "trip", "vehicle", "repw_household", "repw_person",
-                 "repw_trip"):
+    stems = [*reg.tables, *(("repw_household", "repw_person", "repw_trip")
+                            if "replicates" in reg.groups else ())]
+    for stem in stems:
         f = pq / f"{stem}.parquet"
         print(f"  {f.name:<24} {'built' if f.is_file() else 'not built'}")
     return 0
@@ -57,6 +62,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     cache: str | None = args.cache
     if args.command == "info":
         return _info(args.wave, cache)
+    if args.command == "docs":
+        from pynhts.io import fetch_docs
+
+        for name, path in fetch_docs(args.wave, cache=cache, offline=args.offline).items():
+            print(f"{name:<24} {path}")
+        return 0
     if args.command == "register":
         from pynhts.io import register_local
 

@@ -138,6 +138,66 @@ def fetch(
     return result
 
 
+def docs_dir(wave: int = 2017, cache: str | os.PathLike[str] | None = None) -> Path:
+    """Directory that holds the verified official documents of ``wave``."""
+    return cache_dir(cache) / str(wave) / "docs"
+
+
+def fetch_docs(
+    wave: int = 2017,
+    *,
+    cache: str | os.PathLike[str] | None = None,
+    offline: bool = False,
+    names: tuple[str, ...] | None = None,
+    progressbar: bool = False,
+) -> dict[str, Path]:
+    """Download the official codebook, user guide, weighting and release documents of ``wave``.
+
+    Every file must match the SHA-256 pinned in the registry, so a page the server returns in
+    place of a missing document is rejected. The files land in ``<cache>/<wave>/docs/``.
+
+    Args:
+        wave: Survey year.
+        cache: Cache root override.
+        offline: Never touch the network; raise if a document is missing.
+        names: Restrict to these registry names (e.g. ``("users_guide.pdf",)``).
+        progressbar: Show a download progress bar.
+
+    Returns:
+        Mapping from registry name (``users_guide.pdf``, ``codebook.xlsx``, ...) to local path.
+
+    Raises:
+        FileNotFoundError: offline and a document is missing.
+        KeyError: ``names`` contains an unknown document.
+        ValueError: a downloaded file fails its SHA-256 check (raised by ``pooch``).
+    """
+    import pooch
+
+    docs = load_registry(wave).documentation
+    unknown = [n for n in (names or ()) if n not in docs]
+    if unknown:
+        raise KeyError(f"unknown documents {unknown}; available: {sorted(docs)}")
+    out_dir = docs_dir(wave, cache)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    result: dict[str, Path] = {}
+    for name, info in docs.items():
+        if names is not None and name not in names:
+            continue
+        path = out_dir / name
+        if path.is_file() and sha256_file(path) == info["sha256"]:
+            result[name] = path
+            continue
+        if offline:
+            raise FileNotFoundError(f"offline mode and {path} is missing or fails its SHA-256")
+        path.unlink(missing_ok=True)
+        got = pooch.retrieve(
+            url=info["url"], known_hash=f"sha256:{info['sha256']}", fname=name,
+            path=out_dir, progressbar=progressbar,
+        )
+        result[name] = Path(got)
+    return result
+
+
 def clean_downloads(wave: int, cache: str | os.PathLike[str] | None = None) -> None:
     """Remove the temporary zip downloads of ``wave`` (kept while several members need them)."""
     dl_dir = raw_dir(wave, cache) / "_downloads"

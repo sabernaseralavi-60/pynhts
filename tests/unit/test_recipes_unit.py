@@ -28,7 +28,7 @@ def test_classify_rules():
 def test_packaged_spec_is_well_formed():
     spec = load_spec("stt2017")
     ids = [t.id for t in spec.targets]
-    assert len(ids) == len(set(ids)) == 24
+    assert len(ids) == len(set(ids)) == 37
     from pynhts.recipes.stt2017 import COMPUTE
     assert {t.compute for t in spec.targets} <= set(COMPUTE)
     mr = load_spec("mcnally_rafiq2021")

@@ -11,7 +11,10 @@ variables:
 * vehicle trips and vehicle miles: trips on which the respondent drove (``DRVR_FLG == "01"``)
   and ``VMT_MILE`` (-1 treated as 0 miles);
 * rates per person/driver use one survey; rates per household divide person-weighted totals by
-  household-weighted households (:func:`pynhts.stats.ratio_across`).
+  household-weighted households (:func:`pynhts.stats.ratio_across`);
+* "adjusted" 2017 figures use ``TRPMILAD`` (trip miles of version 1.2, scaled by 1.0735 for private
+  vehicle work trips and 1.1151 for other private vehicle trips); adjusted vehicle miles scale
+  ``VMT_MILE`` of driver trips by the same ``TRPMILAD / TRPMILES`` factor.
 """
 
 from __future__ import annotations
@@ -58,21 +61,38 @@ class Context:
         return _jkn(self.data.survey("trip", ["TRPMILES"]))
 
     @cached_property
+    def trip_miles(self) -> Survey:
+        """Trip survey with vehicle trips and (original and adjusted) vehicle miles per trip."""
+        svy = _jkn(self.data.survey("trip", ["TRPMILES", "TRPMILAD", "DRVR_FLG", "VMT_MILE"]))
+        rows = svy.rows
+        driven = (rows["DRVR_FLG"] == "01").to_numpy(dtype=bool)
+        vmt = np.where(driven & (rows["VMT_MILE"] >= 0), rows["VMT_MILE"], 0.0)
+        factor = np.where(rows["TRPMILES"] > 0, rows["TRPMILAD"] / rows["TRPMILES"], 1.0)
+        rows["vtrip"] = driven.astype(float)
+        rows["vmt"] = vmt
+        rows["vmt_adj"] = vmt * np.where(np.isfinite(factor), factor, 1.0)
+        return svy
+
+    @cached_property
     def person_travel(self) -> Survey:
         """Person survey carrying each person's daily trip and mile totals."""
-        trips = self.data.trips(["DRVR_FLG", "VMT_MILE", "TRPMILES"], weight=False)
+        trips = self.data.trips(["DRVR_FLG", "VMT_MILE", "TRPMILES", "TRPMILAD"], weight=False)
         driven = trips["DRVR_FLG"] == "01"
+        factor = np.where(trips["TRPMILES"] > 0, trips["TRPMILAD"] / trips["TRPMILES"], 1.0)
+        vmt = np.where(driven & (trips["VMT_MILE"] >= 0), trips["VMT_MILE"], 0.0)
         frame = pd.DataFrame({
             "HOUSEID": trips["HOUSEID"], "PERSONID": trips["PERSONID"],
             "ntrips": 1.0,
             "pmt": trips["TRPMILES"].fillna(0.0).astype(float),
+            "pmt_adj": trips["TRPMILAD"].fillna(0.0).astype(float),
             "vtrips": driven.astype(float),
-            "vmt": np.where(driven & (trips["VMT_MILE"] >= 0), trips["VMT_MILE"], 0.0),
+            "vmt": vmt,
+            "vmt_adj": vmt * np.where(np.isfinite(factor), factor, 1.0),
         })
         per = frame.groupby(["HOUSEID", "PERSONID"], as_index=False).sum()
         base = self.persons
         rows = base.rows.merge(per, on=["HOUSEID", "PERSONID"], how="left", validate="1:1")
-        cols = ["ntrips", "pmt", "vtrips", "vmt"]
+        cols = ["ntrips", "pmt", "pmt_adj", "vtrips", "vmt", "vmt_adj"]
         rows[cols] = rows[cols].fillna(0.0)
         rows["is_driver"] = (rows["DRIVER"] == "01").astype(float)
         return Survey(rows, base._unit, base._w, base._r, level=base.level)
@@ -193,6 +213,60 @@ def vehicle_trip_length(ctx: Context) -> Result:
     return _pair(ctx.person_travel.ratio("vmt", "vtrips"))
 
 
+# -- adjusted trip length (TRPMILAD), Table 3 "2017 adj." rows ---------------------------------
+def pmt_adj_per_hh(ctx: Context) -> Result:
+    return _per_hh(ctx, "pmt_adj")
+
+
+def vmt_adj_per_hh(ctx: Context) -> Result:
+    return _per_hh(ctx, "vmt_adj")
+
+
+def pmt_adj_per_person(ctx: Context) -> Result:
+    return _pair(ctx.person_travel.mean("pmt_adj"))
+
+
+def vmt_adj_per_driver(ctx: Context) -> Result:
+    return _pair(ctx.person_travel.ratio("vmt_adj", "is_driver"))
+
+
+def person_trip_length_adj(ctx: Context) -> Result:
+    return _pair(ctx.trip_miles.mean("TRPMILAD"))
+
+
+def vehicle_trip_length_adj(ctx: Context) -> Result:
+    return _pair(ctx.person_travel.ratio("vmt_adj", "vtrips"))
+
+
+# -- Table 1d: annual totals ("millions" and "thousands" are removed by the target's scale) ------
+def vehicles_total(ctx: Context) -> Result:
+    return _pair(_jkn(ctx.data.survey("vehicle", ["VEHID"])).total())
+
+
+def person_trips_total(ctx: Context) -> Result:
+    return _pair(ctx.trip_miles.total())
+
+
+def pmt_total(ctx: Context) -> Result:
+    return _pair(ctx.trip_miles.total("TRPMILES"))
+
+
+def pmt_adj_total(ctx: Context) -> Result:
+    return _pair(ctx.trip_miles.total("TRPMILAD"))
+
+
+def hh_vehicle_trips_total(ctx: Context) -> Result:
+    return _pair(ctx.trip_miles.total("vtrip"))
+
+
+def vmt_total(ctx: Context) -> Result:
+    return _pair(ctx.trip_miles.total("vmt"))
+
+
+def vmt_adj_total(ctx: Context) -> Result:
+    return _pair(ctx.trip_miles.total("vmt_adj"))
+
+
 COMPUTE: dict[str, Callable[[Context], Result]] = {
     f.__name__: f
     for f in (
@@ -200,5 +274,8 @@ COMPUTE: dict[str, Callable[[Context], Result]] = {
         age_20_34, age_35_64, age_65plus, age_16plus, drivers, workers, trips_per_hh,
         pmt_per_hh, vtrips_per_hh, vmt_per_hh, trips_per_person, pmt_per_person,
         person_trip_length, vtrips_per_driver, vmt_per_driver, vehicle_trip_length,
+        pmt_adj_per_hh, vmt_adj_per_hh, pmt_adj_per_person, vmt_adj_per_driver,
+        person_trip_length_adj, vehicle_trip_length_adj, vehicles_total, person_trips_total,
+        pmt_total, pmt_adj_total, hh_vehicle_trips_total, vmt_total, vmt_adj_total,
     )
 }

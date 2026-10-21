@@ -2,7 +2,8 @@
 #   McGuckin, N. & Fucci, A. (2018). Summary of Travel Trends: 2017 National Household Travel Survey.
 #   Federal Highway Administration. https://nhts.ornl.gov/assets/2017_nhts_summary_travel_trends.pdf
 #   (PDF sha256 2171916f9929a593a7d86a3a1c97445094271a91cd5dba186ecdfd594e51aa58, read 2026-10-17;
-#   Table 1: PDF pages 12-14, Table 3: PDF pages 19-20; rows "2017" / "2017 orig." and "MOE").
+#   Table 1: PDF pages 12-14, Table 3: PDF pages 19-20; rows "2017" / "2017 orig." and "MOE";
+#   2026-10-21 added the "2017 adj." rows of Table 3 and the 2017 rows of Table 1d (annual totals).
 #
 # Fields
 #   id        stable identifier
@@ -45,8 +46,13 @@ targets:
     note: >-
       The printed total exceeds the sum of the report's own five age bands (301,599) by 19,820
       thousand; the weights reproduce that sum exactly and the public file has no persons under
-      age 5. Cause not established (a population-control baseline is a plausible but unverified
-      explanation).
+      age 5. The report itself points to the cause: its Table A-1 prints the same 321,419 as
+      "Population in occupied housing units, estimate 2016", the Census control total that the
+      weighting was tied to at census-division level (Appendix A, page A-2), which counts every
+      age, while the file stops at age 5. The 19,820 thousand gap is then the population under 5,
+      which is of the right size (about 6 percent of the US population) but was not checked here
+      against a Census table (the Census API needs a key). The report's own "All 5+" column repeats
+      321,419, so that label is not literally true for the printed value.
   - {id: age_under16,   table: 1b, label: "Persons under 16 (thousands)",      scale: 1000, decimals: 0, published: 45498,  moe: 756,  compute: age_under16,   expected: reproduced}
   - {id: age_16_19,     table: 1b, label: "Persons 16-19 (thousands)",         scale: 1000, decimals: 0, published: 17755,  moe: 945,  compute: age_16_19,     expected: reproduced}
   - {id: age_20_34,     table: 1b, label: "Persons 20-34 (thousands)",         scale: 1000, decimals: 0, published: 64339,  moe: 954,  compute: age_20_34,     expected: reproduced}
@@ -104,3 +110,40 @@ targets:
     expected: estimate_only
     note: "Estimate reproduces (25.84); JKn MOE is 1.055 against the printed 1.04 (1.4 percent)."
   - {id: vehicle_trip_length, table: 3b, label: "Average vehicle trip length (miles)", scale: 1, decimals: 2, published: 9.55, moe: 0.37, compute: vehicle_trip_length, expected: reproduced}
+  # ---- Table 3, "2017 adj." rows (trip distance adjusted with TRPMILAD, V1.2 release notes) -------
+  - {id: pmt_adj_per_hh,       table: 3a, label: "Daily person miles per household, adjusted", scale: 1, decimals: 2, published: 99.46, moe: 3.60, compute: pmt_adj_per_hh,       expected: reproduced}
+  - {id: vmt_adj_per_hh,       table: 3a, label: "Daily vehicle miles per household, adjusted", scale: 1, decimals: 2, published: 53.81, moe: 2.27, compute: vmt_adj_per_hh,       expected: reproduced}
+  - {id: pmt_adj_per_person,   table: 3b, label: "Daily person miles per person, adjusted",     scale: 1, decimals: 2, published: 38.98, moe: 1.41, compute: pmt_adj_per_person,   expected: reproduced}
+  - id: vmt_adj_per_driver
+    table: 3b
+    label: "Daily vehicle miles per driver, adjusted"
+    scale: 1
+    decimals: 2
+    published: 28.49
+    moe: 1.16
+    compute: vmt_adj_per_driver
+    expected: estimate_only
+    note: "Estimate reproduces (28.49); JKn MOE is 1.174 against the printed 1.16 (1.2 percent), as for the unadjusted figure."
+  - {id: person_trip_length_adj,  table: 3b, label: "Average person trip length, adjusted (miles)",  scale: 1, decimals: 2, published: 11.57, moe: 0.41, compute: person_trip_length_adj,  expected: reproduced}
+  - {id: vehicle_trip_length_adj, table: 3b, label: "Average vehicle trip length, adjusted (miles)", scale: 1, decimals: 2, published: 10.53, moe: 0.42, compute: vehicle_trip_length_adj, expected: reproduced}
+  # ---- Table 1d: annual totals, 2017 rows (vehicles in thousands, the rest in millions) -----------
+  - {id: vehicles_total,      table: 1d, label: "Household vehicles (thousands)",                  scale: 1000,    decimals: 0, published: 222579,  moe: 917,    compute: vehicles_total,      expected: reproduced}
+  - {id: person_trips_total,  table: 1d, label: "Person trips (millions)",                         scale: 1000000, decimals: 0, published: 371152,  moe: 4395,   compute: person_trips_total,  expected: reproduced}
+  - {id: pmt_total,           table: 1d, label: "Person miles of travel (millions)",               scale: 1000000, decimals: 0, published: 3970287, moe: 150877, compute: pmt_total,           expected: reproduced}
+  - {id: pmt_adj_total,       table: 1d, label: "Person miles of travel, adjusted (millions)",     scale: 1000000, decimals: 0, published: 4291150, moe: 155470, compute: pmt_adj_total,       expected: reproduced}
+  - {id: vmt_total,           table: 1d, label: "Household vehicle miles of travel (millions)",    scale: 1000000, decimals: 0, published: 2105882, moe: 88113,  compute: vmt_total,           expected: reproduced}
+  - {id: vmt_adj_total,       table: 1d, label: "Household vehicle miles, adjusted (millions)",    scale: 1000000, decimals: 0, published: 2321820, moe: 98064,  compute: vmt_adj_total,       expected: reproduced}
+  - id: hh_vehicle_trips_total
+    table: 1d
+    label: "Household vehicle trips (millions)"
+    scale: 1000000
+    decimals: 0
+    published: 220430
+    moe: 2561
+    compute: hh_vehicle_trips_total
+    expected: not_reproduced
+    note: >-
+      Trips on which the respondent drove (DRVR_FLG = 01) weigh 220,559 million, 0.06 percent above the
+      printed 220,430 (MOE 2,559 against 2,561). Same direction and size as the gap in daily vehicle
+      trips per driver (2.7064 against 2.70), so the report's vehicle-trip definition differs slightly
+      from DRVR_FLG = 01 in a way the public documents do not state. Not tuned.
