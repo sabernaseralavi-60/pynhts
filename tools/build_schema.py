@@ -1,6 +1,6 @@
-"""Generate src/pynhts/_schema/2017/<table>.yaml from the official NHTS 2017 codebook (xlsx).
+"""Generate src/pynhts/_schema/<wave>/<table>.yaml from an official NHTS codebook (xlsx).
 
-Usage: python tools/build_schema.py path/to/codebook_v1.2.xlsx
+Usage: python tools/build_schema.py <wave> path/to/codebook.xlsx     (wave 2017 or 2022)
 
 The codebook is the single source of truth. Nothing is guessed: the generator only reshapes
 what the codebook says (type C/N, length, code=label lines, response ranges, frequencies).
@@ -17,11 +17,20 @@ from typing import Any
 import openpyxl
 import yaml
 
-SHEETS = {
-    "CODEBOOK_HH": ("household", "hhpub.csv"),
-    "CODEBOOK_PER": ("person", "perpub.csv"),
-    "CODEBOOK_TRIP": ("trip", "trippub.csv"),
-    "CODEBOOK_VEH": ("vehicle", "vehpub.csv"),
+SHEETS_BY_WAVE = {
+    2017: {
+        "CODEBOOK_HH": ("household", "hhpub.csv"),
+        "CODEBOOK_PER": ("person", "perpub.csv"),
+        "CODEBOOK_TRIP": ("trip", "trippub.csv"),
+        "CODEBOOK_VEH": ("vehicle", "vehpub.csv"),
+    },
+    2022: {
+        "Household": ("household", "hhv2pub.csv"),
+        "Person": ("person", "perv2pub.csv"),
+        "Trip": ("trip", "tripv2pub.csv"),
+        "Vehicle": ("vehicle", "vehv2pub.csv"),
+        "Long Distance": ("longdist", "ldtv2pub.csv"),
+    },
 }
 # Tables whose columns a table can inherit copies of, root first.
 ANCESTORS = {
@@ -29,6 +38,7 @@ ANCESTORS = {
     "person": ["household"],
     "trip": ["household", "person"],
     "vehicle": ["household"],
+    "longdist": ["household", "person"],
 }
 # -88 and -77 are the codebook's "I don't know" / "I prefer not to answer" in fields where -8/-7 could be real values.
 MISSING = {
@@ -43,7 +53,7 @@ SKIP = "-1"
 # of -88 plus -8 rows, and its count for -77 equals -77 plus -7 rows (YEARMILE, OD_READ). So a
 # column that lists -88 / -77 also carries -8 / -7 values, which must be masked as well.
 LUMPED = {"-88": "-8", "-77": "-7"}
-OUT = Path(__file__).resolve().parents[1] / "src" / "pynhts" / "_schema" / "2017"
+OUT_ROOT = Path(__file__).resolve().parents[1] / "src" / "pynhts" / "_schema"
 
 
 def _norm(label: str) -> str:
@@ -80,8 +90,10 @@ def parse_sheet(ws: Any) -> dict[str, dict[str, Any]]:
     return variables
 
 
-def build(codebook: Path) -> None:
-    """Write one YAML per table plus an ownership index."""
+def build(wave: int, codebook: Path) -> None:
+    """Write one YAML per table of ``wave`` (ownership is decided per column)."""
+    SHEETS = SHEETS_BY_WAVE[wave]
+    OUT = OUT_ROOT / str(wave)
     wb = openpyxl.load_workbook(codebook, read_only=True)
     digest = hashlib.sha256(codebook.read_bytes()).hexdigest()
     parsed = {sheet: parse_sheet(wb[sheet]) for sheet in SHEETS}
@@ -120,7 +132,7 @@ def build(codebook: Path) -> None:
                 "codes": codes,
             }
         doc = {
-            "wave": 2017,
+            "wave": wave,
             "table": table,
             "csv": csv_name,
             "codebook": {"file": codebook.name, "sha256": digest},
@@ -135,6 +147,6 @@ def build(codebook: Path) -> None:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 3 or int(sys.argv[1]) not in SHEETS_BY_WAVE:
         raise SystemExit(__doc__)
-    build(Path(sys.argv[1]))
+    build(int(sys.argv[1]), Path(sys.argv[2]))

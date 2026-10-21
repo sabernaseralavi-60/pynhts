@@ -26,7 +26,7 @@ import pyarrow.csv as pacsv
 import pyarrow.parquet as pq
 
 from pynhts.core.schema import TableSchema, load_schema
-from pynhts.io.fetcher import cache_dir, fetch, sha256_file
+from pynhts.io.fetcher import cache_dir, clean_downloads, fetch, sha256_file
 from pynhts.io.registry import load_registry
 
 CONVERTER_VERSION = "1"
@@ -34,12 +34,6 @@ N_REPLICATES = 98
 _BLOCK = 1 << 26
 _COMPRESSION = "zstd"
 
-CORE_TABLES = {
-    "hhpub.csv": "household",
-    "perpub.csv": "person",
-    "trippub.csv": "trip",
-    "vehpub.csv": "vehicle",
-}
 # (full-sample weight, key columns, output file) for each replicate source file.
 _REPLICATE_JOBS: dict[str, list[tuple[str, tuple[str, ...], str]]] = {
     "hhwgt.csv": [("WTHHFIN", ("HOUSEID",), "repw_household.parquet")],
@@ -242,48 +236,62 @@ def convert(
     def raw(csv_name: str) -> Path:
         """Verified raw file, fetched only now (so up-to-date outputs need no raw CSVs)."""
         group = reg.members[csv_name].group
-        return fetch(wave, (group,), cache=cache, offline=offline, names=(csv_name,))[csv_name]
+        # keep the archive until the whole conversion is done: several members share one zip
+        return fetch(wave, (group,), cache=cache, offline=offline, names=(csv_name,),
+                     keep_archives=True)[csv_name]
 
     directory = parquet_dir(wave, cache)
     directory.mkdir(parents=True, exist_ok=True)
     manifest = _read_manifest(directory)
     results: dict[str, Converted] = {}
 
-    if "core" in groups:
-        for csv_name, table in CORE_TABLES.items():
-            schema = load_schema(table, wave)
-            out = directory / f"{table}.parquet"
-            codebook = schema.codebook_sha256
-            inputs = {csv_name: reg.members[csv_name].sha256}
-            if not force and _up_to_date(manifest, out, inputs, codebook):
-                rec = manifest[out.name]
-                results[out.name] = Converted(out, int(str(rec["rows"])), str(rec["sha256"]), True)
-                continue
-            results[out.name] = _convert_core(
-                raw(csv_name), schema, out, reg.members[csv_name].rows, inputs, codebook, manifest
-            )
-            _write_manifest(directory, manifest)
-
-    if "replicates" in groups:
-        codebook = load_schema("household", wave).codebook_sha256
-        for csv_name, jobs in _REPLICATE_JOBS.items():
-            inputs = {csv_name: reg.members[csv_name].sha256}
-            todo = set()
-            for _, _, fname in jobs:
-                out = directory / fname
+    try:
+        if "core" in groups:
+            for table, member in reg.tables.items():
+                csv_name = member.name
+                schema = load_schema(table, wave)
+                out = directory / f"{table}.parquet"
+                codebook = schema.codebook_sha256
+                inputs = {csv_name: reg.members[csv_name].sha256}
                 if not force and _up_to_date(manifest, out, inputs, codebook):
-                    rec = manifest[fname]
-                    results[fname] = Converted(
+                    rec = manifest[out.name]
+                    results[out.name] = Converted(
                         out, int(str(rec["rows"])), str(rec["sha256"]), True
                     )
-                else:
-                    todo.add(fname)
-            if todo:
-                results.update(
-                    _convert_replicates(
-                        raw(csv_name), jobs, directory, inputs, codebook, manifest, todo,
-                        reg.members[csv_name].rows,
-                    )
+                    continue
+                results[out.name] = _convert_core(
+                    raw(csv_name), schema, out, reg.members[csv_name].rows, inputs, codebook,
+                    manifest,
                 )
                 _write_manifest(directory, manifest)
+
+        if "replicates" in groups and "replicates" not in reg.groups:
+            raise ValueError(
+                f"NHTS {wave} has no replicate weights (standard errors use Taylor series); "
+                "request groups=('core',)"
+            )
+        if "replicates" in groups:
+            codebook = load_schema("household", wave).codebook_sha256
+            for csv_name, jobs in _REPLICATE_JOBS.items():
+                inputs = {csv_name: reg.members[csv_name].sha256}
+                todo = set()
+                for _, _, fname in jobs:
+                    out = directory / fname
+                    if not force and _up_to_date(manifest, out, inputs, codebook):
+                        rec = manifest[fname]
+                        results[fname] = Converted(
+                            out, int(str(rec["rows"])), str(rec["sha256"]), True
+                        )
+                    else:
+                        todo.add(fname)
+                if todo:
+                    results.update(
+                        _convert_replicates(
+                            raw(csv_name), jobs, directory, inputs, codebook, manifest, todo,
+                            reg.members[csv_name].rows,
+                        )
+                    )
+                    _write_manifest(directory, manifest)
+    finally:
+        clean_downloads(wave, cache)
     return results

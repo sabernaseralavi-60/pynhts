@@ -1,0 +1,4955 @@
+wave: 2022
+table: person
+csv: perv2pub.csv
+codebook:
+  file: codebook.xlsx
+  sha256: 7e10ff62be0a72b03528f2469e8da850b335b7d761cf6efdfe9eba9b8a513d96
+n_columns: 153
+columns:
+  BIKESHARE22:
+    label: Days in last 30 days bike share used
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 0-30
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 16910
+      weighted: 303853064.663602
+  BIKETRANSIT:
+    label: Days in last 30 days cycling used
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 0-30
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 15438
+      weighted: 278562891.136289
+  CDIVMSAR:
+    label: Grouping of household by combination of Census division, MSA status, and presence of rail
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '11'
+      label: New England MSA/CMSA of 1 million+ with heavy rail
+      n: 335
+      weighted: 4810761.96513364
+    - code: '12'
+      label: New England MSA/CMSA of 1 million+ w/o heavy rail
+      n: 109
+      weighted: 2118086.1825408
+    - code: '13'
+      label: New England MSA of less than 1 million
+      n: 432
+      weighted: 6539310.76893297
+    - code: '14'
+      label: New England Not in an MSA
+      n: 41
+      weighted: 404307.07838704
+    - code: '21'
+      label: Mid-Atlantic MSA/CMSA of 1 million+ with heavy rail
+      n: 993
+      weighted: 20543695.5033129
+    - code: '22'
+      label: Mid-Atlantic MSA/CMSA of 1 million+ w/o heavy rail
+      n: 266
+      weighted: 4509274.82630501
+    - code: '23'
+      label: Mid-Atlantic MSA of less than 1 million
+      n: 651
+      weighted: 12738014.0130982
+    - code: '24'
+      label: Mid-Atlantic Not in an MSA
+      n: 45
+      weighted: 831916.5773204
+    - code: '31'
+      label: East North Central MSA/CMSA of 1 million+ with heavy rail
+      n: 555
+      weighted: 8887014.86601863
+    - code: '32'
+      label: East North Central MSA/CMSA of 1 million+ w/o heavy rail
+      n: 778
+      weighted: 11221595.875607
+    - code: '33'
+      label: East North Central MSA of less than 1 million
+      n: 1197
+      weighted: 19752882.0030264
+    - code: '34'
+      label: East North Central Not in an MSA
+      n: 216
+      weighted: 3589270.7781357
+    - code: '42'
+      label: West North Central MSA/CMSA of 1 million+ w/o heavy rail
+      n: 478
+      weighted: 8475007.19811671
+    - code: '43'
+      label: West North Central MSA of less than 1 million
+      n: 610
+      weighted: 9515771.5656053
+    - code: '44'
+      label: West North Central Not in an MSA
+      n: 183
+      weighted: 1840125.26877332
+    - code: '51'
+      label: South Atlantic MSA/CMSA of 1 million+ with heavy rail
+      n: 980
+      weighted: 19129787.0471709
+    - code: '52'
+      label: South Atlantic MSA/CMSA of 1 million+ w/o heavy rail
+      n: 822
+      weighted: 13854561.9550436
+    - code: '53'
+      label: South Atlantic MSA of less than 1 million
+      n: 1471
+      weighted: 25791452.6733064
+    - code: '54'
+      label: South Atlantic Not in an MSA
+      n: 135
+      weighted: 2703056.44058152
+    - code: '62'
+      label: East South Central MSA/CMSA of 1 million+ w/o heavy rail
+      n: 307
+      weighted: 5682663.5100103
+    - code: '63'
+      label: East South Central MSA of less than 1 million
+      n: 584
+      weighted: 10787206.6424844
+    - code: '64'
+      label: East South Central Not in an MSA
+      n: 89
+      weighted: 1405443.9599956
+    - code: '72'
+      label: West South Central MSA/CMSA of 1 million+ w/o heavy rail
+      n: 1143
+      weighted: 21999890.550964
+    - code: '73'
+      label: West South Central MSA of less than 1 million
+      n: 674
+      weighted: 13286951.4715452
+    - code: '74'
+      label: West South Central Not in an MSA
+      n: 117
+      weighted: 2419376.12249561
+    - code: '82'
+      label: Mountain MSA/CMSA of 1 million+ w/o heavy rail
+      n: 629
+      weighted: 11565777.0710693
+    - code: '83'
+      label: Mountain MSA of less than 1 million
+      n: 674
+      weighted: 10935846.4344363
+    - code: '84'
+      label: Mountain Not in an MSA
+      n: 65
+      weighted: 904343.3495072
+    - code: '91'
+      label: Pacific MSA/CMSA of 1 million+ with heavy rail
+      n: 845
+      weighted: 19511817.8961217
+    - code: '92'
+      label: Pacific MSA/CMSA of 1 million+ w/o heavy rail
+      n: 816
+      weighted: 14739673.2548755
+    - code: '93'
+      label: Pacific MSA of less than 1 million
+      n: 726
+      weighted: 14589397.6144181
+    - code: '94'
+      label: Pacific Not in an MSA
+      n: 31
+      weighted: 476644.53572156
+  CENSUS_D:
+    label: Census division classification for home address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: New England
+      n: 917
+      weighted: 13872465.9949945
+    - code: '02'
+      label: Middle Atlantic
+      n: 1955
+      weighted: 38622900.9200365
+    - code: '03'
+      label: East North Central
+      n: 2746
+      weighted: 43450763.5227877
+    - code: '04'
+      label: West North Central
+      n: 1271
+      weighted: 19830904.0324953
+    - code: '05'
+      label: South Atlantic
+      n: 3408
+      weighted: 61478858.1161024
+    - code: '06'
+      label: East South Central
+      n: 980
+      weighted: 17875314.1124903
+    - code: '07'
+      label: West South Central
+      n: 1934
+      weighted: 37706218.1450047
+    - code: 08
+      label: Mountain
+      n: 1368
+      weighted: 23405966.8550128
+    - code: 09
+      label: Pacific
+      n: 2418
+      weighted: 49317533.3011369
+  CENSUS_R:
+    label: Census region classification for home address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Northeast
+      n: 2872
+      weighted: 52495366.9150309
+    - code: '02'
+      label: Midwest
+      n: 4017
+      weighted: 63281667.555283
+    - code: '03'
+      label: South
+      n: 6322
+      weighted: 117060390.373598
+    - code: '04'
+      label: West
+      n: 3786
+      weighted: 72723500.1561497
+  CNTTDTR:
+    label: Count of person trips on travel day
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: 0-36
+    codes: []
+  CONDNIGH:
+    label: Limited driving to daytime due to condition or disability
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15360
+      weighted: 280934641.532697
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 122262.5886659
+    - code: '01'
+      label: Selected
+      n: 355
+      weighted: 5037391.84029246
+    - code: '02'
+      label: Not Selected
+      n: 1276
+      weighted: 19466629.0384051
+  CONDNONE:
+    label: Travel not affected by condition or disability
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15360
+      weighted: 280934641.532697
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 122262.5886659
+    - code: '01'
+      label: Selected
+      n: 250
+      weighted: 3712886.10488182
+    - code: '02'
+      label: Not Selected
+      n: 1381
+      weighted: 20791134.7738157
+  CONDPUB:
+    label: Used bus or subway less frequently due to condition or disability
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15360
+      weighted: 280934641.532697
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 122262.5886659
+    - code: '01'
+      label: Selected
+      n: 76
+      weighted: 1235016.4375816
+    - code: '02'
+      label: Not Selected
+      n: 1555
+      weighted: 23269004.4411159
+  CONDRF:
+    label: Prefer not to answer if travel is affected by condition or disability
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15360
+      weighted: 280934641.532697
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 122262.5886659
+    - code: '01'
+      label: Selected
+      n: 68
+      weighted: 1259740.3796116
+    - code: '02'
+      label: Not Selected
+      n: 1563
+      weighted: 23244280.4990859
+  CONDRIDE:
+    label: Asked others for rides due to condition or disability
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15360
+      weighted: 280934641.532697
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 122262.5886659
+    - code: '01'
+      label: Selected
+      n: 440
+      weighted: 6767587.07681154
+    - code: '02'
+      label: Not Selected
+      n: 1191
+      weighted: 17736433.801886
+  CONDRIVE:
+    label: Given up driving due to condition or disability
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15360
+      weighted: 280934641.532697
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 122262.5886659
+    - code: '01'
+      label: Selected
+      n: 312
+      weighted: 4448708.71532854
+    - code: '02'
+      label: Not Selected
+      n: 1319
+      weighted: 20055312.163369
+  CONDSHARE:
+    label: Used rideshare due to condition or disability
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15360
+      weighted: 280934641.532697
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 122262.5886659
+    - code: '01'
+      label: Selected
+      n: 79
+      weighted: 1313474.7296847
+    - code: '02'
+      label: Not Selected
+      n: 1552
+      weighted: 23190546.1490128
+  CONDSPEC:
+    label: Used special transportation services due to condition or disability
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15360
+      weighted: 280934641.532697
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 122262.5886659
+    - code: '01'
+      label: Selected
+      n: 87
+      weighted: 1490533.4539891
+    - code: '02'
+      label: Not Selected
+      n: 1544
+      weighted: 23013487.4247084
+  CONDTRAV:
+    label: Reduced travel due to condition or disability
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15360
+      weighted: 280934641.532697
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 122262.5886659
+    - code: '01'
+      label: Selected
+      n: 992
+      weighted: 13923467.9436422
+    - code: '02'
+      label: Not Selected
+      n: 639
+      weighted: 10580552.9350553
+  COV1_OHD:
+    label: COVID impact on online purchases for home delivery
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: Don't Know
+      n: 574
+      weighted: 12945765.2890303
+    - code: '-9'
+      label: Not ascertained
+      n: 66
+      weighted: 1346762.1701152
+    - code: '01'
+      label: Do more often than before
+      n: 5633
+      weighted: 94606751.741717
+    - code: '02'
+      label: Do the same as before
+      n: 7122
+      weighted: 121794667.899256
+    - code: '03'
+      label: Do less often than before
+      n: 480
+      weighted: 10399422.5094658
+    - code: '04'
+      label: Not Applicable
+      n: 3122
+      weighted: 64467555.3904766
+  COV1_PT:
+    label: COVID impact on use of public transit
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-8'
+      label: Don't Know
+      n: 561
+      weighted: 12930285.4847384
+    - code: '-9'
+      label: Not ascertained
+      n: 51
+      weighted: 1313207.8063318
+    - code: '01'
+      label: Do more often than before
+      n: 377
+      weighted: 6866885.50600594
+    - code: '02'
+      label: Do the same as before
+      n: 4626
+      weighted: 77606734.1769798
+    - code: '03'
+      label: Do less often than before
+      n: 3189
+      weighted: 51841643.6426261
+    - code: '04'
+      label: Not Applicable
+      n: 8193
+      weighted: 155002168.383379
+  COV1_SCH:
+    label: COVID impact on travel to a physical school/class location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 13670
+      weighted: 235542266.715198
+    - code: '-8'
+      label: Don't Know
+      n: 120
+      weighted: 2660045.8538426
+    - code: '-9'
+      label: Not ascertained
+      n: 8
+      weighted: 160501.1518965
+    - code: '01'
+      label: Do more often than before
+      n: 296
+      weighted: 6566671.14251274
+    - code: '02'
+      label: Do the same as before
+      n: 2093
+      weighted: 44009705.98864
+    - code: '03'
+      label: Do less often than before
+      n: 469
+      weighted: 9266855.49828378
+    - code: '04'
+      label: Not Applicable
+      n: 341
+      weighted: 7354878.64968731
+  COV1_WK:
+    label: COVID impact on travel to a physical work location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 9214
+      weighted: 147551414.674601
+    - code: '-8'
+      label: Don't Know
+      n: 123
+      weighted: 3426087.9538452
+    - code: '-9'
+      label: Not ascertained
+      n: 4
+      weighted: 70820.5305374
+    - code: '01'
+      label: Do more often than before
+      n: 511
+      weighted: 11731476.2803127
+    - code: '02'
+      label: Do the same as before
+      n: 4317
+      weighted: 91034405.3375887
+    - code: '03'
+      label: Do less often than before
+      n: 2433
+      weighted: 43562413.2934971
+    - code: '04'
+      label: Not Applicable
+      n: 395
+      weighted: 8184306.92967927
+  COV2_OHD:
+    label: Home delivery changes temporary or permanent
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 10884
+      weighted: 200554750.748878
+    - code: '-8'
+      label: Don't Know
+      n: 1133
+      weighted: 21837232.9452449
+    - code: '-9'
+      label: Not ascertained
+      n: 8
+      weighted: 94521.4789159
+    - code: '01'
+      label: Temporary
+      n: 767
+      weighted: 14363172.4189521
+    - code: '02'
+      label: Permanent
+      n: 4205
+      weighted: 68711247.4080698
+  COV2_PT:
+    label: Public transit use changes temporary or permanent
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 13431
+      weighted: 246852395.851429
+    - code: '-8'
+      label: Don't Know
+      n: 1035
+      weighted: 17839644.7607917
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 191103.3206736
+    - code: '01'
+      label: Temporary
+      n: 1318
+      weighted: 21050528.8562832
+    - code: '02'
+      label: Permanent
+      n: 1207
+      weighted: 19627252.2108835
+  COV2_SCH:
+    label: School travel changes temporary or permanent
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 16232
+      weighted: 289727398.359265
+    - code: '-8'
+      label: Don't Know
+      n: 135
+      weighted: 2219918.55319303
+    - code: '01'
+      label: Temporary
+      n: 290
+      weighted: 6106806.5782828
+    - code: '02'
+      label: Permanent
+      n: 340
+      weighted: 7506801.50932068
+  COV2_WK:
+    label: Work travel changes temporary or permanent
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 14053
+      weighted: 250267035.426251
+    - code: '-8'
+      label: Don't Know
+      n: 550
+      weighted: 11691142.7155121
+    - code: '-9'
+      label: Not ascertained
+      n: 1
+      weighted: 139546.37722
+    - code: '01'
+      label: Temporary
+      n: 672
+      weighted: 12993627.2104458
+    - code: '02'
+      label: Permanent
+      n: 1721
+      weighted: 30469573.2706317
+  DELIVER:
+    label: Number of online purchase deliveries in past 30 days
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 0-99
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 2193
+      weighted: 46150762.6605722
+  DELIV_FOOD:
+    label: Number of times food delivered in past 30 days
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: 0-59
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 4476
+      weighted: 71867767.1466888
+    - code: '-1'
+      label: Appropriate skip
+      n: 5993
+      weighted: 120304284.856874
+  DELIV_GOOD:
+    label: Number of times goods delivered in past 30 days
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: 0-99
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 243
+      weighted: 4344278.76002273
+    - code: '-1'
+      label: Appropriate skip
+      n: 5993
+      weighted: 120304284.856874
+  DELIV_GROC:
+    label: Number of times groceries delivered in past 30 days
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: 0-30
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 5193
+      weighted: 86598939.4941842
+    - code: '-1'
+      label: Appropriate skip
+      n: 5993
+      weighted: 120304284.856874
+  DELIV_PERS:
+    label: Number of times services delivered in the past 30 days
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: 0-60
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 5257
+      weighted: 88468561.7129196
+    - code: '-1'
+      label: Appropriate skip
+      n: 5993
+      weighted: 120304284.856874
+  DRIVER:
+    label: Driver status, derived
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 1964
+      weighted: 41806100.5941762
+    - code: '01'
+      label: 'Yes'
+      n: 13434
+      weighted: 231803889.469379
+    - code: '02'
+      label: 'No'
+      n: 1599
+      weighted: 31950934.9365055
+  DRIVINGOCCUPATION:
+    label: Drive for work
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 9409
+      weighted: 152347586.447552
+    - code: '-9'
+      label: Not ascertained
+      n: 7
+      weighted: 114581.5113415
+    - code: '01'
+      label: 'Yes'
+      n: 1502
+      weighted: 32399038.8637079
+    - code: '02'
+      label: 'No'
+      n: 6079
+      weighted: 120699718.17746
+  DRIVINGVEHICLE:
+    label: Vehicle driven for work
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15495
+      weighted: 273161886.136353
+    - code: '01'
+      label: Yes, use a household vehicle
+      n: 846
+      weighted: 18146289.4056681
+    - code: '02'
+      label: No, use non-household vehicle
+      n: 481
+      weighted: 10430248.2011356
+    - code: '03'
+      label: Use both household and non-household vehicle
+      n: 175
+      weighted: 3822501.25690414
+  DRVRCNT:
+    label: Number of drivers in the household
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '0'
+      label: ''
+      n: 432
+      weighted: 9995515.86187337
+    - code: '1'
+      label: ''
+      n: 3611
+      weighted: 61185614.2771288
+    - code: '2'
+      label: ''
+      n: 9789
+      weighted: 158842173.698297
+    - code: '3'
+      label: ''
+      n: 2152
+      weighted: 50323038.918966
+    - code: '4'
+      label: ''
+      n: 809
+      weighted: 20359988.3816559
+    - code: '5'
+      label: ''
+      n: 157
+      weighted: 3835124.5821406
+    - code: '6'
+      label: ''
+      n: 31
+      weighted: 892290.1043879
+    - code: '7'
+      label: ''
+      n: 16
+      weighted: 127179.1756123
+  EDUC:
+    label: Highest level of education
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 1765
+      weighted: 38037040.4234895
+    - code: '01'
+      label: Less than high school
+      n: 544
+      weighted: 14041499.231971
+    - code: '02'
+      label: Some high school, no diploma/GED
+      n: 932
+      weighted: 25528117.9698506
+    - code: '03'
+      label: High school graduate, have diploma/GED
+      n: 2401
+      weighted: 71126449.2559952
+    - code: '04'
+      label: Some college, no degree/ some trade school
+      n: 2603
+      weighted: 44747687.820757
+    - code: '05'
+      label: Associates degree (2-year)/ trade school certificate
+      n: 1704
+      weighted: 28670187.5557203
+    - code: '06'
+      label: Bachelor's degree
+      n: 4021
+      weighted: 46133784.5064672
+    - code: '07'
+      label: Master's degree
+      n: 2180
+      weighted: 26430208.1422894
+    - code: 08
+      label: Professional/Doctorate degree
+      n: 847
+      weighted: 10845950.0935208
+  EMPLOYMENT2:
+    label: Hours worked for pay each week
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 0-99
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 9214
+      weighted: 147551414.674601
+  EMPPASS:
+    label: Employer pays for discounted transit pass
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 16824
+      weighted: 302831555.038326
+    - code: '01'
+      label: 'Yes'
+      n: 68
+      weighted: 954314.46594504
+    - code: '02'
+      label: 'No'
+      n: 105
+      weighted: 1775055.4957895
+  ESCOOTERUSED:
+    label: Days in last 30 days e-scooter used
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 0-30
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 16756
+      weighted: 300607941.326813
+  FRSTHM:
+    label: Started travel day at home
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: 'Yes'
+      n: 15956
+      weighted: 286324952.90587
+    - code: '02'
+      label: 'No'
+      n: 1041
+      weighted: 19235972.0941913
+  GCDWORK:
+    label: Great circle distance (miles) between home and work
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: 0-2543.9541665
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2028
+      weighted: 37747279.8651832
+    - code: '-1'
+      label: Appropriate skip
+      n: 9214
+      weighted: 147551414.674601
+  HBHTNRNT:
+    label: Category of the percent of renter-occupied housing in the census block group of the household's
+      home location
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: 0-4%
+      n: 1151
+      weighted: 17186136.3021508
+    - code: '05'
+      label: 5-14%
+      n: 4596
+      weighted: 73181734.0975476
+    - code: '20'
+      label: 15-24%
+      n: 3572
+      weighted: 59667009.9726811
+    - code: '30'
+      label: 25-34%
+      n: 2480
+      weighted: 44631727.6346163
+    - code: '40'
+      label: 35-44%
+      n: 1799
+      weighted: 37345899.2446512
+    - code: '50'
+      label: 45-54%
+      n: 1250
+      weighted: 25087098.7145832
+    - code: '60'
+      label: 55-64%
+      n: 927
+      weighted: 22377768.2455412
+    - code: '70'
+      label: 65-74%
+      n: 611
+      weighted: 13304191.0322468
+    - code: '80'
+      label: 75-84%
+      n: 411
+      weighted: 8264928.74536472
+    - code: '90'
+      label: 85-94%
+      n: 177
+      weighted: 4047676.0969758
+    - code: '95'
+      label: 95-100%
+      n: 23
+      weighted: 466754.9137022
+  HBHUR:
+    label: Urban / Rural indicator - Block group
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Rural
+      n: 3484
+      weighted: 56827875.1111057
+    - code: '02'
+      label: Small Town
+      n: 3926
+      weighted: 66575651.464443
+    - code: '03'
+      label: Second City
+      n: 3205
+      weighted: 61190374.8468788
+    - code: '04'
+      label: Suburban
+      n: 4025
+      weighted: 71801912.0727238
+    - code: '05'
+      label: Urban
+      n: 2357
+      weighted: 49165111.5049098
+  HBPPOPDN:
+    label: Category of population density (persons per square mile) in the census block group of the household's
+      home location
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 93
+      weighted: 1869465.1824957
+    - code: '01'
+      label: 0-99
+      n: 1998
+      weighted: 31310617.4741456
+    - code: '02'
+      label: 100-499
+      n: 2443
+      weighted: 41185504.5488521
+    - code: '03'
+      label: 500-999
+      n: 1323
+      weighted: 23941535.7748059
+    - code: '04'
+      label: 1,000-1,999
+      n: 2194
+      weighted: 37570100.9139529
+    - code: '05'
+      label: 2,000-3,999
+      n: 3472
+      weighted: 61508050.187224
+    - code: '06'
+      label: 4,000-9,999
+      n: 3956
+      weighted: 74208907.3701916
+    - code: '07'
+      label: 10,000-24,999
+      n: 1043
+      weighted: 23423947.0011273
+    - code: 08
+      label: 25,000-999,999
+      n: 475
+      weighted: 10542796.5472658
+  HBRESDN:
+    label: Category of housing units per square mile in the census block group of the household's home
+      location
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 142
+      weighted: 2110150.19464196
+    - code: '01'
+      label: 0-99
+      n: 3359
+      weighted: 53480520.568242
+    - code: '02'
+      label: 100-499
+      n: 3167
+      weighted: 54120411.018639
+    - code: '03'
+      label: 500-999
+      n: 2002
+      weighted: 35193087.8479529
+    - code: '04'
+      label: 1,000-1,999
+      n: 3611
+      weighted: 68085667.4751366
+    - code: '05'
+      label: 2,000-3,999
+      n: 3042
+      weighted: 57798219.3297277
+    - code: '06'
+      label: 4,000-9,999
+      n: 1076
+      weighted: 22782814.2301682
+    - code: '07'
+      label: 10,000-24,999
+      n: 361
+      weighted: 6680486.27620593
+    - code: 08
+      label: 25,000-999,999
+      n: 237
+      weighted: 5309568.05934669
+  HHFAMINC:
+    label: Household income
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+    skip_code: null
+    range: null
+    codes:
+    - code: '-7'
+      label: I prefer not to answer
+      n: 205
+      weighted: 3321285.83563
+    - code: '-8'
+      label: I don't know
+      n: 5
+      weighted: 108411.1243596
+    - code: '01'
+      label: Less than $10,000
+      n: 547
+      weighted: 12777003.1847057
+    - code: '02'
+      label: $10,000 to $14,999
+      n: 405
+      weighted: 7652726.37213021
+    - code: '03'
+      label: $15,000 to $24,999
+      n: 811
+      weighted: 16967877.697938
+    - code: '04'
+      label: $25,000 to $34,999
+      n: 1064
+      weighted: 21208086.7889717
+    - code: '05'
+      label: $35,000 to $49,999
+      n: 1583
+      weighted: 27892188.7878585
+    - code: '06'
+      label: $50,000 to $74,999
+      n: 2824
+      weighted: 48440546.5542767
+    - code: '07'
+      label: $75,000 to $99,999
+      n: 2436
+      weighted: 41285423.1635267
+    - code: 08
+      label: $100,000 to $124,999
+      n: 2056
+      weighted: 32133171.5046175
+    - code: 09
+      label: $125,000 to $149,999
+      n: 1503
+      weighted: 24875938.4558835
+    - code: '10'
+      label: $150,000 to $199,999
+      n: 1507
+      weighted: 32009298.277377
+    - code: '11'
+      label: $200,000 or more
+      n: 2051
+      weighted: 36888967.2527859
+  HHFAMINC_IMP:
+    label: Household income (imputed)
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Less than $10,000
+      n: 549
+      weighted: 12824414.1095987
+    - code: '02'
+      label: $10,000 to $14,999
+      n: 409
+      weighted: 7694097.20557741
+    - code: '03'
+      label: $15,000 to $24,999
+      n: 817
+      weighted: 17071869.1939442
+    - code: '04'
+      label: $25,000 to $34,999
+      n: 1081
+      weighted: 21388206.501683
+    - code: '05'
+      label: $35,000 to $49,999
+      n: 1598
+      weighted: 28219078.4699787
+    - code: '06'
+      label: $50,000 to $74,999
+      n: 2867
+      weighted: 49404936.6981506
+    - code: '07'
+      label: $75,000 to $99,999
+      n: 2464
+      weighted: 41688877.3533222
+    - code: 08
+      label: $100,000 to $124,999
+      n: 2099
+      weighted: 32832803.763885
+    - code: 09
+      label: $125,000 to $149,999
+      n: 1516
+      weighted: 24980200.4449036
+    - code: '10'
+      label: $150,000 to $199,999
+      n: 1525
+      weighted: 32336208.8611408
+    - code: '11'
+      label: $200,000 or more
+      n: 2072
+      weighted: 37120232.3978768
+  HHSIZE:
+    label: Total number of people in household
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '1'
+      label: ''
+      n: 2271
+      weighted: 36098091.0261278
+    - code: '2'
+      label: ''
+      n: 6657
+      weighted: 87921569.3028693
+    - code: '3'
+      label: ''
+      n: 2719
+      weighted: 57418391.5682434
+    - code: '4'
+      label: ''
+      n: 2781
+      weighted: 60418305.290025
+    - code: '5'
+      label: ''
+      n: 1517
+      weighted: 38752988.1552654
+    - code: '6'
+      label: ''
+      n: 636
+      weighted: 13676387.1419096
+    - code: '7'
+      label: ''
+      n: 222
+      weighted: 6053193.9139305
+    - code: '8'
+      label: ''
+      n: 131
+      weighted: 4170204.1536143
+    - code: '9'
+      label: ''
+      n: 44
+      weighted: 864569.510345
+    - code: '10'
+      label: ''
+      n: 19
+      weighted: 187224.9377311
+  HHVEHCNT:
+    label: Total number of vehicles in household
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '0'
+      label: ''
+      n: 743
+      weighted: 16634884.4775055
+    - code: '1'
+      label: ''
+      n: 4092
+      weighted: 70456908.5353858
+    - code: '2'
+      label: ''
+      n: 7583
+      weighted: 127012310.669043
+    - code: '3'
+      label: ''
+      n: 2885
+      weighted: 55305070.6707285
+    - code: '4'
+      label: ''
+      n: 1093
+      weighted: 24703795.6872792
+    - code: '5'
+      label: ''
+      n: 391
+      weighted: 7054316.7330841
+    - code: '6'
+      label: ''
+      n: 139
+      weighted: 2835859.88434145
+    - code: '7'
+      label: ''
+      n: 37
+      weighted: 832013.4690185
+    - code: '8'
+      label: ''
+      n: 21
+      weighted: 317996.8769388
+    - code: '9'
+      label: ''
+      n: 2
+      weighted: 17696.7525218
+    - code: '11'
+      label: ''
+      n: 7
+      weighted: 343100.9305218
+    - code: '14'
+      label: ''
+      n: 3
+      weighted: 26988.694693
+    - code: '17'
+      label: ''
+      n: 1
+      weighted: 19981.619
+  HH_HISP:
+    label: Hispanic status of household respondent
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Hispanic or Latino
+      n: 1525
+      weighted: 52613378.2735377
+    - code: '02'
+      label: Not Hispanic or Latino
+      n: 15472
+      weighted: 252947546.726523
+  HH_RACE:
+    label: Race of household respondent
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: White
+      n: 14261
+      weighted: 221708653.170358
+    - code: '02'
+      label: Black or African American
+      n: 1201
+      weighted: 36899218.8510912
+    - code: '03'
+      label: Asian
+      n: 899
+      weighted: 20917284.7218396
+    - code: '04'
+      label: American Indian/Alaska Native
+      n: 100
+      weighted: 3278147.339553
+    - code: '05'
+      label: Native Hawaiian/Pacific Islander
+      n: 56
+      weighted: 1340654.11596767
+    - code: '06'
+      label: Multiple races selected
+      n: 57
+      weighted: 7845160.4900318
+    - code: '97'
+      label: Other race
+      n: 423
+      weighted: 13571806.3112197
+  HOMEOWN:
+    label: Whether home owned or rented
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Owned by hh member with mortgage or loan
+      n: 8873
+      weighted: 157818131.337713
+    - code: '02'
+      label: Owned by hh member free and clear (no mortgage)
+      n: 4227
+      weighted: 59854220.7150598
+    - code: '03'
+      label: Rented by hh member
+      n: 3666
+      weighted: 83204677.9422401
+    - code: '04'
+      label: Occupied without payment
+      n: 231
+      weighted: 4683895.00504819
+  HOUSEID:
+    label: Unique Identifier- Household
+    dtype: string
+    length: 10
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: 9000013002-9000218040
+    codes: []
+  HTEEMPDN:
+    label: Category of workers per square mile in the census tract of the household's home location
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 124
+      weighted: 1758464.6185348
+    - code: '01'
+      label: 0-49
+      n: 2430
+      weighted: 40800143.6499469
+    - code: '02'
+      label: 50-99
+      n: 997
+      weighted: 16936694.6453998
+    - code: '03'
+      label: 100-249
+      n: 1554
+      weighted: 24587235.0015758
+    - code: '04'
+      label: 250-499
+      n: 1663
+      weighted: 29757844.2876795
+    - code: '05'
+      label: 500-999
+      n: 1983
+      weighted: 33471165.2345246
+    - code: '06'
+      label: 1,000-1,999
+      n: 3406
+      weighted: 63171901.1117157
+    - code: '07'
+      label: 2,000-3,999
+      n: 3101
+      weighted: 59613705.9811977
+    - code: 08
+      label: 4,000-999,999
+      n: 1739
+      weighted: 35463770.4694866
+  HTHTNRNT:
+    label: Category of the percent of renter-occupied housing in the census tract of the household's home
+      location
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: 0-4%
+      n: 588
+      weighted: 10318758.6306894
+    - code: '05'
+      label: 5-14%
+      n: 4099
+      weighted: 63886710.6566506
+    - code: '20'
+      label: 15-24%
+      n: 4149
+      weighted: 70630396.4995192
+    - code: '30'
+      label: 25-34%
+      n: 2858
+      weighted: 50624637.2705808
+    - code: '40'
+      label: 35-44%
+      n: 2030
+      weighted: 37973767.4883406
+    - code: '50'
+      label: 45-54%
+      n: 1446
+      weighted: 31253896.0006773
+    - code: '60'
+      label: 55-64%
+      n: 882
+      weighted: 19919944.9020339
+    - code: '70'
+      label: 65-74%
+      n: 520
+      weighted: 11566733.6952709
+    - code: '80'
+      label: 75-84%
+      n: 316
+      weighted: 6607986.03280062
+    - code: '90'
+      label: 85-94%
+      n: 99
+      weighted: 2520827.2534112
+    - code: '95'
+      label: 95-100%
+      n: 10
+      weighted: 257266.5700866
+  HTPPOPDN:
+    label: Category of population density (persons per square mile) in the census tract of the household's
+      home location
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 63
+      weighted: 1046653.52061676
+    - code: '01'
+      label: 0-99
+      n: 2282
+      weighted: 37939835.1716806
+    - code: '02'
+      label: 100-499
+      n: 2623
+      weighted: 43030198.482303
+    - code: '03'
+      label: 500-999
+      n: 1439
+      weighted: 25260026.1272856
+    - code: '04'
+      label: 1,000-1,999
+      n: 2289
+      weighted: 39062193.3894332
+    - code: '05'
+      label: 2,000-3,999
+      n: 3511
+      weighted: 62831146.8119281
+    - code: '06'
+      label: 4,000-9,999
+      n: 3540
+      weighted: 69505656.0484841
+    - code: '07'
+      label: 10,000-24,999
+      n: 828
+      weighted: 17316527.6813936
+    - code: 08
+      label: 25,000-999,999
+      n: 422
+      weighted: 9568687.76693612
+  HTRESDN:
+    label: Category of housing units per square mile in the census tract of the household's home location
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 129
+      weighted: 3034682.7103797
+    - code: '01'
+      label: 0-99
+      n: 3639
+      weighted: 59544561.3294512
+    - code: '02'
+      label: 100-499
+      n: 3447
+      weighted: 60169788.5388121
+    - code: '03'
+      label: 500-999
+      n: 2136
+      weighted: 34551670.8556287
+    - code: '04'
+      label: 1,000-1,999
+      n: 3600
+      weighted: 66477023.8427712
+    - code: '05'
+      label: 2,000-3,999
+      n: 2674
+      weighted: 54338713.3928112
+    - code: '06'
+      label: 4,000-9,999
+      n: 855
+      weighted: 16631325.8347566
+    - code: '07'
+      label: 10,000-24,999
+      n: 330
+      weighted: 6238772.30569895
+    - code: 08
+      label: 25,000-999,999
+      n: 187
+      weighted: 4574386.18975136
+  LAST30_BIKE:
+    label: Used bicycle in last 30 days
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 2193
+      weighted: 46150762.6605722
+    - code: '-8'
+      label: Don't Know
+      n: 55
+      weighted: 1190964.655577
+    - code: '01'
+      label: 'Yes'
+      n: 1559
+      weighted: 26998033.8637717
+    - code: '02'
+      label: 'No'
+      n: 13190
+      weighted: 231221163.82014
+  LAST30_BKSHR:
+    label: Used bike share in last 30 days
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15438
+      weighted: 278562891.136289
+    - code: '-8'
+      label: Don't Know
+      n: 6
+      weighted: 108472.93712345
+    - code: '-9'
+      label: Not ascertained
+      n: 1
+      weighted: 6766.1056265
+    - code: '01'
+      label: 'Yes'
+      n: 87
+      weighted: 1707860.33645875
+    - code: '02'
+      label: 'No'
+      n: 1465
+      weighted: 25174934.484563
+  LAST30_ESCT:
+    label: Used e-scooters in last 30 days
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 2193
+      weighted: 46150762.6605722
+    - code: '-8'
+      label: Don't Know
+      n: 56
+      weighted: 1242860.3307438
+    - code: '01'
+      label: 'Yes'
+      n: 241
+      weighted: 4952983.67324896
+    - code: '02'
+      label: 'No'
+      n: 14507
+      weighted: 253214318.335496
+  LAST30_MTRC:
+    label: Used motorcycle in last 30 days
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 2193
+      weighted: 46150762.6605722
+    - code: '-8'
+      label: Don't Know
+      n: 47
+      weighted: 1112457.1476539
+    - code: '01'
+      label: 'Yes'
+      n: 374
+      weighted: 6824047.69877482
+    - code: '02'
+      label: 'No'
+      n: 14383
+      weighted: 251473657.49306
+  LAST30_PT:
+    label: Used public transit in last 30 days
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 2193
+      weighted: 46150762.6605722
+    - code: '-8'
+      label: Don't Know
+      n: 59
+      weighted: 1340245.0535117
+    - code: '01'
+      label: 'Yes'
+      n: 1610
+      weighted: 32020627.4064362
+    - code: '02'
+      label: 'No'
+      n: 13135
+      weighted: 226049289.879541
+  LAST30_RDSHR:
+    label: Used rideshare in last 30 days
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 2193
+      weighted: 46150762.6605722
+    - code: '-8'
+      label: Don't Know
+      n: 74
+      weighted: 1538789.9672015
+    - code: '01'
+      label: 'Yes'
+      n: 2294
+      weighted: 44483732.5959033
+    - code: '02'
+      label: 'No'
+      n: 12436
+      weighted: 213387639.776385
+  LAST30_TAXI:
+    label: Used taxi service in last 30 days
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 2193
+      weighted: 46150762.6605722
+    - code: '-8'
+      label: Don't Know
+      n: 67
+      weighted: 1219786.7348155
+    - code: '01'
+      label: 'Yes'
+      n: 544
+      weighted: 10883480.7487006
+    - code: '02'
+      label: 'No'
+      n: 14193
+      weighted: 247306894.855973
+  LAST30_WALK:
+    label: Walked from place to place in last 30 days
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-8': dont_know
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 2193
+      weighted: 46150762.6605722
+    - code: '-8'
+      label: Don't Know
+      n: 72
+      weighted: 1394707.3916541
+    - code: '01'
+      label: 'Yes'
+      n: 6473
+      weighted: 110279370.076095
+    - code: '02'
+      label: 'No'
+      n: 8259
+      weighted: 147736084.87174
+  LIF_CYC:
+    label: Life Cycle classification for the household
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: one adult, no children
+      n: 1281
+      weighted: 23077500.5717126
+    - code: '02'
+      label: 2+ adults, no children
+      n: 3258
+      weighted: 54787802.935083
+    - code: '03'
+      label: one adult, youngest child 0-5
+      n: 137
+      weighted: 4250317.13983555
+    - code: '04'
+      label: 2+ adults, youngest child 0-5
+      n: 2010
+      weighted: 47014063.1303666
+    - code: '05'
+      label: one adult, youngest child 6-15
+      n: 502
+      weighted: 10271698.4263693
+    - code: '06'
+      label: 2+ adults, youngest child 6-15
+      n: 3167
+      weighted: 70473398.7965337
+    - code: '07'
+      label: one adult, youngest child 16-21
+      n: 199
+      weighted: 3722612.39067149
+    - code: 08
+      label: 2+ adults, youngest child 16-21
+      n: 906
+      weighted: 21701999.4321244
+    - code: 09
+      label: one adult, retired, no children
+      n: 990
+      weighted: 13020590.4544152
+    - code: '10'
+      label: 2+ adults, retired, no children
+      n: 4547
+      weighted: 57240941.7229493
+  MCTRANSIT:
+    label: Days in last 30 days motorcycle used
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 0-30
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 16623
+      weighted: 298736877.301286
+  MEDCOND:
+    label: Condition or disability that makes travel difficult
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-7'
+      label: I prefer not to answer
+      n: 679
+      weighted: 12168423.5775369
+    - code: '-8'
+      label: Don't know
+      n: 101
+      weighted: 2643257.84359233
+    - code: '-9'
+      label: Not ascertained
+      n: 33
+      weighted: 565448.4784206
+    - code: '01'
+      label: 'Yes'
+      n: 1206
+      weighted: 18647930.8358373
+    - code: '02'
+      label: 'No'
+      n: 14978
+      weighted: 271535864.264674
+  MEDCOND6:
+    label: Length of time respondent has had condition
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15791
+      weighted: 286912994.164224
+    - code: '-7'
+      label: I prefer not to answer
+      n: 40
+      weighted: 865165.7179677
+    - code: '-8'
+      label: Don't know
+      n: 15
+      weighted: 445088.0407078
+    - code: '-9'
+      label: Not ascertained
+      n: 5
+      weighted: 76312.2936834
+    - code: '01'
+      label: 6 months or less
+      n: 80
+      weighted: 1295363.2986122
+    - code: '02'
+      label: More than 6 months
+      n: 895
+      weighted: 12670707.3630485
+    - code: '03'
+      label: Entire life
+      n: 171
+      weighted: 3295294.1218177
+  MSACAT:
+    label: MSA category for the HH home address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: MSA of 1 million or more, with rail
+      n: 3708
+      weighted: 72883077.2777576
+    - code: '02'
+      label: MSA of 1 million or more, without rail
+      n: 5348
+      weighted: 94166530.4245327
+    - code: '03'
+      label: MSA less than 1 million
+      n: 7019
+      weighted: 123936833.186853
+    - code: '04'
+      label: Not in MSA
+      n: 922
+      weighted: 14574484.110918
+  MSASIZE:
+    label: Population size category of the MSA from the five-year ACS API
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: In an MSA of Less than 250,000
+      n: 3154
+      weighted: 53109001.0004719
+    - code: '02'
+      label: In an MSA of 250,000 - 499,999
+      n: 1647
+      weighted: 29786993.4948957
+    - code: '03'
+      label: In an MSA of 500,000 - 999,999
+      n: 2218
+      weighted: 41040838.6914856
+    - code: '04'
+      label: In an MSA or CMSA of 1,000,000 - 2,999,999
+      n: 3864
+      weighted: 68477466.5909874
+    - code: '05'
+      label: In an MSA or CMSA of 3 million or more
+      n: 5192
+      weighted: 98572141.1113026
+    - code: '06'
+      label: Not in MSA or CMSA
+      n: 922
+      weighted: 14574484.110918
+  NUMADLT:
+    label: Count of adult household members at least 18 years old
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '1'
+      label: ''
+      n: 2918
+      weighted: 50335502.3144108
+    - code: '2'
+      label: ''
+      n: 10526
+      weighted: 171330353.705551
+    - code: '3'
+      label: ''
+      n: 2358
+      weighted: 53315088.3248728
+    - code: '4'
+      label: ''
+      n: 895
+      weighted: 22562579.3524798
+    - code: '5'
+      label: ''
+      n: 196
+      weighted: 5186376.3861906
+    - code: '6'
+      label: ''
+      n: 56
+      weighted: 2160736.9987378
+    - code: '7'
+      label: ''
+      n: 40
+      weighted: 622999.4290687
+    - code: '8'
+      label: ''
+      n: 8
+      weighted: 47288.4887499
+  OUTOFTWN:
+    label: Away from home entire travel day
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: 'Yes'
+      n: 75
+      weighted: 1515001.1440297
+    - code: '02'
+      label: 'No'
+      n: 16922
+      weighted: 304045923.856032
+  PARK:
+    label: Paid for parking at any time during travel day
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 9599
+      weighted: 155422007.203655
+    - code: '01'
+      label: 'Yes'
+      n: 186
+      weighted: 4098814.8457681
+    - code: '02'
+      label: 'No'
+      n: 7212
+      weighted: 146040102.950638
+  PARKHOME:
+    label: Pay for home parking
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 16811
+      weighted: 301462110.154293
+    - code: '01'
+      label: 'Yes'
+      n: 14
+      weighted: 367226.6312057
+    - code: '02'
+      label: 'No'
+      n: 172
+      weighted: 3731588.2145624
+  PARKHOMEAMT:
+    label: Whether respondent pays to park at home
+    dtype: string
+    length: 4
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 16983
+      weighted: 305193698.368856
+    - code: '0001'
+      label: Paid to park at home
+      n: 12
+      weighted: 290411.8391737
+    - code: '9998'
+      label: Paid but I don't remember the cost
+      n: 2
+      weighted: 76814.792032
+  PARKHOMEAMT_PAMOUNT:
+    label: Cost of parking at home
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 6.55-200
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 16985
+      weighted: 305270513.160888
+  PARKHOMEAMT_PAYTYPE:
+    label: Duration of payment
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 16985
+      weighted: 305270513.160888
+    - code: '01'
+      label: One Time
+      n: 4
+      weighted: 152835.530924
+    - code: '03'
+      label: Per Month
+      n: 8
+      weighted: 137576.3082497
+  PAYPROF:
+    label: Worked for pay last week
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 2193
+      weighted: 46150762.6605722
+    - code: '01'
+      label: 'Yes'
+      n: 7559
+      weighted: 152753321.522142
+    - code: '02'
+      label: 'No'
+      n: 7245
+      weighted: 106656840.817348
+  PERSONID:
+    label: Person ID within household
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: ''
+      n: 7852
+      weighted: 137629125.173316
+    - code: '02'
+      label: ''
+      n: 5554
+      weighted: 87542459.5951971
+    - code: '03'
+      label: ''
+      n: 1986
+      weighted: 44286567.7583203
+    - code: '04'
+      label: ''
+      n: 1041
+      weighted: 22966179.3048486
+    - code: '05'
+      label: ''
+      n: 384
+      weighted: 9199927.24768432
+    - code: '06'
+      label: ''
+      n: 120
+      weighted: 2498081.19797937
+    - code: '07'
+      label: ''
+      n: 44
+      weighted: 1141112.9551096
+    - code: 08
+      label: ''
+      n: 12
+      weighted: 259117.6074
+    - code: 09
+      label: ''
+      n: 3
+      weighted: 26480.0495296
+    - code: '10'
+      label: ''
+      n: 1
+      weighted: 11874.110677
+  PRMACT:
+    label: Primary activity for those who did not work for pay last week
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 9752
+      weighted: 198904084.182714
+    - code: '01'
+      label: Temporarily absent from a job or business
+      n: 224
+      weighted: 5256188.8033184
+    - code: '02'
+      label: Looking for work/unemployed
+      n: 499
+      weighted: 8718082.71584767
+    - code: '03'
+      label: A homemaker
+      n: 807
+      weighted: 12174137.2351525
+    - code: '04'
+      label: Going to school
+      n: 532
+      weighted: 10863661.2828918
+    - code: '05'
+      label: Retired
+      n: 4051
+      weighted: 49050555.5422907
+    - code: '97'
+      label: Something else
+      n: 1132
+      weighted: 20594215.2378461
+  PROXY:
+    label: Survey completed by self or someone else
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Self
+      n: 11568
+      weighted: 203513392.281939
+    - code: '02'
+      label: Someone else
+      n: 5429
+      weighted: 102047532.718123
+  PTUSED:
+    label: Days in last 30 days public transit used
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 0-30
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 15387
+      weighted: 273540297.593625
+  QACSLAN1:
+    label: Language other than English spoken at home
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 26
+      weighted: 354664.171241273
+    - code: '01'
+      label: 'Yes'
+      n: 2247
+      weighted: 53814967.9618575
+    - code: '02'
+      label: 'No'
+      n: 14724
+      weighted: 251391292.866962
+  QACSLAN3:
+    label: How well this person speaks English
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 14724
+      weighted: 251391292.866962
+    - code: '-9'
+      label: Not ascertained
+      n: 27
+      weighted: 414742.636765273
+    - code: '01'
+      label: Very well
+      n: 1700
+      weighted: 38808876.8342591
+    - code: '02'
+      label: Well
+      n: 369
+      weighted: 9227434.40483294
+    - code: '03'
+      label: Not well
+      n: 146
+      weighted: 4692768.59806
+    - code: '04'
+      label: Not at all
+      n: 31
+      weighted: 1025809.6591816
+  RAIL:
+    label: MSA heavy rail status for household
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: 'Yes'
+      n: 3845
+      weighted: 75551007.6004449
+    - code: '02'
+      label: 'No'
+      n: 13152
+      weighted: 230009917.399616
+  RET_AMZ:
+    label: Number of times returned online purchase at Amazon dropoff center
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: 0-31
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2946
+      weighted: 50615867.7350685
+    - code: '-1'
+      label: Appropriate skip
+      n: 5993
+      weighted: 120304284.856874
+  RET_HOME:
+    label: Number of times returned online purchase by home pickup
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: 0-60
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 3177
+      weighted: 53341225.1415312
+    - code: '-1'
+      label: Appropriate skip
+      n: 5993
+      weighted: 120304284.856874
+  RET_PUF:
+    label: Number of times returned online purchase to post office/UPS/Fed Ex/ similar
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: 0-47
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2332
+      weighted: 39488912.9486442
+    - code: '-1'
+      label: Appropriate skip
+      n: 5993
+      weighted: 120304284.856874
+  RET_STORE:
+    label: Number of times returned online purchase by direct to store
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: 0-17
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 3179
+      weighted: 52561680.4090522
+    - code: '-1'
+      label: Appropriate skip
+      n: 5993
+      weighted: 120304284.856874
+  RIDESHARE22:
+    label: Days in last 30 days rideshare used
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 0-30
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 14703
+      weighted: 261077192.404158
+  R_AGE:
+    label: Respondent age
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: 5-92
+    codes: []
+  R_HISP:
+    label: Person 5 or older - Hispanic or Latino
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Hispanic
+      n: 1722
+      weighted: 56715891.263312
+    - code: '02'
+      label: Not Hispanic
+      n: 15275
+      weighted: 248845033.736749
+  R_RACE:
+    label: Respondent race
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2
+      weighted: 23871.2100824
+    - code: '01'
+      label: White
+      n: 14053
+      weighted: 218057853.779033
+    - code: '02'
+      label: Black or African American
+      n: 1282
+      weighted: 37907512.2723381
+    - code: '03'
+      label: Asian
+      n: 935
+      weighted: 17369165.3789778
+    - code: '04'
+      label: American Indian/Alaska Native
+      n: 124
+      weighted: 3564969.466328
+    - code: '05'
+      label: Native Hawaiian/Pacific Islander
+      n: 67
+      weighted: 1382010.75880959
+    - code: '06'
+      label: Multiple races selected
+      n: 70
+      weighted: 12995066.0100723
+    - code: '97'
+      label: Other race
+      n: 464
+      weighted: 14260476.1244195
+  R_RACE_IMP:
+    label: Respondent race (imputed)
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: White
+      n: 14055
+      weighted: 218081724.989116
+    - code: '02'
+      label: Black or African American
+      n: 1282
+      weighted: 37907512.2723381
+    - code: '03'
+      label: Asian
+      n: 935
+      weighted: 17369165.3789778
+    - code: '04'
+      label: American Indian/Alaska Native
+      n: 124
+      weighted: 3564969.466328
+    - code: '05'
+      label: Native Hawaiian/Pacific Islander
+      n: 67
+      weighted: 1382010.75880959
+    - code: '06'
+      label: Multiple races selected
+      n: 70
+      weighted: 12995066.0100723
+    - code: '97'
+      label: Other race
+      n: 464
+      weighted: 14260476.1244195
+  R_RELAT:
+    label: Respondent relationship to primary respondent
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 9
+      weighted: 168983.4118372
+    - code: '01'
+      label: Spouse/Partner
+      n: 4547
+      weighted: 68828752.3405244
+    - code: '02'
+      label: Child
+      n: 3284
+      weighted: 69790557.8297756
+    - code: '03'
+      label: Parent
+      n: 355
+      weighted: 8380901.35046174
+    - code: '04'
+      label: Brother/Sister
+      n: 207
+      weighted: 5136442.68429844
+    - code: '05'
+      label: Other relative
+      n: 418
+      weighted: 9855000.15562258
+    - code: '06'
+      label: Not related
+      n: 325
+      weighted: 5771162.05422564
+    - code: '07'
+      label: Self
+      n: 7852
+      weighted: 137629125.173316
+  R_SEX:
+    label: Respondent sex
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-7'
+      label: Refuse
+      n: 228
+      weighted: 4179855.30966133
+    - code: '-8'
+      label: Don't know
+      n: 8
+      weighted: 232338.3893851
+    - code: '-9'
+      label: Not ascertained
+      n: 1
+      weighted: 12070.276926
+    - code: '01'
+      label: Male
+      n: 8154
+      weighted: 148289961.587196
+    - code: '02'
+      label: Female
+      n: 8606
+      weighted: 152846699.436893
+  R_SEX_IMP:
+    label: Respondent sex (imputed)
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Male
+      n: 8250
+      weighted: 150091842.331825
+    - code: '02'
+      label: Female
+      n: 8747
+      weighted: 155469082.668236
+  SAMEPLC:
+    label: Reason for not taking trips on travel day
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 10592
+      weighted: 226115054.756128
+    - code: '-7'
+      label: I prefer not to answer
+      n: 990
+      weighted: 13481579.5191431
+    - code: '-8'
+      label: Don't know
+      n: 1057
+      weighted: 14923177.066279
+    - code: '-9'
+      label: Not ascertained
+      n: 477
+      weighted: 5844281.49046393
+    - code: '01'
+      label: Personally sick or quarantining
+      n: 343
+      weighted: 4267168.84603341
+    - code: '02'
+      label: Vacation or personal day
+      n: 273
+      weighted: 3676589.86546034
+    - code: '03'
+      label: Caretaking
+      n: 93
+      weighted: 1219129.21907993
+    - code: '04'
+      label: Disabled or home-bound
+      n: 144
+      weighted: 1759712.28269782
+    - code: '05'
+      label: Worked at home (for pay)
+      n: 427
+      weighted: 4955731.33500197
+    - code: '06'
+      label: Not scheduled to work
+      n: 130
+      weighted: 1826897.49458301
+    - code: '07'
+      label: Household chores/projects
+      n: 263
+      weighted: 3334930.81418122
+    - code: 08
+      label: Bad weather
+      n: 347
+      weighted: 3276669.89930482
+    - code: 09
+      label: Out of country
+      n: 4
+      weighted: 19405.5422935
+    - code: '10'
+      label: No transportation available
+      n: 92
+      weighted: 1138889.3152876
+    - code: '12'
+      label: School holiday/teacher workday
+      n: 58
+      weighted: 591441.5951332
+    - code: '14'
+      label: Hospitalized or otherwise confined
+      n: 22
+      weighted: 285111.8026862
+    - code: '15'
+      label: School from home
+      n: 111
+      weighted: 1009636.13407103
+    - code: '16'
+      label: Reluctant to travel
+      n: 83
+      weighted: 903632.16573259
+    - code: '97'
+      label: Something else, please specify
+      n: 1491
+      weighted: 16931885.8565009
+  SBHTNRNT:
+    label: Category of the percent of renter-occupied housing in the census block group of the school's
+      location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 14861
+      weighted: 258754274.837853
+    - code: '-9'
+      label: Not ascertained
+      n: 5
+      weighted: 70144.3971586
+    - code: '01'
+      label: 0-4%
+      n: 116
+      weighted: 2705385.59022777
+    - code: '05'
+      label: 5-14%
+      n: 490
+      weighted: 9139661.68205572
+    - code: '20'
+      label: 15-24%
+      n: 457
+      weighted: 9274750.44429021
+    - code: '30'
+      label: 25-34%
+      n: 326
+      weighted: 7878079.00805225
+    - code: '40'
+      label: 35-44%
+      n: 226
+      weighted: 5600534.07421726
+    - code: '50'
+      label: 45-54%
+      n: 160
+      weighted: 3811757.09766477
+    - code: '60'
+      label: 55-64%
+      n: 124
+      weighted: 2471636.1436386
+    - code: '70'
+      label: 65-74%
+      n: 94
+      weighted: 2401679.87863738
+    - code: '80'
+      label: 75-84%
+      n: 77
+      weighted: 2117575.9715034
+    - code: '90'
+      label: 85-94%
+      n: 50
+      weighted: 1029838.7278265
+    - code: '95'
+      label: 95-100%
+      n: 11
+      weighted: 305607.1469364
+  SBHUR:
+    label: Urban / Rural indicator - School Block group
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 14861
+      weighted: 258754274.837853
+    - code: '-9'
+      label: Not ascertained
+      n: 5
+      weighted: 70144.3971586
+    - code: '01'
+      label: Rural
+      n: 330
+      weighted: 5884756.45784241
+    - code: '02'
+      label: Small Town
+      n: 471
+      weighted: 10171269.1492786
+    - code: '03'
+      label: Second City
+      n: 462
+      weighted: 10010058.1405274
+    - code: '04'
+      label: Suburban
+      n: 587
+      weighted: 13244471.1522229
+    - code: '05'
+      label: Urban
+      n: 281
+      weighted: 7425950.86517901
+  SBPPOPDN:
+    label: Category of population density (persons per square mile) in the census block group of the school's
+      location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 14861
+      weighted: 258754274.837853
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 339569.3428065
+    - code: '01'
+      label: 0-99
+      n: 161
+      weighted: 2839009.80183976
+    - code: '02'
+      label: 100-499
+      n: 300
+      weighted: 6085568.15285388
+    - code: '03'
+      label: 500-999
+      n: 189
+      weighted: 3682867.1543165
+    - code: '04'
+      label: 1,000-1,999
+      n: 308
+      weighted: 7261847.69913117
+    - code: '05'
+      label: 2,000-3,999
+      n: 551
+      weighted: 11761778.8163281
+    - code: '06'
+      label: 4,000-9,999
+      n: 450
+      weighted: 10632085.7815678
+    - code: '07'
+      label: 10,000-24,999
+      n: 120
+      weighted: 3009402.87301057
+    - code: 08
+      label: 25,000-999,999
+      n: 41
+      weighted: 1194520.5403546
+  SBRESDN:
+    label: Category of housing units per square mile in the census block group of the school's location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 14861
+      weighted: 258754274.837853
+    - code: '-9'
+      label: Not ascertained
+      n: 19
+      weighted: 291151.8394457
+    - code: '01'
+      label: 0-99
+      n: 370
+      weighted: 7446506.62220726
+    - code: '02'
+      label: 100-499
+      n: 482
+      weighted: 9750158.80091599
+    - code: '03'
+      label: 500-999
+      n: 345
+      weighted: 6872796.24729154
+    - code: '04'
+      label: 1,000-1,999
+      n: 528
+      weighted: 11471395.6181489
+    - code: '05'
+      label: 2,000-3,999
+      n: 271
+      weighted: 7247118.70534685
+    - code: '06'
+      label: 4,000-9,999
+      n: 79
+      weighted: 2532270.24531467
+    - code: '07'
+      label: 10,000-24,999
+      n: 22
+      weighted: 416280.0409092
+    - code: 08
+      label: 25,000-999,999
+      n: 20
+      weighted: 778972.0426287
+  SCHOOL1:
+    label: Enrolled in school or academic program
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 27
+      weighted: 429104.2621173
+    - code: '01'
+      label: 'Yes'
+      n: 3327
+      weighted: 70018658.2848628
+    - code: '02'
+      label: 'No'
+      n: 13643
+      weighted: 235113162.453081
+  SCHOOL1C:
+    label: Type of non K-12 school enrolled in
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 16094
+      weighted: 288254914.378433
+    - code: '-9'
+      label: Not ascertained
+      n: 1
+      weighted: 8823.4552384
+    - code: '01'
+      label: In- person
+      n: 458
+      weighted: 9317473.55376351
+    - code: '02'
+      label: Online
+      n: 382
+      weighted: 6857125.38903915
+    - code: '03'
+      label: Other (specify)
+      n: 62
+      weighted: 1122588.2235874
+  SCHTRN1:
+    label: Usual transport to school
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 14246
+      weighted: 245289741.565526
+    - code: '01'
+      label: Car
+      n: 857
+      weighted: 21104247.0448593
+    - code: '02'
+      label: Van
+      n: 137
+      weighted: 2489403.6366585
+    - code: '03'
+      label: SUV/Crossover
+      n: 481
+      weighted: 8846291.11194477
+    - code: '04'
+      label: Pickup truck
+      n: 98
+      weighted: 1573619.61415506
+    - code: '07'
+      label: Motorcycle
+      n: 1
+      weighted: 9914.3424139
+    - code: 08
+      label: Public or commuter bus
+      n: 62
+      weighted: 1565170.0805123
+    - code: 09
+      label: School bus
+      n: 745
+      weighted: 16993219.1296177
+    - code: '10'
+      label: Streetcar or trolley car
+      n: 3
+      weighted: 43662.1337712
+    - code: '11'
+      label: Subway or elevated rail
+      n: 11
+      weighted: 262692.6147576
+    - code: '12'
+      label: Commuter rail
+      n: 6
+      weighted: 80107.3498716
+    - code: '15'
+      label: Taxicab or limo service
+      n: 1
+      weighted: 14744.202054
+    - code: '16'
+      label: Other ride-sharing service
+      n: 7
+      weighted: 167259.4350355
+    - code: '17'
+      label: Paratransit/ Dial a ride
+      n: 1
+      weighted: 21711.11504
+    - code: '18'
+      label: Bicycle (including bikeshare, ebike, etc.)
+      n: 49
+      weighted: 892277.4365504
+    - code: '19'
+      label: E-scooter
+      n: 2
+      weighted: 13216.1503726
+    - code: '20'
+      label: Walked
+      n: 254
+      weighted: 5615939.55507497
+    - code: '21'
+      label: Other (specify)
+      n: 36
+      weighted: 577708.4818453
+  SCHTYP:
+    label: Type of K-12 school enrolled in
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 14579
+      weighted: 252977032.137105
+    - code: '-9'
+      label: Not ascertained
+      n: 4
+      weighted: 30912.753943
+    - code: '01'
+      label: Public or private school
+      n: 2220
+      weighted: 49652950.4077243
+    - code: '02'
+      label: Home schooled
+      n: 183
+      weighted: 2721858.4518296
+    - code: '03'
+      label: Other (specify)
+      n: 11
+      weighted: 178171.2494597
+  STEEMPDN:
+    label: Category of workers per square mile in the census tract of the school's location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 14861
+      weighted: 258754274.837853
+    - code: '-9'
+      label: Not ascertained
+      n: 14
+      weighted: 201607.7516539
+    - code: '01'
+      label: 0-49
+      n: 227
+      weighted: 4324185.77646709
+    - code: '02'
+      label: 50-99
+      n: 118
+      weighted: 2742315.4948381
+    - code: '03'
+      label: 100-249
+      n: 192
+      weighted: 3797834.6408108
+    - code: '04'
+      label: 250-499
+      n: 214
+      weighted: 3969419.5643444
+    - code: '05'
+      label: 500-999
+      n: 283
+      weighted: 6252996.92783303
+    - code: '06'
+      label: 1,000-1,999
+      n: 499
+      weighted: 10610838.6051511
+    - code: '07'
+      label: 2,000-3,999
+      n: 392
+      weighted: 9828328.21610647
+    - code: 08
+      label: 4,000-999,999
+      n: 197
+      weighted: 5079123.18500398
+  STHTNRNT:
+    label: Category of the percent of renter-occupied housing in the census tract of the school's location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 14861
+      weighted: 258754274.837853
+    - code: '-9'
+      label: Not ascertained
+      n: 5
+      weighted: 70144.3971586
+    - code: '01'
+      label: 0-4%
+      n: 59
+      weighted: 1888467.2107424
+    - code: '05'
+      label: 5-14%
+      n: 420
+      weighted: 7418146.17890108
+    - code: '20'
+      label: 15-24%
+      n: 502
+      weighted: 10349923.3036363
+    - code: '30'
+      label: 25-34%
+      n: 383
+      weighted: 9646263.63227593
+    - code: '40'
+      label: 35-44%
+      n: 263
+      weighted: 5675950.95455523
+    - code: '50'
+      label: 45-54%
+      n: 174
+      weighted: 4118084.88908976
+    - code: '60'
+      label: 55-64%
+      n: 124
+      weighted: 2860284.7653708
+    - code: '70'
+      label: 65-74%
+      n: 87
+      weighted: 1757922.8927364
+    - code: '80'
+      label: 75-84%
+      n: 72
+      weighted: 2101620.5401522
+    - code: '90'
+      label: 85-94%
+      n: 43
+      weighted: 778771.7944021
+    - code: '95'
+      label: 95-100%
+      n: 4
+      weighted: 141069.603188
+  STPPOPDN:
+    label: Category of population density (persons per square mile) in the census tract of the school's
+      location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 14861
+      weighted: 258754274.837853
+    - code: '-9'
+      label: Not ascertained
+      n: 10
+      weighted: 152711.0642985
+    - code: '01'
+      label: 0-99
+      n: 210
+      weighted: 4253989.14018401
+    - code: '02'
+      label: 100-499
+      n: 310
+      weighted: 5882053.13929188
+    - code: '03'
+      label: 500-999
+      n: 179
+      weighted: 3487509.4323685
+    - code: '04'
+      label: 1,000-1,999
+      n: 322
+      weighted: 7246523.62566323
+    - code: '05'
+      label: 2,000-3,999
+      n: 492
+      weighted: 10964774.583157
+    - code: '06'
+      label: 4,000-9,999
+      n: 444
+      weighted: 10731681.7559613
+    - code: '07'
+      label: 10,000-24,999
+      n: 119
+      weighted: 2672196.66323623
+    - code: 08
+      label: 25,000-999,999
+      n: 50
+      weighted: 1415210.7580482
+  STRATUMID:
+    label: Household Stratum ID
+    dtype: string
+    length: 4
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: 1021-1040
+    codes: []
+  STRESDN:
+    label: Category of housing units per square mile in the census tract of the school's location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 14861
+      weighted: 258754274.837853
+    - code: '-9'
+      label: Not ascertained
+      n: 22
+      weighted: 457003.7746321
+    - code: '01'
+      label: 0-99
+      n: 387
+      weighted: 7181067.57480879
+    - code: '02'
+      label: 100-499
+      n: 484
+      weighted: 9499414.9867459
+    - code: '03'
+      label: 500-999
+      n: 323
+      weighted: 8337986.97214284
+    - code: '04'
+      label: 1,000-1,999
+      n: 510
+      weighted: 10910475.0647562
+    - code: '05'
+      label: 2,000-3,999
+      n: 294
+      weighted: 7643666.94305603
+    - code: '06'
+      label: 4,000-9,999
+      n: 67
+      weighted: 1462337.04675003
+    - code: '07'
+      label: 10,000-24,999
+      n: 28
+      weighted: 528146.4578399
+    - code: 08
+      label: 25,000-999,999
+      n: 21
+      weighted: 786551.3414771
+  STUDE:
+    label: School or academic program description
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 13670
+      weighted: 235542266.715198
+    - code: '-9'
+      label: Not ascertained
+      n: 6
+      weighted: 128754.800278
+    - code: '01'
+      label: K-12th grade including GED
+      n: 2418
+      weighted: 52583892.8629566
+    - code: '02'
+      label: Vocation/Technical/Trade School
+      n: 57
+      weighted: 1502206.74654604
+    - code: '03'
+      label: Part-time college or university
+      n: 252
+      weighted: 4857771.4147194
+    - code: '04'
+      label: Full-time college or university
+      n: 487
+      weighted: 9007933.86046361
+    - code: '05'
+      label: Other (specify)
+      n: 107
+      weighted: 1938098.5998994
+  TAXISERVICE:
+    label: Days in last 30 days taxi service used
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 0-30
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 16453
+      weighted: 294677444.251361
+  TDAYDATE:
+    label: Date of travel day (YYYYMM)
+    dtype: string
+    length: 6
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '202201'
+      label: ''
+      n: 441
+      weighted: 7909178.6580463
+    - code: '202202'
+      label: ''
+      n: 1717
+      weighted: 23440225.7200965
+    - code: '202203'
+      label: ''
+      n: 1508
+      weighted: 25951890.2381285
+    - code: '202204'
+      label: ''
+      n: 1472
+      weighted: 25114686.7183576
+    - code: '202205'
+      label: ''
+      n: 1218
+      weighted: 25951623.7265512
+    - code: '202206'
+      label: ''
+      n: 780
+      weighted: 25114668.3173238
+    - code: '202207'
+      label: ''
+      n: 998
+      weighted: 25951601.1178757
+    - code: '202208'
+      label: ''
+      n: 1028
+      weighted: 25951582.8739187
+    - code: '202209'
+      label: ''
+      n: 937
+      weighted: 25114654.9350163
+    - code: '202210'
+      label: ''
+      n: 1369
+      weighted: 25951554.5951956
+    - code: '202211'
+      label: ''
+      n: 2566
+      weighted: 25114377.9681805
+    - code: '202212'
+      label: ''
+      n: 2126
+      weighted: 25951892.3693706
+    - code: '202301'
+      label: ''
+      n: 837
+      weighted: 18042987.7619998
+  TRAVDAY:
+    label: Travel day - day of week
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Sunday
+      n: 3032
+      weighted: 43651555.2734937
+    - code: '02'
+      label: Monday
+      n: 3199
+      weighted: 43651501.5901854
+    - code: '03'
+      label: Tuesday
+      n: 2311
+      weighted: 43651578.3309666
+    - code: '04'
+      label: Wednesday
+      n: 2111
+      weighted: 43651549.8958959
+    - code: '05'
+      label: Thursday
+      n: 2287
+      weighted: 43651659.2466583
+    - code: '06'
+      label: Friday
+      n: 2278
+      weighted: 43651588.602261
+    - code: '07'
+      label: Saturday
+      n: 1779
+      weighted: 43651492.0606001
+  TRNPASS:
+    label: Discounted transit pass used in past 30 days
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15432
+      weighted: 274095231.571447
+    - code: '01'
+      label: 'Yes'
+      n: 445
+      weighted: 7592751.76110302
+    - code: '02'
+      label: 'No'
+      n: 1120
+      weighted: 23872941.6675108
+  URBAN:
+    label: Household urban area classification, based on 2020 TIGER/Line Shapefile
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: In an urban area
+      n: 11945
+      weighted: 220756776.181429
+    - code: '02'
+      label: In an Urban cluster
+      n: 1494
+      weighted: 26082431.9468894
+    - code: '03'
+      label: In an area surrounded by urban areas
+      n: 2
+      weighted: 17645.0261647
+    - code: '04'
+      label: Not in urban area
+      n: 3556
+      weighted: 58704071.8455776
+  URBANSIZE:
+    label: Urban area size where home address is located
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: 50,000-199,999
+      n: 1665
+      weighted: 29792063.2667154
+    - code: '02'
+      label: 200,000-499,999
+      n: 1854
+      weighted: 33753568.3859555
+    - code: '03'
+      label: 500,000-999,999
+      n: 1654
+      weighted: 30533415.4865352
+    - code: '04'
+      label: 1,000,000 or more with heavy rail
+      n: 3117
+      weighted: 62864817.8209922
+    - code: '05'
+      label: 1,000,000 or more without heavy rail
+      n: 3655
+      weighted: 63812911.2212308
+    - code: '06'
+      label: Not in urbanized area
+      n: 5052
+      weighted: 84804148.8186319
+  URBRUR:
+    label: Household in urban/rural area
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Urban
+      n: 13439
+      weighted: 246839208.128318
+    - code: '02'
+      label: Rural
+      n: 3558
+      weighted: 58721716.8717423
+  USAGE1:
+    label: Fewer trips in past 30 days
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 2193
+      weighted: 46150762.6605722
+    - code: '-9'
+      label: Not ascertained
+      n: 38
+      weighted: 639344.3458523
+    - code: '01'
+      label: Yes, took fewer trips
+      n: 4109
+      weighted: 72595522.4733849
+    - code: '02'
+      label: No, did not take fewer trips
+      n: 10657
+      weighted: 186175295.520252
+  USAGE2_1:
+    label: Reason fewer trips - more deliveries
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 12888
+      weighted: 232965402.526676
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 232300.5649092
+    - code: '01'
+      label: I had more home deliveries
+      n: 697
+      weighted: 11594658.5042567
+    - code: '02'
+      label: Not Selected
+      n: 3396
+      weighted: 60768563.404219
+  USAGE2_10:
+    label: Reason fewer trips - COVID 19
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 12888
+      weighted: 232965402.526676
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 232300.5649092
+    - code: '01'
+      label: Concerns related to COVID 19
+      n: 1147
+      weighted: 18955851.5886176
+    - code: '02'
+      label: Not Selected
+      n: 2946
+      weighted: 53407370.319858
+  USAGE2_2:
+    label: Reason fewer trips - did not feel safe
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 12888
+      weighted: 232965402.526676
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 232300.5649092
+    - code: '01'
+      label: Transportation did not feel safe
+      n: 198
+      weighted: 3573315.38456445
+    - code: '02'
+      label: Not Selected
+      n: 3895
+      weighted: 68789906.5239113
+  USAGE2_3:
+    label: Reason fewer trips - did not feel clean/healthy
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 12888
+      weighted: 232965402.526676
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 232300.5649092
+    - code: '01'
+      label: Transportation did not feel clean or healthy
+      n: 131
+      weighted: 2220465.01303412
+    - code: '02'
+      label: Not Selected
+      n: 3962
+      weighted: 70142756.8954415
+  USAGE2_4:
+    label: Reason fewer trips - not reliable
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 12888
+      weighted: 232965402.526676
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 232300.5649092
+    - code: '01'
+      label: Transportation was not reliable
+      n: 265
+      weighted: 5863773.72999815
+    - code: '02'
+      label: Not Selected
+      n: 3828
+      weighted: 66499448.1784774
+  USAGE2_5:
+    label: Reason fewer trips - did not go where needed
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 12888
+      weighted: 232965402.526676
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 232300.5649092
+    - code: '01'
+      label: Available transportation did not go where I need to go
+      n: 230
+      weighted: 3802898.5519764
+    - code: '02'
+      label: Not Selected
+      n: 3863
+      weighted: 68560323.3564993
+  USAGE2_6:
+    label: Reason fewer trips - unaffordable
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: valid skip
+      n: 12888
+      weighted: 232965402.526676
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 232300.5649092
+    - code: '01'
+      label: Unable to afford available forms of transportation
+      n: 553
+      weighted: 11764346.2252416
+    - code: '02'
+      label: Not Selected
+      n: 3540
+      weighted: 60598875.6832341
+  USAGE2_7:
+    label: Reason fewer trips - health problems
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: valid skip
+      n: 12888
+      weighted: 232965402.526676
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 232300.5649092
+    - code: '01'
+      label: Had health problems and unable to travel
+      n: 851
+      weighted: 12069913.4090052
+    - code: '02'
+      label: Not Selected
+      n: 3242
+      weighted: 60293308.4994704
+  USAGE2_8:
+    label: Reason fewer trips - no time
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 12888
+      weighted: 232965402.526676
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 232300.5649092
+    - code: '01'
+      label: Did not have time to travel
+      n: 706
+      weighted: 12784831.3907383
+    - code: '02'
+      label: Not Selected
+      n: 3387
+      weighted: 59578390.5177373
+  USAGE2_9:
+    label: Reason fewer trips - other
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 12888
+      weighted: 232965402.526676
+    - code: '-9'
+      label: Not ascertained
+      n: 16
+      weighted: 232300.5649092
+    - code: '01'
+      label: Another reason
+      n: 1318
+      weighted: 23537071.0361128
+    - code: '02'
+      label: Not Selected
+      n: 2775
+      weighted: 48826150.8723628
+  USEPUBTR:
+    label: Public Transit Usage on Travel Date
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: 'Yes'
+      n: 182
+      weighted: 4992814.5377844
+    - code: '02'
+      label: 'No'
+      n: 16815
+      weighted: 300568110.462277
+  WALKTRANSIT:
+    label: Days in last 30 days walking used
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: 0-30
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 10523
+      weighted: 195272358.474444
+  WBHTNRNT:
+    label: Category of the percent of renter-occupied housing in the census block group of the workplace's
+      location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 11224
+      weighted: 184842865.888122
+    - code: '-9'
+      label: Not ascertained
+      n: 18
+      weighted: 455828.6516629
+    - code: '01'
+      label: 0-4%
+      n: 229
+      weighted: 4023620.82102501
+    - code: '05'
+      label: 5-14%
+      n: 771
+      weighted: 14620909.1657095
+    - code: '20'
+      label: 15-24%
+      n: 916
+      weighted: 20186757.0458925
+    - code: '30'
+      label: 25-34%
+      n: 875
+      weighted: 17867234.5062952
+    - code: '40'
+      label: 35-44%
+      n: 682
+      weighted: 15629855.8267947
+    - code: '50'
+      label: 45-54%
+      n: 701
+      weighted: 16050798.100457
+    - code: '60'
+      label: 55-64%
+      n: 542
+      weighted: 9970368.47839621
+    - code: '70'
+      label: 65-74%
+      n: 460
+      weighted: 9613714.07786628
+    - code: '80'
+      label: 75-84%
+      n: 385
+      weighted: 8461684.04159375
+    - code: '90'
+      label: 85-94%
+      n: 161
+      weighted: 3074473.4218234
+    - code: '95'
+      label: 95-100%
+      n: 33
+      weighted: 762814.97442334
+  WBHUR:
+    label: Urban / Rural indicator - Workplace Block group
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 11224
+      weighted: 184842865.888122
+    - code: '-9'
+      label: Not ascertained
+      n: 18
+      weighted: 455828.6516629
+    - code: '01'
+      label: Rural
+      n: 731
+      weighted: 14385232.0236454
+    - code: '02'
+      label: Small Town
+      n: 1222
+      weighted: 25260838.0570113
+    - code: '03'
+      label: Second City
+      n: 1064
+      weighted: 22168063.7891608
+    - code: '04'
+      label: Suburban
+      n: 1739
+      weighted: 36835965.0163817
+    - code: '05'
+      label: Urban
+      n: 999
+      weighted: 21612131.5740778
+  WBPPOPDN:
+    label: Category of population density (persons per square mile) in the census block group of the workplace's
+      location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 11224
+      weighted: 184842865.888122
+    - code: '-9'
+      label: Not ascertained
+      n: 90
+      weighted: 1964022.0920338
+    - code: '01'
+      label: 0-99
+      n: 572
+      weighted: 10692133.0482567
+    - code: '02'
+      label: 100-499
+      n: 885
+      weighted: 19348327.7809662
+    - code: '03'
+      label: 500-999
+      n: 567
+      weighted: 12571550.4842294
+    - code: '04'
+      label: 1,000-1,999
+      n: 949
+      weighted: 19266868.5383602
+    - code: '05'
+      label: 2,000-3,999
+      n: 1213
+      weighted: 25275079.3372482
+    - code: '06'
+      label: 4,000-9,999
+      n: 962
+      weighted: 20493048.7087327
+    - code: '07'
+      label: 10,000-24,999
+      n: 369
+      weighted: 6888894.06058362
+    - code: 08
+      label: 25,000-999,999
+      n: 166
+      weighted: 4218135.0615289
+  WBRESDN:
+    label: Category of housing units per square mile in the census block group of the workplace's location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 11224
+      weighted: 184842865.888122
+    - code: '-9'
+      label: Not ascertained
+      n: 138
+      weighted: 2829680.09847611
+    - code: '01'
+      label: 0-99
+      n: 1019
+      weighted: 19565888.5356942
+    - code: '02'
+      label: 100-499
+      n: 1365
+      weighted: 30577215.4592578
+    - code: '03'
+      label: 500-999
+      n: 794
+      weighted: 16361207.573339
+    - code: '04'
+      label: 1,000-1,999
+      n: 1105
+      weighted: 23034152.7296981
+    - code: '05'
+      label: 2,000-3,999
+      n: 730
+      weighted: 15851826.720059
+    - code: '06'
+      label: 4,000-9,999
+      n: 362
+      weighted: 6995814.65313338
+    - code: '07'
+      label: 10,000-24,999
+      n: 167
+      weighted: 3192995.42957879
+    - code: 08
+      label: 25,000-999,999
+      n: 93
+      weighted: 2309277.9127035
+  WHOPROXY:
+    label: Who is completing the survey
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 11568
+      weighted: 203513392.281939
+    - code: '01'
+      label: Person1
+      n: 5215
+      weighted: 96668359.7712853
+    - code: '02'
+      label: Person 2
+      n: 100
+      weighted: 2138256.7566281
+    - code: '03'
+      label: Person 3
+      n: 28
+      weighted: 749299.8976245
+    - code: '04'
+      label: Person 4
+      n: 10
+      weighted: 298938.539093
+    - code: '05'
+      label: Person 5
+      n: 5
+      weighted: 115914.0483785
+    - code: '06'
+      label: Person 6
+      n: 4
+      weighted: 111926.858945
+    - code: '97'
+      label: Someone else
+      n: 67
+      weighted: 1964836.8461682
+  WKFMHM22:
+    label: Days per week worked from home
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 9214
+      weighted: 147551414.674601
+    - code: '01'
+      label: Never
+      n: 4366
+      weighted: 98141336.2438747
+    - code: '02'
+      label: One or two days a week
+      n: 1120
+      weighted: 18610325.7937501
+    - code: '03'
+      label: Three or four days a week
+      n: 610
+      weighted: 10484138.7402256
+    - code: '04'
+      label: Five or more days a week/ Entire work week
+      n: 1687
+      weighted: 30773709.5476099
+  WORKER:
+    label: Employment status of respondent
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 2193
+      weighted: 46150762.6605722
+    - code: '01'
+      label: Worker
+      n: 7783
+      weighted: 158009510.32546
+    - code: '02'
+      label: Not worker
+      n: 7021
+      weighted: 101400652.014029
+  WRKCOUNT:
+    label: Count of workers in household
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '0'
+      label: ''
+      n: 4769
+      weighted: 65254658.8411027
+    - code: '1'
+      label: ''
+      n: 5421
+      weighted: 96952160.2951807
+    - code: '2'
+      label: ''
+      n: 5509
+      weighted: 108241205.428207
+    - code: '3'
+      label: ''
+      n: 1044
+      weighted: 27188781.7487452
+    - code: '4'
+      label: ''
+      n: 188
+      weighted: 5593976.58578212
+    - code: '5'
+      label: ''
+      n: 47
+      weighted: 1960413.8829502
+    - code: '6'
+      label: ''
+      n: 19
+      weighted: 369728.2180928
+  WRKLOC:
+    label: Description of work location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 9214
+      weighted: 147551414.674601
+    - code: '01'
+      label: Only one work location outside of home
+      n: 4659
+      weighted: 98564167.0703408
+    - code: '02'
+      label: Work location regularly varies (different offices/job sites)
+      n: 1301
+      weighted: 26410451.0889133
+    - code: '03'
+      label: Only work at home (telework, self-employed)
+      n: 1489
+      weighted: 26276357.578031
+    - code: '04'
+      label: Drive/travel for work (driver, sales)
+      n: 334
+      weighted: 6758534.5881753
+  WRKTRANS:
+    label: Usual transport to work
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 10901
+      weighted: 178325124.222211
+    - code: '01'
+      label: Car
+      n: 2972
+      weighted: 65010734.4474836
+    - code: '02'
+      label: Van
+      n: 204
+      weighted: 4648517.473866
+    - code: '03'
+      label: SUV/Crossover
+      n: 1585
+      weighted: 30039129.961568
+    - code: '04'
+      label: Pickup truck
+      n: 758
+      weighted: 15175254.5645783
+    - code: '07'
+      label: Motorcycle
+      n: 12
+      weighted: 283635.3450635
+    - code: 08
+      label: Public or commuter bus
+      n: 97
+      weighted: 2640723.2400086
+    - code: 09
+      label: School bus
+      n: 7
+      weighted: 125816.4225599
+    - code: '10'
+      label: Streetcar or trolley car
+      n: 2
+      weighted: 18983.4077867
+    - code: '11'
+      label: Subway or elevated rail
+      n: 88
+      weighted: 1660118.44641654
+    - code: '12'
+      label: Commuter rail
+      n: 49
+      weighted: 888393.0521583
+    - code: '13'
+      label: Amtrak
+      n: 1
+      weighted: 33161.66516
+    - code: '14'
+      label: Airplane
+      n: 11
+      weighted: 216473.483205
+    - code: '15'
+      label: Taxicab or limo service
+      n: 2
+      weighted: 38626.6006027
+    - code: '16'
+      label: Other ride-sharing service
+      n: 35
+      weighted: 675128.1343959
+    - code: '17'
+      label: Paratransit/ Dial a ride
+      n: 4
+      weighted: 110671.791548
+    - code: '18'
+      label: Bicycle (including bikeshare, ebike, etc.)
+      n: 77
+      weighted: 1292623.9091213
+    - code: '19'
+      label: E-scooter
+      n: 1
+      weighted: 6640.2369368
+    - code: '20'
+      label: Walked
+      n: 163
+      weighted: 3723305.2546798
+    - code: '21'
+      label: Other (specify)
+      n: 25
+      weighted: 590109.2966873
+    - code: '22'
+      label: Ferryboat
+      n: 3
+      weighted: 57754.044024
+  WTEEMPDN:
+    label: Category of workers per square mile in the census tract of the workplace's location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 11224
+      weighted: 184842865.888122
+    - code: '-9'
+      label: Not ascertained
+      n: 96
+      weighted: 2245256.2982379
+    - code: '01'
+      label: 0-49
+      n: 599
+      weighted: 11458075.690313
+    - code: '02'
+      label: 50-99
+      n: 299
+      weighted: 7080422.2336366
+    - code: '03'
+      label: 100-249
+      n: 556
+      weighted: 12125488.5369451
+    - code: '04'
+      label: 250-499
+      n: 610
+      weighted: 12703104.644118
+    - code: '05'
+      label: 500-999
+      n: 804
+      weighted: 16644202.9481996
+    - code: '06'
+      label: 1,000-1,999
+      n: 1247
+      weighted: 26943023.2520471
+    - code: '07'
+      label: 2,000-3,999
+      n: 866
+      weighted: 18080119.5396211
+    - code: 08
+      label: 4,000-999,999
+      n: 696
+      weighted: 13438365.9688214
+  WTHTNRNT:
+    label: Category of the percent of renter-occupied housing in the census tract of the workplace's location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 11224
+      weighted: 184842865.888122
+    - code: '-9'
+      label: Not ascertained
+      n: 18
+      weighted: 455828.6516629
+    - code: '01'
+      label: 0-4%
+      n: 99
+      weighted: 1931563.60838921
+    - code: '05'
+      label: 5-14%
+      n: 720
+      weighted: 14118208.1669743
+    - code: '20'
+      label: 15-24%
+      n: 1042
+      weighted: 22117731.5719256
+    - code: '30'
+      label: 25-34%
+      n: 922
+      weighted: 19821402.5651732
+    - code: '40'
+      label: 35-44%
+      n: 822
+      weighted: 17292346.7546369
+    - code: '50'
+      label: 45-54%
+      n: 682
+      weighted: 14862636.6942115
+    - code: '60'
+      label: 55-64%
+      n: 581
+      weighted: 11677255.6147051
+    - code: '70'
+      label: 65-74%
+      n: 446
+      weighted: 10081483.7331249
+    - code: '80'
+      label: 75-84%
+      n: 312
+      weighted: 5575347.16005736
+    - code: '90'
+      label: 85-94%
+      n: 116
+      weighted: 2409432.61385324
+    - code: '95'
+      label: 95-100%
+      n: 13
+      weighted: 374821.9772257
+  WTPERFIN:
+    label: 7 day National person weight
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: 30.877179031-781699.97227
+    codes: []
+  WTPERFIN2D:
+    label: 2 day National person weight
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: 0-473081.72428
+    codes: []
+  WTPERFIN5D:
+    label: 5 day National person weight
+    dtype: float64
+    length: 8
+    owner: person
+    missing_codes: {}
+    skip_code: null
+    range: 0-972351.28194
+    codes: []
+  WTPPOPDN:
+    label: Category of population density (persons per square mile) in the census tract of the workplace's
+      location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 11224
+      weighted: 184842865.888122
+    - code: '-9'
+      label: Not ascertained
+      n: 66
+      weighted: 1634494.4084171
+    - code: '01'
+      label: 0-99
+      n: 597
+      weighted: 11148954.1733183
+    - code: '02'
+      label: 100-499
+      n: 798
+      weighted: 17394022.5768765
+    - code: '03'
+      label: 500-999
+      n: 545
+      weighted: 11109448.729131
+    - code: '04'
+      label: 1,000-1,999
+      n: 940
+      weighted: 20237909.0939696
+    - code: '05'
+      label: 2,000-3,999
+      n: 1258
+      weighted: 26843457.1956959
+    - code: '06'
+      label: 4,000-9,999
+      n: 1022
+      weighted: 21801486.7901875
+    - code: '07'
+      label: 10,000-24,999
+      n: 361
+      weighted: 6114062.98474854
+    - code: 08
+      label: 25,000-999,999
+      n: 186
+      weighted: 4434223.15959536
+  WTRESDN:
+    label: Category of housing units per square mile in the census tract of the workplace's location
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 11224
+      weighted: 184842865.888122
+    - code: '-9'
+      label: Not ascertained
+      n: 107
+      weighted: 2668698.83535701
+    - code: '01'
+      label: 0-99
+      n: 992
+      weighted: 19830410.9794823
+    - code: '02'
+      label: 100-499
+      n: 1268
+      weighted: 27354579.3125144
+    - code: '03'
+      label: 500-999
+      n: 827
+      weighted: 17409077.9295493
+    - code: '04'
+      label: 1,000-1,999
+      n: 1185
+      weighted: 24800280.6136047
+    - code: '05'
+      label: 2,000-3,999
+      n: 752
+      weighted: 15851352.7447546
+    - code: '06'
+      label: 4,000-9,999
+      n: 377
+      weighted: 7187037.05722161
+    - code: '07'
+      label: 10,000-24,999
+      n: 168
+      weighted: 2864817.59069796
+    - code: 08
+      label: 25,000-999,999
+      n: 97
+      weighted: 2751804.0487578
+  W_CANE:
+    label: Uses cane or walking stick
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15791
+      weighted: 286912994.164224
+    - code: '-7'
+      label: I prefer not to answer
+      n: 80
+      weighted: 1562095.7415825
+    - code: '-8'
+      label: Don't know
+      n: 4
+      weighted: 38676.3309523
+    - code: '-9'
+      label: Not ascertained
+      n: 11
+      weighted: 114290.0698163
+    - code: '01'
+      label: Selected
+      n: 379
+      weighted: 5396130.22863179
+    - code: '02'
+      label: Not Selected
+      n: 732
+      weighted: 11536738.4648544
+  W_CHAIR:
+    label: Uses manual scooter or wheel chair
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15791
+      weighted: 286912994.164224
+    - code: '-7'
+      label: I prefer not to answer
+      n: 80
+      weighted: 1562095.7415825
+    - code: '-8'
+      label: Don't know
+      n: 4
+      weighted: 38676.3309523
+    - code: '-9'
+      label: Not ascertained
+      n: 11
+      weighted: 114290.0698163
+    - code: '01'
+      label: Selected
+      n: 113
+      weighted: 1755731.060646
+    - code: '02'
+      label: Not Selected
+      n: 998
+      weighted: 15177137.6328402
+  W_NONE:
+    label: Uses no medical device for mobility
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15791
+      weighted: 286912994.164224
+    - code: '-7'
+      label: I prefer not to answer
+      n: 80
+      weighted: 1562095.7415825
+    - code: '-8'
+      label: Don't know
+      n: 4
+      weighted: 38676.3309523
+    - code: '-9'
+      label: Not ascertained
+      n: 11
+      weighted: 114290.0698163
+    - code: '01'
+      label: Selected
+      n: 479
+      weighted: 7733761.50918671
+    - code: '02'
+      label: Not Selected
+      n: 632
+      weighted: 9199107.1842995
+  W_SCCH:
+    label: Uses motorized scooter or wheelchair
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15791
+      weighted: 286912994.164224
+    - code: '-7'
+      label: I prefer not to answer
+      n: 80
+      weighted: 1562095.7415825
+    - code: '-8'
+      label: Don't know
+      n: 4
+      weighted: 38676.3309523
+    - code: '-9'
+      label: Not ascertained
+      n: 11
+      weighted: 114290.0698163
+    - code: '01'
+      label: Selected
+      n: 119
+      weighted: 1643490.26527905
+    - code: '02'
+      label: Not Selected
+      n: 992
+      weighted: 15289378.4282072
+  W_VISIMP:
+    label: Uses devices to aid the blind or visually impaired
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15791
+      weighted: 286912994.164224
+    - code: '-7'
+      label: I prefer not to answer
+      n: 80
+      weighted: 1562095.7415825
+    - code: '-8'
+      label: Don't know
+      n: 4
+      weighted: 38676.3309523
+    - code: '-9'
+      label: Not ascertained
+      n: 11
+      weighted: 114290.0698163
+    - code: '01'
+      label: Selected
+      n: 17
+      weighted: 338301.7291868
+    - code: '02'
+      label: Not Selected
+      n: 1094
+      weighted: 16594566.9642994
+  W_WKCR:
+    label: Uses walker or crutches
+    dtype: string
+    length: 2
+    owner: person
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Valid skip
+      n: 15791
+      weighted: 286912994.164224
+    - code: '-7'
+      label: I prefer not to answer
+      n: 80
+      weighted: 1562095.7415825
+    - code: '-8'
+      label: Don't know
+      n: 4
+      weighted: 38676.3309523
+    - code: '-9'
+      label: Not ascertained
+      n: 11
+      weighted: 114290.0698163
+    - code: '01'
+      label: Selected
+      n: 265
+      weighted: 3744649.55427184
+    - code: '02'
+      label: Not Selected
+      n: 846
+      weighted: 13188219.1392144

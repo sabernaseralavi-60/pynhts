@@ -1,0 +1,90 @@
+# NHTS 2022 NextGen (national ABS sample, public-use release dated 2025-05) file registry.
+# Hashes verified 2026-10-21 by downloading the archive from the official ORNL server and
+# hashing every member. The archive and the documents are served under /media/2022/ (the
+# /assets/ path of 2017 does not exist for this wave).
+# NOTE: nhts.ornl.gov answers HTTP 200 with an HTML page for missing files, so only the
+# SHA-256 below proves that a download is the real file.
+wave: 2022
+source_page: https://nhts.ornl.gov
+citation: >-
+  Federal Highway Administration. (2022). 2022 NextGen National Household Travel Survey Core
+  Data, U.S. Department of Transportation, Washington, DC. Available online: http://nhts.ornl.gov.
+# How standard errors are obtained. The 2022 public files carry NO replicate weights; the User's
+# Guide (Appendix 1, "Sampling Errors") prescribes Taylor-series variance with the weight, the
+# stratum and the primary sampling unit (HOUSEID). The guide names the stratum variable
+# HHSTRATUMID_2010; the public household file carries it as STRATUMID.
+variance:
+  method: taylor
+  strata: STRATUMID
+  cluster: HOUSEID
+  weight_sets:
+    all: ""
+    weekday: "5D"
+    weekend: "2D"
+archives:
+  csv.zip:
+    url: https://nhts.ornl.gov/media/2022/download/csv.zip
+    sha256: 64530c396d5f164d2259a22f7042f27bee5147babcd367568ddbfafe6c8bf34c
+    size: 4533528
+members:
+  hhv2pub.csv:
+    archive: csv.zip
+    group: core
+    table: household
+    sha256: d459a63d9bf818f38ea4a222fc0ae038e78509011cba3233762abd39d785745b
+    size: 1767471
+    rows: 7893
+  perv2pub.csv:
+    archive: csv.zip
+    group: core
+    table: person
+    sha256: fa4d816ccd4d1975ff8afd394ce50b1d2326fa2c0b07b8d7f36636ea670fd89c
+    size: 12473819
+    rows: 16997
+  tripv2pub.csv:
+    archive: csv.zip
+    group: core
+    table: trip
+    sha256: f821357ffbab035a4a6704f575cfd20cd7eb4d2f890bd69e1345776377a66c82
+    size: 17505566
+    rows: 31074
+  vehv2pub.csv:
+    archive: csv.zip
+    group: core
+    table: vehicle
+    sha256: eb7bc61dde5f81d08b2437a053aff2eabe9575a6befbfed6bc9a36159c23b52a
+    size: 4455967
+    rows: 14684
+  ldtv2pub.csv:
+    archive: csv.zip
+    group: core
+    table: longdist
+    sha256: 523da0b5778061e1c405d3c656c30184e1e366dc913fd369c135fa7ca29baad8
+    size: 6418788
+    rows: 16997
+# Documents. NOTE: the site still links the first-release (V1) User Guide and Derived Variables
+# files; their Table 10/11 control totals describe the V1 trips and weights and do NOT match the
+# current V2.1 data (trip weights were rebuilt in V2.0, see the release notes). The entries below
+# are the current V2.x documents.
+documentation:
+  codebook.xlsx:
+    url: https://nhts.ornl.gov/media/2022/doc/codebook.xlsx
+    sha256: 7e10ff62be0a72b03528f2469e8da850b335b7d761cf6efdfe9eba9b8a513d96
+  dictionary.xlsx:
+    url: https://nhts.ornl.gov/media/2022/doc/dictionary.xlsx
+    sha256: 6bb6a6518224ef62d511494ea7882a5f533becc1301ac06483dd65dc042db073
+  users_guide.pdf:
+    url: https://nhts.ornl.gov/media/2022/doc/2022%20NextGen%20NHTS%20User's%20Guide%20V201_PubUse.pdf
+    sha256: bc0e7dc4546db3ff6a465fca928c29f4ecb7fbfe23d44ee7e57add4602d3ba0c
+  derived_variables.pdf:
+    url: https://nhts.ornl.gov/media/2022/doc/2022%20NextGen%20NHTS%20Derived%20Variables-PubUseV2.1.pdf
+    sha256: 2906973e00ad4174187e41dfc14ec628fbec9dd5fe3ad33592199367e3c78a72
+  release_notes.pdf:
+    url: https://nhts.ornl.gov/media/2022/doc/2022%20NextGen%20NHTS%20V2.1%20Release%20Notes.pdf
+    sha256: d9f385ab1dc04216f5cb29bd908c520e20e1c52dffef77c17f170e6cefb8b8cb
+  compatibility.pdf:
+    url: https://nhts.ornl.gov/media/2022/doc/2022%20NextGen%20NHTS%20Compatibility%20with%20Prior%20Data%20V2.1.pdf
+    sha256: 1fdac5d27a355f30692c60b4b957af2cfcfe2bf586301aac2519deba916ff171
+  weighting_memo.pdf:
+    url: https://nhts.ornl.gov/media/2022/doc/2022%20NextGen%20NHTS%20Weighting%20Memo.pdf
+    sha256: b78a7cf7fdafbe346d629317cd33519f35e36abd2593d94384adaf132a069223

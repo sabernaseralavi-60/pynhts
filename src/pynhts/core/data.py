@@ -25,10 +25,17 @@ import pandas as pd
 import pyarrow.parquet as pq
 
 from pynhts.core.cache import arrow_to_pandas, cached_frames, derived_dir, fingerprint
-from pynhts.core.schema import KEYS, TABLES, Column, TableSchema, load_schema
+from pynhts.core.schema import (
+    Column,
+    TableSchema,
+    load_schema,
+    table_key,
+    wave_tables,
+)
 from pynhts.io.converter import convert, parquet_dir, replicate_columns
 from pynhts.io.fetcher import NHTSIntegrityError
-from pynhts.stats.survey import Survey
+from pynhts.io.registry import load_registry
+from pynhts.stats.survey import Survey, TaylorSurvey
 
 if TYPE_CHECKING:
     from pynhts.tours import TourConfig, TourResult
@@ -41,6 +48,7 @@ DEFAULT_WEIGHT = {
     "person": "WTPERFIN",
     "trip": "WTTRDFIN",
     "vehicle": "WTHHFIN",
+    "longdist": "WTPERFIN",
 }
 # child table -> tables whose columns can be joined on (nearest first)
 _ANCESTORS = {
@@ -48,6 +56,7 @@ _ANCESTORS = {
     "person": ("household",),
     "trip": ("person", "household"),
     "vehicle": ("household",),
+    "longdist": ("person", "household"),
 }
 _REPLICATE_LEVEL = {
     "household": "household",
@@ -69,9 +78,12 @@ class NHTSData:
         """Wrap the Parquet files in ``directory``; use :func:`pynhts.load` instead."""
         self.wave = wave
         self.directory = directory
-        self._schemas: dict[str, TableSchema] = {t: load_schema(t, wave) for t in TABLES}
+        self.tables: tuple[str, ...] = wave_tables(wave)
+        self._registry = load_registry(wave)
+        self._schemas: dict[str, TableSchema] = {t: load_schema(t, wave) for t in self.tables}
         self._owner_spec: dict[str, Column] = {}
-        for t in TABLES:
+        self._taylor_cache: tuple[pd.Index, np.ndarray] | None = None
+        for t in self.tables:
             for name, col in self._schemas[t].columns.items():
                 if col.owner == t:
                     self._owner_spec.setdefault(name, col)
@@ -94,9 +106,27 @@ class NHTSData:
         ]
         return own + sorted(set(extra) - set(own))
 
-    def weight_column(self, table: str) -> str:
-        """Default full-sample weight of ``table``."""
-        return DEFAULT_WEIGHT[self._check_table(table)]
+    @property
+    def variance_method(self) -> str:
+        """``"jkn"`` (replicate weights, 2017) or ``"taylor"`` (strata and clusters, 2022)."""
+        return self._registry.variance_method
+
+    def key(self, table: str) -> tuple[str, ...]:
+        """Primary-key columns of ``table`` in this wave."""
+        return table_key(self._check_table(table), self.wave)
+
+    def weight_column(self, table: str, weights: str = "all") -> str:
+        """Full-sample weight of ``table``.
+
+        ``weights`` selects the day-type weight set in waves that have several (2022):
+        ``"all"`` (seven days, the default), ``"weekday"`` (``...5D``) or ``"weekend"``
+        (``...2D``). Waves with a single weight set accept only ``"all"``.
+        """
+        base = DEFAULT_WEIGHT[self._check_table(table)]
+        sets: dict[str, str] = self._registry.variance.get("weight_sets", {"all": ""})
+        if weights not in sets:
+            raise ValueError(f"weights must be one of {tuple(sets)} for NHTS {self.wave}")
+        return base + sets[weights]
 
     def labels(self, column: str, table: str | None = None) -> dict[str, str]:
         """Mapping ``code -> label`` for a coded column, from the codebook.
@@ -107,10 +137,11 @@ class NHTSData:
         spec = self._schemas[table].columns[column] if table else self._owner_spec[column]
         return {c.code: c.label for c in spec.codes}
 
-    @staticmethod
-    def _check_table(table: str) -> str:
-        if table not in TABLES:
-            raise ValueError(f"unknown table {table!r}; expected one of {TABLES}")
+    def _check_table(self, table: str) -> str:
+        if table not in self.tables:
+            raise ValueError(
+                f"unknown table {table!r} in NHTS {self.wave}; expected one of {self.tables}"
+            )
         return table
 
     # -- loading -------------------------------------------------------------------------
@@ -123,6 +154,7 @@ class NHTSData:
         skip: SkipMode = "keep",
         weight: bool = True,
         keys: bool = True,
+        weights: str = "all",
     ) -> pd.DataFrame:
         """Load ``table`` as a DataFrame with only the requested columns.
 
@@ -136,8 +168,10 @@ class NHTSData:
             skip: What to do with the appropriate-skip code ``-1``: ``"keep"`` (default; it is
                 not a missing value but it is also not a real number, so numeric columns that
                 contain it need care) or ``"nan"``.
-            weight: Also load the table's default full-sample weight.
+            weight: Also load the table's full-sample weight.
             keys: Also load the table's key columns.
+            weights: Weight set (``"all"``, ``"weekday"``, ``"weekend"``); see
+                :meth:`weight_column`.
 
         Returns:
             DataFrame in the order keys, requested columns, weight; rows in file order.
@@ -147,6 +181,7 @@ class NHTSData:
             NHTSIntegrityError: an orphan child row or a non-unique parent key was found.
         """
         self._check_table(table)
+        wcol = self.weight_column(table, weights)
         if missing not in ("nan", "keep"):
             raise ValueError("missing must be 'nan' or 'keep'")
         if skip not in ("keep", "nan"):
@@ -161,20 +196,20 @@ class NHTSData:
             anc = self._find_ancestor(table, c)
             pulled.setdefault(anc, []).append(c)
         # the schema that describes each loaded column: the table it is read from
-        source = {c: table for c in [*KEYS[table], *base_cols, DEFAULT_WEIGHT[table]]}
+        source = {c: table for c in [*self.key(table), *base_cols, wcol]}
         source.update({c: anc for anc, cols in pulled.items() for c in cols})
 
-        lead = list(KEYS[table]) if keys else []
-        w = [self.weight_column(table)] if weight else []
+        lead = list(self.key(table)) if keys else []
+        w = [wcol] if weight else []
         read = list(dict.fromkeys([*lead, *base_cols, *w]))
         if any(anc_cols for anc_cols in pulled.values()):
             # join keys must be present even when the caller did not ask for keys
-            read = list(dict.fromkeys([*KEYS[table], *read]))
+            read = list(dict.fromkeys([*self.key(table), *read]))
         df = arrow_to_pandas(pq.read_table(self.directory / f"{table}.parquet", columns=read))
         n_rows = len(df)
 
         for anc, cols in pulled.items():
-            on = list(KEYS[anc])
+            on = list(self.key(anc))
             parent = arrow_to_pandas(
                 pq.read_table(self.directory / f"{anc}.parquet", columns=[*on, *cols])
             )
@@ -198,10 +233,12 @@ class NHTSData:
         skip: SkipMode = "keep",
         weight: bool = True,
         keys: bool = True,
+        weights: str = "all",
     ) -> pd.DataFrame:
         """Shortcut for ``table("household", ...)``; see :meth:`table`."""
         return self.table(
-            "household", columns, missing=missing, skip=skip, weight=weight, keys=keys
+            "household", columns, missing=missing, skip=skip, weight=weight, keys=keys,
+            weights=weights,
         )
 
     def persons(
@@ -212,10 +249,12 @@ class NHTSData:
         skip: SkipMode = "keep",
         weight: bool = True,
         keys: bool = True,
+        weights: str = "all",
     ) -> pd.DataFrame:
         """Shortcut for ``table("person", ...)``; see :meth:`table`."""
         return self.table(
-            "person", columns, missing=missing, skip=skip, weight=weight, keys=keys
+            "person", columns, missing=missing, skip=skip, weight=weight, keys=keys,
+            weights=weights,
         )
 
     def trips(
@@ -226,10 +265,12 @@ class NHTSData:
         skip: SkipMode = "keep",
         weight: bool = True,
         keys: bool = True,
+        weights: str = "all",
     ) -> pd.DataFrame:
         """Shortcut for ``table("trip", ...)``; see :meth:`table`."""
         return self.table(
-            "trip", columns, missing=missing, skip=skip, weight=weight, keys=keys
+            "trip", columns, missing=missing, skip=skip, weight=weight, keys=keys,
+            weights=weights,
         )
 
     def vehicles(
@@ -240,10 +281,28 @@ class NHTSData:
         skip: SkipMode = "keep",
         weight: bool = True,
         keys: bool = True,
+        weights: str = "all",
     ) -> pd.DataFrame:
         """Shortcut for ``table("vehicle", ...)``; see :meth:`table`."""
         return self.table(
-            "vehicle", columns, missing=missing, skip=skip, weight=weight, keys=keys
+            "vehicle", columns, missing=missing, skip=skip, weight=weight, keys=keys,
+            weights=weights,
+        )
+
+    def longdist(
+        self,
+        columns: Sequence[str] | None = None,
+        *,
+        missing: MissingMode = "nan",
+        skip: SkipMode = "keep",
+        weight: bool = True,
+        keys: bool = True,
+        weights: str = "all",
+    ) -> pd.DataFrame:
+        """Shortcut for ``table("longdist", ...)`` (NHTS 2022 only); see :meth:`table`."""
+        return self.table(
+            "longdist", columns, missing=missing, skip=skip, weight=weight, keys=keys,
+            weights=weights,
         )
 
     def survey(
@@ -254,24 +313,56 @@ class NHTSData:
         missing: MissingMode = "nan",
         skip: SkipMode = "keep",
         level: float = 0.95,
-    ) -> Survey:
-        """Rows of ``table`` bound to their 98 jackknife replicate weights.
+        weights: str = "all",
+        clusters: Literal["all", "observed"] = "all",
+    ) -> Survey | TaylorSurvey:
+        """Rows of ``table`` bound to the weights and the wave's variance design.
 
-        Household and vehicle rows use the household replicates, person rows the person
-        replicates, and trip rows the person-day (``WTTRDFIN``) replicates. The result offers
-        ``total``, ``mean``, ``proportion`` and ``ratio`` with JKn standard errors, margins of
-        error and confidence intervals (see :class:`pynhts.stats.Survey`).
+        NHTS 2017 (``variance_method == "jkn"``): household and vehicle rows use the household
+        replicates, person rows the person replicates and trip rows the person-day
+        (``WTTRDFIN``) replicates; the result is a :class:`pynhts.stats.Survey` with JKn
+        standard errors. NHTS 2022 (``"taylor"``, no replicate weights): every row carries its own
+        weight and belongs to its household (cluster) and ``STRATUMID`` (stratum); the result is a
+        :class:`pynhts.stats.TaylorSurvey`. Both offer ``total``, ``mean``, ``proportion`` and
+        ``ratio`` with standard errors, margins of error and confidence intervals.
+
+        Args:
+            table: Table whose rows are analysed.
+            columns: Columns to load (see :meth:`table`).
+            missing: Missing-code handling (see :meth:`table`).
+            skip: Appropriate-skip handling (see :meth:`table`).
+            level: Confidence level.
+            weights: Weight set: ``"all"`` (default), ``"weekday"`` or ``"weekend"`` (2022 only).
+            clusters: 2022 only. ``"all"`` (default) keeps every sampled household in the design,
+                also those without a row in ``table`` (no trip on the travel day, no vehicle);
+                they contribute zeros, which is the design-correct variance. ``"observed"``
+                keeps only households that have a row, which is what software gives when you
+                feed it the trip or vehicle file alone (smaller standard errors; use it only to
+                compare with such output).
 
         Raises:
-            NHTSIntegrityError: a row has no replicate-weight unit, or its weight differs from
-                the replicate file's full-sample weight.
+            NHTSIntegrityError: a row has no weight unit, or its weight differs from the
+                replicate file's full-sample weight.
         """
-        rows = self.table(table, columns, missing=missing, skip=skip, weight=True, keys=True)
+        rows = self.table(table, columns, missing=missing, skip=skip, weight=True, keys=True,
+                          weights=weights)
+        if self.variance_method == "taylor":
+            return self._bind_taylor(rows, self._check_table(table), level, weights,
+                                     clusters=clusters)
+        if weights != "all":
+            raise ValueError(f"NHTS {self.wave} has only the 'all' weight set")
         return self._bind(rows, _REPLICATE_LEVEL[self._check_table(table)], DEFAULT_WEIGHT[table],
                           level)
 
-    def survey_rows(self, rows: pd.DataFrame, level: str, *, level_conf: float = 0.95) -> Survey:
-        """Bind your own rows to replicate weights, e.g. tours (use ``level="trip"``).
+    def survey_rows(
+        self, rows: pd.DataFrame, level: str, *, level_conf: float = 0.95, weights: str = "all"
+    ) -> Survey | TaylorSurvey:
+        """Bind your own rows to the weights and variance design, e.g. tours (``level="trip"``).
+
+        In 2017 ``level="trip"`` means the person-day replicate weight (keys ``HOUSEID`` and
+        ``PERSONID``). In 2022 the levels are the weight-carrying tables (``"household"``,
+        ``"person"``, ``"trip"`` keyed by ``TRIPID``, ``"vehicle"``, ``"longdist"``); rows must
+        carry the keys of that table, and each row takes the weight of the table row it names.
 
         ``rows`` must carry the keys of the weight unit: ``HOUSEID`` for ``"household"``,
         ``HOUSEID`` and ``PERSONID`` for ``"person"`` and for ``"trip"`` (person-day). All rows
@@ -281,6 +372,9 @@ class NHTSData:
         Raises:
             NHTSIntegrityError: a row has no replicate-weight unit.
         """
+        if self.variance_method == "taylor":
+            return self._bind_taylor(rows, self._check_table(level), level_conf, weights,
+                                     rows_are_table=False)
         if level not in _REPLICATE_FILE:
             raise ValueError(f"level must be one of {tuple(_REPLICATE_FILE)}")
         return self._bind(rows, level, None, level_conf)
@@ -288,7 +382,7 @@ class NHTSData:
     def _bind(
         self, rows: pd.DataFrame, level_name: str, weight_col: str | None, level: float
     ) -> Survey:
-        keys = list(KEYS["household" if level_name == "household" else "person"])
+        keys = list(self.key("household" if level_name == "household" else "person"))
         absent = [k for k in keys if k not in rows.columns]
         if absent:
             raise KeyError(f"rows lack the key columns {absent}")
@@ -306,6 +400,59 @@ class NHTSData:
             raise NHTSIntegrityError("row weights differ from the replicate file's weights")
         reps = rep[replicate_columns(wcol)].to_numpy(dtype=np.float64)
         return Survey(rows, unit.astype(np.int64), unit_w, reps, level=level)
+
+    def _taylor_design(self) -> tuple[pd.Index, np.ndarray]:
+        """Household ids and the stratum label of each household (the clusters)."""
+        if self._taylor_cache is None:
+            col = str(self._registry.variance["strata"])
+            hh = arrow_to_pandas(
+                pq.read_table(self.directory / "household.parquet", columns=["HOUSEID", col])
+            )
+            if hh[col].isna().any():
+                raise NHTSIntegrityError(f"{col} has missing values")
+            self._taylor_cache = (pd.Index(hh["HOUSEID"]), hh[col].to_numpy())
+        return self._taylor_cache
+
+    def _bind_taylor(
+        self, rows: pd.DataFrame, table: str, level: float, weights: str,
+        *, rows_are_table: bool = True, clusters: Literal["all", "observed"] = "all",
+    ) -> TaylorSurvey:
+        """Bind rows to the weight-carrying ``table`` of a Taylor-series wave.
+
+        Every row of ``table`` is a unit with its own weight; its cluster is the household.
+        ``rows`` (the table itself, or your own rows keyed like it) are mapped to those units.
+        """
+        key = list(self.key(table))
+        absent = [k for k in key if k not in rows.columns]
+        if absent:
+            raise KeyError(f"rows lack the key columns {absent}")
+        wcol = self.weight_column(table, weights)
+        units = arrow_to_pandas(
+            pq.read_table(self.directory / f"{table}.parquet", columns=[*key, wcol])
+        )
+        if units.duplicated(key).any():
+            raise NHTSIntegrityError(f"{table} keys {key} are not unique")
+        index = pd.MultiIndex.from_frame(units[key]) if len(key) > 1 else pd.Index(units[key[0]])
+        wanted = pd.MultiIndex.from_frame(rows[key]) if len(key) > 1 else pd.Index(rows[key[0]])
+        unit = index.get_indexer(wanted)
+        if (unit < 0).any():
+            raise NHTSIntegrityError(f"rows without a {table} weight unit")
+        unit_w = units[wcol].to_numpy(dtype=np.float64)
+        if rows_are_table and wcol in rows.columns and not np.allclose(
+            rows[wcol].to_numpy(dtype=np.float64), unit_w[unit], rtol=1e-12, atol=0
+        ):
+            raise NHTSIntegrityError("row weights differ from the table's weights")
+        hh_ids, hh_stratum = self._taylor_design()
+        cluster = hh_ids.get_indexer(pd.Index(units["HOUSEID"]))
+        if (cluster < 0).any():
+            raise NHTSIntegrityError(f"{table} rows without a household row")
+        if clusters == "observed":
+            present, cluster = np.unique(cluster, return_inverse=True)
+            hh_stratum = hh_stratum[present]
+        elif clusters != "all":
+            raise ValueError("clusters must be 'all' or 'observed'")
+        return TaylorSurvey(rows, unit.astype(np.int64), unit_w, cluster.astype(np.int64),
+                            hh_stratum, level=level)
 
     def tours(
         self,
@@ -386,6 +533,11 @@ class NHTSData:
         Replicates are stored as float32 and returned as float64 by default, which is the
         precision required before squaring deviations.
         """
+        if self.variance_method != "jkn":
+            raise ValueError(
+                f"NHTS {self.wave} has no replicate weights; its standard errors use "
+                "Taylor-series linearisation (see NHTSData.survey)"
+            )
         if level not in _REPLICATE_FILE:
             raise ValueError(f"level must be one of {tuple(_REPLICATE_FILE)}")
         fname, wcol = _REPLICATE_FILE[level]
@@ -441,15 +593,17 @@ def load(
     """Open an NHTS wave, downloading and converting it on first use.
 
     Args:
-        wave: Survey year (only 2017 in Phase 1).
+        wave: Survey year (2017 or 2022).
         cache: Cache root override (default: ``$PYNHTS_CACHE_DIR`` or the user cache dir).
         offline: Never download; raise if the data are not already cached.
-        replicates: Also make sure the 98 jackknife replicate weights are available.
+        replicates: Also make sure the 98 jackknife replicate weights are available (waves
+            without replicate weights, i.e. 2022, ignore this flag).
 
     Returns:
         An :class:`NHTSData` handle. Nothing large is read until you ask for a table.
     """
-    groups: tuple[str, ...] = ("core", "replicates") if replicates else ("core",)
+    has_replicates = "replicates" in load_registry(wave).groups
+    groups: tuple[str, ...] = ("core", "replicates") if replicates and has_replicates else ("core",)
     convert(wave, groups, cache=cache, offline=offline)
     return NHTSData(wave, parquet_dir(wave, cache))
 

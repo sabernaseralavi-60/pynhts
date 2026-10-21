@@ -138,6 +138,13 @@ def fetch(
     return result
 
 
+def clean_downloads(wave: int, cache: str | os.PathLike[str] | None = None) -> None:
+    """Remove the temporary zip downloads of ``wave`` (kept while several members need them)."""
+    dl_dir = raw_dir(wave, cache) / "_downloads"
+    if dl_dir.is_dir():
+        shutil.rmtree(dl_dir, ignore_errors=True)
+
+
 def _download_and_extract(
     archive: Archive, members: list[Member], out_dir: Path, keep: bool, progressbar: bool
 ) -> dict[str, Path]:

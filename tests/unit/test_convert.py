@@ -49,7 +49,8 @@ def env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
 
     def member(name: str, group: str, rows: int | None) -> Member:
         b = (raw / name).read_bytes()
-        return Member(name, "x.zip", group, _sha(b), len(b), rows)
+        return Member(name, "x.zip", group, _sha(b), len(b), rows,
+                      "household" if name == "hhpub.csv" else "")
 
     reg = Registry(
         2017, "fake",
@@ -69,10 +70,9 @@ def env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     )
     monkeypatch.setattr(cv, "load_registry", lambda wave: reg)
     monkeypatch.setattr(cv, "load_schema", lambda table, wave=2017: schema)
-    monkeypatch.setattr(cv, "CORE_TABLES", {"hhpub.csv": "household"})
     fetch_calls: list[tuple] = []
 
-    def fake_fetch(wave, groups, cache=None, offline=False, names=None):
+    def fake_fetch(wave, groups, cache=None, offline=False, names=None, **_):
         fetch_calls.append(names)
         return {m.name: raw / m.name for m in reg.members_in(groups)
                 if names is None or m.name in names}
@@ -113,7 +113,7 @@ def test_rebuilds_when_input_hash_or_codebook_changes(env):
 def test_row_count_mismatch_raises_and_leaves_no_partial_file(env):
     reg = env["reg"]
     bad = Member("hhpub.csv", "x.zip", "core", reg.members["hhpub.csv"].sha256,
-                 reg.members["hhpub.csv"].size, 99)
+                 reg.members["hhpub.csv"].size, 99, "household")
     env["monkeypatch"].setattr(
         cv, "load_registry", lambda wave: Registry(2017, "f", reg.archives,
                                                    {**reg.members, "hhpub.csv": bad}, {}))

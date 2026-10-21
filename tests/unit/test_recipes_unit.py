@@ -43,7 +43,7 @@ def test_packaged_spec_is_well_formed():
 
 
 def test_unknown_recipe_and_available():
-    assert recipes.available() == ["mcnally_rafiq2021", "stt2017"]
+    assert recipes.available() == ["mcnally_rafiq2021", "stt2017", "ug2022"]
     with pytest.raises(ValueError):
         load_spec("nope")
     with pytest.raises(ValueError):

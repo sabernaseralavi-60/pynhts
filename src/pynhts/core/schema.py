@@ -10,12 +10,24 @@ from typing import Any
 import yaml
 
 TABLES = ("household", "person", "trip", "vehicle")
+# 2022 adds a long-distance-travel file with one row per person (child of the person table).
+ALL_TABLES = (*TABLES, "longdist")
 KEYS = {
     "household": ("HOUSEID",),
     "person": ("HOUSEID", "PERSONID"),
     "trip": ("HOUSEID", "PERSONID", "TDTRPNUM"),
     "vehicle": ("HOUSEID", "VEHID"),
+    "longdist": ("HOUSEID", "PERSONID"),
 }
+# Keys that differ from KEYS in a wave: the 2022 trip file is keyed by TRIPID (no TDTRPNUM).
+WAVE_KEYS: dict[int, dict[str, tuple[str, ...]]] = {
+    2022: {"trip": ("HOUSEID", "PERSONID", "TRIPID")},
+}
+
+
+def table_key(table: str, wave: int = 2017) -> tuple[str, ...]:
+    """Primary-key columns of ``table`` in ``wave``."""
+    return WAVE_KEYS.get(wave, {}).get(table, KEYS[table])
 
 
 @dataclass(frozen=True)
@@ -61,7 +73,7 @@ class TableSchema:
     @property
     def key(self) -> tuple[str, ...]:
         """Primary-key columns of this table."""
-        return KEYS[self.table]
+        return table_key(self.table, self.wave)
 
     def dtypes(self) -> dict[str, str]:
         """Mapping suitable for ``pandas.read_csv(dtype=...)``."""
@@ -83,11 +95,11 @@ def load_schema(table: str, wave: int = 2017) -> TableSchema:
     Raises:
         ValueError: unknown table or unsupported wave.
     """
-    if table not in TABLES:
-        raise ValueError(f"unknown table {table!r}; expected one of {TABLES}")
+    if table not in ALL_TABLES:
+        raise ValueError(f"unknown table {table!r}; expected one of {ALL_TABLES}")
     ref = resources.files("pynhts") / "_schema" / str(wave) / f"{table}.yaml"
     if not ref.is_file():
-        raise ValueError(f"no schema for NHTS wave {wave}")
+        raise ValueError(f"no schema for table {table!r} in NHTS wave {wave}")
     raw: dict[str, Any] = yaml.safe_load(ref.read_text(encoding="utf-8"))
     cols = {
         name: Column(
@@ -110,3 +122,9 @@ def load_schema(table: str, wave: int = 2017) -> TableSchema:
         columns=cols,
         codebook_sha256=str(raw["codebook"]["sha256"]),
     )
+
+
+def wave_tables(wave: int) -> tuple[str, ...]:
+    """Tables that exist in ``wave`` (the four core tables, plus ``longdist`` from 2022)."""
+    root = resources.files("pynhts") / "_schema" / str(wave)
+    return tuple(t for t in ALL_TABLES if (root / f"{t}.yaml").is_file())

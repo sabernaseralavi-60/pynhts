@@ -4,6 +4,7 @@ from pynhts.io.converter import Converted, convert, parquet_dir, replicate_colum
 from pynhts.io.fetcher import (
     NHTSIntegrityError,
     cache_dir,
+    clean_downloads,
     fetch,
     raw_dir,
     register_local,
@@ -16,6 +17,7 @@ __all__ = [
     "NHTSIntegrityError",
     "Registry",
     "cache_dir",
+    "clean_downloads",
     "convert",
     "fetch",
     "load_registry",

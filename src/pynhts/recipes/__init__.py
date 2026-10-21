@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, Any
 
 import pandas as pd
 
-from pynhts.recipes import mcnally_rafiq2021, stt2017
+from pynhts.recipes import mcnally_rafiq2021, stt2017, ug2022
 from pynhts.recipes.base import RecipeSpec, Target, classify, comparison_frame, load_spec
 
 if TYPE_CHECKING:
@@ -22,6 +22,7 @@ if TYPE_CHECKING:
 RECIPES: dict[str, tuple[dict[str, Any], Any]] = {
     "stt2017": (stt2017.COMPUTE, stt2017.Context),
     "mcnally_rafiq2021": (mcnally_rafiq2021.COMPUTE, mcnally_rafiq2021.Context),
+    "ug2022": (ug2022.COMPUTE, ug2022.Context),
 }
 
 
@@ -41,6 +42,8 @@ def run(name: str, data: NHTSData) -> pd.DataFrame:
     if name not in RECIPES:
         raise ValueError(f"unknown recipe {name!r}; available: {available()}")
     spec = load_spec(name)
+    if data.wave != spec.wave:
+        raise ValueError(f"recipe {name!r} reproduces NHTS {spec.wave}, got NHTS {data.wave}")
     compute, context_class = RECIPES[name]
     ctx = context_class(data)
     results: dict[str, tuple[float, float]] = {}

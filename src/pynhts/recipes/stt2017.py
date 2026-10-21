@@ -23,12 +23,19 @@ from typing import TYPE_CHECKING
 import numpy as np
 import pandas as pd
 
-from pynhts.stats.survey import Survey, ratio_across
+from pynhts.stats.survey import Survey, TaylorSurvey, ratio_across
 
 if TYPE_CHECKING:
     from pynhts.core.data import NHTSData
 
 Result = tuple[float, float]
+
+
+def _jkn(survey: Survey | TaylorSurvey) -> Survey:
+    """This recipe reproduces published JKn margins of error, so it needs the 2017 replicates."""
+    if not isinstance(survey, Survey):
+        raise TypeError("recipe stt2017 needs NHTS 2017 (replicate weights)")
+    return survey
 
 
 class Context:
@@ -40,15 +47,15 @@ class Context:
 
     @cached_property
     def households(self) -> Survey:
-        return self.data.survey("household", ["HHSIZE"])
+        return _jkn(self.data.survey("household", ["HHSIZE"]))
 
     @cached_property
     def persons(self) -> Survey:
-        return self.data.survey("person", ["R_AGE_IMP", "DRIVER", "WORKER"])
+        return _jkn(self.data.survey("person", ["R_AGE_IMP", "DRIVER", "WORKER"]))
 
     @cached_property
     def trips(self) -> Survey:
-        return self.data.survey("trip", ["TRPMILES"])
+        return _jkn(self.data.survey("trip", ["TRPMILES"]))
 
     @cached_property
     def person_travel(self) -> Survey:

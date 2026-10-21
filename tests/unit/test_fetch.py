@@ -149,4 +149,4 @@ def test_real_registry_is_complete_and_well_formed():
 
 def test_unsupported_wave():
     with pytest.raises(ValueError, match="not supported"):
-        load_registry(2022)
+        load_registry(1995)

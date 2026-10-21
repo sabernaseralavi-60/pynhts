@@ -1,0 +1,75 @@
+# Replication targets: control totals printed in the 2022 NHTS Data User Guide.
+#   Federal Highway Administration (2022 NextGen NHTS), "2022 NHTS Data User Guide", revised
+#   December 2024 for the V2.0.1 release (Ipsos / MacroSys / ORNL), Tables 10 and 11, page 28-29.
+#   Registry entry users_guide.pdf, sha256 bc0e7dc4546db3ff6a465fca928c29f4ecb7fbfe23d44ee7e57add4602d3ba0c,
+#   read 2026-10-21. The first-release (V1) guide prints different trip, driver and vehicle totals
+#   (trips 231,715,789,629) because V2.0 rebuilt the trip and household weights; do not use it.
+#
+# Fields as in stt2017.yaml; `wave` selects the wave the recipe runs on. Weighted totals are
+# compared to the nearest integer. The guide prints no margins of error (moe: null), so only the
+# estimate decides the status.
+source: ug2022
+wave: 2022
+title: "2022 NHTS Data User Guide: Tables 10 and 11 (control totals, national ABS file V2.1)"
+citation: "Federal Highway Administration (2022). 2022 NextGen National Household Travel Survey Core Data. 2022 NHTS Data User Guide, Tables 10 and 11."
+targets:
+  # ---- Table 10 ---------------------------------------------------------------------------
+  - {id: hh_cases,         table: T10, label: "Households, cases",              scale: 1, decimals: 0, published: 7893,           moe: null, compute: hh_cases,         expected: reproduced}
+  - {id: hh_weighted,      table: T10, label: "Households, sum of weights",     scale: 1, decimals: 0, published: 127544707,     moe: null, compute: hh_weighted,      expected: reproduced}
+  - {id: per_cases,        table: T10, label: "Persons, cases",                 scale: 1, decimals: 0, published: 16997,          moe: null, compute: per_cases,        expected: reproduced}
+  - {id: per_weighted,     table: T10, label: "Persons, sum of weights",        scale: 1, decimals: 0, published: 305560925,     moe: null, compute: per_weighted,     expected: reproduced}
+  - {id: veh_cases,        table: T10, label: "Personally owned vehicles, cases", scale: 1, decimals: 0, published: 14684,        moe: null, compute: veh_cases,        expected: reproduced}
+  - {id: veh_weighted,     table: T10, label: "Personally owned vehicles, sum of weights", scale: 1, decimals: 0, published: 232837104, moe: null, compute: veh_weighted, expected: reproduced}
+  - {id: trips_cases,      table: T10, label: "Trips (annualized), cases",      scale: 1, decimals: 0, published: 31074,          moe: null, compute: trips_cases,      expected: reproduced}
+  - {id: trips_weighted,   table: T10, label: "Trips (annualized), sum of weights", scale: 1, decimals: 0, published: 253754536507, moe: null, compute: trips_weighted, expected: reproduced}
+  # ---- Table 11 ---------------------------------------------------------------------------
+  - {id: workers_cases,    table: T11, label: "Workers, cases",                 scale: 1, decimals: 0, published: 7783,           moe: null, compute: workers_cases,    expected: reproduced}
+  - {id: workers_weighted, table: T11, label: "Workers, sum of weights",        scale: 1, decimals: 0, published: 158009510,     moe: null, compute: workers_weighted, expected: reproduced}
+  - {id: drivers_cases,    table: T11, label: "Drivers, cases",                 scale: 1, decimals: 0, published: 13434,          moe: null, compute: drivers_cases,    expected: reproduced}
+  - {id: drivers_weighted, table: T11, label: "Drivers, sum of weights",        scale: 1, decimals: 0, published: 231803889,     moe: null, compute: drivers_weighted, expected: reproduced}
+  - id: pmt_cases
+    table: T11
+    label: "Person miles of travel, 'cases' (unweighted sum of TRPMILES)"
+    scale: 1
+    decimals: 0
+    published: 434079
+    moe: null
+    compute: pmt_cases
+    expected: reproduced
+    note: "The guide's 'number of cases' for PMT is the unweighted sum of trip miles, not a count."
+  - {id: pmt_weighted,     table: T11, label: "Person miles of travel, sum of weights", scale: 1, decimals: 0, published: 3184397491594, moe: null, compute: pmt_weighted, expected: reproduced}
+  - {id: vtrips_cases,     table: T11, label: "Vehicle trips, cases",           scale: 1, decimals: 0, published: 20490,          moe: null, compute: vtrips_cases,     expected: reproduced}
+  - id: vtrips_weighted
+    table: T11
+    label: "Vehicle trips, sum of weights"
+    scale: 1
+    decimals: 0
+    published: 220653982376
+    moe: null
+    compute: vtrips_weighted
+    expected: not_reproduced
+    note: >-
+      The 20,490 driver trips (DRVR_FLG = 01) carry 160,953,195,395 of trip weight, not 220.65 billion.
+      The printed total is close to the weight of all trips in privately owned vehicles whatever the
+      respondent's role (about 220.5 billion over TRPTRANS 01-04 and 07), but that set has 27,399 trips
+      and the printed case count is 20,490, so the row mixes two definitions or is stale. Not tuned.
+  - id: vmt_cases
+    table: T11
+    label: "Vehicle miles of travel, 'cases' (unweighted sum of VMT_MILE)"
+    scale: 1
+    decimals: 0
+    published: 244515
+    moe: null
+    compute: vmt_cases
+    expected: not_reproduced
+    note: "Unweighted sum of VMT_MILE over driver trips is 235,775 here (3 trips with -9 count as 0). Cause unknown."
+  - id: vmt_weighted
+    table: T11
+    label: "Vehicle miles of travel, sum of weights"
+    scale: 1
+    decimals: 0
+    published: 1891330527292
+    moe: null
+    compute: vmt_weighted
+    expected: not_reproduced
+    note: "1,848,031,458,832 here (2.3 percent lower). Same unexplained definition as the case count; not tuned."

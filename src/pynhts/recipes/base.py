@@ -41,6 +41,7 @@ class RecipeSpec:
     title: str
     citation: str
     targets: tuple[Target, ...]
+    wave: int = 2017
 
 
 def load_spec(name: str) -> RecipeSpec:
@@ -61,7 +62,8 @@ def load_spec(name: str) -> RecipeSpec:
     for t in targets:
         if t.expected not in STATUSES:
             raise ValueError(f"{t.id}: invalid expected status {t.expected!r}")
-    return RecipeSpec(raw["source"], raw["title"], raw["citation"], targets)
+    return RecipeSpec(raw["source"], raw["title"], raw["citation"], targets,
+                      int(raw.get("wave", 2017)))
 
 
 def classify(target: Target, estimate: float, moe: float) -> str:

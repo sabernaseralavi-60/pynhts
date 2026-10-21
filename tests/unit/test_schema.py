@@ -43,4 +43,4 @@ def test_unknown_table_and_wave():
     with pytest.raises(ValueError):
         load_schema("trips")
     with pytest.raises(ValueError):
-        load_schema("trip", wave=2022)
+        load_schema("trip", wave=1995)

@@ -75,7 +75,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         import pynhts
         from pynhts import recipes
 
-        data = pynhts.load(2017, cache=cache, replicates=True)
+        wave = recipes.load_spec(args.recipe).wave
+        data = pynhts.load(wave, cache=cache, replicates=True)
         table = recipes.run(args.recipe, data)
         if args.markdown:
             print(recipes.to_markdown(table))

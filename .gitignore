@@ -27,3 +27,6 @@ build/
 .coverage
 htmlcov/
 lit/txt/
+
+# small golden reference tables (aggregated estimates, no microdata) are tracked
+!tests/golden/*.csv

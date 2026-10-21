@@ -4,6 +4,12 @@
 # SHA-256 below proves that a download is the real file.
 wave: 2017
 source_page: https://nhts.ornl.gov
+# Standard errors: stratified delete-one-unit jackknife (JKn) with the 98 replicate weights of
+# ReplicatesCSV.zip, 14 variance strata x 7 units (2017 Weighting Report).
+variance:
+  method: jkn
+  replicates: 98
+  factor: 0.8571428571428571
 citation: >-
   U.S. Department of Transportation, Federal Highway Administration, 2017 National Household
   Travel Survey, Version 1.2 (2019). URL: https://nhts.ornl.gov
@@ -20,24 +26,28 @@ members:
   hhpub.csv:
     archive: csv.zip
     group: core
+    table: household
     sha256: a8e461d45e3abefd6ed1620daba947f664752ed4bbbee8413ce49d7bc80d762c
     size: 38631137
     rows: 129696
   perpub.csv:
     archive: csv.zip
     group: core
+    table: person
     sha256: e75e9e1f0ff1438e37a8227e0c166b6db9ef8444cff5db1fa79085e36d0609cc
     size: 153098853
     rows: 264234
   trippub.csv:
     archive: csv.zip
     group: core
+    table: trip
     sha256: 17449ee491a9acc64db65aa2336e38e1a228cba200b6baacae0448fe4e9e2e36
     size: 546388721
     rows: 923572
   vehpub.csv:
     archive: csv.zip
     group: core
+    table: vehicle
     sha256: d92a4415270647e35cfe7bb5a0ed4c160ef828fe759bf7e8bb16d3b9e0d71d3a
     size: 90856500
     rows: 256115
@@ -60,3 +70,21 @@ documentation:
   weighting_report.pdf:
     url: https://nhts.ornl.gov/assets/2017%20NHTS%20Weighting%20Report.pdf
     sha256: fa9772b8298ceec0cca2d89aee2668a54145887e3148ced5152e432cc1467400
+  users_guide.pdf:
+    url: https://nhts.ornl.gov/assets/2017UsersGuide.pdf
+    sha256: a4a9494d18f44ba97ce65897d82d4f02617a34aed8162b6b897b5bb6e9671e0f
+  derived_variables.pdf:
+    url: https://nhts.ornl.gov/assets/DerivedVariables_V1.2.pdf
+    sha256: 29c63e39970a5dca17a584bc5d52a8673d2bdb4a2afe8dfe73effc5982811fbe
+  release_notes.pdf:
+    url: https://nhts.ornl.gov/assets/V1.2_Release_Notes.pdf
+    sha256: 6e2d7f2d5998477bae01b50f072a00a22b4c47a41fea938f0ec4a1def959b439
+  compatibility.pdf:
+    url: https://nhts.ornl.gov/media/2017/doc/2017%20NHTS%20Compatibility%20with%20Prior%20NHTS%20Data.pdf
+    sha256: 2bd076a5f9432610f31ef3f80484d892be6243b8014337225864fd6789df04de
+  bestmile.pdf:
+    url: https://nhts.ornl.gov/media/2017/doc/2017BESTMILE_Documentation.pdf
+    sha256: a6cf32d3b3e074df313e1b865d4bf334fdea2a6103a9fe187f7ee6af9adb6adf
+  eia_fuel_variables.pdf:
+    url: https://nhts.ornl.gov/media/2017/doc/EIA%20Fuel%20Consumption%20Variables.pdf
+    sha256: 34633c5ca094f9c3677bd7971c01f2a1b1af9d5098c35fa1087cf558c144a2df
