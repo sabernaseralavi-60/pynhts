@@ -51,12 +51,19 @@
   "optuna-integration",
   "pyproj",
   "xlrd",
-  "acteval"
+  "acteval",
+  "torchvision",
+  "torchmetrics",
+  "scikit-learn",
+  "seaborn",
+  "networkx",
+  "pyyaml",
+  "tqdm"
  ],
  "venv_nodeps": [
   "cml-pam"
  ],
- "import_check": "import torch, pam, caveat.cli; print('torch', torch.__version__, 'cuda', torch.cuda.is_available())",
+ "import_check": "import torch, torchvision, torchmetrics, sklearn, seaborn, networkx, yaml, tqdm, pam, caveat.cli; print('torch', torch.__version__, 'cuda', torch.cuda.is_available())",
  "run": "cd /content/caveat && {bin}/caveat run /content/caveat_run/run_full.yaml",
  "run_filter": "Epoch [0-9]+: 100%|Generation took|Results saved|rror|Traceback",
  "log": "/content/train.log",
