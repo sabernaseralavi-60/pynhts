@@ -4,6 +4,32 @@
 
 (nothing yet)
 
+## 0.6.1 (2026-10-22)
+
+Corrections from an independent fact-check of the 0.6.0 documentation (`docs/factcheck_0.6.0.md`: about
+263 statements checked, 10 false, 44 imprecise).
+
+* **Crosswalk statuses that overstated equivalence:** `trip_class` HBW and HBO are `approximate` (2001 and
+  2009 file work-related business trips under HBO, 2017 and 2022 under HBW: weighted HBW share 10.6, 11.6,
+  13.7, 17.9 percent); `fuel` gasoline and alternative fuel are `approximate` (hybrids are gasoline in
+  2001/2009 and code 03 in 2017); `purpose_1990` "other", "school_church" and "family_personal" are
+  `approximate` (2017/2022 put change-of-mode segments in "other"; child care moves between classes);
+  2017 `FUELTYPE` 97 is `only_here`; `urban_rural` is grade H (the delineation is dated differently and URBAN
+  code 03 changes side).
+* **New flags:** mileage variables are capped at 200,000 in every wave (kind `cap`), 2001 `VEHYEAR` and `YRTOUS`
+  bottom codes; a column that is both capped and national-only warns about both.
+* **Variance:** the 2017 `design` degrees of freedom is 97 (R's `svrepdesign(type="JKn")`, was the
+  unverified 84); documentation states which numbers are R's and which are choices (the 2001 guide's
+  example uses 2 x SE, so 99 df is ours).
+* **Documentation:** Hispanic is a separate variable in all four waves; WHYTRP1S has two numbering systems,
+  not three; -4 means "did not work at the usual workplace"; 2022 age imputation is documented in the
+  Weighting Memo; the 2001 worker/driver universe, PRMACT universe, HHVEHCNT, trip distance in 2022, the
+  fieldwork period of 2001, item non-response wording, the suspected-sentinel list (extended) and the
+  unmasked suppression codes; `purpose_summary` has nine categories.
+* **Agent tasks:** T14 states the multiplier and its trap is corrected (a naive standard error is 131
+  thousand, larger, not smaller); T04, T10, T12, T13 name the denominator or definition and carry measured
+  careless values.
+
 ## 0.6.0 (2026-10-21)
 
 Added value for researchers and AI agents, from the plan of the adversarial review.
@@ -38,7 +64,7 @@ Guards and corrections from an adversarial review of 0.4.0 (`docs/opus_review_0.
   ["VMT_MILE"])` gave a mean of 5.36 in 2009 instead of 9.72 and total VMT 7 % low.
   `skip="keep"` restores the old behaviour.
 * **More non-answer codes masked (2001, 2009).** Every labelled negative code (-3 no contact, -4 and
-  -5 did not work, -6 odometer broken) is now a missing code of its own kind; 2009 mean commute time
+  -5 did not work last week, -6 odometer broken) is now a missing code of its own kind; 2009 mean commute time
   was 23.34 instead of 24.21 minutes. Schemas regenerated; the codebook-frequency tests still pass.
 * **Top-codes and national-only columns** (`pynhts.core.flags`, `_schema/column_flags.yaml`): age
   (88 = 85+ in 2001, 92 = 89+ later), vehicle age (35 = 25+ in 2009, 40 = 33+ in the others), vehicle

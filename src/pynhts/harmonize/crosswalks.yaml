@@ -361,7 +361,7 @@ urban_area:
   table: household
   source: "codebooks 2001, 2009, 2017, 2022; checked against the data"
   note: >-
-    CODES 1 AND 2 ARE SWAPPED in 2001 (1 = urban cluster, 2 = urban area). The Census delineation behind the flag is not the same in every wave (vintage not verified for each).
+    CODES 1 AND 2 ARE SWAPPED in 2001 (1 = urban cluster, 2 = urban area). The codebooks date the delineation: 2017 uses 2014 TIGER/Line, 2022 2020 TIGER/Line (2022 also ships URBRUR_2010, which differs for 5.5 percent of households: use it to compare with 2017). Code 03 (surrounded by urban areas) counts as urban in 2001 and 2009 but as rural in 2017 and 2022 in URBRUR.
   rows:
     - {wave: 2001, code: "1", hint: "In an Urban cluster", category: urban_cluster, status: exact, note: "Swapped against the later waves."}
     - {wave: 2001, code: "2", hint: "In an urban area", category: urban_area, status: exact, note: "Swapped against the later waves."}
@@ -385,7 +385,7 @@ urban_rural:
   table: household
   source: "codebooks 2001, 2009, 2017, 2022"
   note: >-
-    Same two codes in every wave; the Census delineation behind the flag is not the same in every wave.
+    Same two codes in every wave, but the Census delineation behind the flag is not the same (2017 uses 2014 TIGER/Line, 2022 2020 TIGER/Line; 2022 also ships URBRUR_2010, which differs for 5.5 percent of households).
   rows:
     - {wave: 2001, code: "1", hint: "Urban", category: urban, status: exact}
     - {wave: 2001, code: "2", hint: "Rural", category: rural, status: exact}
@@ -473,17 +473,17 @@ fuel:
     2001 and 2009: ORNL's EIA-derived fuel as a NUMBER (1 diesel, 2 natural gas, 3 electricity, 4 gasoline; 2001 for national-sample vehicles only); 2017: a coded string with REVERSED meaning (01 gas, 02 diesel, 03 hybrid/electric/alternative). 2022 has no FUELTYPE (use HYBRID).
   rows:
     - {wave: 2001, code: "1", hint: "Diesel", category: diesel, status: exact}
-    - {wave: 2001, code: "2", hint: "Natural Gas", category: alt_fuel, status: nested}
-    - {wave: 2001, code: "3", hint: "Electricity", category: alt_fuel, status: nested}
-    - {wave: 2001, code: "4", hint: "Gasoline", category: gasoline, status: exact}
+    - {wave: 2001, code: "2", hint: "Natural Gas", category: alt_fuel, status: approximate, note: "Includes hybrids only from 2017 on (HYBRID exists in 2009, 2017 and 2022)."}
+    - {wave: 2001, code: "3", hint: "Electricity", category: alt_fuel, status: approximate, note: "Includes hybrids only from 2017 on (HYBRID exists in 2009, 2017 and 2022)."}
+    - {wave: 2001, code: "4", hint: "Gasoline", category: gasoline, status: approximate, note: "2001 and 2009 FUELTYPE (by model, EIA) put hybrids under gasoline (7,084 of 7,222 hybrids in 2009); 2017 puts hybrids, electric and alternative fuel in 03."}
     - {wave: 2009, code: "1", hint: "Diesel", category: diesel, status: exact}
-    - {wave: 2009, code: "2", hint: "Natural Gas", category: alt_fuel, status: nested}
-    - {wave: 2009, code: "3", hint: "Electricity", category: alt_fuel, status: nested}
-    - {wave: 2009, code: "4", hint: "Motor Gasoline", category: gasoline, status: exact}
-    - {wave: 2017, code: "01", hint: "Gas", category: gasoline, status: exact}
+    - {wave: 2009, code: "2", hint: "Natural Gas", category: alt_fuel, status: approximate, note: "Includes hybrids only from 2017 on (HYBRID exists in 2009, 2017 and 2022)."}
+    - {wave: 2009, code: "3", hint: "Electricity", category: alt_fuel, status: approximate, note: "Includes hybrids only from 2017 on (HYBRID exists in 2009, 2017 and 2022)."}
+    - {wave: 2009, code: "4", hint: "Motor Gasoline", category: gasoline, status: approximate, note: "2001 and 2009 FUELTYPE (by model, EIA) put hybrids under gasoline (7,084 of 7,222 hybrids in 2009); 2017 puts hybrids, electric and alternative fuel in 03."}
+    - {wave: 2017, code: "01", hint: "Gas", category: gasoline, status: approximate, note: "2001 and 2009 FUELTYPE (by model, EIA) put hybrids under gasoline (7,084 of 7,222 hybrids in 2009); 2017 puts hybrids, electric and alternative fuel in 03."}
     - {wave: 2017, code: "02", hint: "Diesel", category: diesel, status: exact}
     - {wave: 2017, code: "03", hint: "Hybrid, electric or al", category: alt_fuel, status: approximate, note: "Hybrid, electric or alternative fuel in one code."}
-    - {wave: 2017, code: "97", hint: "Some other fuel", category: other, status: exact}
+    - {wave: 2017, code: "97", hint: "Some other fuel", category: other, status: only_here, note: "No counterpart in 2001 and 2009."}
 
 trip_class:
   variable: TRIPPURP
@@ -492,25 +492,25 @@ trip_class:
   note: >-
     ORNL's derived home-based purpose class: HBW, home-based shopping, social/recreational, other, and not home-based. Three code formats (1-5, HBW...NHB strings, 01-05). It is derived from each wave's own purpose codes and the trips are counted differently (2017 and 2022 report some transfer segments as trips), so shares are indicative.
   rows:
-    - {wave: 2001, code: "1", hint: "Home-base work", category: hbw, status: exact}
+    - {wave: 2001, code: "1", hint: "Home-base work", category: hbw, status: approximate, note: "2001 and 2009 file work-related business trips under home-based other; 2017 and 2022 count them as home-based work (weighted HBW share 10.6, 11.6, 13.7, 17.9 percent)."}
     - {wave: 2001, code: "2", hint: "Home-based shopping", category: hb_shopping, status: exact}
     - {wave: 2001, code: "3", hint: "Home-based social/recr", category: hb_social_rec, status: exact}
-    - {wave: 2001, code: "4", hint: "Other home-based", category: hb_other, status: exact}
+    - {wave: 2001, code: "4", hint: "Other home-based", category: hb_other, status: approximate, note: "2001 and 2009 hold work-related business trips here; 2017 and 2022 do not."}
     - {wave: 2001, code: "5", hint: "Not home-based", category: nhb, status: exact}
-    - {wave: 2009, code: "HBW", hint: "Home-base work", category: hbw, status: exact}
+    - {wave: 2009, code: "HBW", hint: "Home-base work", category: hbw, status: approximate, note: "2001 and 2009 file work-related business trips under home-based other; 2017 and 2022 count them as home-based work (weighted HBW share 10.6, 11.6, 13.7, 17.9 percent)."}
     - {wave: 2009, code: "HBSHOP", hint: "Home-based shopping", category: hb_shopping, status: exact}
     - {wave: 2009, code: "HBSOCREC", hint: "Home-based social/recr", category: hb_social_rec, status: exact}
-    - {wave: 2009, code: "HBO", hint: "Other home-based", category: hb_other, status: exact}
+    - {wave: 2009, code: "HBO", hint: "Other home-based", category: hb_other, status: approximate, note: "2001 and 2009 hold work-related business trips here; 2017 and 2022 do not."}
     - {wave: 2009, code: "NHB", hint: "Not home-based", category: nhb, status: exact}
-    - {wave: 2017, code: "HBW", hint: "Home-based trip (work)", category: hbw, status: exact}
+    - {wave: 2017, code: "HBW", hint: "Home-based trip (work)", category: hbw, status: approximate, note: "2001 and 2009 file work-related business trips under home-based other; 2017 and 2022 count them as home-based work (weighted HBW share 10.6, 11.6, 13.7, 17.9 percent)."}
     - {wave: 2017, code: "HBSHOP", hint: "Home-based trip (shopp", category: hb_shopping, status: exact}
     - {wave: 2017, code: "HBSOCREC", hint: "Home-based trip (socia", category: hb_social_rec, status: exact}
-    - {wave: 2017, code: "HBO", hint: "Home-based trip (other", category: hb_other, status: exact}
+    - {wave: 2017, code: "HBO", hint: "Home-based trip (other", category: hb_other, status: approximate, note: "2001 and 2009 hold work-related business trips here; 2017 and 2022 do not."}
     - {wave: 2017, code: "NHB", hint: "Not a home-based trip", category: nhb, status: exact}
-    - {wave: 2022, code: "01", hint: "Home-based work (HBW)", category: hbw, status: exact}
+    - {wave: 2022, code: "01", hint: "Home-based work (HBW)", category: hbw, status: approximate, note: "2001 and 2009 file work-related business trips under home-based other; 2017 and 2022 count them as home-based work (weighted HBW share 10.6, 11.6, 13.7, 17.9 percent)."}
     - {wave: 2022, code: "02", hint: "Home-based shopping (H", category: hb_shopping, status: exact}
     - {wave: 2022, code: "03", hint: "Home-based social/recr", category: hb_social_rec, status: exact}
-    - {wave: 2022, code: "04", hint: "Home-based other (HBO)", category: hb_other, status: exact}
+    - {wave: 2022, code: "04", hint: "Home-based other (HBO)", category: hb_other, status: approximate, note: "2001 and 2009 hold work-related business trips here; 2017 and 2022 do not."}
     - {wave: 2022, code: "05", hint: "Not a home-based trip", category: nhb, status: exact}
 
 purpose_1990:
@@ -518,43 +518,43 @@ purpose_1990:
   table: trip
   source: "codebooks 2001, 2009, 2017, 2022"
   note: >-
-    ORNL's trip purpose in the 1990 NPTS scheme, present with the same 10 classes in all four waves (the best single cross-wave purpose variable). 'Vacation' (07) exists in 2001 and 2009 only; 98 'N/A' and 99 'Refused' are masked as non-answers.
+    ORNL's trip purpose in the 1990 NPTS scheme, present in all four waves with 10 classes in 2001 and 2009 and 9 in 2017 and 2022 (no vacation); the best single cross-wave purpose variable, but see the approximate classes. 'Vacation' (07) exists in 2001 and 2009 only; 98 'N/A' and 99 'Refused' are masked as non-answers.
   rows:
     - {wave: 2001, code: "01", hint: "ToFrmWrk", category: work, status: exact}
     - {wave: 2001, code: "02", hint: "WorkRel", category: work_related, status: exact}
     - {wave: 2001, code: "03", hint: "Shopping", category: shopping, status: exact}
-    - {wave: 2001, code: "04", hint: "Fam/Pers", category: family_personal, status: exact}
-    - {wave: 2001, code: "05", hint: "SchlChch", category: school_church, status: exact}
+    - {wave: 2001, code: "04", hint: "Fam/Pers", category: family_personal, status: approximate, note: "See school_church: child care moves between the two classes."}
+    - {wave: 2001, code: "05", hint: "SchlChch", category: school_church, status: approximate, note: "Child care is filed with school in 2017 (98 percent of those trips) but with family and personal business in 2001, 2009 and, mostly, 2022."}
     - {wave: 2001, code: "06", hint: "Md/DDS", category: medical, status: exact}
     - {wave: 2001, code: "08", hint: "VistFrnd", category: visit, status: exact}
     - {wave: 2001, code: "10", hint: "Soc/Rec", category: social_rec, status: exact}
-    - {wave: 2001, code: "11", hint: "Other", category: other, status: exact}
+    - {wave: 2001, code: "11", hint: "Other", category: other, status: approximate, note: "Class 11 is 0.8 percent of trips in 2001 and 2009, 4.0 in 2017 and 1.9 in 2022: 2017 and 2022 put 'change type of transportation' segments here (29 and 45 percent of the class)."}
     - {wave: 2001, code: "07", hint: "Vacation", category: vacation, status: only_here, note: "Only 2001 and 2009 have a vacation class."}
     - {wave: 2009, code: "01", hint: "To/From Work", category: work, status: exact}
     - {wave: 2009, code: "02", hint: "Work-Related Business", category: work_related, status: exact}
     - {wave: 2009, code: "03", hint: "Shopping", category: shopping, status: exact}
-    - {wave: 2009, code: "04", hint: "Other Family/Personal", category: family_personal, status: exact}
-    - {wave: 2009, code: "05", hint: "School/Church", category: school_church, status: exact}
+    - {wave: 2009, code: "04", hint: "Other Family/Personal", category: family_personal, status: approximate, note: "See school_church: child care moves between the two classes."}
+    - {wave: 2009, code: "05", hint: "School/Church", category: school_church, status: approximate, note: "Child care is filed with school in 2017 (98 percent of those trips) but with family and personal business in 2001, 2009 and, mostly, 2022."}
     - {wave: 2009, code: "06", hint: "Medical/Dentral", category: medical, status: exact}
     - {wave: 2009, code: "08", hint: "Visit Friends/Relative", category: visit, status: exact}
     - {wave: 2009, code: "10", hint: "Other Social/Recreatio", category: social_rec, status: exact}
-    - {wave: 2009, code: "11", hint: "Other", category: other, status: exact}
+    - {wave: 2009, code: "11", hint: "Other", category: other, status: approximate, note: "Class 11 is 0.8 percent of trips in 2001 and 2009, 4.0 in 2017 and 1.9 in 2022: 2017 and 2022 put 'change type of transportation' segments here (29 and 45 percent of the class)."}
     - {wave: 2009, code: "07", hint: "Vacation", category: vacation, status: only_here, note: "Only 2001 and 2009 have a vacation class."}
     - {wave: 2017, code: "01", hint: "To/From Work", category: work, status: exact}
     - {wave: 2017, code: "02", hint: "Work-Related Business", category: work_related, status: exact}
     - {wave: 2017, code: "03", hint: "Shopping", category: shopping, status: exact}
-    - {wave: 2017, code: "04", hint: "Other Family/Personal", category: family_personal, status: exact}
-    - {wave: 2017, code: "05", hint: "School/Church", category: school_church, status: exact}
+    - {wave: 2017, code: "04", hint: "Other Family/Personal", category: family_personal, status: approximate, note: "See school_church: child care moves between the two classes."}
+    - {wave: 2017, code: "05", hint: "School/Church", category: school_church, status: approximate, note: "Child care is filed with school in 2017 (98 percent of those trips) but with family and personal business in 2001, 2009 and, mostly, 2022."}
     - {wave: 2017, code: "06", hint: "Medical/Dentral", category: medical, status: exact}
     - {wave: 2017, code: "08", hint: "Visit Friends/Relative", category: visit, status: exact}
     - {wave: 2017, code: "10", hint: "Other Social/Recreatio", category: social_rec, status: exact}
-    - {wave: 2017, code: "11", hint: "Other", category: other, status: exact}
+    - {wave: 2017, code: "11", hint: "Other", category: other, status: approximate, note: "Class 11 is 0.8 percent of trips in 2001 and 2009, 4.0 in 2017 and 1.9 in 2022: 2017 and 2022 put 'change type of transportation' segments here (29 and 45 percent of the class)."}
     - {wave: 2022, code: "01", hint: "To/From Work", category: work, status: exact}
     - {wave: 2022, code: "02", hint: "Work-Related Business", category: work_related, status: exact}
     - {wave: 2022, code: "03", hint: "Shopping", category: shopping, status: exact}
-    - {wave: 2022, code: "04", hint: "Other Family/Personal", category: family_personal, status: exact}
-    - {wave: 2022, code: "05", hint: "School/Church", category: school_church, status: exact}
+    - {wave: 2022, code: "04", hint: "Other Family/Personal", category: family_personal, status: approximate, note: "See school_church: child care moves between the two classes."}
+    - {wave: 2022, code: "05", hint: "School/Church", category: school_church, status: approximate, note: "Child care is filed with school in 2017 (98 percent of those trips) but with family and personal business in 2001, 2009 and, mostly, 2022."}
     - {wave: 2022, code: "06", hint: "Medical/Dental", category: medical, status: exact}
     - {wave: 2022, code: "08", hint: "Visit Friends/Relative", category: visit, status: exact}
     - {wave: 2022, code: "10", hint: "Other Social/Recreatio", category: social_rec, status: exact}
-    - {wave: 2022, code: "11", hint: "Other", category: other, status: exact}
+    - {wave: 2022, code: "11", hint: "Other", category: other, status: approximate, note: "Class 11 is 0.8 percent of trips in 2001 and 2009, 4.0 in 2017 and 1.9 in 2022: 2017 and 2022 put 'change type of transportation' segments here (29 and 45 percent of the class)."}

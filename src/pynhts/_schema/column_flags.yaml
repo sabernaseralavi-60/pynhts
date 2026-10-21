@@ -1,9 +1,10 @@
 # Per-wave facts about columns that the codebooks do not state in machine-readable form. Each
-# entry was verified on the real files (tests/data/test_column_flags.py re-checks all of them).
+# entry was verified on the real files (tests/data/test_four_wave_guards.py re-checks all of them).
 #
 # topcodes: a value that stands for a range. kind top: the code replaces every value above
 #   `boundary` (the largest ordinary value; the values between boundary and code never occur);
-#   kind bottom: the code replaces every value below `boundary` (the smallest ordinary value).
+#   kind bottom: the code replaces every value below `boundary` (the smallest ordinary value);
+#   kind cap: values above `code` were set to `code` (the largest value is the cap, no gap).
 #   `source` says where the meaning comes from: codebook (printed) or data (inferred from the gap
 #   in the values; the meaning is then an inference).
 # national_only (2001): columns that exist only for the national-sample households. They are
@@ -23,19 +24,31 @@ topcodes:
     AGE_P6: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
     AGE_P7: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
     VEHAGE: {kind: top, code: 40, boundary: 32, meaning: "33 or older", source: data}
+    VEHYEAR: {kind: bottom, code: 1962, boundary: 1970, meaning: "1969 or earlier", source: codebook}
+    YRTOUS: {kind: bottom, code: 1958, boundary: 1970, meaning: "before 1970 (inferred from the gap: 2,666 persons at 1958, next value 1970)", source: data}
+    BESTMILE: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
+    ANNMILES: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
+    YEARMILE: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
   2009:
     R_AGE: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: codebook}
     VEHAGE: {kind: top, code: 35, boundary: 24, meaning: "25 or older", source: codebook}
     VEHYEAR: {kind: bottom, code: 1974, boundary: 1985, meaning: "1984 or earlier", source: codebook}
+    BESTMILE: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: codebook}
+    ANNMILES: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
+    YEARMILE: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
   2017:
-    R_AGE: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: codebook}
-    R_AGE_IMP: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: codebook}
+    R_AGE: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: data}
+    R_AGE_IMP: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: data}
     VEHAGE: {kind: top, code: 40, boundary: 32, meaning: "33 or older", source: data}
     VEHYEAR: {kind: bottom, code: 1977, boundary: 1985, meaning: "1984 or earlier", source: data}
+    BESTMILE: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
+    ANNMILES: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
+    YEARMILE: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
   2022:
     R_AGE: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: data}
     VEHAGE: {kind: top, code: 40, boundary: 32, meaning: "33 or older", source: data}
     VEHYEAR: {kind: bottom, code: 1982, boundary: 1990, meaning: "1989 or earlier", source: data}
+    ANNMILES: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
 national_only:
   2001:
     tables: [longdist]     # the whole long-distance file: national sample only

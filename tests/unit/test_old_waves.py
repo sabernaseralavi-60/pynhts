@@ -40,6 +40,17 @@ def test_registry_of_2009_and_2001_describes_their_replicate_designs():
     assert (r17.n_replicates, r17.jackknife_factor) == (98, pytest.approx(6 / 7))
 
 
+def test_variance_conventions_of_the_three_jackknife_waves():
+    assert load_registry(2009).convention("fhwa") == (0.99, 100)
+    assert load_registry(2009).convention("design") == (1.0, 99)
+    assert load_registry(2001).convention("design")[1] == 98
+    assert load_registry(2017).convention("design") == (pytest.approx(6 / 7), 97)
+    with pytest.raises(ValueError, match="no 'design'"):
+        load_registry(2022).convention("design")
+    with pytest.raises(ValueError, match="must be"):
+        load_registry(2009).convention("other")
+
+
 def test_tables_and_keys_of_the_old_waves():
     assert wave_tables(2009) == ("household", "person", "trip", "vehicle")
     assert wave_tables(2001) == ("household", "person", "trip", "vehicle", "longdist")

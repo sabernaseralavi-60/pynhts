@@ -2,17 +2,22 @@
 
 ## Variance conventions
 
-`data.survey(..., convention="fhwa")` (default) uses the multiplier and degrees of freedom of the User's
-Guides and of the published tables; `convention="design"` the textbook convention of the replicate method:
+`data.survey(..., convention="fhwa")` (default) uses the multiplier and degrees of freedom behind the
+published tables; `convention="design"` uses R's `survey` package convention for the same replicate
+weights (degrees of freedom = rank of the replicate weights - 1):
 
 | wave | method | `fhwa`: multiplier, df | `design`: multiplier, df |
 |---|---|---|---|
 | 2001 | delete-one jackknife, 99 replicates | 98/99, 99 | 98/99, 98 (R `svrepdesign(type="JK1")`) |
 | 2009 | jackknife-2, 100 replicates | 99/100, 100 | 1, 99 (R `svrepdesign(type="JK2")`) |
-| 2017 | JKn, 98 replicates in 14 strata | 6/7, 98 | 6/7, 84 (98 replicates minus 14 strata; not checked in R) |
+| 2017 | JKn, 98 replicates in 14 strata | 6/7, 98 | 6/7, 97 (R `type="JKn"`; the stratified n - H would be 84) |
 
-For 2009 the standard errors differ by 0.5 % (multiplier 0.99 against 1). Both conventions equal R's
-`survey` package for 2001 and 2009 (`tools/validate_jackknife_r.R`, `tests/golden/jackknife_*_r.csv`).
+Where the numbers come from: 2009 User's Guide chapter 7 gives 99/100 and its worked example uses t on
+100 df; the 2001 User's Guide gives 98/99 but its example uses 2 x SE, so 99 df is a pynhts choice; FHWA's
+2017 tables use 98 df. For 2009 the standard errors differ by 0.5 % between the conventions
+(multiplier 0.99 against 1). **Estimates and standard errors equal R's `survey` package for 2001 and 2009**
+(`tools/validate_jackknife_r.R`, `tests/golden/jackknife_*_r.csv`); the degrees of freedom equal R's under
+`design` only (R's golden files hold 99 and 98). The 2017 design value 97 was read from R, not tested.
 Replicates are stored as float32, so a standard error agrees with R to about 2e-5 relative.
 
 ## Daily rates
@@ -20,8 +25,11 @@ Replicates are stored as float32, so a standard error agrees with R to about 2e-
 `pynhts.rates.daily_rate(data, "trips" | "miles", per="person" | "household", min_age=None)` returns
 person trips or miles per day (total / 365 / persons or households) from the trip weights, with a
 ratio variance across the two weight systems and the unit in `attrs`. 2009: 3.79 trips and 36.13 miles per
-person and day (published 3.79 and 36.13); 2001 with all ages 4.03 (published 4.03; with `min_age=5`
-4.10); 2017: 3.37; 2022: 2.275.
+person and day (published 3.79 and 36.13); 2001 with all ages 4.03 (published 4.03); 2017: 3.37; 2022:
+2.275. For 2001 `min_age=5` drops the children 0-4 and persons of unknown age from numerator and
+denominator (4.10 per person, 9.66 per household = the published per-household figure). The published
+per-person figure without 0-4 is 3.74 because it divides the trips of persons 5+ by ALL persons; use the
+recipe `stt2001` to reproduce that definition.
 
 ## What a total counts (units)
 

@@ -48,7 +48,7 @@ def test_flags_match_the_schemas():
         for col, tc in flags.topcoded_columns(wave).items():
             tables = [t for t in wave_tables(wave) if col in load_schema(t, wave).columns]
             assert tables, (wave, col)
-            assert tc["kind"] in ("top", "bottom") and tc["source"] in ("codebook", "data")
+            assert tc["kind"] in ("top", "bottom", "cap") and tc["source"] in ("codebook", "data")
     assert flags.topcode(2009, "R_AGE")["code"] == 92
     assert flags.topcode(2001, "R_AGE")["code"] == 88  # 85 or older, not 88
     assert flags.topcode(2022, "TRPMILES") is None

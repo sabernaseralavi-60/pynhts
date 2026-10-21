@@ -22,7 +22,7 @@ pynhts.harmonize.compare_waves(2009, 2017)   # which same-name variables really 
    `pynhts.rates.daily_rate(data, "trips" | "miles", per="person" | "household")`. 2022 trip weights include a
    +10 % methods adjustment: 2.275 trips per person and day, not 2.078.
 3. **Raw codes are not comparable across waves.** The same code means different things (`TRPTRANS` 08 =
-   airplane, golf cart, motorcycle, bus; `URBAN` 1/2 swapped in 2001; `WHYTRP1S` has three systems). Map with
+   airplane, golf cart, motorcycle, bus; `URBAN` 1/2 swapped in 2001; `WHYTRP1S` has two numbering systems). Map with
    `pynhts.harmonize.apply_column(frame, "TRPTRANS", "mode")`; it reads the wave from the frame and refuses a wrong one.
    Available concepts: `harmonize.concepts()`. Check `category_report` for `comparable`.
 4. **Never pool weights across waves.** Compare shares, rates and distributions per wave; totals have

@@ -53,13 +53,25 @@ def cautions(wave: int, table: str, columns: list[str]) -> dict[str, str]:
     out: dict[str, str] = {}
     for col in columns:
         tc = topcode(wave, col)
+        note = ""
+        if national_only(wave, col, table):
+            note = (
+                f" {col} also exists only for the national-sample households of NHTS {wave} "
+                "(-1 for the add-on areas); the full-sample weight leaves their records out."
+            )
         if tc:
+            if tc["kind"] == "cap":
+                out[col] = (
+                    f"{col} is capped in NHTS {wave}: {tc['code']:g} stands for '{tc['meaning']}', "
+                    "so means and totals are biased downward for the capped records." + note
+                )
+                continue
             where = "above" if tc["kind"] == "top" else "below"
             out[col] = (
                 f"{col} is {'top' if tc['kind'] == 'top' else 'bottom'}-coded in NHTS {wave}: the "
                 f"value {tc['code']:g} stands for '{tc['meaning']}' (every value {where} "
                 f"{tc['boundary']:g}), so means and totals are biased; use bands or treat it as "
-                "censored."
+                "censored." + note
             )
         elif national_only(wave, col, table):
             out[col] = (

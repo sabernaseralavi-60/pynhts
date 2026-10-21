@@ -41,8 +41,10 @@ def daily_rate(
             distance add 0 miles, as FHWA's tables do).
         per: Divide by persons or by households.
         min_age: Count only persons (and their trips) of at least this age. The 2001 file
-            holds children 0-4, the other waves do not: ``min_age=5`` makes them comparable.
-            Persons of unknown age are left out when ``min_age`` is given.
+            holds children 0-4, the other waves do not: ``min_age=5`` makes the rates comparable.
+            Persons of unknown age (2001: 2,399) are left out when ``min_age`` is given. The
+            published 2001 per-person rate without children (3.74) divides by all persons and is
+            reproduced by the recipe ``stt2001``, not by this option.
         level: Confidence level.
 
     Returns:

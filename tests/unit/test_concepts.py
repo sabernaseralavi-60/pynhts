@@ -49,7 +49,7 @@ def test_grades_are_consistent_with_the_flags():
             if var is None:
                 continue
             if concepts.find(var, wave)[0]["topcode"]:
-                assert "top" in text or "bottom" in text or "band" in text, (name, wave, var)
+                assert any(w in text for w in ("top", "bottom", "band", "cap")), (name, wave, var)
             if concepts.find(var, wave)[0]["national_only"]:
                 assert "national" in text, (name, wave, var)
 

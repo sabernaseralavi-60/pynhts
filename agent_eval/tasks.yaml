@@ -2,7 +2,7 @@
 # oracle: the expected number; tol: relative tolerance of the grader; source: where the number comes
 # from (published = a printed table, r = R's survey package on the raw csv files, reference = the
 # pynhts reference solution in reference.py, whose logic is documented in docs/). `naive` is the
-# value the typical careless solution gives (informational; measured when the guard did not exist).
+# value the typical careless solution gives (informational; 0 means no careless value was measured).
 tasks:
   - {id: T01, wave: 2009, unit: "thousand households", oracle: 113101.33, tol: 0.001, source: "published (Summary of Travel Trends 2009, Table 1: 113,101)",
      question: "How many households did NHTS 2009 represent (in thousands)?",
@@ -14,8 +14,8 @@ tasks:
      question: "What is the mean distance (VMT_MILE) of the trips driven by the respondent in NHTS 2009?",
      trap: "the skip code -1 sits on every non-driver trip", naive: 5.36}
   - {id: T04, wave: 2001, unit: "thousand persons", oracle: 19626.32, tol: 0.002, source: reference,
-     question: "How many children under 5 did NHTS 2001 represent (in thousands)?",
-     trap: "only 2001 has them; the other waves start at age 5", naive: 0}
+     question: "How many children under 5 (R_AGE below 5; persons of unknown age excluded) did NHTS 2001 represent, in thousands?",
+     trap: "only 2001 has them; the other waves start at age 5 (R_AGEWGT, the age used in weighting, gives 19,877 instead)", naive: 19877.11}
   - {id: T05, wave: 2009, unit: "trips per person per day", oracle: 3.7945, tol: 0.005, source: "published (Summary of Travel Trends 2009, Table 3: 3.79)",
      question: "How many person trips per person and day does NHTS 2009 give?",
      trap: "travel-day weights are annual: the total divided by persons is 1,385", naive: 1385.0}
@@ -32,17 +32,17 @@ tasks:
      question: "What share of the weighted households of NHTS 2001 live in an urban area (not an urban cluster, not outside)?",
      trap: "URBAN codes 1 and 2 are swapped in 2001", naive: 11.13}
   - {id: T10, wave: 2009, unit: "percent of vehicles", oracle: 3.82, tol: 0.01, source: reference,
-     question: "What share of the weighted household vehicles of NHTS 2009 are 25 years old or older?",
-     trap: "VEHAGE is top-coded in 2009: 35 means 25 or older, so a mean or a threshold above 25 is wrong", naive: 0}
+     question: "Among the household vehicles of NHTS 2009 with a known age, what weighted share are 25 years old or older?",
+     trap: "VEHAGE is top-coded in 2009: 35 means 25 or older, so a mean or a threshold above 25 is wrong; counting vehicles of unknown age in the denominator gives 3.67", naive: 3.67}
   - {id: T11, wave: 2009, unit: "thousand persons", oracle: 37227.74, tol: 0.002, source: reference,
      question: "How many persons made no trip on the travel day in NHTS 2009 (in thousands)?",
      trap: "these persons have no travel-day weight in the replicate file; they still count in the person weight", naive: 0}
   - {id: T12, wave: 2001, unit: "percent of households", oracle: 10.5378, tol: 0.005, source: reference,
-     question: "What share of the weighted households of NHTS 2001 had a family income of $100,000 or more (nominal)?",
-     trap: "18 income bands in 2001 against 11 in 2017; use the nested band crosswalk", naive: 0}
+     question: "Among the households of NHTS 2001 that report an income, what weighted share had a family income of $100,000 or more (nominal)?",
+     trap: "18 income bands in 2001 against 11 in 2017; use the nested band crosswalk; dividing by all households gives 9.67", naive: 9.67}
   - {id: T13, wave: 2017, unit: "percent of trips", oracle: 2.5447, tol: 0.005, source: reference,
-     question: "What share of the weighted trips of NHTS 2017 are public-transit trips (summary mode)?",
-     trap: "mode codes differ in every wave; the summary level equals the official PUBTRANS flag", naive: 0}
+     question: "What share of the weighted trips of NHTS 2017 are public-transit trips, as defined by the official PUBTRANS flag?",
+     trap: "mode codes differ in every wave; counting every transit-like code (10-16) gives 4.78", naive: 4.78}
   - {id: T14, wave: 2009, unit: "thousand households", oracle: 53.3886, tol: 0.001, source: "r (survey::svrepdesign on the raw csv files: 53,388.56)",
-     question: "What is the standard error of the number of one-person households in NHTS 2009 (in thousands)?",
-     trap: "a simple-random-sample standard error is several times too small; the jackknife replicates give the design-based one", naive: 4.0}
+     question: "What is the standard error of the number of one-person households in NHTS 2009 (in thousands), with the variance multiplier of the User's Guide (99/100)?",
+     trap: "a simple-random-sample standard error (131 thousand) is much too LARGE because household size is a raking control; the jackknife replicates give the design-based 53.4 (53.7 with multiplier 1)", naive: 131.1}

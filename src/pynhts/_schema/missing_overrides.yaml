@@ -4,7 +4,8 @@
 #   WHYTRP90 (trip purpose in the 1990 NPTS scheme): 98 "N/A" (2001, 2009) and 99 "Refused"
 #     (all waves; "Refused / Don't Know" from 2017) are not purposes: 9,837 rows in 2009.
 #   HHSTATE 'XX' (2001) and HH_CBSA 'XXXXX' (2009, 2017) stand for a suppressed (censored) place.
-#     The 2017 codebook labels them "Suppressed, in an MSA of less than 1 million".
+#     Codebook labels: 2001 HHSTATE "Suppressed, HH in state of less than 2 million"; 2017 HH_CBSA
+#     "Suppressed, in an MSA of less than 1 million" (2009 HH_CBSA XXXXX has no label).
 2001:
   WHYTRP90: {'98': not_applicable, '99': refused}
   HHSTATE: {XX: suppressed}

@@ -144,12 +144,24 @@ Every item was checked against the files or the official documents and is covere
 
 # Suspected sentinels that pynhts does NOT mask
 
-Single values that sit above the rest of a column and look like a "none/unknown" code, but have no
-documentation: 2009 `MCUSED` = 999 (45 rows, the next value is 700), 2009 `NWALKTRP` = 99 (138 rows, the next
-is 98), 2022 `NUMONTRP` = 99 (16 rows, the next is 50), and `OD_READ*` = 999999 in 2001/2009 (not checked).
-They stay in the data as values; the review that found them recommends a documented decision before
-any masking. Masked, because the codebook says what they are: negative non-answer codes (-3 ... -6),
-2009 `PTUSED` 99, `WHYTRP90` 98 and 99, and the suppression codes `HHSTATE` "XX" and `HH_CBSA` "XXXXX".
+Single values that sit above the rest of a column and look like a "none/unknown" code or an input cap,
+but have no documentation: 2009 `MCUSED` = 999 (45 rows, the next value is 700; inside the printed range
+0-999), 2009 `NWALKTRP` = 99 (138 rows, next 98), 2009 and 2017 `NBIKETRP` = 99, 2017 `WALK4EX`, `BIKE4EX` and
+`DELIVER` = 99, 2022 `NUMONTRP`, `DELIVER`, `DELIV_GOOD`, `LD_NUMONTRP`, `EMPLOYMENT2` = 99 and `LD_ICB` =
+100, and 2001 `DISTBLOC` = 996. They are examples, not a complete list. They stay in the data as values;
+decide, per analysis, whether they are caps. The 2001 and 2009 odometer readings `OD_READ*` reach 999,999
+without a gap: that is the six-digit limit of the odometer, not a sentinel.
+
+Masked, because the codebook says what they are: negative non-answer codes (-3 ... -6), 2009 `PTUSED` 99,
+`WHYTRP90` 98 and 99, and the suppression codes `HHSTATE` "XX" and `HH_CBSA` "XXXXX". **Other suppression
+codes stay unmasked** and are not places: 2001 `HHSTFIPS` "XX", `HHC_MSA` "XXXX" (2001 and 2009),
+`WORKSTAT`/`WKSTFIPS` "XX", `MAKECODE`/`MODLCODE` "XX"/"XXX"/"XXXX" (2001, 2009), and the long-distance
+`ACCST`/`EGRST` "XX" and `ACCMSA`/`EGRMSA`/`FARMSA` "XXXX". Treat any all-letter X code as missing.
+
+Mileage variables are **capped at 200,000 miles** in every wave (`BESTMILE`, `ANNMILES`, `YEARMILE`; a few
+hundred records each); 2001 `YRTOUS` has an unlabelled bottom code (1958, 2,666 persons) and 2001 `VEHYEAR`
+a labelled one (1962 = 1969 or earlier). 2022 `URBANSIZE` codes 04 and 05 are labelled the other way round
+from 2009 and 2017 (04 with heavy rail in 2022): do not pool the raw column.
 
 # NHTS 2009: pitfalls found while importing it
 

@@ -1,6 +1,6 @@
 # pynhts
 
-> Typed, survey-weight-aware Python access to the US National Household Travel Survey (NHTS): waves 2001, 2009, 2017 and 2022. Validated against published FHWA tables; every known trap is documented and guarded.
+> Typed, survey-weight-aware Python access to the US National Household Travel Survey (NHTS): waves 2001, 2009, 2017 and 2022. Validated against published FHWA tables; the known traps are documented and, where possible, guarded (see docs/guards.md for what is and is not).
 
 Read AGENTS.md first.
 
@@ -11,7 +11,7 @@ Read AGENTS.md first.
 - [Methods](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/methods.md): variance designs, units of totals
 - [Data notes](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data_notes.md): per-wave pitfalls with evidence
 - [Validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md): published numbers reproduced, gaps reported
-- [Concept dictionary (JSON)](https://github.com/sabernaseralavi-60/pynhts/blob/main/src/pynhts/concepts.yaml): per-wave variable, universe, comparability, pitfalls
+- [Concept dictionary (YAML; JSON via pynhts.concepts.to_json())](https://github.com/sabernaseralavi-60/pynhts/blob/main/src/pynhts/concepts.yaml): per-wave variable, universe, comparability, pitfalls
 
 ## Machine-readable facts
 - `pynhts.concepts.to_json()`, `pynhts.concepts.find(variable, wave)`, `pynhts.describe(variable, wave)`

@@ -54,6 +54,9 @@ def test_topcodes_are_what_the_flags_say(data):
             if x.empty:
                 continue  # AGE_P8.. etc. exist but hold nothing
             code, edge = tc["code"], tc["boundary"]
+            if tc["kind"] == "cap":
+                assert x.max() == code and (x == code).sum() >= 5, (data.wave, col)
+                continue
             lo, hi = (edge, code) if tc["kind"] == "top" else (code, edge)
             assert (x == code).any() or x.max() < code, (data.wave, col)
             assert not ((x > lo) & (x < hi)).any(), (data.wave, col)
