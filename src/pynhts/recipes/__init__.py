@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, Any
 
 import pandas as pd
 
-from pynhts.recipes import mcnally_rafiq2021, stt2017, ug2022
+from pynhts.recipes import mcnally_rafiq2021, stt2017, stt_trends, ug2022
 from pynhts.recipes.base import RecipeSpec, Target, classify, comparison_frame, load_spec
 
 if TYPE_CHECKING:
@@ -21,6 +21,8 @@ if TYPE_CHECKING:
 # name -> (target functions by name, context class that builds the surveys/tours once)
 RECIPES: dict[str, tuple[dict[str, Any], Any]] = {
     "stt2017": (stt2017.COMPUTE, stt2017.Context),
+    "stt2009": (stt_trends.COMPUTE, stt_trends.Context),
+    "stt2001": (stt_trends.COMPUTE, stt_trends.Context),
     "mcnally_rafiq2021": (mcnally_rafiq2021.COMPUTE, mcnally_rafiq2021.Context),
     "ug2022": (ug2022.COMPUTE, ug2022.Context),
 }

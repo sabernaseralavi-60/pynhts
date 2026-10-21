@@ -1,4 +1,4 @@
-# Code crosswalks between NHTS waves (2017 <-> 2022): trip purpose and trip mode.
+# Code crosswalks between NHTS waves (2001, 2009, 2017, 2022): trip purpose and trip mode.
 #
 # Sources (read 2026-10-21):
 #   * 2022 NHTS Data User Guide (V2.0.1, revised December 2024), Appendix 2, Tables 12 (trip purpose)
@@ -137,3 +137,118 @@ mode:
     - {wave: 2022, code: "19", hint: "E-scooter", category: escooter, summary: other, status: only_here, note: "No 2017 code (new mode)."}
     - {wave: 2017, code: "97", hint: "Something Else", category: other, summary: other, status: exact}
     - {wave: 2022, code: "21", hint: "Other", category: other, summary: other, status: exact}
+
+    # ---- 2009 (codebook v2.1) and 2001 (User's Guide v3, Appendix B) -------------------------
+    # The 2001 and 2009 TRPTRANS code spaces differ from each other and from 2017/2022: 08 is a
+    # commercial airplane in 2001 and a golf cart in 2009; 22 is a taxi (2001) or a bicycle (2009).
+    # The summary groups follow the 2022 guide's Table 13 by analogy (the guide covers 2017 and
+    # 2022 only).
+    - {wave: 2009, code: "01", hint: "Car", category: car, summary: private_vehicle, status: exact}
+    - {wave: 2009, code: "02", hint: "Van", category: van, summary: private_vehicle, status: exact}
+    - {wave: 2009, code: "03", hint: "SUV", category: suv, summary: private_vehicle, status: exact}
+    - {wave: 2009, code: "04", hint: "Pickup truck", category: pickup, summary: private_vehicle, status: exact}
+    - {wave: 2009, code: "05", hint: "Other truck", category: other_truck, summary: other_vehicle, status: only_here, note: "2001 and 2009 have a separate 'other truck' code; 2017 and 2022 have none."}
+    - {wave: 2009, code: "06", hint: "RV", category: rv, summary: other_vehicle, status: exact}
+    - {wave: 2009, code: "07", hint: "Motorcycle", category: motorcycle, summary: private_vehicle, status: exact}
+    - {wave: 2009, code: "08", hint: "Light electric veh", category: golf_cart, summary: other_vehicle, status: approximate, note: "2009 'Light electric vehicle (golf cart)'; 2017 'Golf cart / Segway'. Same family, wording differs."}
+    - {wave: 2009, code: "09", hint: "Local public bus", category: bus, summary: public_transit, status: merge, note: "2017 has one code for public or commuter bus; 2001 and 2009 separate local from commuter bus."}
+    - {wave: 2009, code: "10", hint: "Commuter bus", category: bus, summary: public_transit, status: merge}
+    - {wave: 2009, code: "11", hint: "School bus", category: school_bus, summary: school_bus, status: exact}
+    - {wave: 2009, code: "12", hint: "Charter/tour bus", category: charter_intercity_bus, summary: other_transit, status: merge}
+    - {wave: 2009, code: "13", hint: "City to city bus", category: charter_intercity_bus, summary: other_transit, status: merge}
+    - {wave: 2009, code: "14", hint: "Shuttle bus", category: charter_intercity_bus, summary: other_transit, status: merge, note: "2017 code 13 is 'Private / Charter / Tour / Shuttle'."}
+    - {wave: 2009, code: "15", hint: "Amtrak", category: rail_commuter_amtrak, summary: public_transit, status: approximate}
+    - {wave: 2009, code: "16", hint: "Commuter train", category: rail_commuter_amtrak, summary: public_transit, status: approximate}
+    - {wave: 2009, code: "17", hint: "Subway", category: rail_local, summary: public_transit, status: merge}
+    - {wave: 2009, code: "18", hint: "Street car", category: rail_local, summary: public_transit, status: merge}
+    - {wave: 2009, code: "19", hint: "Taxicab", category: taxi_rideshare, summary: other_vehicle, status: exact}
+    - {wave: 2009, code: "20", hint: "Ferry", category: ferry, summary: other_transit, status: exact}
+    - {wave: 2009, code: "21", hint: "Airplane", category: air, summary: other, status: exact}
+    - {wave: 2009, code: "22", hint: "Bicycle", category: bike, summary: bike, status: exact}
+    - {wave: 2009, code: "23", hint: "Walk", category: walk, summary: walk, status: exact}
+    - {wave: 2009, code: "24", hint: "Special transit", category: paratransit, summary: other_transit, status: exact}
+    - {wave: 2009, code: "97", hint: "Other", category: other, summary: other, status: exact}
+    - {wave: 2001, code: "01", hint: "Car", category: car, summary: private_vehicle, status: exact}
+    - {wave: 2001, code: "02", hint: "Van", category: van, summary: private_vehicle, status: exact}
+    - {wave: 2001, code: "03", hint: "SUV", category: suv, summary: private_vehicle, status: exact}
+    - {wave: 2001, code: "04", hint: "Pickup truck", category: pickup, summary: private_vehicle, status: exact}
+    - {wave: 2001, code: "05", hint: "Other truck", category: other_truck, summary: other_vehicle, status: only_here}
+    - {wave: 2001, code: "06", hint: "RV", category: rv, summary: other_vehicle, status: exact}
+    - {wave: 2001, code: "07", hint: "Motorcycle", category: motorcycle, summary: private_vehicle, status: exact}
+    - {wave: 2001, code: "08", hint: "Commercial/charter airplane", category: air, summary: other, status: merge, note: "2001 separates commercial/charter from private/corporate airplanes."}
+    - {wave: 2001, code: "09", hint: "Private/corporate airplane", category: air, summary: other, status: merge}
+    - {wave: 2001, code: "10", hint: "Local public transit bus", category: bus, summary: public_transit, status: merge}
+    - {wave: 2001, code: "11", hint: "Commuter bus", category: bus, summary: public_transit, status: merge}
+    - {wave: 2001, code: "12", hint: "School bus", category: school_bus, summary: school_bus, status: exact}
+    - {wave: 2001, code: "13", hint: "Charter/tour bus", category: charter_intercity_bus, summary: other_transit, status: merge}
+    - {wave: 2001, code: "14", hint: "City to city bus", category: charter_intercity_bus, summary: other_transit, status: merge}
+    - {wave: 2001, code: "15", hint: "Amtrack", category: rail_commuter_amtrak, summary: public_transit, status: approximate}
+    - {wave: 2001, code: "16", hint: "Commuter train", category: rail_commuter_amtrak, summary: public_transit, status: approximate}
+    - {wave: 2001, code: "17", hint: "Subway", category: rail_local, summary: public_transit, status: merge}
+    - {wave: 2001, code: "18", hint: "Street car", category: rail_local, summary: public_transit, status: merge}
+    - {wave: 2001, code: "19", hint: "Ship/cruise", category: ferry, summary: other_transit, status: approximate, note: "2001 separates passenger ships and cruises, ferries and private boats; 2017 has one 'Boat / ferry / water taxi' code."}
+    - {wave: 2001, code: "20", hint: "Passenger line/ferry", category: ferry, summary: other_transit, status: approximate}
+    - {wave: 2001, code: "21", hint: "Sailboat/motorboat", category: ferry, summary: other_transit, status: approximate}
+    - {wave: 2001, code: "22", hint: "Taxicab", category: taxi_rideshare, summary: other_vehicle, status: exact}
+    - {wave: 2001, code: "23", hint: "Limousine", category: taxi_rideshare, summary: other_vehicle, status: merge, note: "2017 'Taxi / limo' is one code."}
+    - {wave: 2001, code: "24", hint: "Hotel/airport shuttle", category: charter_intercity_bus, summary: other_transit, status: approximate, note: "Whether hotel and airport shuttles were reported under 2017 code 13 ('Private / Charter / Tour / Shuttle') is not documented."}
+    - {wave: 2001, code: "25", hint: "Bicycle", category: bike, summary: bike, status: exact}
+    - {wave: 2001, code: "26", hint: "Walk", category: walk, summary: walk, status: exact}
+    - {wave: 2001, code: "91", hint: "Other", category: other, summary: other, status: exact}
+
+# WHYTRP1S, the derived "trip purpose summary" (also in the trip file of every wave). The same
+# name has three different code systems: 2001 numbers its 13 categories 1-13 ("1 = To work"),
+# 2009 / 2017 / 2022 use 01 Home, 10 Work, 20 School..., so the raw column must never be pooled.
+# Evidence for the 2017 / 2022 placement of family and personal business (2009 code 60): in the
+# 2017 data every WHYTO "Other general errands" (14), "Buy goods" (11), "Buy services" (12) trip has
+# WHYTRP1S 40 and no trip has WHYTRP1S 60 (cross-tabulation of 923,572 trips, 2026-10-21).
+purpose_summary:
+  variable: WHYTRP1S
+  source: "codebooks 2001 (User's Guide v3, Appendix B), 2009 v2.1, 2017 v1.2, 2022 v2.1; 2017 cross-tabulation WHYTO x WHYTRP1S"
+  rows:
+    - {wave: 2009, code: "01", hint: "Home", category: home, status: exact}
+    - {wave: 2017, code: "01", hint: "Home", category: home, status: exact}
+    - {wave: 2022, code: "01", hint: "Home", category: home, status: exact}
+    - {wave: 2001, code: "12", hint: "Return home", category: home, status: exact}
+    - {wave: 2009, code: "10", hint: "Work", category: work, status: exact}
+    - {wave: 2017, code: "10", hint: "Work", category: work, status: exact}
+    - {wave: 2022, code: "10", hint: "Work", category: work, status: exact}
+    - {wave: 2001, code: "01", hint: "To work", category: work, status: merge, note: "2001 spreads the 2009 'Work' summary over three codes: to work (1), work-related (2) and return to work (11)."}
+    - {wave: 2001, code: "02", hint: "Work-related", category: work, status: merge}
+    - {wave: 2001, code: "11", hint: "Return to work", category: work, status: merge}
+    - {wave: 2009, code: "20", hint: "School/Daycare/Religious", category: school_daycare_religious, status: exact}
+    - {wave: 2017, code: "20", hint: "School/Daycare/Religious", category: school_daycare_religious, status: exact}
+    - {wave: 2022, code: "20", hint: "School/Daycare/Religious", category: school_daycare_religious, status: exact}
+    - {wave: 2001, code: "03", hint: "School", category: school_daycare_religious, status: approximate, note: "2001 puts day-care trips (WHYTO 24) into 'Other family and personal' (7), where 2009 and later put them with school and religious trips."}
+    - {wave: 2001, code: "04", hint: "Religious", category: school_daycare_religious, status: approximate}
+    - {wave: 2009, code: "30", hint: "Medical/Dental", category: medical, status: exact}
+    - {wave: 2017, code: "30", hint: "Medical/Dental", category: medical, status: exact}
+    - {wave: 2022, code: "30", hint: "Medical/Dental", category: medical, status: exact}
+    - {wave: 2001, code: "05", hint: "Medical/dental", category: medical, status: exact}
+    - wave: 2009
+      code: "40"
+      hint: "Shopping/Errands"
+      category: shopping_errands
+      status: approximate
+      note: "From 2017 on, 'Shopping/Errands' (40) also holds the trips that 2009 files under 'Family personal business/Obligations' (60); in the 2017 data no trip has WHYTRP1S 60."
+    - {wave: 2009, code: "60", hint: "Family personal business", category: shopping_errands, status: merge}
+    - {wave: 2017, code: "40", hint: "Shopping/Errands", category: shopping_errands, status: approximate}
+    - {wave: 2022, code: "40", hint: "Shopping/Errands", category: shopping_errands, status: approximate}
+    - {wave: 2001, code: "06", hint: "Shopping", category: shopping_errands, status: approximate, note: "2001 'Shopping' lists WHYTO 41 and 43 only; buying services (42) and the 60 series are not stated to be in it."}
+    - {wave: 2001, code: "07", hint: "Other family", category: shopping_errands, status: approximate}
+    - {wave: 2009, code: "50", hint: "Social/Recreational", category: social_recreational, status: exact}
+    - {wave: 2017, code: "50", hint: "Social/Recreational", category: social_recreational, status: exact}
+    - {wave: 2022, code: "50", hint: "Social/Recreational", category: social_recreational, status: exact}
+    - {wave: 2001, code: "08", hint: "Social Recreation", category: social_recreational, status: exact}
+    - {wave: 2009, code: "70", hint: "Transport someone", category: transport_someone, status: exact}
+    - {wave: 2017, code: "70", hint: "Transport someone", category: transport_someone, status: exact}
+    - {wave: 2022, code: "70", hint: "Transport someone", category: transport_someone, status: exact}
+    - {wave: 2001, code: "10", hint: "Serve passenger", category: transport_someone, status: exact}
+    - {wave: 2009, code: "80", hint: "Meals", category: meals, status: exact}
+    - {wave: 2017, code: "80", hint: "Meals", category: meals, status: exact}
+    - {wave: 2022, code: "80", hint: "Meals", category: meals, status: exact}
+    - {wave: 2001, code: "09", hint: "Eat meal", category: meals, status: exact}
+    - {wave: 2009, code: "97", hint: "Other reason", category: other, status: exact}
+    - {wave: 2017, code: "97", hint: "Something else", category: other, status: exact}
+    - {wave: 2022, code: "97", hint: "Something else", category: other, status: exact}
+    - {wave: 2001, code: "13", hint: "Trip purpose does not fall", category: other, status: exact}

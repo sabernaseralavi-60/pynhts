@@ -1,0 +1,127 @@
+# NHTS 2001 (Version 4, national sample with add-ons) file registry. Hashes verified
+# 2026-10-21 by downloading the archives from the official ORNL server and hashing
+# every member. The archive is called Ascii.zip but holds comma-separated CSV files.
+# NOTE: nhts.ornl.gov answers HTTP 200 with an HTML page for missing files.
+wave: 2001
+source_page: https://nhts.ornl.gov
+variance:
+  method: jkn
+  replicates: 99
+  factor: 0.98989898989899
+  df: 99
+  default_weights:
+    longdist: WTPTPFIN
+  weight_rtol: 1.0e-09
+  replicate_files:
+    hh50wt.csv:
+    - level: household
+      weight: WTHHFIN
+      prefix: WTHFIN
+      keys:
+      - HOUSEID
+      out: repw_household.parquet
+      rename:
+        ID9: HOUSEID
+    pr50wt.csv:
+    - level: person
+      weight: WTPERFIN
+      prefix: WTPFIN
+      keys:
+      - HOUSEID
+      - PERSONID
+      out: repw_person.parquet
+      rename:
+        ID9: HOUSEID
+    - level: trip
+      weight: WTTRDFIN
+      prefix: WTTDFN
+      keys:
+      - HOUSEID
+      - PERSONID
+      out: repw_trip.parquet
+      rename:
+        ID9: HOUSEID
+    ldt50wt.csv:
+    - level: longdist
+      weight: WTPTPFIN
+      prefix: FPTPWT
+      keys:
+      - HOUSEID
+      - PERSONID
+      out: repw_longdist.parquet
+      pad: 2
+citation: 'U.S. Department of Transportation, Federal Highway Administration, 2001 National Household
+  Travel Survey, Version 4 (2004). URL: https://nhts.ornl.gov'
+archives:
+  Ascii.zip:
+    url: https://nhts.ornl.gov/2001/download/Ascii.zip
+    sha256: 443d1e6042214a1dcd6ff790cc61e8f9d17386f12c95e40b8a3b8561b678e908
+    size: 63933715
+  replicates_ascii.zip:
+    url: https://nhts.ornl.gov/2001/download/replicates_ascii.zip
+    sha256: d1831e69dcf7e7d5cc84761aa39f1c0b83f8fa0d8d48121c92e19025406b7591
+    size: 439207463
+members:
+  HHPUB.csv:
+    archive: Ascii.zip
+    group: core
+    table: household
+    sha256: be828e30875c69d896e3d480e4aed2ca15161ba10266cba2c930589c46798b41
+    size: 39765492
+    rows: 69817
+  PERPUB.csv:
+    archive: Ascii.zip
+    group: core
+    table: person
+    sha256: eab749228ea4a55d4b8fc12e0763274c06254af4228398513265775967284496
+    size: 70029563
+    rows: 160758
+  DAYPUB.csv:
+    archive: Ascii.zip
+    group: core
+    table: trip
+    sha256: f3a5478ba879c5341a44704b6b5bfb2bed8ae4f2e11e5344bf050e0d92c22466
+    size: 287252188
+    rows: 642292
+  VEHPUB.csv:
+    archive: Ascii.zip
+    group: core
+    table: vehicle
+    sha256: d6e1abf49f9fb157831398211e0371ef6bf30fb3464544f64df484b47bfe2fc1
+    size: 49466719
+    rows: 139382
+  LDTPUB.csv:
+    archive: Ascii.zip
+    group: core
+    table: longdist
+    sha256: 70829a30477a53cdecb7e1db7fc06c247fc26841d8571f6aede9f38c943797c9
+    size: 20111445
+    rows: 45165
+  hh50wt.csv:
+    archive: replicates_ascii.zip
+    group: replicates
+    sha256: 1d80662f200187ef7449e8e509ec5a49ceeec9757533328300410b273fc91aac
+    size: 197278638
+    rows: 69817
+  ldt50wt.csv:
+    archive: replicates_ascii.zip
+    group: replicates
+    sha256: 5ac3f1f617156f3c46f0dcb722dd3ecee37a1734664aaa98de32d09389d435dc
+    size: 172003312
+    rows: 60282
+  pr50wt.csv:
+    archive: replicates_ascii.zip
+    group: replicates
+    sha256: 0309c6423d9b383cab004da471af4249573892c177c5940dc156d1d11e1c6e9a
+    size: 786714453
+    rows: 160758
+documentation:
+  users_guide.pdf:
+    url: https://nhts.ornl.gov/2001/usersguide/UsersGuide.pdf
+    sha256: 79e8dce801773db88db1b9be9ae1fb39d78e806cf0ab67184f336ef67edaaef0
+  summary_travel_trends.pdf:
+    url: https://nhts.ornl.gov/2001/pub/STT.pdf
+    sha256: 41c42503978349bfe6aec01b5a1c072e8c6161c124a858cec1681a564d3c10e0
+  release_notes_v4.html:
+    url: https://nhts.ornl.gov/2001/download/v4ReleaseNotes.html
+    sha256: 2d1f17d6ca63379ba10e8698c966c7d8c2da7fdbb5ac4289024649ec9ba9cf1c

@@ -10,6 +10,13 @@ variance:
   method: jkn
   replicates: 98
   factor: 0.8571428571428571
+  df: 98
+  replicate_files:
+    hhwgt.csv:
+      - {level: household, weight: WTHHFIN, keys: [HOUSEID], out: repw_household.parquet}
+    perwgt.csv:
+      - {level: person, weight: WTPERFIN, keys: [HOUSEID, PERSONID], out: repw_person.parquet}
+      - {level: trip, weight: WTTRDFIN, keys: [HOUSEID, PERSONID], out: repw_trip.parquet}
 citation: >-
   U.S. Department of Transportation, Federal Highway Administration, 2017 National Household
   Travel Survey, Version 1.2 (2019). URL: https://nhts.ornl.gov

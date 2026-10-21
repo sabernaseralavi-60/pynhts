@@ -24,20 +24,22 @@ DEFAULT_DF = N_REPLICATES
 
 
 def jackknife_variance(
-    full: ArrayLike, replicates: ArrayLike, factor: float = JKN_FACTOR
+    full: ArrayLike, replicates: ArrayLike, factor: float = JKN_FACTOR,
+    n_replicates: int = N_REPLICATES,
 ) -> NDArray[np.float64]:
     """JKn variance of one or several estimates.
 
     Args:
         full: Full-sample estimate(s), shape ``(k,)`` or scalar.
         replicates: Replicate estimates, shape ``(G, k)`` or ``(G,)`` for a scalar estimate.
-        factor: ``(n_h - 1) / n_h``; 6/7 for the 2017 design.
+        factor: ``(n_h - 1) / n_h``; 6/7 for 2017, 99/100 for 2009, 98/99 for 2001.
+        n_replicates: Expected number of replicates (98 in 2017, 100 in 2009, 99 in 2001).
 
     Returns:
         Variance with shape ``(k,)`` (0-d array for a scalar estimate).
     """
     theta = np.asarray(full, dtype=np.float64)
     reps = np.asarray(replicates, dtype=np.float64)
-    if reps.shape[0] != N_REPLICATES:
-        raise ValueError(f"expected {N_REPLICATES} replicates, got {reps.shape[0]}")
+    if reps.shape[0] != n_replicates:
+        raise ValueError(f"expected {n_replicates} replicates, got {reps.shape[0]}")
     return np.asarray(factor * np.sum((reps - theta) ** 2, axis=0))

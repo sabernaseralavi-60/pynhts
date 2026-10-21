@@ -1,5 +1,7 @@
 # NHTS 2017: pitfalls found while building pynhts
 
+*This page covers 2017, then 2022, 2009 and 2001, in that order.*
+
 Every item below was checked against the files or the official documents, and each is covered
 by a test. They are the reason the library exists.
 
@@ -139,3 +141,113 @@ Every item was checked against the files or the official documents and is covere
   add no miles. The guide's "cases" for person miles of travel is the unweighted sum of
   `TRPMILES` (434,079), not a count.
 * `R_SEX` has -7/-8/-9 codes; they are masked (`missing="nan"`) like all coded missing values.
+
+# NHTS 2009: pitfalls found while importing it
+
+Release 2.1 (October 2011). Every item was checked against the files or the official documents;
+the tests are in `tests/data/test_old_waves_real.py` and `tests/unit/test_old_waves.py`.
+
+## Files and codebook
+
+* The archive `Ascii.zip` (95 MB) is called ASCII but holds **four comma-separated CSV files** in
+  its folder `Ascii/`: `HHV2PUB.CSV`, `PERV2PUB.CSV`, `DAYV2PUB.CSV` (the trip table: "day trip
+  file") and `VEHV2PUB.CSV`, with 150,147 households, 308,901 persons, 1,167,321 trips and 309,163
+  vehicles. There is no long-distance file. The hashes are pinned in the registry.
+* **The codebook exists only as a PDF** (the data dictionary `.xls` lists names, types and labels
+  but no codes). `tools/build_schema_pdf.py` reads the PDF layout page by page; no code or type is
+  guessed. All 3,435 compared code lines (unweighted and weighted frequency) reproduce on the data,
+  except for three documented cases:
+  * the PDF prints control character 0x16 for the 3 of `MAKECODE` 35 (Nissan/Datsun); repaired
+    by the data (35 occurs in exactly the printed 12,345 rows);
+  * `PTUSED` (public transit uses): the codebook counts 99,106 rows as -9; the file has 98,498
+    rows of -9 and 608 rows of 99. 98,498 + 608 = 99,106, so the value **99 is a hidden missing
+    code**; pynhts masks it;
+  * `VEHTYPE`: the printed frequencies of the four main classes differ from the file (cars
+    154,593 printed, 151,238 in the file; SUVs 54,760 against 58,718) while they add up to the
+    same 294,409 vehicles. 3,355 vehicles sit in another class than the codebook says; the data are
+    used as they are and the test lists the four classes as a known gap.
+* Coded columns keep leading zeros (`"01"`). Yes/no and sex are `"01"`/`"02"`; in 2001 they are
+  `"1"`/`"2"`.
+
+## Weights and variance
+
+* **Replicate weights are a separate 399 MB archive** (`ReplicatesASCII.zip`): 100 replicates
+  made with the jackknife-2 method. The User's Guide gives Var = 99/100 x sum of the 100 squared
+  deviations. The 95 % margin of error is `t(0.975, 100) = 1.984` times the standard error (not
+  1.96): all 27 printed margins of error of the report's Table 1 match that to rounding.
+* The replicate file's travel-day weight `DAYWGT` is **missing for 45,967 persons** (no complete
+  travel day). None of them has a trip row. pynhts zeroes the weights of units without rows and
+  raises an error if a row belongs to a unit with a missing weight.
+* `WTTRDFIN` is 365 x `WTPERFIN`, as in 2017. Vehicles use the household weight.
+* The four per-person, per-driver and per-household PMT/VMT rows of the report's Table 3 print a
+  margin of error that equals 1.96 x the standard error at the printed precision, not 1.984 x; the
+  totals of Table 1 use 1.984. The library always uses t and reports those rows (and the margin of
+  the daily trips per person) as "estimate reproduced, margin of error differs" (see
+  [Validation](validation.md)).
+
+## Variables
+
+* The public person file starts at age 5, and **`R_AGE` is top-coded**: 92 stands for "89 or
+  older". Do not average it.
+* `TRPMILES` is -1 (appropriate skip) on 181 trips and -9/-8/-7 on 18,484 more. Summing the
+  column with only the -9/-8/-7 codes masked subtracts the 181 skip rows: the report's person
+  miles (3,732,791 million) need `skip="nan"`.
+* "Household vehicles" in the report are vehicles of types 01-07 (210,778 thousand); the vehicle
+  file also holds golf carts, "other" and unknown types (211,501 thousand). The same holds for
+  vehicle trips: 63.2 million driver trips are in a golf cart (mode 08), which the report leaves
+  out of the 233,849 million vehicle trips.
+* `TRPTRANS` codes differ from every other wave: 08 is a golf cart (a commercial airplane in
+  2001), 22 a bicycle (a taxi in 2001), 23 walking (a limousine in 2001).
+
+# NHTS 2001: pitfalls found while importing it
+
+The User's Guide is version 3 (January 2004); the codebook has a "Changed in V4?" column and the
+site carries release notes for version 4 (`v4ReleaseNotes.html`), whose changes the data contain.
+The tests are the same files as for 2009.
+
+## Files and codebook
+
+* `Ascii.zip` (64 MB) holds **five comma-separated CSV files** (lower-case `.csv`): `HHPUB` (69,817
+  households), `PERPUB` (160,758 persons), `DAYPUB` (642,292 trips), `VEHPUB` (139,382 vehicles)
+  and `LDTPUB` (45,165 long-distance trips).
+* **The long-distance file has one row per long trip** (key `HOUSEID, PERSONID, TPTRPNUM`), with
+  the travel-period person weight `WTPTPFIN`; 2022 has one row per person. Replicates exist for
+  the 60,282 persons of the travel-period sample.
+* The codebook is Appendix B of the User's Guide (PDF); the schema is read from it with the same
+  tool as 2009. All 6,327 compared code lines reproduce. The codebook labels a blank cell as
+  `[missing]` (undefined weights): it is kept as a code and matches the empty cells.
+* A few numeric codes are printed with more digits than the file stores (`BTUCOST` 325.577914285714
+  against 325.57791429); the test compares floats to 1e-9.
+* Codes are padded for most variables (`"01"`) but **yes/no and sex are `"1"`/`"2"`**, and the
+  summary trip purpose `WHYTRP1S` numbers its 13 categories 01-13 (`"01"` = to work), whereas 2009
+  and later use 01 = home, 10 = work, 20 = school. The raw column cannot be pooled
+  (`pynhts.harmonize.crosswalk("purpose_summary")`).
+
+## Children under 5
+
+* The file contains children 0-4, whose trips the survey contractor computed. The report's
+  "2001" column leaves them out of the trips and the persons aged 5 and older (257,576 thousand),
+  and its "includes 0-4" column adds them (277,203 thousand persons, 407,262 million trips).
+* **Table 3 of the report mixes the two**: its "2001" per-person rates (3.74 trips, 36.89
+  miles) divide the trips and miles of persons of known age 5 and older by *all* persons, children
+  0-4 and unknown ages included. Counting the same trips over persons aged 5+ gives 4.09 trips.
+  The per-household rates (9.66, 95.24) and the average trip length (10.04) use the same trips.
+  The recipe `stt2001` reproduces the printed values with that definition and says so.
+* 2,399 persons have no age (`R_AGE` -7/-8/-9); the report counts them in "All 5+" but not in
+  the trips of Table 3.
+
+## Weights and variance
+
+* **99 replicate weights**, delete-one jackknife: Var = 98/99 x sum of the squared deviations.
+  The guide's worked example (202,586,200 household vehicles, SE 672,072, interval = estimate
+  +/- 2 SE) is reproduced to the digit by the estimate and to 0.05 % by the SE.
+* Replicates live in `replicates_ascii.zip` (439 MB): `hh50wt.csv`, `pr50wt.csv` (person and
+  travel-day weights) and `ldt50wt.csv`. The household key is called `ID9` there; undefined weights
+  are the quoted string `"."`; the long-distance file names its replicates `FPTPWT01` ... `FPTPWT99`
+  (zero-padded), the others `WTHFIN1`, `WTPFIN1`, `WTTDFN1`. The weight sets of the "100 percent
+  reported households" (`EXPFLLHH`, ...) are in the same files and are not used by default.
+* The main long-distance file prints `WTPTPFIN` with 4 decimals, its replicate file with 6, so
+  the two agree only to 7.6e-11 relative; the registry sets the tolerance for this wave.
+* The 2004 report's totals differ in the sixth digit from the same quantities in the 2009
+  report (vehicle trips 233,040 against 233,030 million; VMT 2,274,797 against 2,274,769). The
+  current file gives the later values, so the 2004 report was computed from an earlier version.

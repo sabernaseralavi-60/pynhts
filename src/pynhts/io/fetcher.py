@@ -224,7 +224,7 @@ def _download_and_extract(
     with zipfile.ZipFile(zpath) as zf:
         for m in members:
             tmp = out_dir / (m.name + ".part")
-            with zf.open(m.name) as src, open(tmp, "wb") as dst:
+            with zf.open(m.path_in_archive) as src, open(tmp, "wb") as dst:
                 shutil.copyfileobj(src, dst, _CHUNK)
             if sha256_file(tmp) != m.sha256:
                 tmp.unlink()

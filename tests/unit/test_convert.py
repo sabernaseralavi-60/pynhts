@@ -61,6 +61,19 @@ def env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
             "perwgt.csv": member("perwgt.csv", "replicates", 2),
         },
         {},
+        {
+            "method": "jkn", "replicates": 98, "factor": 6 / 7,
+            "replicate_files": {
+                "hhwgt.csv": [{"level": "household", "weight": "WTHHFIN", "keys": ["HOUSEID"],
+                               "out": "repw_household.parquet"}],
+                "perwgt.csv": [
+                    {"level": "person", "weight": "WTPERFIN", "keys": ["HOUSEID", "PERSONID"],
+                     "out": "repw_person.parquet"},
+                    {"level": "trip", "weight": "WTTRDFIN", "keys": ["HOUSEID", "PERSONID"],
+                     "out": "repw_trip.parquet"},
+                ],
+            },
+        },
     )
     schema = TableSchema(
         2017, "household", "hhpub.csv",
@@ -116,7 +129,8 @@ def test_row_count_mismatch_raises_and_leaves_no_partial_file(env):
                  reg.members["hhpub.csv"].size, 99, "household")
     env["monkeypatch"].setattr(
         cv, "load_registry", lambda wave: Registry(2017, "f", reg.archives,
-                                                   {**reg.members, "hhpub.csv": bad}, {}))
+                                                   {**reg.members, "hhpub.csv": bad}, {},
+                                                   reg.variance))
     with pytest.raises(ValueError, match="expects 99"):
         cv.convert(2017, ("core",), cache=env["cache"])
     assert not list(cv.parquet_dir(2017, env["cache"]).glob("*.part"))

@@ -1,5 +1,17 @@
 # Roadmap
 
+## Done in 0.4.0: NHTS 2009 and 2001
+
+* Both waves: hash-pinned download (including the separate replicate archives), schema read from the
+  PDF codebooks (`tools/build_schema_pdf.py`; 3,435 and 6,327 code frequencies reproduce, gaps
+  documented), typed Parquet, 100 and 99 jackknife replicate weights with the factor and
+  degrees of freedom of each wave.
+* Recipes `stt2009` (40 figures of the 2009 *Summary of Travel Trends*: 35 reproduced, 5 with a
+  margin-of-error convention difference) and `stt2001` (47 figures: 40 reproduced, 7 within
+  one unit or from an older data version).
+* `harmonize`: crosswalks of mode and of the summary purpose `WHYTRP1S` over all four waves;
+  `compare_waves` ignores zero padding of codes.
+
 ## Done in 0.3.0: NHTS 2022 and cross-wave tools
 
 * NHTS 2022 (NextGen, V2.1): hash-pinned download, codebook-derived schema (2,639 code frequencies
@@ -33,9 +45,12 @@ rules behind the remaining gaps, validation of the chained-trip definition, and 
 
 ## Not done yet
 
-* **Other waves** (2009, 2001, 1995). The registry, schema and variance design are per wave, so a
-  wave adds files (and a crosswalk), not code paths. 2001 is also needed to validate the
-  tour-chaining rule against FHWA's tables.
+* **The 1995 and earlier waves** (NPTS). The registry, schema and variance design are per wave, so a
+  wave adds files (and a crosswalk), not code paths. 2001 and 2009 are now available to validate the
+  tour-chaining rule against FHWA's tables (`chain_ids` is still unvalidated, and `pynhts.tours` is
+  2017-only).
+* Detailed purpose (`WHYTO`) crosswalk for 2001 and 2009; the official documents align 2017 and
+  2022 only.
 * Crosswalks beyond trip purpose and mode (income, education, urban/rural, vehicle type) and a
   harmonized pooled-analysis helper that carries the loss report along.
 * Tours for 2022 (`pynhts.tours` is 2017-only: it relies on `TDTRPNUM`).

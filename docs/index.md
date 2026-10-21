@@ -1,7 +1,7 @@
 # pynhts
 
 Typed, survey-weight-aware Python access to US National Household Travel Survey (NHTS)
-microdata. Two waves are supported: **2017** and **2022** (NextGen).
+microdata. Four waves are supported: **2001**, **2009**, **2017** and **2022** (NextGen).
 
 ## Install
 
@@ -62,7 +62,7 @@ deleted: the Parquet files are enough.
 ## Pages
 
 * [Validation against published tables](validation.md): what reproduces and what does not.
-* [Comparing waves](waves.md): 2017 against 2022, code crosswalks, what cannot be compared.
+* [Comparing waves](waves.md): the four waves, code crosswalks, what cannot be compared.
 * [Methods](methods.md): weights, jackknife and Taylor-series variance, margins of error.
-* [Data notes](data_notes.md): the NHTS 2017 and 2022 pitfalls found while building the library.
+* [Data notes](data_notes.md): the NHTS 2017, 2022, 2009 and 2001 pitfalls found while building the library.
 * [Roadmap](roadmap.md)

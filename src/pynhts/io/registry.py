@@ -31,6 +31,32 @@ class Member:
     size: int
     rows: int | None
     table: str = ""
+    zip_path: str = ""
+
+    @property
+    def path_in_archive(self) -> str:
+        """Name of the member inside its zip archive (2009 keeps its CSVs in ``Ascii/``)."""
+        return self.zip_path or self.name
+
+
+@dataclass(frozen=True)
+class ReplicateJob:
+    """One set of replicate weights read from a replicate CSV file.
+
+    ``weight`` is the full-sample weight column of the replicate file and ``prefix`` the stem of
+    the replicate columns (``prefix1`` ... ``prefixR``, zero-padded to ``pad`` digits when the file
+    does so: the 2001 long-distance file has ``FPTPWT01``). ``rename`` maps key columns of the
+    replicate file to the key names of the data tables (2001 calls the household id ``ID9``).
+    """
+
+    level: str
+    csv: str
+    weight: str
+    prefix: str
+    keys: tuple[str, ...]
+    out: str
+    rename: dict[str, str] = field(default_factory=dict)
+    pad: int = 0
 
 
 @dataclass(frozen=True)
@@ -43,6 +69,39 @@ class Registry:
     members: dict[str, Member]
     documentation: dict[str, dict[str, Any]]
     variance: dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def n_replicates(self) -> int:
+        """Number of replicate weights (98 in 2017, 100 in 2009, 99 in 2001)."""
+        return int(self.variance.get("replicates", 98))
+
+    @property
+    def jackknife_factor(self) -> float:
+        """Multiplier of the summed squared deviations: 6/7 (2017), 99/100 (2009), 98/99 (2001)."""
+        return float(self.variance.get("factor", 6 / 7))
+
+    @property
+    def degrees_of_freedom(self) -> float:
+        """Degrees of freedom of the t multiplier for margins of error."""
+        return float(self.variance.get("df", self.n_replicates))
+
+    @property
+    def replicate_jobs(self) -> dict[str, ReplicateJob]:
+        """Replicate-weight sets of this wave by level (household, person, trip, longdist)."""
+        jobs: dict[str, ReplicateJob] = {}
+        for csv, entries in dict(self.variance.get("replicate_files", {})).items():
+            for e in entries:
+                jobs[e["level"]] = ReplicateJob(
+                    level=e["level"], csv=csv, weight=e["weight"],
+                    prefix=e.get("prefix", e["weight"]), keys=tuple(e["keys"]),
+                    out=e["out"], rename=dict(e.get("rename", {})), pad=int(e.get("pad", 0)),
+                )
+        return jobs
+
+    def weight_for(self, table: str, default: str) -> str:
+        """Full-sample weight column of ``table`` (``default`` unless the wave overrides it)."""
+        override: dict[str, str] = self.variance.get("default_weights", {})
+        return override.get(table, default)
 
     def members_in(self, groups: tuple[str, ...]) -> list[Member]:
         """Return the members that belong to any of ``groups``."""

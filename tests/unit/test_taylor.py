@@ -189,7 +189,7 @@ def test_weight_sets_and_unsupported_calls(d22):
 
 
 def test_registry_describes_both_variance_designs():
-    assert supported_waves() == [2017, 2022]
+    assert supported_waves() == [2001, 2009, 2017, 2022]
     r17, r22 = load_registry(2017), load_registry(2022)
     assert (r17.variance_method, r22.variance_method) == ("jkn", "taylor")
     assert "replicates" in r17.groups and r22.groups == ("core",)

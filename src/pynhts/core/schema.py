@@ -10,7 +10,8 @@ from typing import Any
 import yaml
 
 TABLES = ("household", "person", "trip", "vehicle")
-# 2022 adds a long-distance-travel file with one row per person (child of the person table).
+# 2001 (long trips) and 2022 (one row per person) add a long-distance-travel file, a child of
+# the person table.
 ALL_TABLES = (*TABLES, "longdist")
 KEYS = {
     "household": ("HOUSEID",),
@@ -19,9 +20,11 @@ KEYS = {
     "vehicle": ("HOUSEID", "VEHID"),
     "longdist": ("HOUSEID", "PERSONID"),
 }
-# Keys that differ from KEYS in a wave: the 2022 trip file is keyed by TRIPID (no TDTRPNUM).
+# Keys that differ from KEYS in a wave: the 2022 trip file is keyed by TRIPID (no TDTRPNUM);
+# the 2001 long-distance file has one row per long trip (TPTRPNUM), not one per person.
 WAVE_KEYS: dict[int, dict[str, tuple[str, ...]]] = {
     2022: {"trip": ("HOUSEID", "PERSONID", "TRIPID")},
+    2001: {"longdist": ("HOUSEID", "PERSONID", "TPTRPNUM")},
 }
 
 
@@ -125,6 +128,6 @@ def load_schema(table: str, wave: int = 2017) -> TableSchema:
 
 
 def wave_tables(wave: int) -> tuple[str, ...]:
-    """Tables that exist in ``wave`` (the four core tables, plus ``longdist`` from 2022)."""
+    """Tables that exist in ``wave`` (the four core tables, plus ``longdist`` in 2001 and 2022)."""
     root = resources.files("pynhts") / "_schema" / str(wave)
     return tuple(t for t in ALL_TABLES if (root / f"{t}.yaml").is_file())

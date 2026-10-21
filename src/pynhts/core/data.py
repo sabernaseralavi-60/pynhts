@@ -64,11 +64,7 @@ _REPLICATE_LEVEL = {
     "vehicle": "household",
     "person": "person",
     "trip": "trip",
-}
-_REPLICATE_FILE = {
-    "household": ("repw_household.parquet", "WTHHFIN"),
-    "person": ("repw_person.parquet", "WTPERFIN"),
-    "trip": ("repw_trip.parquet", "WTTRDFIN"),
+    "longdist": "longdist",
 }
 
 
@@ -109,8 +105,13 @@ class NHTSData:
 
     @property
     def variance_method(self) -> str:
-        """``"jkn"`` (replicate weights, 2017) or ``"taylor"`` (strata and clusters, 2022)."""
+        """``"jkn"`` (replicate weights: 2001, 2009, 2017) or ``"taylor"`` (2022)."""
         return self._registry.variance_method
+
+    @property
+    def _weight_rtol(self) -> float:
+        """Relative tolerance when comparing a row's weight with the replicate file's."""
+        return float(self._registry.variance.get("weight_rtol", 1e-12))
 
     def key(self, table: str) -> tuple[str, ...]:
         """Primary-key columns of ``table`` in this wave."""
@@ -123,7 +124,7 @@ class NHTSData:
         ``"all"`` (seven days, the default), ``"weekday"`` (``...5D``) or ``"weekend"``
         (``...2D``). Waves with a single weight set accept only ``"all"``.
         """
-        base = DEFAULT_WEIGHT[self._check_table(table)]
+        base = self._registry.weight_for(table, DEFAULT_WEIGHT[self._check_table(table)])
         sets: dict[str, str] = self._registry.variance.get("weight_sets", {"all": ""})
         if weights not in sets:
             raise ValueError(f"weights must be one of {tuple(sets)} for NHTS {self.wave}")
@@ -352,8 +353,8 @@ class NHTSData:
                                      clusters=clusters)
         if weights != "all":
             raise ValueError(f"NHTS {self.wave} has only the 'all' weight set")
-        return self._bind(rows, _REPLICATE_LEVEL[self._check_table(table)], DEFAULT_WEIGHT[table],
-                          level)
+        return self._bind(rows, _REPLICATE_LEVEL[self._check_table(table)],
+                          self.weight_column(table), level)
 
     def survey_rows(
         self, rows: pd.DataFrame, level: str, *, level_conf: float = 0.95, weights: str = "all"
@@ -376,31 +377,48 @@ class NHTSData:
         if self.variance_method == "taylor":
             return self._bind_taylor(rows, self._check_table(level), level_conf, weights,
                                      rows_are_table=False)
-        if level not in _REPLICATE_FILE:
-            raise ValueError(f"level must be one of {tuple(_REPLICATE_FILE)}")
+        levels = self._registry.replicate_jobs
+        if level not in levels:
+            raise ValueError(f"level must be one of {tuple(levels)}")
         return self._bind(rows, level, None, level_conf)
 
     def _bind(
         self, rows: pd.DataFrame, level_name: str, weight_col: str | None, level: float
     ) -> Survey:
         keys = list(self.key("household" if level_name == "household" else "person"))
+        job = self._registry.replicate_jobs[level_name]
         absent = [k for k in keys if k not in rows.columns]
         if absent:
             raise KeyError(f"rows lack the key columns {absent}")
         rep = self.replicate_weights(level_name)
-        wcol = _REPLICATE_FILE[level_name][1]
+        wcol = job.weight
         index = pd.MultiIndex.from_frame(rep[keys]) if len(keys) > 1 else pd.Index(rep[keys[0]])
         wanted = pd.MultiIndex.from_frame(rows[keys]) if len(keys) > 1 else pd.Index(rows[keys[0]])
         unit = index.get_indexer(wanted)
         if (unit < 0).any():
             raise NHTSIntegrityError("rows without a replicate-weight unit")
-        unit_w = rep[wcol].to_numpy(dtype=np.float64)
+        raw_w = rep[wcol].to_numpy(dtype=np.float64)
+        raw_reps = rep[
+            replicate_columns(job.prefix, self._registry.n_replicates, job.pad)
+        ].to_numpy(dtype=np.float64)
+        # A unit without weights (2009: 45,967 persons without a travel-day weight; 2001: persons
+        # outside the long-distance sample) has no rows to weigh. Zero its weights so that
+        # 0 * NaN cannot poison the matrix products; a *referenced* unit must be complete.
+        absent = np.isnan(raw_w) | np.isnan(raw_reps).any(axis=1)
+        if absent[unit].any():
+            raise NHTSIntegrityError(
+                f"{int(absent[unit].sum())} rows belong to a unit with a missing weight"
+            )
+        unit_w = np.asarray(np.where(absent, 0.0, raw_w), dtype=np.float64)
+        reps = np.asarray(np.where(absent[:, None], 0.0, raw_reps), dtype=np.float64)
         if weight_col is not None and not np.allclose(
-            rows[weight_col].to_numpy(dtype=np.float64), unit_w[unit], rtol=1e-12, atol=0
+            rows[weight_col].to_numpy(dtype=np.float64), unit_w[unit], rtol=self._weight_rtol,
+            atol=0
         ):
             raise NHTSIntegrityError("row weights differ from the replicate file's weights")
-        reps = rep[replicate_columns(wcol)].to_numpy(dtype=np.float64)
-        return Survey(rows, unit.astype(np.int64), unit_w, reps, level=level)
+        return Survey(rows, unit.astype(np.int64), unit_w, reps, level=level,
+                      df=self._registry.degrees_of_freedom,
+                      factor=self._registry.jackknife_factor)
 
     def _taylor_design(self) -> tuple[pd.Index, NDArray[Any]]:
         """Household ids and the stratum label of each household (the clusters)."""
@@ -530,7 +548,7 @@ class NHTSData:
         return result
 
     def replicate_weights(self, level: str, *, dtype: str = "float64") -> pd.DataFrame:
-        """Full-sample weight plus the 98 jackknife replicates for ``level``.
+        """Full-sample weight plus the jackknife replicates for ``level`` (98, 100 or 99 by wave).
 
         ``level`` is ``"household"``, ``"person"`` or ``"trip"``. The trip level is keyed by
         person-day (``HOUSEID``, ``PERSONID``): join it to trips on those two keys.
@@ -542,17 +560,19 @@ class NHTSData:
                 f"NHTS {self.wave} has no replicate weights; its standard errors use "
                 "Taylor-series linearisation (see NHTSData.survey)"
             )
-        if level not in _REPLICATE_FILE:
-            raise ValueError(f"level must be one of {tuple(_REPLICATE_FILE)}")
-        fname, wcol = _REPLICATE_FILE[level]
-        path = self.directory / fname
+        levels = self._registry.replicate_jobs
+        if level not in levels:
+            raise ValueError(f"level must be one of {tuple(levels)}")
+        job = levels[level]
+        path = self.directory / job.out
         if not path.is_file():
             raise FileNotFoundError(
                 f"{path} missing; run pynhts.io.convert(groups=('replicates',)) "
                 "or load(..., replicates=True)"
             )
         df = arrow_to_pandas(pq.read_table(path))
-        converted: pd.DataFrame = df.astype({c: dtype for c in replicate_columns(wcol)})
+        cols = replicate_columns(job.prefix, self._registry.n_replicates, job.pad)
+        converted: pd.DataFrame = df.astype({c: dtype for c in cols})
         return converted
 
     # -- internals -----------------------------------------------------------------------
@@ -597,7 +617,7 @@ def load(
     """Open an NHTS wave, downloading and converting it on first use.
 
     Args:
-        wave: Survey year (2017 or 2022).
+        wave: Survey year (2001, 2009, 2017 or 2022).
         cache: Cache root override (default: ``$PYNHTS_CACHE_DIR`` or the user cache dir).
         offline: Never download; raise if the data are not already cached.
         replicates: Also make sure the 98 jackknife replicate weights are available (waves

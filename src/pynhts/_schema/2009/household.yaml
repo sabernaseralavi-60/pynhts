@@ -1,0 +1,2548 @@
+wave: 2009
+table: household
+csv: HHV2PUB.CSV
+codebook:
+  file: Codebook.pdf
+  sha256: 79bd10eb03d6dc0db1223105773e249285e6ae0e2a41fedf836db6772763cd7d
+n_columns: 43
+columns:
+  CDIVMSAR:
+    label: Grouping of HH by combination of Census Division, MSA status, and presence of a subway system
+      (if area > 1 million)
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2
+      weighted: 23274.0
+    - code: '11'
+      label: New England (ME, NH, VT, CT, MA, RI) MSA or CMSA of 1 million or more with heavy rail
+      n: 618
+      weighted: 2959202.0
+    - code: '12'
+      label: New England (ME, NH, VT, CT, MA, RI) MSA or CMSA of 1 million or without heavy rail.
+      n: 351
+      weighted: 986625.0
+    - code: '13'
+      label: New England (ME, NH, VT, CT, MA, RI) MSA of less than 1 million.
+      n: 696
+      weighted: 634203.0
+    - code: '14'
+      label: New England (ME, NH, VT, CT, MA, RI) Not in a MSA.
+      n: 1499
+      weighted: 913339.0
+    - code: '21'
+      label: Mid-Atlantic (NY, NJ, PA) MSA or CMSA of 1 million or more with heavy rail.
+      n: 7088
+      weighted: 9304695.0
+    - code: '22'
+      label: Mid-Atlantic (NY, NJ, PA) MSA or CMSA of 1 million or without heavy rail.
+      n: 1615
+      weighted: 1850926.0
+    - code: '23'
+      label: Mid-Atlantic (NY, NJ, PA) MSA of less than 1 million.
+      n: 5737
+      weighted: 2643020.0
+    - code: '24'
+      label: Mid-Atlantic (NY, NJ, PA) Not in a MSA.
+      n: 3087
+      weighted: 1374631.0
+    - code: '31'
+      label: East North Central (IL, IN, MI, OH, WI) MSA or CMSA of 1 million or more with heavy rail
+      n: 1038
+      weighted: 4563342.0
+    - code: '32'
+      label: East North Central (IL, IN, MI, OH, WI) MSA or CMSA of 1 million or without heavy rail
+      n: 2128
+      weighted: 5560439.0
+    - code: '33'
+      label: East North Central (IL, IN, MI, OH, WI) MSA of less than 1 million.
+      n: 2147
+      weighted: 4171733.0
+    - code: '34'
+      label: East North Central (IL, IN, MI, OH, WI) Not in a MSA.
+      n: 2028
+      weighted: 3520610.0
+    - code: '42'
+      label: West North Central (IA, KS, MO, MN, ND, NE, SD) MSA or CMSA of 1 million or without heavy
+        rail
+      n: 454
+      weighted: 2794453.0
+    - code: '43'
+      label: West North Central (IA, KS, MO, MN, ND, NE, SD) MSA of less than 1 million.
+      n: 5146
+      weighted: 2032570.0
+    - code: '44'
+      label: West North Central (IA, KS, MO, MN, ND, NE, SD) Not in a MSA.
+      n: 2487
+      weighted: 3217458.0
+    - code: '51'
+      label: South Atlantic (DE, FL, GA, MD, NC, SC, WV, VA) MSA or CMSA of 1 million or more with heavy
+        rail
+      n: 6606
+      weighted: 6754006.0
+    - code: '52'
+      label: South Atlantic (DE, FL, GA, MD, NC, SC, WV, VA) MSA or CMSA of 1 million or without heavy
+        rail
+      n: 15630
+      weighted: 5323193.0
+    - code: '53'
+      label: South Atlantic (DE, FL, GA, MD, NC, SC, WV, VA) MSA of less than 1 million.
+      n: 19603
+      weighted: 5796588.0
+    - code: '54'
+      label: South Atlantic (DE, FL, GA, MD, NC, SC, WV, VA) Not in a MSA.
+      n: 14200
+      weighted: 4331328.0
+    - code: '62'
+      label: East South Central (AL, KY, MS, TN) MSA or CMSA of 1 million or without heavy rail.
+      n: 978
+      weighted: 1494304.0
+    - code: '63'
+      label: East South Central (AL, KY, MS, TN) MSA of less than 1 million.
+      n: 1301
+      weighted: 2760801.0
+    - code: '64'
+      label: East South Central (AL, KY, MS, TN) Not in a MSA.
+      n: 1226
+      weighted: 2777429.0
+    - code: '72'
+      label: West South Central (AR, LA, OK, TX) MSA or CMSA of 1 million or without heavy rail.
+      n: 13549
+      weighted: 6288630.0
+    - code: '73'
+      label: West South Central (AR, LA, OK, TX) MSA of less than 1 million.
+      n: 5333
+      weighted: 3778267.0
+    - code: '74'
+      label: West South Central (AR, LA, OK, TX) Not in a MSA.
+      n: 4183
+      weighted: 2501981.0
+    - code: '82'
+      label: Mountain (AZ, CO, ID, MT, NM, NV, UT, WY) MSA or CMSA of 1 million or without heavy rail
+      n: 5182
+      weighted: 3877490.0
+    - code: '83'
+      label: Mountain (AZ, CO, ID, MT, NM, NV, UT, WY) MSA of less than 1 million.
+      n: 2973
+      weighted: 2085934.0
+    - code: '84'
+      label: Mountain (AZ, CO, ID, MT, NM, NV, UT, WY) Not in a MSA.
+      n: 851
+      weighted: 1906967.0
+    - code: '91'
+      label: Pacific (AK, CA, HI, OR, WA) MSA or CMSA of 1 million or more with heavy rail.
+      n: 10601
+      weighted: 8196660.0
+    - code: '92'
+      label: Pacific (AK, CA, HI, OR, WA) MSA or CMSA of 1 million or without heavy rail.
+      n: 7645
+      weighted: 4386113.0
+    - code: '93'
+      label: Pacific (AK, CA, HI, OR, WA) MSA of less than 1 million.
+      n: 2948
+      weighted: 2722140.0
+    - code: '94'
+      label: Pacific (AK, CA, HI, OR, WA) Not in a MSA.
+      n: 1217
+      weighted: 1568977.0
+  CENSUS_D:
+    label: Census division classification for home address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: New England
+      n: 3164
+      weighted: 5493370.0
+    - code: '02'
+      label: Middle Atlantic
+      n: 17528
+      weighted: 15196048.0
+    - code: '03'
+      label: East North Central
+      n: 7341
+      weighted: 17816124.0
+    - code: '04'
+      label: West North Central
+      n: 8087
+      weighted: 8044481.0
+    - code: '05'
+      label: South Atlantic
+      n: 56039
+      weighted: 22205115.0
+    - code: '06'
+      label: East South Central
+      n: 3505
+      weighted: 7032535.0
+    - code: '07'
+      label: West South Central
+      n: 23066
+      weighted: 12569376.0
+    - code: 08
+      label: Mountain
+      n: 9006
+      weighted: 7870391.0
+    - code: 09
+      label: Pacific
+      n: 22411
+      weighted: 16873890.0
+  CENSUS_R:
+    label: Census region classification for home address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Northeast
+      n: 20692
+      weighted: 20689418.0
+    - code: '02'
+      label: Midwest
+      n: 15428
+      weighted: 25860605.0
+    - code: '03'
+      label: South
+      n: 82610
+      weighted: 41807026.0
+    - code: '04'
+      label: West
+      n: 31417
+      weighted: 24744281.0
+  CNTTDHH:
+    label: Category of number of household trips
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: 0-81
+    codes:
+    - code: 0-81
+      label: ''
+      n: 150147
+      weighted: 113101330.0
+  DRVRCNT:
+    label: Number of drivers in HH
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '0'
+      label: ''
+      n: 5170
+      weighted: 5634147.0
+    - code: '1'
+      label: ''
+      n: 42773
+      weighted: 38224173.0
+    - code: '2'
+      label: ''
+      n: 84429
+      weighted: 54194073.0
+    - code: '3'
+      label: ''
+      n: 13868
+      weighted: 11379470.0
+    - code: '4'
+      label: ''
+      n: 3357
+      weighted: 3175251.0
+    - code: '5'
+      label: ''
+      n: 473
+      weighted: 396263.0
+    - code: '6'
+      label: ''
+      n: 56
+      weighted: 64279.0
+    - code: '7'
+      label: ''
+      n: 16
+      weighted: 30703.0
+    - code: '8'
+      label: ''
+      n: 3
+      weighted: 2228.0
+    - code: '9'
+      label: ''
+      n: 2
+      weighted: 742.0
+  FLAG100:
+    label: Did HH have 100% of members complete interview?
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: 'Yes'
+      n: 130509
+      weighted: 96549730.0
+    - code: '02'
+      label: 'No'
+      n: 19638
+      weighted: 16551600.0
+  HBHTNRNT:
+    label: Percent renter-occupied - Block group
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '0'
+      label: 0-4%
+      n: 10654
+      weighted: 7924700.0
+    - code: '5'
+      label: 5-14%
+      n: 41161
+      weighted: 26129431.0
+    - code: '-9'
+      label: N/A
+      n: 2
+      weighted: 23274.0
+    - code: '20'
+      label: 15-24%
+      n: 37428
+      weighted: 22897626.0
+    - code: '30'
+      label: 25-34%
+      n: 20755
+      weighted: 15607140.0
+    - code: '40'
+      label: 35-44%
+      n: 14003
+      weighted: 11209815.0
+    - code: '50'
+      label: 45-54%
+      n: 9509
+      weighted: 9249969.0
+    - code: '60'
+      label: 55-64%
+      n: 6414
+      weighted: 6719468.0
+    - code: '70'
+      label: 65-74%
+      n: 4381
+      weighted: 5052689.0
+    - code: '80'
+      label: 75-84%
+      n: 2885
+      weighted: 3795155.0
+    - code: '90'
+      label: 85-94%
+      n: 1899
+      weighted: 2653365.0
+    - code: '95'
+      label: 95-100%
+      n: 1056
+      weighted: 1838698.0
+  HBHUR:
+    label: Urban / Rural indicator - Block group
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: N/A
+      n: 2
+      weighted: 23274.0
+    - code: C
+      label: Second City
+      n: 27082
+      weighted: 20632917.0
+    - code: S
+      label: Suburban
+      n: 34991
+      weighted: 27430457.0
+    - code: TC
+      label: Town and Country
+      n: 71126
+      weighted: 45041531.0
+    - code: U
+      label: Urban
+      n: 16937
+      weighted: 19964251.0
+    - code: X
+      label: Unassigned
+      n: 9
+      weighted: 8899.0
+  HBPPOPDN:
+    label: Population per sq mile - Block group
+    dtype: string
+    length: 5
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: N/A
+      n: 2
+      weighted: 23274.0
+    - code: '50'
+      label: 0-99
+      n: 19991
+      weighted: 13011338.0
+    - code: '300'
+      label: 100-499
+      n: 26236
+      weighted: 15267810.0
+    - code: '750'
+      label: 500-999
+      n: 14041
+      weighted: 8905799.0
+    - code: '1500'
+      label: 1,000-1,999
+      n: 20558
+      weighted: 14036469.0
+    - code: '3000'
+      label: 2,000-3,999
+      n: 28856
+      weighted: 21433082.0
+    - code: '7000'
+      label: 4,000-9,999
+      n: 31201
+      weighted: 26508974.0
+    - code: '17000'
+      label: 10,000-24,999
+      n: 6962
+      weighted: 8810703.0
+    - code: '30000'
+      label: 25,000-999,999
+      n: 2300
+      weighted: 5103879.0
+  HBRESDN:
+    label: Housing units per sq mile - Block group
+    dtype: string
+    length: 5
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: N/A
+      n: 2
+      weighted: 23274.0
+    - code: '50'
+      label: 0-99
+      n: 33533
+      weighted: 20660597.0
+    - code: '300'
+      label: 100-499
+      n: 31423
+      weighted: 19608042.0
+    - code: '750'
+      label: 500-999
+      n: 22145
+      weighted: 15566327.0
+    - code: '1500'
+      label: 1,000-1,999
+      n: 30480
+      weighted: 22731383.0
+    - code: '3000'
+      label: 2,000-3,999
+      n: 22771
+      weighted: 20033444.0
+    - code: '7000'
+      label: 4,000-9,999
+      n: 7301
+      weighted: 9156164.0
+    - code: '17000'
+      label: 10,000-24,999
+      n: 1589
+      weighted: 3440435.0
+    - code: '30000'
+      label: 25,000-999,999
+      n: 903
+      weighted: 1881665.0
+  HHC_MSA:
+    label: CMSA FIPS code for HH address
+    dtype: string
+    length: 4
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 30778
+      weighted: 22112719.0
+    - code: '-9'
+      label: Not ascertained
+      n: 2
+      weighted: 23274.0
+    - code: '0520'
+      label: Atlanta, GA
+      n: 1013
+      weighted: 1835913.0
+    - code: '0640'
+      label: Austin--San Marcos, TX
+      n: 1543
+      weighted: 607634.0
+    - code: '1122'
+      label: Boston--Worcester--Lawrence, MA--NH--ME--CT
+      n: 479
+      weighted: 2268630.0
+    - code: '1280'
+      label: Buffalo--Niagara Falls, NY
+      n: 665
+      weighted: 471544.0
+    - code: '1520'
+      label: Charlotte--Gastonia--Rock Hill, NC--SC
+      n: 615
+      weighted: 718414.0
+    - code: '1602'
+      label: Chicago--Gary--Kenosha, IL--IN--WI
+      n: 849
+      weighted: 3422902.0
+    - code: '1642'
+      label: Cincinnati--Hamilton, OH--KY--IN
+      n: 151
+      weighted: 860321.0
+    - code: '1692'
+      label: Cleveland--Akron, OH
+      n: 189
+      weighted: 1140440.0
+    - code: '1840'
+      label: Columbus, OH
+      n: 94
+      weighted: 664873.0
+    - code: '1922'
+      label: Dallas--Fort Worth, TX
+      n: 5977
+      weighted: 2300752.0
+    - code: '2082'
+      label: Denver--Boulder--Greeley, CO
+      n: 160
+      weighted: 1121556.0
+    - code: '2162'
+      label: Detroit--Ann Arbor--Flint, MI
+      n: 301
+      weighted: 2013430.0
+    - code: '3000'
+      label: Grand Rapids--Muskegon--Holland, MI
+      n: 69
+      weighted: 469402.0
+    - code: '3120'
+      label: Greensboro--Winston-Salem--High Point, NC
+      n: 5824
+      weighted: 642760.0
+    - code: '3280'
+      label: Hartford, CT
+      n: 105
+      weighted: 491345.0
+    - code: '3362'
+      label: Houston--Galveston--Brazoria, TX
+      n: 3993
+      weighted: 1686175.0
+    - code: '3480'
+      label: Indianapolis, IN
+      n: 871
+      weighted: 695961.0
+    - code: '3600'
+      label: Jacksonville, FL
+      n: 1140
+      weighted: 494180.0
+    - code: '3760'
+      label: Kansas City, MO--KS
+      n: 134
+      weighted: 698407.0
+    - code: '4120'
+      label: Las Vegas, NV--AZ
+      n: 161
+      weighted: 763742.0
+    - code: '4472'
+      label: Los Angeles--Riverside--Orange County, CA
+      n: 6615
+      weighted: 5419449.0
+    - code: '4520'
+      label: Louisville, KY--IN
+      n: 170
+      weighted: 374907.0
+    - code: '4920'
+      label: Memphis, TN--AR--MS
+      n: 322
+      weighted: 445218.0
+    - code: '4992'
+      label: Miami--Fort Lauderdale, FL
+      n: 2950
+      weighted: 1580002.0
+    - code: '5082'
+      label: Milwaukee--Racine, WI
+      n: 445
+      weighted: 654197.0
+    - code: '5120'
+      label: Minneapolis--St. Paul, MN--WI
+      n: 233
+      weighted: 1271162.0
+    - code: '5360'
+      label: Nashville, TN
+      n: 582
+      weighted: 559790.0
+    - code: '5560'
+      label: New Orleans, LA
+      n: 74
+      weighted: 412847.0
+    - code: '5602'
+      label: New York--Northern New Jersey--Long Island,NY--NJ--CT-- PA
+      n: 6898
+      weighted: 7913476.0
+    - code: '5720'
+      label: Norfolk--Virginia Beach--Newport News, VA--NC
+      n: 3188
+      weighted: 619768.0
+    - code: '5880'
+      label: Oklahoma City, OK
+      n: 80
+      weighted: 464080.0
+    - code: '5960'
+      label: Orlando, FL
+      n: 1157
+      weighted: 749780.0
+    - code: '6162'
+      label: Philadelphia--Wilmington--Atlantic City,PA--NJ--DE--MD
+      n: 468
+      weighted: 2303759.0
+    - code: '6200'
+      label: Phoenix--Mesa, AZ
+      n: 4707
+      weighted: 1461700.0
+    - code: '6280'
+      label: Pittsburgh, PA
+      n: 164
+      weighted: 961242.0
+    - code: '6442'
+      label: Portland--Salem, OR--WA
+      n: 177
+      weighted: 1027384.0
+    - code: '6480'
+      label: Providence--Fall River--Warwick, RI--MA
+      n: 246
+      weighted: 495281.0
+    - code: '6640'
+      label: Raleigh--Durham--Chapel Hill, NC
+      n: 516
+      weighted: 581380.0
+    - code: '6840'
+      label: Rochester, NY
+      n: 786
+      weighted: 418140.0
+    - code: '6922'
+      label: Sacramento--Yolo, CA
+      n: 1231
+      weighted: 803133.0
+    - code: '7040'
+      label: St. Louis, MO--IL
+      n: 190
+      weighted: 1146133.0
+    - code: '7160'
+      label: Salt Lake City--Ogden, UT
+      n: 154
+      weighted: 530492.0
+    - code: '7240'
+      label: San Antonio, TX
+      n: 1880
+      weighted: 812538.0
+    - code: '7320'
+      label: San Diego, CA
+      n: 6002
+      weighted: 1037955.0
+    - code: '7362'
+      label: San Francisco--Oakland--San Jose, CA
+      n: 3986
+      weighted: 2777211.0
+    - code: '7602'
+      label: Seattle--Tacoma--Bremerton, WA
+      n: 235
+      weighted: 1517641.0
+    - code: '8280'
+      label: Tampa--St. Petersburg--Clearwater, FL
+      n: 2160
+      weighted: 1098918.0
+    - code: '8872'
+      label: Washington--Baltimore, DC--MD--VA--WV
+      n: 2504
+      weighted: 3116123.0
+    - code: '8960'
+      label: West Palm Beach--Boca Raton, FL
+      n: 1030
+      weighted: 417993.0
+    - code: XXXX
+      label: Suppressed, in an MSA of less than 1 million
+      n: 45884
+      weighted: 26625257.0
+  HHFAMINC:
+    label: Derived total HH income
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-7'
+      label: Refused
+      n: 8719
+      weighted: 5471660.0
+    - code: '-8'
+      label: Don't know
+      n: 3455
+      weighted: 2376466.0
+    - code: '-9'
+      label: Not ascertained
+      n: 35
+      weighted: 22321.0
+    - code: '01'
+      label: < $5,000
+      n: 2657
+      weighted: 2974335.0
+    - code: '02'
+      label: $5,000 - $9,999
+      n: 5294
+      weighted: 5710544.0
+    - code: '03'
+      label: $10,000 - $14,999
+      n: 7351
+      weighted: 6959723.0
+    - code: '04'
+      label: $15,000 - $19,999
+      n: 8048
+      weighted: 7068391.0
+    - code: '05'
+      label: $20,000 - $24,999
+      n: 6680
+      weighted: 5621171.0
+    - code: '06'
+      label: $25,000 - $29,999
+      n: 9554
+      weighted: 7421820.0
+    - code: '07'
+      label: $30,000 - $34,999
+      n: 5542
+      weighted: 4473208.0
+    - code: 08
+      label: $35,000 - $39,999
+      n: 9079
+      weighted: 6808183.0
+    - code: 09
+      label: $40,000 - $44,999
+      n: 4511
+      weighted: 3745950.0
+    - code: '10'
+      label: $45,000 - $49,999
+      n: 8717
+      weighted: 6292726.0
+    - code: '11'
+      label: $50,000 - $54,999
+      n: 3941
+      weighted: 3068161.0
+    - code: '12'
+      label: $55,000 - $59,999
+      n: 7796
+      weighted: 5346736.0
+    - code: '13'
+      label: $60,000 - $64,999
+      n: 3026
+      weighted: 2343901.0
+    - code: '14'
+      label: $65,000 - $69,999
+      n: 6592
+      weighted: 4427809.0
+    - code: '15'
+      label: $70,000 - $74,999
+      n: 3035
+      weighted: 2014700.0
+    - code: '16'
+      label: $75,000 - $79,999
+      n: 6328
+      weighted: 4669839.0
+    - code: '17'
+      label: $80,000 - $99,999
+      n: 12429
+      weighted: 8631132.0
+    - code: '18'
+      label: '> = $100,000'
+      n: 27358
+      weighted: 17652553.0
+  HHRELATD:
+    label: At least some HHMs are related
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 150066
+      weighted: 113009722.0
+    - code: '-9'
+      label: Not ascertained
+      n: 5
+      weighted: 4218.0
+    - code: '01'
+      label: 'Yes'
+      n: 76
+      weighted: 87391.0
+  HHRESP:
+    label: Person ID number of household respondent
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: ''
+      n: 149775
+      weighted: 112822150.0
+    - code: '02'
+      label: ''
+      n: 320
+      weighted: 236041.0
+    - code: '03'
+      label: ''
+      n: 31
+      weighted: 27317.0
+    - code: '04'
+      label: ''
+      n: 13
+      weighted: 5949.0
+    - code: '05'
+      label: ''
+      n: 5
+      weighted: 1782.0
+    - code: '06'
+      label: ''
+      n: 1
+      weighted: 1743.0
+    - code: 08
+      label: ''
+      n: 1
+      weighted: 6181.0
+    - code: '10'
+      label: ''
+      n: 1
+      weighted: 167.0
+  HHSIZE:
+    label: Count of HH members
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '1'
+      label: ''
+      n: 35651
+      weighted: 31740852.0
+    - code: '2'
+      label: ''
+      n: 68282
+      weighted: 37727994.0
+    - code: '3'
+      label: ''
+      n: 20198
+      weighted: 18103989.0
+    - code: '4'
+      label: ''
+      n: 16542
+      weighted: 15583915.0
+    - code: '5'
+      label: ''
+      n: 6334
+      weighted: 6298984.0
+    - code: '6'
+      label: ''
+      n: 2097
+      weighted: 2290206.0
+    - code: '7'
+      label: ''
+      n: 659
+      weighted: 873925.0
+    - code: '8'
+      label: ''
+      n: 228
+      weighted: 278747.0
+    - code: '9'
+      label: ''
+      n: 90
+      weighted: 132776.0
+    - code: '10'
+      label: ''
+      n: 34
+      weighted: 37773.0
+    - code: '11'
+      label: ''
+      n: 19
+      weighted: 26475.0
+    - code: '12'
+      label: ''
+      n: 5
+      weighted: 1485.0
+    - code: '13'
+      label: ''
+      n: 7
+      weighted: 3943.0
+    - code: '14'
+      label: ''
+      n: 1
+      weighted: 265.0
+  HHSTATE:
+    label: State HH location
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: AK
+      label: Alaska
+      n: 253
+      weighted: 237667.0
+    - code: AL
+      label: Alabama
+      n: 425
+      weighted: 1817665.0
+    - code: AR
+      label: Arkansas
+      n: 258
+      weighted: 1114043.0
+    - code: AZ
+      label: Arizona
+      n: 7157
+      weighted: 2273842.0
+    - code: CA
+      label: California
+      n: 21225
+      weighted: 12176760.0
+    - code: CO
+      label: Colorado
+      n: 306
+      weighted: 1897629.0
+    - code: CT
+      label: Connecticut
+      n: 275
+      weighted: 1330779.0
+    - code: DC
+      label: District of Columbia
+      n: 264
+      weighted: 250157.0
+    - code: DE
+      label: Delaware
+      n: 245
+      weighted: 328921.0
+    - code: FL
+      label: Florida
+      n: 15884
+      weighted: 7057285.0
+    - code: GA
+      label: Georgia
+      n: 7502
+      weighted: 3470225.0
+    - code: HI
+      label: Hawaii
+      n: 254
+      weighted: 437171.0
+    - code: IA
+      label: Iowa
+      n: 3752
+      weighted: 1215351.0
+    - code: ID
+      label: Idaho
+      n: 259
+      weighted: 565805.0
+    - code: IL
+      label: Illinois
+      n: 809
+      weighted: 4766227.0
+    - code: IN
+      label: Indiana
+      n: 3458
+      weighted: 2480570.0
+    - code: KS
+      label: Kansas
+      n: 263
+      weighted: 1110710.0
+    - code: KY
+      label: Kentucky
+      n: 271
+      weighted: 1686124.0
+    - code: LA
+      label: Louisiana
+      n: 292
+      weighted: 1625174.0
+    - code: MA
+      label: Massachusetts
+      n: 412
+      weighted: 2463783.0
+    - code: MD
+      label: Maryland
+      n: 355
+      weighted: 2092538.0
+    - code: ME
+      label: Maine
+      n: 277
+      weighted: 540898.0
+    - code: MI
+      label: Michigan
+      n: 643
+      weighted: 3810808.0
+    - code: MN
+      label: Minnesota
+      n: 340
+      weighted: 2089258.0
+    - code: MO
+      label: Missouri
+      n: 389
+      weighted: 2330291.0
+    - code: MS
+      label: Mississippi
+      n: 257
+      weighted: 1094063.0
+    - code: MT
+      label: Montana
+      n: 256
+      weighted: 375621.0
+    - code: NC
+      label: North Carolina
+      n: 11096
+      weighted: 3595175.0
+    - code: ND
+      label: North Dakota
+      n: 256
+      weighted: 274801.0
+    - code: NE
+      label: Nebraska
+      n: 1289
+      weighted: 704143.0
+    - code: NH
+      label: New Hampshire
+      n: 254
+      weighted: 508818.0
+    - code: NJ
+      label: New Jersey
+      n: 559
+      weighted: 3154028.0
+    - code: NM
+      label: New Mexico
+      n: 251
+      weighted: 741667.0
+    - code: NV
+      label: Nevada
+      n: 256
+      weighted: 953134.0
+    - code: NY
+      label: New York
+      n: 16165
+      weighted: 7137482.0
+    - code: OH
+      label: Ohio
+      n: 724
+      weighted: 4508888.0
+    - code: OK
+      label: Oklahoma
+      n: 261
+      weighted: 1407910.0
+    - code: OR
+      label: Oregon
+      n: 264
+      weighted: 1474365.0
+    - code: PA
+      label: Pennsylvania
+      n: 804
+      weighted: 4904538.0
+    - code: RI
+      label: Rhode Island
+      n: 256
+      weighted: 399106.0
+    - code: SC
+      label: South Carolina
+      n: 5209
+      weighted: 1700419.0
+    - code: SD
+      label: South Dakota
+      n: 1798
+      weighted: 319926.0
+    - code: TN
+      label: Tennessee
+      n: 2552
+      weighted: 2434683.0
+    - code: TX
+      label: Texas
+      n: 22255
+      weighted: 8422249.0
+    - code: UT
+      label: Utah
+      n: 261
+      weighted: 854088.0
+    - code: VA
+      label: Virginia
+      n: 15231
+      weighted: 2961083.0
+    - code: VT
+      label: Vermont
+      n: 1690
+      weighted: 249986.0
+    - code: WA
+      label: Washington
+      n: 415
+      weighted: 2547927.0
+    - code: WI
+      label: Wisconsin
+      n: 1707
+      weighted: 2249630.0
+    - code: WV
+      label: West Virginia
+      n: 253
+      weighted: 749313.0
+    - code: WY
+      label: Wyoming
+      n: 260
+      weighted: 208606.0
+  HHSTFIPS:
+    label: State FIPS for HH address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Alabama
+      n: 425
+      weighted: 1817665.0
+    - code: '02'
+      label: Alaska
+      n: 253
+      weighted: 237667.0
+    - code: '04'
+      label: Arizona
+      n: 7157
+      weighted: 2273842.0
+    - code: '05'
+      label: Arkansas
+      n: 258
+      weighted: 1114043.0
+    - code: '06'
+      label: California
+      n: 21225
+      weighted: 12176760.0
+    - code: 08
+      label: Colorado
+      n: 306
+      weighted: 1897629.0
+    - code: 09
+      label: Connecticut
+      n: 275
+      weighted: 1330779.0
+    - code: '10'
+      label: Delaware
+      n: 245
+      weighted: 328921.0
+    - code: '11'
+      label: District of Columbia
+      n: 264
+      weighted: 250157.0
+    - code: '12'
+      label: Florida
+      n: 15884
+      weighted: 7057285.0
+    - code: '13'
+      label: Georgia
+      n: 7502
+      weighted: 3470225.0
+    - code: '15'
+      label: Hawaii
+      n: 254
+      weighted: 437171.0
+    - code: '16'
+      label: Idaho
+      n: 259
+      weighted: 565805.0
+    - code: '17'
+      label: Illinois
+      n: 809
+      weighted: 4766227.0
+    - code: '18'
+      label: Indiana
+      n: 3458
+      weighted: 2480570.0
+    - code: '19'
+      label: Iowa
+      n: 3752
+      weighted: 1215351.0
+    - code: '20'
+      label: Kansas
+      n: 263
+      weighted: 1110710.0
+    - code: '21'
+      label: Kentucky
+      n: 271
+      weighted: 1686124.0
+    - code: '22'
+      label: Louisiana
+      n: 292
+      weighted: 1625174.0
+    - code: '23'
+      label: Maine
+      n: 277
+      weighted: 540898.0
+    - code: '24'
+      label: Maryland
+      n: 355
+      weighted: 2092538.0
+    - code: '25'
+      label: Massachusetts
+      n: 412
+      weighted: 2463783.0
+    - code: '26'
+      label: Michigan
+      n: 643
+      weighted: 3810808.0
+    - code: '27'
+      label: Minnesota
+      n: 340
+      weighted: 2089258.0
+    - code: '28'
+      label: Mississippi
+      n: 257
+      weighted: 1094063.0
+    - code: '29'
+      label: Missouri
+      n: 389
+      weighted: 2330291.0
+    - code: '30'
+      label: Montana
+      n: 256
+      weighted: 375621.0
+    - code: '31'
+      label: Nebraska
+      n: 1289
+      weighted: 704143.0
+    - code: '32'
+      label: Nevada
+      n: 256
+      weighted: 953134.0
+    - code: '33'
+      label: New Hampshire
+      n: 254
+      weighted: 508818.0
+    - code: '34'
+      label: New Jersey
+      n: 559
+      weighted: 3154028.0
+    - code: '35'
+      label: New Mexico
+      n: 251
+      weighted: 741667.0
+    - code: '36'
+      label: New York
+      n: 16165
+      weighted: 7137482.0
+    - code: '37'
+      label: North Carolina
+      n: 11096
+      weighted: 3595175.0
+    - code: '38'
+      label: North Dakota
+      n: 256
+      weighted: 274801.0
+    - code: '39'
+      label: Ohio
+      n: 724
+      weighted: 4508888.0
+    - code: '40'
+      label: Oklahoma
+      n: 261
+      weighted: 1407910.0
+    - code: '41'
+      label: Oregon
+      n: 264
+      weighted: 1474365.0
+    - code: '42'
+      label: Pennsylvania
+      n: 804
+      weighted: 4904538.0
+    - code: '44'
+      label: Rhode Island
+      n: 256
+      weighted: 399106.0
+    - code: '45'
+      label: South Carolina
+      n: 5209
+      weighted: 1700419.0
+    - code: '46'
+      label: South Dakota
+      n: 1798
+      weighted: 319926.0
+    - code: '47'
+      label: Tennessee
+      n: 2552
+      weighted: 2434683.0
+    - code: '48'
+      label: Texas
+      n: 22255
+      weighted: 8422249.0
+    - code: '49'
+      label: Utah
+      n: 261
+      weighted: 854088.0
+    - code: '50'
+      label: Vermont
+      n: 1690
+      weighted: 249986.0
+    - code: '51'
+      label: Virginia
+      n: 15231
+      weighted: 2961083.0
+    - code: '53'
+      label: Washington
+      n: 415
+      weighted: 2547927.0
+    - code: '54'
+      label: West Virginia
+      n: 253
+      weighted: 749313.0
+    - code: '55'
+      label: Wisconsin
+      n: 1707
+      weighted: 2249630.0
+    - code: '56'
+      label: Wyoming
+      n: 260
+      weighted: 208606.0
+  HHVEHCNT:
+    label: Count of HH vehicles
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '0'
+      label: ''
+      n: 7205
+      weighted: 9827977.0
+    - code: '1'
+      label: ''
+      n: 40527
+      weighted: 36508561.0
+    - code: '2'
+      label: ''
+      n: 61711
+      weighted: 41077106.0
+    - code: '3'
+      label: ''
+      n: 26647
+      weighted: 16274799.0
+    - code: '4'
+      label: ''
+      n: 9258
+      weighted: 5992904.0
+    - code: '5'
+      label: ''
+      n: 3080
+      weighted: 2194377.0
+    - code: '6'
+      label: ''
+      n: 1037
+      weighted: 736912.0
+    - code: '7'
+      label: ''
+      n: 377
+      weighted: 244357.0
+    - code: '8'
+      label: ''
+      n: 156
+      weighted: 131756.0
+    - code: '9'
+      label: ''
+      n: 72
+      weighted: 43440.0
+    - code: '10'
+      label: ''
+      n: 38
+      weighted: 28705.0
+    - code: '11'
+      label: ''
+      n: 17
+      weighted: 10524.0
+    - code: '12'
+      label: ''
+      n: 10
+      weighted: 26885.0
+    - code: '13'
+      label: ''
+      n: 2
+      weighted: 1018.0
+    - code: '14'
+      label: ''
+      n: 6
+      weighted: 1050.0
+    - code: '15'
+      label: ''
+      n: 2
+      weighted: 766.0
+    - code: '23'
+      label: ''
+      n: 1
+      weighted: 16.0
+    - code: '27'
+      label: ''
+      n: 1
+      weighted: 177.0
+  HH_CBSA:
+    label: CBSA FIPS code for HH address
+    dtype: string
+    length: 5
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2
+      weighted: 23274.0
+    - code: '12060'
+      label: Atlanta-Sandy Springs-Marietta, GA
+      n: 1242
+      weighted: 1890056.0
+    - code: '12420'
+      label: Austin-Round Rock, TX
+      n: 1543
+      weighted: 607634.0
+    - code: '12580'
+      label: Baltimore-Towson, MD
+      n: 167
+      weighted: 1015758.0
+    - code: '13820'
+      label: Birmingham-Hoover, AL
+      n: 69
+      weighted: 432568.0
+    - code: '14460'
+      label: Boston-Cambridge-Quincy, MA-NH
+      n: 336
+      weighted: 1706147.0
+    - code: '15380'
+      label: Buffalo-Niagara Falls, NY
+      n: 665
+      weighted: 471544.0
+    - code: '16740'
+      label: Charlotte-Gastonia-Concord, NC-SC
+      n: 565
+      weighted: 661539.0
+    - code: '16980'
+      label: Chicago-Naperville-Joliet, IL-IN-WI
+      n: 870
+      weighted: 3419638.0
+    - code: '17140'
+      label: Cincinnati-Middletown, OH-KY-IN
+      n: 172
+      weighted: 877313.0
+    - code: '17460'
+      label: Cleveland-Elyria-Mentor, OH
+      n: 133
+      weighted: 837150.0
+    - code: '18140'
+      label: Columbus, OH
+      n: 98
+      weighted: 678757.0
+    - code: '19100'
+      label: Dallas-Fort Worth-Arlington, TX
+      n: 5875
+      weighted: 2275469.0
+    - code: '19740'
+      label: Denver-Aurora-Broomfield, CO
+      n: 131
+      weighted: 968658.0
+    - code: '19820'
+      label: Detroit-Warren-Livonia, MI
+      n: 246
+      weighted: 1654042.0
+    - code: '25540'
+      label: Hartford-West Hartford-East Hartford, CT
+      n: 94
+      weighted: 463159.0
+    - code: '26420'
+      label: Houston-Sugar Land-Baytown, TX
+      n: 4043
+      weighted: 1696333.0
+    - code: '26900'
+      label: Indianapolis-Carmel, IN
+      n: 815
+      weighted: 666493.0
+    - code: '27260'
+      label: Jacksonville, FL
+      n: 1184
+      weighted: 501531.0
+    - code: '28140'
+      label: Kansas City, MO-KS
+      n: 138
+      weighted: 727082.0
+    - code: '29820'
+      label: Las Vegas-Paradise, NV
+      n: 140
+      weighted: 684916.0
+    - code: '31100'
+      label: Los Angeles-Long Beach-Santa Ana, CA
+      n: 4663
+      weighted: 4049255.0
+    - code: '31140'
+      label: Louisville-Jefferson County, KY-IN
+      n: 193
+      weighted: 442967.0
+    - code: '32820'
+      label: Memphis, TN-MS-AR
+      n: 329
+      weighted: 474768.0
+    - code: '33100'
+      label: Miami-Fort Lauderdale-Pompano Beach, FL
+      n: 3980
+      weighted: 1997995.0
+    - code: '33340'
+      label: Milwaukee-Waukesha-West Allis, WI
+      n: 402
+      weighted: 598790.0
+    - code: '33460'
+      label: Minneapolis-St. Paul-Bloomington, MN-WI
+      n: 233
+      weighted: 1271162.0
+    - code: '34980'
+      label: Nashville-Davidson--Murfreesboro--Franklin, TN
+      n: 617
+      weighted: 590047.0
+    - code: '35380'
+      label: New Orleans-Metairie-Kenner, LA
+      n: 72
+      weighted: 382793.0
+    - code: '35620'
+      label: New York-Northern New Jersey-Long Island, NY-NJ-PA
+      n: 5191
+      weighted: 6862122.0
+    - code: '36420'
+      label: Oklahoma City, OK
+      n: 77
+      weighted: 465139.0
+    - code: '36740'
+      label: Orlando-Kissimmee, FL
+      n: 1157
+      weighted: 749780.0
+    - code: '37980'
+      label: Philadelphia-Camden-Wilmington, PA-NJ-DE-MD
+      n: 425
+      weighted: 2068904.0
+    - code: '38060'
+      label: Phoenix-Mesa-Scottsdale, AZ
+      n: 4707
+      weighted: 1461700.0
+    - code: '38300'
+      label: Pittsburgh, PA
+      n: 171
+      weighted: 987089.0
+    - code: '38900'
+      label: Portland-Vancouver-Beaverton, OR-WA
+      n: 153
+      weighted: 840250.0
+    - code: '39300'
+      label: Providence-New Bedford-Fall River, RI-MA
+      n: 284
+      weighted: 603229.0
+    - code: '39580'
+      label: Raleigh-Cary, NC
+      n: 357
+      weighted: 401138.0
+    - code: '40060'
+      label: Richmond, VA
+      n: 2440
+      weighted: 464291.0
+    - code: '40140'
+      label: Riverside-San Bernardino-Ontario, CA
+      n: 1566
+      weighted: 1156819.0
+    - code: '40380'
+      label: Rochester, NY
+      n: 730
+      weighted: 398148.0
+    - code: '40900'
+      label: Sacramento--Arden-Arcade--Roseville, CA
+      n: 1231
+      weighted: 803133.0
+    - code: '41180'
+      label: St. Louis, MO-IL
+      n: 195
+      weighted: 1168181.0
+    - code: '41620'
+      label: Salt Lake City, UT
+      n: 111
+      weighted: 364667.0
+    - code: '41700'
+      label: San Antonio, TX
+      n: 2054
+      weighted: 857228.0
+    - code: '41740'
+      label: San Diego-Carlsbad-San Marcos, CA
+      n: 6002
+      weighted: 1037955.0
+    - code: '41860'
+      label: San Francisco-Oakland-Fremont, CA
+      n: 2293
+      weighted: 1656729.0
+    - code: '41940'
+      label: San Jose-Sunnyvale-Santa Clara, CA
+      n: 865
+      weighted: 636973.0
+    - code: '42660'
+      label: Seattle-Tacoma-Bellevue, WA
+      n: 192
+      weighted: 1336054.0
+    - code: '45300'
+      label: Tampa-St. Petersburg-Clearwater, FL
+      n: 2160
+      weighted: 1098918.0
+    - code: '47260'
+      label: Virginia Beach-Norfolk-Newport News, VA-NC
+      n: 3193
+      weighted: 620427.0
+    - code: '47900'
+      label: Washington-Arlington-Alexandria, DC-VA-MD-WV
+      n: 2207
+      weighted: 1997745.0
+    - code: XXXXX
+      label: ''
+      n: 83369
+      weighted: 52997873.0
+  HH_HISP:
+    label: Hispanic status of HH respondent
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate Skip
+      n: 2
+      weighted: 237.0
+    - code: '-7'
+      label: Refused
+      n: 374
+      weighted: 257355.0
+    - code: '-8'
+      label: Don't Know
+      n: 235
+      weighted: 192821.0
+    - code: '-9'
+      label: Not Ascertained
+      n: 14
+      weighted: 10556.0
+    - code: '01'
+      label: 'Yes'
+      n: 10246
+      weighted: 12789059.0
+    - code: '02'
+      label: 'No'
+      n: 139276
+      weighted: 99851301.0
+  HH_RACE:
+    label: Race of HH respondent
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 2
+      weighted: 237.0
+    - code: '-7'
+      label: Refused
+      n: 880
+      weighted: 636796.0
+    - code: '-8'
+      label: Don't know
+      n: 315
+      weighted: 353432.0
+    - code: '-9'
+      label: Not ascertained
+      n: 35
+      weighted: 20796.0
+    - code: '01'
+      label: White
+      n: 128807
+      weighted: 86740797.0
+    - code: '02'
+      label: African American, Black
+      n: 9376
+      weighted: 13069737.0
+    - code: '03'
+      label: Asian Only
+      n: 2838
+      weighted: 2815059.0
+    - code: '04'
+      label: American Indian, Alaskan Native
+      n: 1100
+      weighted: 1091518.0
+    - code: '05'
+      label: Native Hawaiian, other Pacific
+      n: 388
+      weighted: 472510.0
+    - code: '06'
+      label: Multiracial
+      n: 906
+      weighted: 817463.0
+    - code: '07'
+      label: Hispanic/Mexican
+      n: 3892
+      weighted: 5152263.0
+    - code: '97'
+      label: Other specify
+      n: 1608
+      weighted: 1930722.0
+  HOMEOWN:
+    label: Housing unit owned or rented
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Own
+      n: 130874
+      weighted: 75375205.0
+    - code: '02'
+      label: Rent
+      n: 19273
+      weighted: 37726125.0
+  HOMETYPE:
+    label: Type of housing unit
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-7': refused
+      '-8': dont_know
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-7'
+      label: Refused
+      n: 197
+      weighted: 119177.0
+    - code: '-8'
+      label: Don't know
+      n: 99
+      weighted: 76579.0
+    - code: '-9'
+      label: Not ascertained
+      n: 1
+      weighted: 356.0
+    - code: '01'
+      label: Detached single house
+      n: 117353
+      weighted: 74280526.0
+    - code: '02'
+      label: Duplex
+      n: 7765
+      weighted: 8208970.0
+    - code: '03'
+      label: Rowhouse or townhouse
+      n: 16510
+      weighted: 25205689.0
+    - code: '04'
+      label: Apartment, condominium
+      n: 8056
+      weighted: 4957343.0
+    - code: '05'
+      label: Mobile home or trailer
+      n: 40
+      weighted: 12966.0
+    - code: '06'
+      label: Dorm room, fraternity or sorority house
+      n: 11
+      weighted: 60342.0
+    - code: '97'
+      label: Other
+      n: 115
+      weighted: 179383.0
+  HOUSEID:
+    label: HH eight-digit ID number
+    dtype: string
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: 20000017-69999811
+    codes:
+    - code: 20000017-69999811
+      label: ''
+      n: 150147
+      weighted: 113101330.0
+  HTEEMPDN:
+    label: Workers per square mile living in Tract
+    dtype: string
+    length: 4
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: N/A
+      n: 4
+      weighted: 29191.0
+    - code: '25'
+      label: 0-49
+      n: 34297
+      weighted: 21398805.0
+    - code: '75'
+      label: 50-99
+      n: 11097
+      weighted: 6407548.0
+    - code: '150'
+      label: 100-249
+      n: 18439
+      weighted: 11474133.0
+    - code: '350'
+      label: 250-499
+      n: 19111
+      weighted: 13319379.0
+    - code: '750'
+      label: 500-999
+      n: 22869
+      weighted: 17397941.0
+    - code: '1500'
+      label: 1,000-1,999
+      n: 21324
+      weighted: 18229429.0
+    - code: '3000'
+      label: 2,000-3,999
+      n: 13628
+      weighted: 13348089.0
+    - code: '5000'
+      label: 4,000-999,999
+      n: 9378
+      weighted: 11496815.0
+  HTHTNRNT:
+    label: Percent renter-occupied - Tract level
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '0'
+      label: 0-4%
+      n: 4470
+      weighted: 3487983.0
+    - code: '5'
+      label: 5-14%
+      n: 31763
+      weighted: 20585797.0
+    - code: '-9'
+      label: N/A
+      n: 2
+      weighted: 23274.0
+    - code: '20'
+      label: 15-24%
+      n: 43319
+      weighted: 27812119.0
+    - code: '30'
+      label: 25-34%
+      n: 27476
+      weighted: 20154980.0
+    - code: '40'
+      label: 35-44%
+      n: 17429
+      weighted: 13747877.0
+    - code: '50'
+      label: 45-54%
+      n: 10837
+      weighted: 9945753.0
+    - code: '60'
+      label: 55-64%
+      n: 6930
+      weighted: 6622095.0
+    - code: '70'
+      label: 65-74%
+      n: 3954
+      weighted: 5195082.0
+    - code: '80'
+      label: 75-84%
+      n: 2263
+      weighted: 2844632.0
+    - code: '90'
+      label: 85-94%
+      n: 1196
+      weighted: 1751001.0
+    - code: '95'
+      label: 95-100%
+      n: 508
+      weighted: 930736.0
+  HTPPOPDN:
+    label: Population per sq mile - Tract level
+    dtype: string
+    length: 5
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: N/A
+      n: 2
+      weighted: 23274.0
+    - code: '50'
+      label: 0-99
+      n: 23248
+      weighted: 15418890.0
+    - code: '300'
+      label: 100-499
+      n: 28031
+      weighted: 16417325.0
+    - code: '750'
+      label: 500-999
+      n: 14649
+      weighted: 10099700.0
+    - code: '1500'
+      label: 1,000-1,999
+      n: 20456
+      weighted: 14001543.0
+    - code: '3000'
+      label: 2,000-3,999
+      n: 28428
+      weighted: 21574588.0
+    - code: '7000'
+      label: 4,000-9,999
+      n: 27961
+      weighted: 24028240.0
+    - code: '17000'
+      label: 10,000-24,999
+      n: 5476
+      weighted: 7243736.0
+    - code: '30000'
+      label: 25,000-999,999
+      n: 1896
+      weighted: 4294034.0
+  HTRESDN:
+    label: Housing units per sq mile - Tract level
+    dtype: string
+    length: 5
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: N/A
+      n: 2
+      weighted: 23274.0
+    - code: '50'
+      label: 0-99
+      n: 38580
+      weighted: 23879032.0
+    - code: '300'
+      label: 100-499
+      n: 31839
+      weighted: 21188259.0
+    - code: '750'
+      label: 500-999
+      n: 22783
+      weighted: 16029969.0
+    - code: '1500'
+      label: 1,000-1,999
+      n: 29419
+      weighted: 22071587.0
+    - code: '3000'
+      label: 2,000-3,999
+      n: 19861
+      weighted: 18235159.0
+    - code: '7000'
+      label: 4,000-9,999
+      n: 5600
+      weighted: 7273761.0
+    - code: '17000'
+      label: 10,000-24,999
+      n: 1283
+      weighted: 2738685.0
+    - code: '30000'
+      label: 25,000-999,999
+      n: 780
+      weighted: 1661603.0
+  LIF_CYC:
+    label: Life Cycle classification for the HH
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: one adult, no children
+      n: 15138
+      weighted: 19501836.0
+    - code: '02'
+      label: 2+ adults, no children
+      n: 31475
+      weighted: 23578493.0
+    - code: '03'
+      label: one adult, youngest child 0-5
+      n: 610
+      weighted: 1258975.0
+    - code: '04'
+      label: 2+ adults, youngest child 0-5
+      n: 12937
+      weighted: 13279790.0
+    - code: '05'
+      label: one adult, youngest child 6-15
+      n: 2037
+      weighted: 2436983.0
+    - code: '06'
+      label: 2+ adults, youngest child 6-15
+      n: 16826
+      weighted: 14832622.0
+    - code: '07'
+      label: one adult, youngest child 16-21
+      n: 1139
+      weighted: 1037275.0
+    - code: 08
+      label: 2+ adults, youngest child 16-21
+      n: 6626
+      weighted: 5764705.0
+    - code: 09
+      label: one adult, retired, no children
+      n: 20513
+      weighted: 12239016.0
+    - code: '10'
+      label: 2+ adults, retired, no children
+      n: 42846
+      weighted: 19171634.0
+  MSACAT:
+    label: MSA category for the HH home address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2
+      weighted: 23274.0
+    - code: '01'
+      label: MSA of 1 million or more, with rail
+      n: 25951
+      weighted: 31777906.0
+    - code: '02'
+      label: MSA of 1 million or more, and not in 1
+      n: 47532
+      weighted: 32562174.0
+    - code: '03'
+      label: MSA less than 1 million
+      n: 45884
+      weighted: 26625257.0
+    - code: '04'
+      label: Not in MSA (CMSA)
+      n: 30778
+      weighted: 22112719.0
+  MSASIZE:
+    label: MSA population size for the HH home address
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2
+      weighted: 23274.0
+    - code: '01'
+      label: In an MSA of Less than 250,000
+      n: 17018
+      weighted: 7927615.0
+    - code: '02'
+      label: In an MSA of 250,000 - 499,999
+      n: 12800
+      weighted: 9748676.0
+    - code: '03'
+      label: In an MSA of 500,000 - 999,999
+      n: 16066
+      weighted: 8948966.0
+    - code: '04'
+      label: In an MSA or CMSA of 1,000,000 - 2,999,999
+      n: 32508
+      weighted: 24722917.0
+    - code: '05'
+      label: In an MSA or CMSA of 3 million or more
+      n: 40975
+      weighted: 39617163.0
+    - code: '06'
+      label: Not in MSA or CMSA
+      n: 30778
+      weighted: 22112719.0
+  NUMADLT:
+    label: Count of adult HHMs at least 18 years old
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '1'
+      label: ''
+      n: 38426
+      weighted: 35010916.0
+    - code: '2'
+      label: ''
+      n: 94354
+      weighted: 61690175.0
+    - code: '3'
+      label: ''
+      n: 13310
+      weighted: 12089376.0
+    - code: '4'
+      label: ''
+      n: 3414
+      weighted: 3654776.0
+    - code: '5'
+      label: ''
+      n: 524
+      weighted: 527556.0
+    - code: '6'
+      label: ''
+      n: 92
+      weighted: 93024.0
+    - code: '7'
+      label: ''
+      n: 22
+      weighted: 34052.0
+    - code: '8'
+      label: ''
+      n: 3
+      weighted: 540.0
+    - code: '9'
+      label: ''
+      n: 1
+      weighted: 477.0
+    - code: '10'
+      label: ''
+      n: 1
+      weighted: 439.0
+  RAIL:
+    label: MSA heavy rail status for HH
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: MSA has rail
+      n: 25951
+      weighted: 31777906.0
+    - code: '02'
+      label: MSA does not have rail, or hh not in an MSA
+      n: 124196
+      weighted: 81323424.0
+  RESP_CNT:
+    label: Count of responding persons per HH
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '1'
+      label: ''
+      n: 48752
+      weighted: 41554765.0
+    - code: '2'
+      label: ''
+      n: 66772
+      weighted: 40211117.0
+    - code: '3'
+      label: ''
+      n: 18555
+      weighted: 15841798.0
+    - code: '4'
+      label: ''
+      n: 11293
+      weighted: 10518214.0
+    - code: '5'
+      label: ''
+      n: 3452
+      weighted: 3527283.0
+    - code: '6'
+      label: ''
+      n: 949
+      weighted: 1025987.0
+    - code: '7'
+      label: ''
+      n: 252
+      weighted: 236995.0
+    - code: '8'
+      label: ''
+      n: 76
+      weighted: 123217.0
+    - code: '9'
+      label: ''
+      n: 30
+      weighted: 52516.0
+    - code: '10'
+      label: ''
+      n: 8
+      weighted: 3259.0
+    - code: '11'
+      label: ''
+      n: 5
+      weighted: 3553.0
+    - code: '12'
+      label: ''
+      n: 2
+      weighted: 586.0
+    - code: '13'
+      label: ''
+      n: 1
+      weighted: 2039.0
+  SCRESP:
+    label: Person ID number of screener respondent
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: '-1'
+    range: null
+    codes:
+    - code: '-1'
+      label: Appropriate skip
+      n: 114767
+      weighted: 81648265.0
+    - code: '01'
+      label: ''
+      n: 35380
+      weighted: 31453065.0
+  TDAYDATE:
+    label: Date of Travel Day (YYYYMM)
+    dtype: string
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '200803'
+      label: ''
+      n: 225
+      weighted: 215033.0
+    - code: '200804'
+      label: ''
+      n: 5259
+      weighted: 4737128.0
+    - code: '200805'
+      label: ''
+      n: 9643
+      weighted: 9425401.0
+    - code: '200806'
+      label: ''
+      n: 10066
+      weighted: 9425477.0
+    - code: '200807'
+      label: ''
+      n: 12387
+      weighted: 9424815.0
+    - code: '200808'
+      label: ''
+      n: 13841
+      weighted: 9494374.0
+    - code: '200809'
+      label: ''
+      n: 13406
+      weighted: 9355141.0
+    - code: '200810'
+      label: ''
+      n: 13559
+      weighted: 9425214.0
+    - code: '200811'
+      label: ''
+      n: 14800
+      weighted: 9425266.0
+    - code: '200812'
+      label: ''
+      n: 14079
+      weighted: 9424913.0
+    - code: '200901'
+      label: ''
+      n: 13377
+      weighted: 9393753.0
+    - code: '200902'
+      label: ''
+      n: 10503
+      weighted: 9456638.0
+    - code: '200903'
+      label: ''
+      n: 11618
+      weighted: 9425165.0
+    - code: '200904'
+      label: ''
+      n: 7384
+      weighted: 4473014.0
+  TRAVDAY:
+    label: Travel day - day of week
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '01'
+      label: Sunday
+      n: 21807
+      weighted: 16156809.0
+    - code: '02'
+      label: Monday
+      n: 21521
+      weighted: 16157629.0
+    - code: '03'
+      label: Tuesday
+      n: 21525
+      weighted: 16157551.0
+    - code: '04'
+      label: Wednesday
+      n: 21341
+      weighted: 16157085.0
+    - code: '05'
+      label: Thursday
+      n: 21445
+      weighted: 16157449.0
+    - code: '06'
+      label: Friday
+      n: 21335
+      weighted: 16157325.0
+    - code: '07'
+      label: Saturday
+      n: 21173
+      weighted: 16157483.0
+  URBAN:
+    label: Home address in urbanized area
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2
+      weighted: 23274.0
+    - code: '01'
+      label: In an urban area
+      n: 91918
+      weighted: 75383529.0
+    - code: '02'
+      label: In an Urban cluster
+      n: 14582
+      weighted: 11992871.0
+    - code: '03'
+      label: In an area surrounded by urban areas
+      n: 62
+      weighted: 100645.0
+    - code: '04'
+      label: Not in urban area
+      n: 43583
+      weighted: 25601011.0
+  URBANSIZE:
+    label: Size of urban area in which home address is located
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2
+      weighted: 23274.0
+    - code: '01'
+      label: 50,000 - 199,999
+      n: 21107
+      weighted: 11591257.0
+    - code: '02'
+      label: 200,000 - 499,999
+      n: 14144
+      weighted: 9876479.0
+    - code: '03'
+      label: 500,000 - 999,999
+      n: 12220
+      weighted: 9461053.0
+    - code: '04'
+      label: 1 million or more without subway or rail
+      n: 27509
+      weighted: 21139513.0
+    - code: '05'
+      label: 1 million or more with subway or rail
+      n: 16938
+      weighted: 23315227.0
+    - code: '06'
+      label: Not in an urbanized area
+      n: 58227
+      weighted: 37694527.0
+  URBRUR:
+    label: Household in urban/rural area
+    dtype: string
+    length: 2
+    owner: household
+    missing_codes:
+      '-9': not_ascertained
+    skip_code: null
+    range: null
+    codes:
+    - code: '-9'
+      label: Not ascertained
+      n: 2
+      weighted: 23274.0
+    - code: '01'
+      label: Urban
+      n: 106562
+      weighted: 87477045.0
+    - code: '02'
+      label: Rural
+      n: 43583
+      weighted: 25601011.0
+  VARSTRAT:
+    label: Linearization Variance Stratum for Std Err Calculation
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: 1-100
+    codes:
+    - code: 1-100
+      label: ''
+      n: 150147
+      weighted: 113101330.0
+  WRKCOUNT:
+    label: Number of workers in HH
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: null
+    codes:
+    - code: '0'
+      label: ''
+      n: 57832
+      weighted: 30154870.0
+    - code: '1'
+      label: ''
+      n: 52122
+      weighted: 49148267.0
+    - code: '2'
+      label: ''
+      n: 34605
+      weighted: 28384670.0
+    - code: '3'
+      label: ''
+      n: 4712
+      weighted: 4557877.0
+    - code: '4'
+      label: ''
+      n: 788
+      weighted: 781809.0
+    - code: '5'
+      label: ''
+      n: 79
+      weighted: 68952.0
+    - code: '6'
+      label: ''
+      n: 9
+      weighted: 4884.0
+  WTHHFIN:
+    label: Final HH weight
+    dtype: float64
+    length: 8
+    owner: household
+    missing_codes: {}
+    skip_code: null
+    range: 1.17-53067
+    codes:
+    - code: 1.17-53067
+      label: ''
+      n: 150147
+      weighted: 113101330.0

@@ -4,6 +4,35 @@
 
 (nothing yet)
 
+## 0.4.0 (2026-10-21)
+
+Adds the **2009** and **2001** waves.
+
+* **NHTS 2009** (release 2.1) and **NHTS 2001**: hash-pinned download of the data archives and of
+  the separate replicate-weight archives (`Ascii.zip` holds CSV files; 2009 keeps them in the folder
+  `Ascii/`), typed Parquet, `pynhts.load(2009)` / `load(2001)`, `pynhts fetch|info|register|docs
+  --wave`. 2009 has four tables; 2001 adds `longdist` (one row per long-distance trip).
+* **Schemas read from the PDF codebooks** (`tools/build_schema_pdf.py`; the 2009 data dictionary
+  `.xls` has no codes and the 2001 codebook is Appendix B of the User's Guide). 3,435 (2009) and
+  6,327 (2001) printed code frequencies reproduce, unweighted and weighted. Documented codebook
+  problems: a control character in `MAKECODE` 35 (repaired by the data), a hidden missing code `99`
+  in 2009 `PTUSED`, and printed `VEHTYPE` frequencies that do not match the file.
+* **Jackknife for any replicate design:** the number of replicates, the multiplier (99/100 in
+  2009, 98/99 in 2001, 6/7 in 2017), the degrees of freedom, the weight and stem names of each
+  replicate file (renamed keys, zero-padded stems, SAS missing values) are registry data
+  (`Registry.n_replicates`, `jackknife_factor`, `replicate_jobs`). Units without a weight
+  (45,967 persons without a travel-day weight in 2009) are zeroed; a row that belongs to such a
+  unit raises an error.
+* Recipes `stt2009` (40 figures: 35 reproduced, 5 with a different margin-of-error convention)
+  and `stt2001` (47 figures: 40 reproduced, 7 within one unit or from an older data version).
+  Definitions reverse-engineered from the printed numbers are documented in `docs/data_notes.md`
+  (household vehicles are types 01-07, golf-cart trips are not vehicle trips; the 2001 Table 3 rates).
+* `harmonize`: `mode` crosswalk over all four waves, new `purpose_summary` concept (`WHYTRP1S` has
+  three different code systems), `category_report(concept, wave_a, wave_b)` for any pair,
+  `compare_waves` ignores zero padding of codes (`padding_differs`).
+* `Registry.weight_for`, `NHTSData.replicate_weights` and `survey` work for the 2001 long-distance
+  file (person replicates); `table_key("longdist", 2001)`.
+
 ## 0.3.0 (2026-10-21)
 
 Adds the **2022 NextGen NHTS**, completes the 2017 wave and compares the two.

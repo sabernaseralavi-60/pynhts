@@ -232,7 +232,7 @@ class Survey(_SurveyBase):
             d_full, d_rep = self._w @ d, self._r.T @ d
             with np.errstate(divide="ignore", invalid="ignore"):
                 full, reps = a_full / d_full, a_rep / d_rep
-        se = np.sqrt(jackknife_variance(full, reps, self.factor))
+        se = np.sqrt(jackknife_variance(full, reps, self.factor, self._r.shape[1]))
         return self._table(full, se, self._tcrit, codes, k, labels)
 
 
@@ -357,7 +357,7 @@ def ratio_across(
     d_full, d_rep = denominator.total_replicates(den_var, domain=den_domain)
     full = n_full / d_full
     reps = n_rep / d_rep
-    se = float(np.sqrt(jackknife_variance(full, reps, numerator.factor)))
+    se = float(np.sqrt(jackknife_variance(full, reps, numerator.factor, n_rep.shape[0])))
     moe = numerator._tcrit * se
     result: pd.DataFrame = pd.DataFrame({
         "estimate": [full], "se": [se], "moe": [moe], "ci_low": [full - moe],

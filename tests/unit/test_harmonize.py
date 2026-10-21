@@ -19,12 +19,20 @@ def _codebook(concept: str, wave: int, variable: str) -> dict[str, str]:
     return {c.code: c.label for c in load_schema(table, wave).columns[variable].codes}
 
 
-@pytest.mark.parametrize("concept", ["purpose", "mode"])
-@pytest.mark.parametrize("wave", [2017, 2022])
+VARIABLES = {"purpose": ["WHYTO", "WHYFROM"], "purpose_summary": ["WHYTRP1S"],
+             "mode": ["TRPTRANS"]}
+# the detailed purpose crosswalk covers 2017 and 2022 (2001 and 2009 have a different WHYTO
+# scheme, aligned through the summary purpose WHYTRP1S)
+CASES = [("purpose", 2017), ("purpose", 2022)] + [
+    (c, w) for c in ("purpose_summary", "mode") for w in (2001, 2009, 2017, 2022)
+]
+
+
+@pytest.mark.parametrize(("concept", "wave"), CASES)
 def test_every_observed_code_has_a_category_and_every_crosswalk_code_exists(concept, wave):
     cw = harmonize.crosswalk(concept)
     assert not cw.duplicated(["wave", "code"]).any()
-    variables = {"purpose": ["WHYTO", "WHYFROM"], "mode": ["TRPTRANS"]}[concept]
+    variables = VARIABLES[concept]
     listed = set(cw.loc[cw["wave"] == wave, "code"])
     for variable in variables:
         book = _codebook(concept, wave, variable)
@@ -35,7 +43,7 @@ def test_every_observed_code_has_a_category_and_every_crosswalk_code_exists(conc
     assert not extra, extra
 
 
-@pytest.mark.parametrize("concept", ["purpose", "mode"])
+@pytest.mark.parametrize("concept", ["purpose", "purpose_summary", "mode"])
 def test_label_hints_match_the_codebook_wording(concept):
     cw = harmonize.crosswalk(concept)
     for r in cw.itertuples():
@@ -60,6 +68,7 @@ def test_status_vocabulary_and_comparability():
     mode = harmonize.category_report("mode").set_index("category")
     assert mode.loc["walk", "comparable"] and not mode.loc["escooter", "comparable"]
     assert mode.loc["escooter", "issue"] == "only in 2022"
+    assert "other_truck" not in mode.index  # exists only in the 2001 and 2009 rows
 
 
 def test_apply_maps_each_wave_with_its_own_codes_and_drops_missing():
@@ -78,7 +87,31 @@ def test_apply_maps_each_wave_with_its_own_codes_and_drops_missing():
     with pytest.raises(ValueError, match="unknown concept"):
         harmonize.apply(s, "income", 2017)
     with pytest.raises(ValueError, match="no crosswalk rows"):
-        harmonize.apply(s, "mode", 2009)
+        harmonize.apply(s, "mode", 1995)
+
+
+def test_old_waves_use_other_codes_for_the_same_modes():
+    # the same raw code means different things in every wave: 08 is a commercial airplane (2001),
+    # a golf cart (2009) and a motorcycle (2017); 22 is a taxi (2001), a bicycle (2009) and a
+    # ferry (2022)
+    s = pd.Series(["01", "08", "22", "23"], dtype="string")
+    assert harmonize.apply(s, "mode", 2001).tolist() == [
+        "car", "air", "taxi_rideshare", "taxi_rideshare"]
+    assert harmonize.apply(s, "mode", 2009).tolist() == ["car", "golf_cart", "bike", "walk"]
+    assert harmonize.apply(s, "mode", 2017).tolist()[:2] == ["walk", "motorcycle"]
+    rep = harmonize.category_report("mode", 2001, 2009).set_index("category")
+    assert rep.loc["walk", "comparable"] and rep.loc["bike", "comparable"]
+    assert not rep.loc["bus", "comparable"] and rep.loc["golf_cart", "issue"] == "only in 2009"
+
+
+def test_whytrp1s_has_three_code_systems_but_shared_categories():
+    one = pd.Series(["01", "10"], dtype="string")
+    # the same raw codes: 2001 01 = to work, 10 = serve passenger; later 01 = home, 10 = work
+    assert harmonize.apply(one, "purpose_summary", 2001).tolist() == ["work", "transport_someone"]
+    assert harmonize.apply(one, "purpose_summary", 2009).tolist() == ["home", "work"]
+    assert harmonize.apply(one, "purpose_summary", 2017).tolist() == ["home", "work"]
+    rep = harmonize.category_report("purpose_summary", 2009, 2017).set_index("category")
+    assert rep.loc["work", "comparable"] and not rep.loc["shopping_errands", "comparable"]
 
 
 def test_purpose_codes_18_and_19_follow_the_codebook_not_the_guide_table():

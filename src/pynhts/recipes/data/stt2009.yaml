@@ -1,0 +1,53 @@
+# Replication targets: published figures transcribed by hand from
+#   FHWA, Summary of Travel Trends: 2009 National Household Travel Survey (2011). https://nhts.ornl.gov/2009/pub/STT.pdf
+#   (PDF sha256 f937f471041414d0d400136234379168710636e81bc4f5b7f5b6fd19c1a9b5f7, read 2026-10-21; Table 1 and Table 3, column 2009 and 95% CI)
+#
+# Fields as in stt2017.yaml (id, table, label, scale, decimals, published, moe, compute, expected,
+# note). Status rule (pynhts.recipes.base.classify): the estimate matches when
+# |estimate - published| <= 0.5 * 10**-decimals; the margin of error matches when
+# |moe - published_moe| <= max(0.5 * 10**-decimals, 0.001 * published_moe).
+source: stt2009
+wave: 2009
+title: "Summary of Travel Trends: 2009 NHTS (Tables 1 and 3, 2009 column)"
+citation: "U.S. Department of Transportation, Federal Highway Administration. Summary of Travel Trends: 2009 National Household Travel Survey (2011)."
+targets:
+  - {id: hh_all, table: "1", label: "Households, all (thousands)", scale: 1000, decimals: 0, published: 113101, moe: null, compute: hh_all, expected: reproduced}
+  - {id: hh_size1, table: "1", label: "Households, 1 person (thousands)", scale: 1000, decimals: 0, published: 31741, moe: 106, compute: hh_size1, expected: reproduced}
+  - {id: hh_size2, table: "1", label: "Households, 2 persons (thousands)", scale: 1000, decimals: 0, published: 37728, moe: 135, compute: hh_size2, expected: reproduced}
+  - {id: hh_size3, table: "1", label: "Households, 3 persons (thousands)", scale: 1000, decimals: 0, published: 18104, moe: 257, compute: hh_size3, expected: reproduced}
+  - {id: hh_size4plus, table: "1", label: "Households, 4+ persons (thousands)", scale: 1000, decimals: 0, published: 25528, moe: 243, compute: hh_size4plus, expected: reproduced}
+  - {id: persons_all, table: "1", label: "Persons, all (thousands)", scale: 1000, decimals: 0, published: 283054, moe: null, compute: persons_all, expected: reproduced}
+  - {id: age_under16, table: "1", label: "Persons under 16 (thousands)", scale: 1000, decimals: 0, published: 44724, moe: 441, compute: age_under16, expected: reproduced}
+  - {id: age_16_19, table: "1", label: "Persons 16-19 (thousands)", scale: 1000, decimals: 0, published: 19414, moe: 743, compute: age_16_19, expected: reproduced}
+  - {id: age_20_34, table: "1", label: "Persons 20-34 (thousands)", scale: 1000, decimals: 0, published: 50844, moe: 1089, compute: age_20_34, expected: reproduced}
+  - {id: age_35_64, table: "1", label: "Persons 35-64 (thousands)", scale: 1000, decimals: 0, published: 129202, moe: 874, compute: age_35_64, expected: reproduced}
+  - {id: age_65plus, table: "1", label: "Persons 65+ (thousands)", scale: 1000, decimals: 0, published: 38870, moe: 0, compute: age_65plus, expected: reproduced}
+  - {id: age_16plus, table: "1", label: "Persons 16+ (thousands)", scale: 1000, decimals: 0, published: 238330, moe: 441, compute: age_16plus, expected: reproduced}
+  - {id: male, table: "1", label: "Males (thousands)", scale: 1000, decimals: 0, published: 139257, moe: 81, compute: male, expected: reproduced}
+  - {id: male_16plus, table: "1", label: "Males 16+ (thousands)", scale: 1000, decimals: 0, published: 116421, moe: 338, compute: male_16plus, expected: reproduced}
+  - {id: female, table: "1", label: "Females (thousands)", scale: 1000, decimals: 0, published: 143797, moe: 81, compute: female, expected: reproduced}
+  - {id: female_16plus, table: "1", label: "Females 16+ (thousands)", scale: 1000, decimals: 0, published: 121908, moe: 338, compute: female_16plus, expected: reproduced}
+  - {id: persons_5plus, table: "1", label: "Persons 5+ (thousands)", scale: 1000, decimals: 0, published: 283054, moe: null, compute: persons_5plus, expected: reproduced}
+  - {id: male_5plus, table: "1", label: "Males 5+ (thousands)", scale: 1000, decimals: 0, published: 139257, moe: 81, compute: male_5plus, expected: reproduced}
+  - {id: female_5plus, table: "1", label: "Females 5+ (thousands)", scale: 1000, decimals: 0, published: 143797, moe: 81, compute: female_5plus, expected: reproduced}
+  - {id: drivers, table: "1", label: "Licensed drivers (thousands)", scale: 1000, decimals: 0, published: 212309, moe: 959, compute: drivers, expected: reproduced}
+  - {id: drivers_male, table: "1", label: "Male drivers (thousands)", scale: 1000, decimals: 0, published: 106813, moe: 709, compute: drivers_male, expected: reproduced}
+  - {id: drivers_female, table: "1", label: "Female drivers (thousands)", scale: 1000, decimals: 0, published: 105496, moe: 631, compute: drivers_female, expected: reproduced}
+  - {id: workers, table: "1", label: "Workers (thousands)", scale: 1000, decimals: 0, published: 151373, moe: 893, compute: workers, expected: reproduced}
+  - {id: workers_male, table: "1", label: "Male workers (thousands)", scale: 1000, decimals: 0, published: 81939, moe: 769, compute: workers_male, expected: reproduced}
+  - {id: workers_female, table: "1", label: "Female workers (thousands)", scale: 1000, decimals: 0, published: 69434, moe: 728, compute: workers_female, expected: reproduced}
+  - {id: vehicles, table: "1", label: "Household vehicles (thousands)", scale: 1000, decimals: 0, published: 210778, moe: 918, compute: household_vehicles, expected: reproduced, note: "Vehicles of types 01-07 (210,778). All rows of the vehicle file give 211,501; golf carts, other and unknown type are not household vehicles."}
+  - {id: vehicle_trips, table: "1", label: "Household vehicle trips (millions)", scale: 1000000, decimals: 0, published: 233849, moe: 2381, compute: hh_vehicle_trips_total, expected: reproduced, note: "Needs the report's definition: trips the respondent drove in a household-type vehicle (TRPTRANS 01-07). Counting every DRVR_FLG trip gives 233,913 because 63.2 million driven golf-cart trips (code 08) are not household vehicle trips."}
+  - {id: hh_vmt, table: "1", label: "Household VMT (millions)", scale: 1000000, decimals: 0, published: 2245111, moe: 56157, compute: vmt_total, expected: reproduced}
+  - {id: person_trips, table: "1", label: "Person trips (millions)", scale: 1000000, decimals: 0, published: 392023, moe: 3644, compute: person_trips_total, expected: reproduced}
+  - {id: pmt, table: "1", label: "Person miles of travel (millions)", scale: 1000000, decimals: 0, published: 3732791, moe: 141396, compute: pmt_total, expected: reproduced}
+  - {id: trips_per_person, table: "3", label: "Daily person trips per person", scale: 1, decimals: 2, published: 3.79, moe: 0.03, compute: trips_per_person, expected: estimate_only, note: "Estimate matches (3.7945 prints as 3.79). MOE 0.0353 prints as 0.04 if rounded; the report shows 0.03 (0.0349 with 1.96 x SE, or truncation). Same two-multiplier pattern as the PMT rows."}
+  - {id: pmt_per_person, table: "3", label: "Daily PMT per person", scale: 1, decimals: 2, published: 36.13, moe: 1.35, compute: pmt_per_person, expected: estimate_only, note: "The estimate matches. The printed margin of error is about 1 percent smaller than t(0.975, 100) x SE, and it is exactly 1.96 x SE at the printed precision, whereas the Table 1 totals use t(0.975, 100) = 1.984 to within 0.1 percent. The four PMT/VMT rows of Table 3 all fit 1.96 x SE (an inference from four two-digit values), so the report seems to mix the two multipliers; the library always uses t."}
+  - {id: vtrips_per_driver, table: "3", label: "Daily vehicle trips per driver", scale: 1, decimals: 2, published: 3.02, moe: 0.03, compute: vtrips_per_driver, expected: reproduced}
+  - {id: vmt_per_driver, table: "3", label: "Daily VMT per driver", scale: 1, decimals: 2, published: 28.97, moe: 0.71, compute: vmt_per_driver, expected: estimate_only, note: "The estimate matches. The printed margin of error is about 1 percent smaller than t(0.975, 100) x SE, and it is exactly 1.96 x SE at the printed precision, whereas the Table 1 totals use t(0.975, 100) = 1.984 to within 0.1 percent. The four PMT/VMT rows of Table 3 all fit 1.96 x SE (an inference from four two-digit values), so the report seems to mix the two multipliers; the library always uses t."}
+  - {id: trips_per_hh, table: "3", label: "Daily person trips per household", scale: 1, decimals: 2, published: 9.5, moe: 0.09, compute: trips_per_hh, expected: reproduced}
+  - {id: pmt_per_hh, table: "3", label: "Daily PMT per household", scale: 1, decimals: 2, published: 90.42, moe: 3.38, compute: pmt_per_hh, expected: estimate_only, note: "The estimate matches. The printed margin of error is about 1 percent smaller than t(0.975, 100) x SE, and it is exactly 1.96 x SE at the printed precision, whereas the Table 1 totals use t(0.975, 100) = 1.984 to within 0.1 percent. The four PMT/VMT rows of Table 3 all fit 1.96 x SE (an inference from four two-digit values), so the report seems to mix the two multipliers; the library always uses t."}
+  - {id: vtrips_per_hh, table: "3", label: "Daily vehicle trips per household", scale: 1, decimals: 2, published: 5.66, moe: 0.06, compute: vtrips_per_hh, expected: reproduced}
+  - {id: vmt_per_hh, table: "3", label: "Daily VMT per household", scale: 1, decimals: 2, published: 54.38, moe: 1.34, compute: vmt_per_hh, expected: estimate_only, note: "The estimate matches. The printed margin of error is about 1 percent smaller than t(0.975, 100) x SE, and it is exactly 1.96 x SE at the printed precision, whereas the Table 1 totals use t(0.975, 100) = 1.984 to within 0.1 percent. The four PMT/VMT rows of Table 3 all fit 1.96 x SE (an inference from four two-digit values), so the report seems to mix the two multipliers; the library always uses t."}
+  - {id: person_trip_length, table: "3", label: "Average person trip length (miles)", scale: 1, decimals: 2, published: 9.75, moe: 0.36, compute: person_trip_length, expected: reproduced}
+  - {id: vehicle_trip_length, table: "3", label: "Average vehicle trip length (miles)", scale: 1, decimals: 2, published: 9.72, moe: 0.22, compute: vehicle_trip_length, expected: reproduced}

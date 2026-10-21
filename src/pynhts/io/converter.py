@@ -27,22 +27,12 @@ import pyarrow.parquet as pq
 
 from pynhts.core.schema import TableSchema, load_schema
 from pynhts.io.fetcher import cache_dir, clean_downloads, fetch, sha256_file
-from pynhts.io.registry import load_registry
+from pynhts.io.registry import ReplicateJob, load_registry
 
 CONVERTER_VERSION = "1"
-N_REPLICATES = 98
+N_REPLICATES = 98  # 2017; other waves declare their own count in the registry
 _BLOCK = 1 << 26
 _COMPRESSION = "zstd"
-
-# (full-sample weight, key columns, output file) for each replicate source file.
-_REPLICATE_JOBS: dict[str, list[tuple[str, tuple[str, ...], str]]] = {
-    "hhwgt.csv": [("WTHHFIN", ("HOUSEID",), "repw_household.parquet")],
-    "perwgt.csv": [
-        ("WTPERFIN", ("HOUSEID", "PERSONID"), "repw_person.parquet"),
-        ("WTTRDFIN", ("HOUSEID", "PERSONID"), "repw_trip.parquet"),
-    ],
-}
-
 
 @dataclass(frozen=True)
 class Converted:
@@ -59,20 +49,26 @@ def parquet_dir(wave: int = 2017, cache: str | os.PathLike[str] | None = None) -
     return cache_dir(cache) / str(wave) / "parquet"
 
 
-def replicate_columns(prefix: str) -> list[str]:
-    """Names ``<prefix>1`` ... ``<prefix>98`` of the replicate weight columns."""
-    return [f"{prefix}{i}" for i in range(1, N_REPLICATES + 1)]
+def replicate_columns(prefix: str, n: int = N_REPLICATES, pad: int = 0) -> list[str]:
+    """Names ``<prefix>1`` ... ``<prefix>n`` of the replicate weight columns (2017: n = 98).
+
+    ``pad`` zero-pads the number to that many digits (``FPTPWT01`` for ``pad=2``).
+    """
+    return [f"{prefix}{i:0{pad}d}" for i in range(1, n + 1)]
 
 
-def _open_csv(path: Path, column_types: dict[str, pa.DataType]) -> pacsv.CSVStreamingReader:
+def _open_csv(
+    path: Path, column_types: dict[str, pa.DataType], null_values: tuple[str, ...] = ("",),
+    *, quoted_nulls: bool = False,
+) -> pacsv.CSVStreamingReader:
     return pacsv.open_csv(
         path,
         read_options=pacsv.ReadOptions(block_size=_BLOCK),
         convert_options=pacsv.ConvertOptions(
             column_types=column_types,
-            null_values=[""],
+            null_values=list(null_values),
             strings_can_be_null=False,
-            quoted_strings_can_be_null=False,
+            quoted_strings_can_be_null=quoted_nulls,
         ),
     )
 
@@ -155,31 +151,39 @@ def _convert_core(
 
 
 def _convert_replicates(
-    csv: Path, jobs: list[tuple[str, tuple[str, ...], str]], directory: Path,
+    csv: Path, jobs: list[ReplicateJob], n_rep: int, directory: Path,
     inputs: dict[str, str], codebook: str, manifest: dict[str, dict[str, Any]],
     todo: set[str],
     expected: int | None,
 ) -> dict[str, Converted]:
-    all_keys = {k for _, keys, _ in jobs for k in keys}
+    # key columns are coded strings (leading zeros); the file may call them something else (ID9)
+    all_keys = {k for j in jobs for k in j.keys} | {f for j in jobs for f in j.rename}
     header = pacsv.open_csv(csv, read_options=pacsv.ReadOptions(block_size=_BLOCK)).schema.names
     types: dict[str, pa.DataType] = {
         n: pa.string() if n in all_keys else pa.float64() for n in header
     }
-    reader = _open_csv(csv, types)
+    # the 2001 replicate files write a SAS missing value, a quoted ".", where a weight is undefined
+    reader = _open_csv(csv, types, null_values=("", "."), quoted_nulls=True)
     writers: dict[str, tuple[pq.ParquetWriter, Path, list[str]]] = {}
-    for weight, keys, fname in jobs:
-        if fname not in todo:
+    for job in jobs:
+        if job.out not in todo:
             continue
-        cols = [*keys, weight, *replicate_columns(weight)]
+        # file column -> table column: only the key names can differ (2001: ID9 -> HOUSEID)
+        file_keys = [next((f for f, t in job.rename.items() if t == k), k) for k in job.keys]
+        cols = [*file_keys, job.weight, *replicate_columns(job.prefix, n_rep, job.pad)]
         missing = [c for c in cols if c not in header]
         if missing:
             raise ValueError(f"{csv.name}: missing columns {missing[:3]}...")
+        names = [*job.keys, *cols[len(job.keys):]]
         fields = [
-            pa.field(c, pa.string() if c in keys else pa.float32() if c != weight else pa.float64())
-            for c in cols
+            pa.field(
+                n, pa.string() if n in job.keys else pa.float32() if n != job.weight
+                else pa.float64()
+            )
+            for n in names
         ]
-        w, tmp = _atomic_writer(directory / fname, pa.schema(fields))
-        writers[fname] = (w, tmp, cols)
+        w, tmp = _atomic_writer(directory / job.out, pa.schema(fields))
+        writers[job.out] = (w, tmp, cols)
     rows = 0
     try:
         for batch in reader:
@@ -187,7 +191,8 @@ def _convert_replicates(
             for w, _, cols in writers.values():
                 target = w.schema
                 arrays = [
-                    batch.column(c).cast(target.field(c).type, safe=False) for c in cols
+                    batch.column(c).cast(target.field(i).type, safe=False)
+                    for i, c in enumerate(cols)
                 ]
                 w.write_batch(pa.RecordBatch.from_arrays(arrays, schema=target))
     except BaseException:
@@ -272,23 +277,26 @@ def convert(
             )
         if "replicates" in groups:
             codebook = load_schema("household", wave).codebook_sha256
-            for csv_name, jobs in _REPLICATE_JOBS.items():
+            by_csv: dict[str, list[ReplicateJob]] = {}
+            for job in reg.replicate_jobs.values():
+                by_csv.setdefault(job.csv, []).append(job)
+            for csv_name, jobs in by_csv.items():
                 inputs = {csv_name: reg.members[csv_name].sha256}
                 todo = set()
-                for _, _, fname in jobs:
-                    out = directory / fname
+                for job in jobs:
+                    out = directory / job.out
                     if not force and _up_to_date(manifest, out, inputs, codebook):
-                        rec = manifest[fname]
-                        results[fname] = Converted(
+                        rec = manifest[job.out]
+                        results[job.out] = Converted(
                             out, int(str(rec["rows"])), str(rec["sha256"]), True
                         )
                     else:
-                        todo.add(fname)
+                        todo.add(job.out)
                 if todo:
                     results.update(
                         _convert_replicates(
-                            raw(csv_name), jobs, directory, inputs, codebook, manifest, todo,
-                            reg.members[csv_name].rows,
+                            raw(csv_name), jobs, reg.n_replicates, directory, inputs, codebook,
+                            manifest, todo, reg.members[csv_name].rows,
                         )
                     )
                     _write_manifest(directory, manifest)

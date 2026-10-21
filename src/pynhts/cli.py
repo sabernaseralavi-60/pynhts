@@ -18,7 +18,8 @@ def _build_parser() -> argparse.ArgumentParser:
 
     f = sub.add_parser("fetch", help="download, verify and convert the NHTS data to Parquet")
     f.add_argument("--wave", type=int, default=2017)
-    f.add_argument("--replicates", action="store_true", help="also fetch the 98 replicate weights")
+    f.add_argument("--replicates", action="store_true",
+                   help="also fetch the jackknife replicate weights (not in 2022)")
     f.add_argument("--offline", action="store_true", help="never use the network")
 
     r = sub.add_parser("register", help="adopt NHTS CSV files you already have (hash-checked)")
@@ -47,9 +48,8 @@ def _info(wave: int, cache: str | None) -> int:
     print(f"NHTS {wave}\n  raw CSV : {raw}\n  Parquet : {pq}")
     for m in reg.members.values():
         state = "present" if (raw / m.name).is_file() else "absent"
-        print(f"  {m.name:<12} {state:<8} {m.size / 1e6:>8.1f} MB")
-    stems = [*reg.tables, *(("repw_household", "repw_person", "repw_trip")
-                            if "replicates" in reg.groups else ())]
+        print(f"  {m.name:<14} {state:<8} {m.size / 1e6:>8.1f} MB")
+    stems = [*reg.tables, *(j.out.removesuffix(".parquet") for j in reg.replicate_jobs.values())]
     for stem in stems:
         f = pq / f"{stem}.parquet"
         print(f"  {f.name:<24} {'built' if f.is_file() else 'not built'}")

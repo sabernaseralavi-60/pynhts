@@ -5,8 +5,12 @@
 `data.survey(table, columns)` returns the rows of a table bound to the weights and to the wave's
 variance design:
 
-* **2017** (`Survey`): the 98 replicate weights of the unit that carries the weight, with
-  stratified-jackknife (JKn) variance;
+* **2001, 2009, 2017** (`Survey`): the replicate weights of the unit that carries the weight,
+  with the jackknife variance `factor x sum of squared deviations`: 98 replicates and the
+  stratified-jackknife (JKn) factor 6/7 in 2017 (14 strata of 7 units), 100 replicates and 99/100
+  in 2009 (jackknife-2, User's Guide chapter 7), 99 replicates and 98/99 in 2001 (delete-one
+  jackknife, User's Guide 7-E.1). The margin of error is `t(0.975, df) x SE` with df equal to the
+  number of replicates; the registry of each wave stores the three numbers;
 * **2022** (`TaylorSurvey`): the public files carry **no replicate weights**, so errors use
   Taylor-series linearisation with the stratum (`STRATUMID`) and the household (`HOUSEID`) as
   primary sampling unit, as the 2022 User Guide prescribes (see below).

@@ -1,14 +1,16 @@
-"""Compare and harmonize NHTS waves (2017 <-> 2022) without hiding what is lost.
+"""Compare and harmonize NHTS waves (2001, 2009, 2017, 2022) without hiding what is lost.
 
 Two tools:
 
 * :func:`compare_waves` lists every variable of two waves and says whether it is the same
   column (same label and same coded values), the same column with other labels, a column whose
   codes changed, or a column that exists in one wave only. It is computed from the codebooks.
-* :func:`crosswalk`, :func:`apply` and :func:`category_report` map the codes of the two
-  concepts that changed the most, **trip purpose** and **trip mode**, to shared categories. Every
-  code carries a status (``exact``, ``merge``, ``approximate``, ``only_here``) and the reason
-  for it, taken from the 2022 User Guide's Appendix 2 and checked against the codebooks.
+* :func:`crosswalk`, :func:`apply` and :func:`category_report` map the codes of the concepts that
+  changed the most, **trip purpose** (``purpose``: the detailed WHYTO of 2017 and 2022;
+  ``purpose_summary``: WHYTRP1S of all four waves) and **trip mode** (all four waves), to shared
+  categories. Every code carries a status (``exact``, ``merge``, ``approximate``, ``only_here``)
+  and the reason for it, taken from the 2022 User Guide's Appendix 2 for 2017 and 2022 and checked
+  against the codebooks and, for 2001 and 2009, against the codebooks and the data.
 
 >>> from pynhts import harmonize
 >>> harmonize.crosswalk("mode").query("wave == 2022")                    # doctest: +SKIP
@@ -40,7 +42,7 @@ def _load() -> dict[str, Any]:
 
 
 def concepts() -> list[str]:
-    """Names of the concepts that have a curated crosswalk (``purpose`` and ``mode``)."""
+    """Names of the concepts with a curated crosswalk: purpose, purpose_summary and mode."""
     return sorted(_load())
 
 
@@ -101,7 +103,7 @@ def apply(
 
 
 def category_report(concept: str, wave_a: int = 2017, wave_b: int = 2022) -> pd.DataFrame:
-    """Per category: the codes of each wave, and whether the category is equally defined.
+    """Per category: the codes of two waves, and whether the category is equally defined.
 
     ``comparable`` is true when the category exists in both waves and every code in it is
     ``exact`` in both. Everything else needs a decision from the analyst; ``issue`` says why.
@@ -110,6 +112,9 @@ def category_report(concept: str, wave_a: int = 2017, wave_b: int = 2022) -> pd.
     rows = []
     for cat, g in frame.groupby("category", sort=False):
         per = {w: g[g["wave"] == w] for w in (wave_a, wave_b)}
+        if not any(len(p) > 0 for p in per.values()):
+            continue  # the category exists only in waves that are not being compared
+        g = g[g["wave"].isin((wave_a, wave_b))]
         in_both = all(len(p) > 0 for p in per.values())
         statuses = set(g["status"])
         issue = ""
@@ -131,6 +136,11 @@ def category_report(concept: str, wave_a: int = 2017, wave_b: int = 2022) -> pd.
 
 def _norm(text: object) -> str:
     return re.sub(r"[^a-z0-9]+", " ", str(text).lower()).strip()
+
+
+def _canon(code: str) -> str:
+    """Code without zero padding: 2001 writes "1", 2009 "01" for the same answer."""
+    return str(int(code)) if re.fullmatch(r"\d+", code) else code
 
 
 def _similar(a: str, b: str) -> bool:
@@ -178,11 +188,16 @@ def compare_waves(wave_a: int = 2017, wave_b: int = 2022) -> pd.DataFrame:
             elif a["dtype"] != "string":
                 row["status"] = "identical" if same_label else "relabelled"
             else:
-                ca, cb = codes[wave_a].get(name, {}), codes[wave_b].get(name, {})
+                raw_a, raw_b = codes[wave_a].get(name, {}), codes[wave_b].get(name, {})
+                ca = {_canon(k): v for k, v in raw_a.items()}
+                cb = {_canon(k): v for k, v in raw_b.items()}
                 shared = (set(ca) & set(cb)) - MISSING_CODES
                 conflict = sorted(c for c in shared if not _similar(ca[c], cb[c]))
                 same_set = set(ca) - MISSING_CODES == set(cb) - MISSING_CODES
                 row["conflicting_codes"] = ",".join(conflict)
+                row["padding_differs"] = bool(
+                    (set(raw_a) - MISSING_CODES) != (set(raw_b) - MISSING_CODES) and same_set
+                )
                 if not same_set:
                     row["status"] = "codes_changed"
                 elif conflict:

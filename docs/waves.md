@@ -1,7 +1,25 @@
-# Working with two waves: 2017 and 2022
+# Working with four waves: 2001, 2009, 2017 and 2022
 
-`pynhts.load(2017)` and `pynhts.load(2022)` return the same kind of object, `NHTSData`, with the
-same methods. What differs is stated by the data, not hidden by the library.
+`pynhts.load(2001)`, `load(2009)`, `load(2017)` and `load(2022)` return the same kind of object,
+`NHTSData`, with the same methods. What differs is stated by the data, not hidden by the library.
+
+| | 2001 | 2009 | 2017 | 2022 |
+|---|---:|---:|---:|---:|
+| Households | 69,817 | 150,147 | 129,696 | 7,893 |
+| Persons | 160,758 | 308,901 | 264,234 | 16,997 |
+| Trips | 642,292 | 1,167,321 | 923,572 | 31,074 |
+| Tables | + long trips | | | + long distance (per person) |
+| Variance | 99 jackknife replicates, 98/99 | 100 replicates, 99/100 | 98 replicates, 6/7 | Taylor series |
+| t degrees of freedom | 99 | 100 | 98 | by domain |
+| Children 0-4 | in the file (computed trips) | not in the file | not in the file | not in the file |
+| Yes/no and sex codes | `"1"`, `"2"` | `"01"`, `"02"` | `"01"`, `"02"` | `"01"`, `"02"` |
+
+```python
+import pynhts
+d01, d09 = pynhts.load(2001, replicates=True), pynhts.load(2009, replicates=True)
+d09.survey("trip", ["TRPMILES"]).mean("TRPMILES")     # jackknife SE with the 100 replicates
+d01.key("longdist")       # ('HOUSEID', 'PERSONID', 'TPTRPNUM')  one row per long trip
+```
 
 ```python
 import pynhts
@@ -82,6 +100,31 @@ Missing codes (-9, -8, -7) and codes the crosswalk does not list become NA. Noth
 * The guide groups recreational vehicles under "Other Vehicle"; ORNL's 2022 `TRIPMODE` counts them
   as private-vehicle trips. The `summary` level follows the guide.
 
+## 2001 and 2009: the same name, other codes
+
+`harmonize.compare_waves(2001, 2009)` finds 41 variables whose codes changed and 11 whose type
+changed; `harmonize.compare_waves(2009, 2017)` finds 37 and 4. Code padding is ignored when codes
+are compared (`"1"` and `"01"` are the same answer; the column `padding_differs` says where it
+happened, 50 variables for 2001 and 2009). Two examples that would corrupt a pooled analysis:
+
+* `TRPTRANS` (mode): 08 is a commercial airplane in 2001, a golf cart in 2009, a motorcycle in
+  2017 and a bus in 2022; 19 is a cruise ship, a taxi, an airplane and an e-scooter in the same
+  four waves.
+* `WHYTRP1S` (summary purpose): 2001 uses 01 = to work ... 13 = other; 2009, 2017 and 2022 use 01 =
+  home, 10 = work, 20 = school/daycare/religious. The 2009 category 60 ("family personal
+  business") has no code from 2017 on; in the 2017 data those trips (WHYTO "other general
+  errands", "buy goods" and "buy services") all have `WHYTRP1S` 40.
+
+`crosswalk("mode")` covers all four waves; `crosswalk("purpose_summary")` maps `WHYTRP1S` of all four
+waves to ten categories; the detailed `crosswalk("purpose")` (WHYTO) stays 2017/2022 because the
+2001/2009 detail codes (11 go to work, 41 buy goods, ...) have no official alignment to the 2017
+scheme. `category_report(concept, wave_a, wave_b)` compares any two waves.
+
+```python
+harmonize.apply(trips["TRPTRANS"], "mode", wave=2009)
+harmonize.category_report("mode", 2001, 2009)       # walk, bike, car, SUV, ... are comparable
+```
+
 ## What is not harmonized
 
 * **Trip rates.** The 2022 trip weights contain a methods adjustment (about 10-12 % more trips)
@@ -96,5 +139,7 @@ Missing codes (-9, -8, -7) and codes the crosswalk does not list become NA. Noth
 ## Sources
 
 2022 NHTS Data User Guide (V2.0.1), Appendix 2; 2022 NextGen NHTS Compatibility with Prior Data
-(V2.1); 2017 NHTS Compatibility with Prior NHTS Data; the two codebooks. All are pinned by hash
-in the registry and downloaded with `pynhts docs --wave 2017|2022`.
+(V2.1); 2017 NHTS Compatibility with Prior NHTS Data; the four codebooks (2001: Appendix B of the
+User's Guide). For 2001 and 2009 the crosswalk rows come from the codebooks and the data (the
+official documents align 2017 and 2022 only). All documents are pinned by hash in the registry and
+downloaded with `pynhts docs --wave 2001|2009|2017|2022`.

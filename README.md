@@ -8,8 +8,11 @@
 Typed, survey-weight-aware Python access to US National Household Travel Survey (NHTS)
 microdata.
 
-> **Scope and status (0.3.0, alpha).** The **2017** and **2022** (NextGen) waves are supported.
-> The API may still change. Results are validated against published tables: for 2017, 31 of 37
+> **Scope and status (0.4.0, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
+> waves are supported. The API may still change. Results are validated against published tables:
+> for 2009, 35 of 40 figures of the *Summary of Travel Trends* reproduce completely (the other 5
+> reproduce the estimate; the report's margin of error uses another multiplier), for 2001 40 of
+> 47 (the 7 others are within one unit or come from an older data version); for 2017, 31 of 37
 > figures of FHWA's *Summary of Travel Trends* reproduce completely (3 more reproduce the estimate
 > but not the margin of error, 3 are gaps); for 2022, 15 of 18 control totals of the User Guide,
 > and the Taylor-series errors equal R's `survey` package. Every gap is reported openly in
@@ -22,9 +25,10 @@ pip install pynhts
 pynhts fetch --replicates        # download, verify (SHA-256) and convert; about 0.4 GB of Parquet, plus 1.8 GB of raw CSV that you may delete afterwards
 ```
 
-`pynhts fetch --wave 2022` needs no replicate weights (4.5 MB). Already have the NHTS CSV files?
+`pynhts fetch --wave 2022` needs no replicate weights (4.5 MB); 2009 and 2001 need a separate
+replicate archive (400 and 440 MB) for standard errors. Already have the NHTS CSV files?
 `pynhts register <folder> [--wave 2022]` adopts them after checking their hashes, and
-`pynhts docs --wave 2017|2022` downloads the official documents (also hash-checked).
+`pynhts docs --wave 2001|2009|2017|2022` downloads the official documents (also hash-checked).
 
 ## What it does
 
@@ -52,6 +56,10 @@ arr = ml.to_arrays(trips, ["TRPMILES", "R_AGE"], target="TRPTRANS", weight="WTTR
 d22 = pynhts.load(2022)
 d22.survey("trip", ["TRPMILES"]).mean("TRPMILES")          # weights="weekday" | "weekend" too
 
+# 2009 and 2001: 100 and 99 jackknife replicates, same interface (children 0-4 are in the 2001 file)
+d09 = pynhts.load(2009, replicates=True)
+d09.survey("person", ["R_AGE"]).total()                     # 283,054 thousand persons
+
 # the waves use different codes: compare and harmonize explicitly (TRPTRANS 02 is a bike in 2017, a van in 2022)
 from pynhts import harmonize
 harmonize.compare_waves()                                   # 386 variable names: 19 identical, 47 with changed codes
@@ -64,8 +72,8 @@ pynhts.dictionary(2022)                                     # every variable wit
 |---|---|
 | `pynhts.io` | verified download, offline mode, deterministic Parquet cache |
 | `pynhts.core` | codebook-derived schema, `NHTSData` loader, missing-code handling |
-| `pynhts.stats` | totals, means, proportions, ratios with JKn (2017) or Taylor-series (2022) errors and margins of error |
-| `pynhts.harmonize` | variable inventory of two waves; validated 2017 <-> 2022 crosswalks of trip purpose and mode |
+| `pynhts.stats` | totals, means, proportions, ratios with jackknife (2001, 2009, 2017) or Taylor-series (2022) errors and margins of error |
+| `pynhts.harmonize` | variable inventory of two waves; crosswalks of trip mode (four waves) and trip purpose (2017/2022; summary purpose for all four) |
 | `pynhts.recipes` | replication of published tables with honest status per figure |
 | `pynhts.tours` | tour formation (HBW/HBO/NHB, work-tour patterns), FHWA-style chains; flexible home/work rules |
 | `pynhts.ml` | NumPy / PyTorch / graph export (PyTorch optional) |
@@ -80,13 +88,18 @@ They are documented in [docs/data_notes.md](https://github.com/sabernaseralavi-6
 ## Validation
 
 * All coded values of the official codebooks (counts and weighted totals) reproduce: 3,807 in
-  2017 and 2,639 in 2022.
+  2017, 2,639 in 2022, 3,435 in 2009 and 6,327 in 2001 (three documented codebook errors in 2009).
 * 37 figures from Tables 1 and 3 of FHWA's *Summary of Travel Trends: 2017 NHTS*, including the
   adjusted-distance rows and the annual totals, with margins of error: 31 reproduce completely, 3
   reproduce the estimate but not the margin of error, 3 do not reproduce.
 * 2022: 15 of the 18 control totals of the V2.x User Guide (Tables 10 and 11); the 3 that do not
   reproduce are documented. Estimates, standard errors and degrees of freedom of 24 estimands
   equal R's `survey` package to 1e-9.
+* 2009: 40 figures of the *Summary of Travel Trends* (35 reproduce completely; all 27 printed
+  margins of error of its Table 1 match t(0.975, 100) x the jackknife standard error to rounding).
+  2001: 47 figures (40 reproduce; the 2004 report's per-person rates are reproduced only with its
+  own definition, documented). The 2001 User's Guide worked example (202,586,200 vehicles, SE
+  672,072) reproduces.
 * The transit-user sample of McNally & Rafiq's tour study (4,994 persons, 20,222 trips, 10,011
   transit trips) exactly, plus 33 of their figures in all: 21 reproduce, 12 gaps are documented
   (`pynhts.tours`). See [docs/validation.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md).

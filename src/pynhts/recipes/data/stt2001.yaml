@@ -1,0 +1,60 @@
+# Replication targets: published figures transcribed by hand from
+#   FHWA, 2001 NHTS Summary of Travel Trends (2004). https://nhts.ornl.gov/2001/pub/STT.pdf
+#   (PDF sha256 41c42503978349bfe6aec01b5a1c072e8c6161c124a858cec1681a564d3c10e0, read 2026-10-21; Table 1 and Table 3, columns 2001 and 2001 (includes 0-4); the report prints no margin of error for 2001)
+#
+# Fields as in stt2017.yaml (id, table, label, scale, decimals, published, moe, compute, expected,
+# note). Status rule (pynhts.recipes.base.classify): the estimate matches when
+# |estimate - published| <= 0.5 * 10**-decimals; the margin of error matches when
+# |moe - published_moe| <= max(0.5 * 10**-decimals, 0.001 * published_moe).
+source: stt2001
+wave: 2001
+title: "2001 NHTS Summary of Travel Trends (Tables 1 and 3)"
+citation: "U.S. Department of Transportation, Federal Highway Administration. 2001 NHTS Summary of Travel Trends (2004)."
+targets:
+  - {id: hh_all, table: "1", label: "Households, all (thousands)", scale: 1000, decimals: 0, published: 107365, moe: null, compute: hh_all, expected: reproduced}
+  - {id: hh_size1, table: "1", label: "Households, 1 person (thousands)", scale: 1000, decimals: 0, published: 27718, moe: null, compute: hh_size1, expected: reproduced}
+  - {id: hh_size2, table: "1", label: "Households, 2 persons (thousands)", scale: 1000, decimals: 0, published: 35032, moe: null, compute: hh_size2, expected: reproduced}
+  - {id: hh_size3, table: "1", label: "Households, 3 persons (thousands)", scale: 1000, decimals: 0, published: 17749, moe: null, compute: hh_size3, expected: reproduced}
+  - {id: hh_size4plus, table: "1", label: "Households, 4+ persons (thousands)", scale: 1000, decimals: 0, published: 26867, moe: null, compute: hh_size4plus, expected: reproduced}
+  - {id: persons_all, table: "1", label: "Persons, all (thousands)", scale: 1000, decimals: 0, published: 277203, moe: null, compute: persons_all, expected: reproduced}
+  - {id: age_under16, table: "1", label: "Persons under 16 (thousands)", scale: 1000, decimals: 0, published: 64612, moe: null, compute: age_under16, expected: not_reproduced, note: "Off by 0.78 thousand: the file gives 64,611.2, the report prints 64,612."}
+  - {id: age_16_19, table: "1", label: "Persons 16-19 (thousands)", scale: 1000, decimals: 0, published: 14296, moe: null, compute: age_16_19, expected: reproduced}
+  - {id: age_20_34, table: "1", label: "Persons 20-34 (thousands)", scale: 1000, decimals: 0, published: 57680, moe: null, compute: age_20_34, expected: reproduced}
+  - {id: age_35_64, table: "1", label: "Persons 35-64 (thousands)", scale: 1000, decimals: 0, published: 103296, moe: null, compute: age_35_64, expected: reproduced}
+  - {id: age_65plus, table: "1", label: "Persons 65+ (thousands)", scale: 1000, decimals: 0, published: 32884, moe: null, compute: age_65plus, expected: reproduced}
+  - {id: age_16plus, table: "1", label: "Persons 16+ (thousands)", scale: 1000, decimals: 0, published: 208155, moe: null, compute: age_16plus, expected: reproduced}
+  - {id: male, table: "1", label: "Males (thousands)", scale: 1000, decimals: 0, published: 135276, moe: null, compute: male, expected: reproduced}
+  - {id: male_16plus, table: "1", label: "Males 16+ (thousands)", scale: 1000, decimals: 0, published: 100308, moe: null, compute: male_16plus, expected: reproduced}
+  - {id: female, table: "1", label: "Females (thousands)", scale: 1000, decimals: 0, published: 141910, moe: null, compute: female, expected: reproduced}
+  - {id: female_16plus, table: "1", label: "Females 16+ (thousands)", scale: 1000, decimals: 0, published: 107847, moe: null, compute: female_16plus, expected: reproduced}
+  - {id: persons_5plus, table: "1", label: "Persons 5+ (thousands)", scale: 1000, decimals: 0, published: 257576, moe: null, compute: persons_5plus, expected: not_reproduced, note: "Off by 0.91 thousand: the file gives 257,576.9, the report prints 257,576 (the 2009 report prints 257,577 in Table 1 and 257,576 in the 5+ row)."}
+  - {id: male_5plus, table: "1", label: "Males 5+ (thousands)", scale: 1000, decimals: 0, published: 125321, moe: null, compute: male_5plus, expected: reproduced}
+  - {id: female_5plus, table: "1", label: "Females 5+ (thousands)", scale: 1000, decimals: 0, published: 132239, moe: null, compute: female_5plus, expected: not_reproduced, note: "Off by 0.59 thousand: 132,239.6 against the printed 132,239."}
+  - {id: drivers, table: "1", label: "Licensed drivers (thousands)", scale: 1000, decimals: 0, published: 190425, moe: null, compute: drivers, expected: reproduced}
+  - {id: drivers_male, table: "1", label: "Male drivers (thousands)", scale: 1000, decimals: 0, published: 94651, moe: null, compute: drivers_male, expected: reproduced}
+  - {id: drivers_female, table: "1", label: "Female drivers (thousands)", scale: 1000, decimals: 0, published: 95773, moe: null, compute: drivers_female, expected: reproduced}
+  - {id: workers, table: "1", label: "Workers (thousands)", scale: 1000, decimals: 0, published: 145272, moe: null, compute: workers, expected: reproduced}
+  - {id: workers_male, table: "1", label: "Male workers (thousands)", scale: 1000, decimals: 0, published: 78264, moe: null, compute: workers_male, expected: reproduced}
+  - {id: workers_female, table: "1", label: "Female workers (thousands)", scale: 1000, decimals: 0, published: 67007, moe: null, compute: workers_female, expected: reproduced}
+  - {id: vehicles, table: "1", label: "Household vehicles (thousands)", scale: 1000, decimals: 0, published: 202586, moe: null, compute: household_vehicles, expected: reproduced}
+  - {id: vehicle_trips, table: "1", label: "Household vehicle trips (millions)", scale: 1000000, decimals: 0, published: 233040, moe: null, compute: hh_vehicle_trips_total, expected: not_reproduced, note: "233,030 from the current file, 233,040 in this report. The 2009 report prints 233,030 for 2001, so the 2004 report was computed from an earlier version of the data."}
+  - {id: hh_vmt, table: "1", label: "Household VMT (millions)", scale: 1000000, decimals: 0, published: 2274797, moe: null, compute: vmt_total, expected: not_reproduced, note: "2,274,769 from the current file, 2,274,797 in this report; the 2009 report prints 2,274,769 for 2001 (earlier data version in the 2004 report)."}
+  - {id: person_trips, table: "1", label: "Person trips (millions)", scale: 1000000, decimals: 0, published: 384484, moe: null, compute: person_trips_total, expected: not_reproduced, note: "Off by 0.79 million: 384,484.8 against the printed 384,484 (the 2009 report prints 384,485 for the same quantity)."}
+  - {id: pmt, table: "1", label: "Person miles of travel (millions)", scale: 1000000, decimals: 0, published: 3783975, moe: null, compute: pmt_total, expected: not_reproduced, note: "3,783,979 from the current file, 3,783,975 in this report; the 2009 report prints 3,783,979 for 2001."}
+  - {id: trips_per_person, table: "3", label: "Daily person trips per person", scale: 1, decimals: 2, published: 3.74, moe: null, compute: trips_per_person, expected: reproduced, note: "Report definition: trips of persons of known age >= 5 divided by ALL persons (children 0-4 and unknown age included in the denominator). The 4.03 column uses all trips over all persons."}
+  - {id: pmt_per_person, table: "3", label: "Daily PMT per person", scale: 1, decimals: 2, published: 36.89, moe: null, compute: pmt_per_person, expected: reproduced}
+  - {id: vtrips_per_driver, table: "3", label: "Daily vehicle trips per driver", scale: 1, decimals: 2, published: 3.35, moe: null, compute: vtrips_per_driver, expected: reproduced}
+  - {id: vmt_per_driver, table: "3", label: "Daily VMT per driver", scale: 1, decimals: 2, published: 32.73, moe: null, compute: vmt_per_driver, expected: reproduced}
+  - {id: trips_per_hh, table: "3", label: "Daily person trips per household", scale: 1, decimals: 2, published: 9.66, moe: null, compute: trips_per_hh, expected: reproduced}
+  - {id: pmt_per_hh, table: "3", label: "Daily PMT per household", scale: 1, decimals: 2, published: 95.24, moe: null, compute: pmt_per_hh, expected: reproduced}
+  - {id: vtrips_per_hh, table: "3", label: "Daily vehicle trips per household", scale: 1, decimals: 2, published: 5.95, moe: null, compute: vtrips_per_hh, expected: reproduced}
+  - {id: vmt_per_hh, table: "3", label: "Daily VMT per household", scale: 1, decimals: 2, published: 58.05, moe: null, compute: vmt_per_hh, expected: reproduced}
+  - {id: person_trip_length, table: "3", label: "Average person trip length (miles)", scale: 1, decimals: 2, published: 10.04, moe: null, compute: person_trip_length, expected: reproduced}
+  - {id: vehicle_trip_length, table: "3", label: "Average vehicle trip length (miles)", scale: 1, decimals: 2, published: 9.87, moe: null, compute: vehicle_trip_length, expected: reproduced, note: "Only driver trips with a distance (the report's note)."}
+  - {id: person_trips_all, table: "1", label: "Person trips incl. children 0-4 (millions)", scale: 1000000, decimals: 0, published: 407262, moe: null, compute: person_trips_total_all_ages, expected: reproduced}
+  - {id: pmt_all, table: "1", label: "Person miles of travel incl. children 0-4 (millions)", scale: 1000000, decimals: 0, published: 3972749, moe: null, compute: pmt_total_all_ages, expected: reproduced}
+  - {id: trips_per_person_all, table: "3", label: "Daily person trips per person incl. 0-4", scale: 1, decimals: 2, published: 4.03, moe: null, compute: trips_per_person_all_ages, expected: reproduced}
+  - {id: pmt_per_person_all, table: "3", label: "Daily PMT per person incl. 0-4", scale: 1, decimals: 2, published: 39.26, moe: null, compute: pmt_per_person_all_ages, expected: reproduced}
+  - {id: trips_per_hh_all, table: "3", label: "Daily person trips per household incl. 0-4", scale: 1, decimals: 2, published: 10.39, moe: null, compute: trips_per_hh_all_ages, expected: reproduced}
+  - {id: pmt_per_hh_all, table: "3", label: "Daily PMT per household incl. 0-4", scale: 1, decimals: 2, published: 101.38, moe: null, compute: pmt_per_hh_all_ages, expected: reproduced}
+  - {id: person_trip_length_all, table: "3", label: "Average person trip length incl. 0-4 (miles)", scale: 1, decimals: 2, published: 9.94, moe: null, compute: person_trip_length_all_ages, expected: reproduced}
