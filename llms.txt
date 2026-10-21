@@ -1,0 +1,18 @@
+# pynhts
+
+> Typed, survey-weight-aware Python access to the US National Household Travel Survey (NHTS): waves 2001, 2009, 2017 and 2022. Validated against published FHWA tables; every known trap is documented and guarded.
+
+Read AGENTS.md first.
+
+## Docs
+- [AGENTS.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/AGENTS.md): ten rules, canonical recipes, what not to do
+- [Defaults and guards](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/guards.md): each silent error and the guard that prevents it
+- [Comparing waves](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/waves.md): codes that change meaning, crosswalks
+- [Methods](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/methods.md): variance designs, units of totals
+- [Data notes](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data_notes.md): per-wave pitfalls with evidence
+- [Validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md): published numbers reproduced, gaps reported
+- [Concept dictionary (JSON)](https://github.com/sabernaseralavi-60/pynhts/blob/main/src/pynhts/concepts.yaml): per-wave variable, universe, comparability, pitfalls
+
+## Machine-readable facts
+- `pynhts.concepts.to_json()`, `pynhts.concepts.find(variable, wave)`, `pynhts.describe(variable, wave)`
+- `pynhts.harmonize.crosswalk(concept)`, `pynhts.harmonize.compare_waves(a, b)`

@@ -8,7 +8,7 @@
 Typed, survey-weight-aware Python access to US National Household Travel Survey (NHTS)
 microdata.
 
-> **Scope and status (0.5.0, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
+> **Scope and status (0.6.0, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
 > waves are supported. The API may still change. Results are validated against published tables:
 > for 2009, 35 of 40 figures of the *Summary of Travel Trends* reproduce completely (the other 5
 > reproduce the estimate; the report's margin of error uses another multiplier), for 2001 40 of
@@ -60,6 +60,14 @@ d22.survey("trip", ["TRPMILES"]).mean("TRPMILES")          # weights="weekday" |
 d09 = pynhts.load(2009, replicates=True)
 d09.survey("person", ["R_AGE"]).total()                     # 283,054 thousand persons
 
+# daily rates by the official route, with the unit in the result
+from pynhts import rates
+rates.daily_rate(d09, "trips", per="person")                # 3.79 person trips per person and day
+
+# what a variable means in each wave, and what to watch for
+pynhts.concepts.find("VEHAGE", 2009)                        # top-coded (35 = 25+), grade H, pitfalls
+pynhts.concepts.table()                                     # concepts x 4 waves, grade C / H / N
+
 # the waves use different codes: compare and harmonize explicitly (TRPTRANS 02 is a bike in 2017, a van in 2022)
 from pynhts import harmonize
 harmonize.compare_waves()                                   # 386 variable names: 19 identical, 47 with changed codes
@@ -74,6 +82,8 @@ pynhts.dictionary(2022)                                     # every variable wit
 | `pynhts.core` | codebook-derived schema, `NHTSData` loader, missing-code handling |
 | `pynhts.stats` | totals, means, proportions, ratios with jackknife (2001, 2009, 2017) or Taylor-series (2022) errors and margins of error |
 | `pynhts.harmonize` | variable inventory of two waves; crosswalks of trip mode (four waves) and trip purpose (2017/2022; summary purpose for all four) |
+| `pynhts.concepts` | machine-readable dictionary: variable, universe, unit, comparability and pitfalls of each concept in each wave |
+| `pynhts.rates` | daily trips and miles per person or household by the official route, with units |
 | `pynhts.recipes` | replication of published tables with honest status per figure |
 | `pynhts.tours` | tour formation (HBW/HBO/NHB, work-tour patterns), FHWA-style chains; flexible home/work rules |
 | `pynhts.ml` | NumPy / PyTorch / graph export (PyTorch optional) |
@@ -106,7 +116,7 @@ They are documented in [docs/data_notes.md](https://github.com/sabernaseralavi-6
 
 ## Documentation
 
-[Comparing waves](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/waves.md) · [Defaults and guards](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/guards.md) · [Methods](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/methods.md) · [Data notes](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data_notes.md) · [Validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md)
+[Comparing waves](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/waves.md) · [Defaults and guards](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/guards.md) · [AGENTS.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/AGENTS.md) · [Methods](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/methods.md) · [Data notes](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data_notes.md) · [Validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md)
 · [Roadmap](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/roadmap.md) · [Contributing](https://github.com/sabernaseralavi-60/pynhts/blob/main/CONTRIBUTING.md) · [Changelog](https://github.com/sabernaseralavi-60/pynhts/blob/main/CHANGELOG.md)
 
 ## Data

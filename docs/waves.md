@@ -116,6 +116,12 @@ happened, 50 variables for 2001 and 2009). Two examples that would corrupt a poo
   business") has no code from 2017 on; in the 2017 data those trips (WHYTO "other general
   errands", "buy goods" and "buy services") all have `WHYTRP1S` 40.
 
+12 crosswalk concepts are available (`harmonize.concepts()`): `mode`, `purpose_summary`
+(`WHYTRP1S`), `purpose_1990` (`WHYTRP90`, ORNL's own cross-wave purpose), `trip_class` (`TRIPPURP`),
+`income` (eight nominal bands that nest exactly in all four waves), `education` (five levels), `urban_area`
+(`URBAN`, codes swapped in 2001), `urban_rural`, `density` (`HBHUR`), `vehicle_type`, `fuel`, and the
+detailed `purpose` (2017/2022). Status `nested` means several codes collapse exactly into the category,
+so the category is comparable. `harmonize.age_bands` ends at 85+ whatever the top-code;
 `crosswalk("mode")` covers all four waves; `crosswalk("purpose_summary")` maps `WHYTRP1S` of all four
 waves to ten categories; the detailed `crosswalk("purpose")` (WHYTO) stays 2017/2022 because the
 2001/2009 detail codes (11 go to work, 41 buy goods, ...) have no official alignment to the 2017

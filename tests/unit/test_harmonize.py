@@ -8,56 +8,65 @@ import pytest
 from pynhts import harmonize
 from pynhts.core.schema import load_schema
 
-MISSING = {"-9", "-8", "-7", "-1", "-88", "-77"}
 # listed by the User Guide's Table 13 but absent from the public file (the codebook lists only
 # observed codes)
 UNOBSERVED = {("mode", 2022, "22")}
-
-
-def _codebook(concept: str, wave: int, variable: str) -> dict[str, str]:
-    table = "trip"
-    return {c.code: c.label for c in load_schema(table, wave).columns[variable].codes}
-
-
-VARIABLES = {"purpose": ["WHYTO", "WHYFROM"], "purpose_summary": ["WHYTRP1S"],
-             "mode": ["TRPTRANS"]}
 # the detailed purpose crosswalk covers 2017 and 2022 (2001 and 2009 have a different WHYTO
-# scheme, aligned through the summary purpose WHYTRP1S)
-CASES = [("purpose", 2017), ("purpose", 2022)] + [
-    (c, w) for c in ("purpose_summary", "mode") for w in (2001, 2009, 2017, 2022)
-]
+# scheme, aligned through the summary purpose WHYTRP1S and the 1990-scheme purpose WHYTRP90);
+# 2022 has no FUELTYPE
+ALL = (2001, 2009, 2017, 2022)
+WAVES = {"purpose": (2017, 2022), "fuel": (2001, 2009, 2017)}
+
+
+def _codebook(concept: str, wave: int, variable: str):
+    info = harmonize.concept_info(concept)
+    return load_schema(info["table"], wave).columns[variable]
+
+
+CASES = [(c, w) for c in harmonize.concepts() for w in WAVES.get(c, ALL)]
+
+
+def _canon(code: str) -> str:
+    return str(int(code)) if code.isdigit() else code
 
 
 @pytest.mark.parametrize(("concept", "wave"), CASES)
 def test_every_observed_code_has_a_category_and_every_crosswalk_code_exists(concept, wave):
     cw = harmonize.crosswalk(concept)
     assert not cw.duplicated(["wave", "code"]).any()
-    variables = VARIABLES[concept]
+    info = harmonize.concept_info(concept)
     listed = set(cw.loc[cw["wave"] == wave, "code"])
-    for variable in variables:
-        book = _codebook(concept, wave, variable)
-        real = {c for c in book if c not in MISSING}
-        assert real <= listed, (variable, sorted(real - listed))
-    book = _codebook(concept, wave, variables[0])
+    for variable in [info["variable"], *info["also"]]:
+        col = _codebook(concept, wave, variable)
+        real = {c.code for c in col.codes
+                if c.code not in col.missing_codes and c.code != col.skip_code
+                and not (not c.label and ("-" in c.code[1:] or ":" in c.code))}
+        # the crosswalk may list codes by their canonical form; compare without zero padding
+        canon_listed = {_canon(x) for x in listed}
+        missing = {c for c in real if c not in listed and _canon(c) not in canon_listed}
+        assert not missing, (concept, wave, variable, sorted(missing))
+    book = {c.code for c in _codebook(concept, wave, info["variable"]).codes}
     extra = {c for c in listed if c not in book and (concept, wave, c) not in UNOBSERVED}
     assert not extra, extra
 
 
-@pytest.mark.parametrize("concept", ["purpose", "purpose_summary", "mode"])
+@pytest.mark.parametrize("concept", harmonize.concepts())
 def test_label_hints_match_the_codebook_wording(concept):
     cw = harmonize.crosswalk(concept)
     for r in cw.itertuples():
-        book = _codebook(concept, int(r.wave), str(r.variable))
+        col = _codebook(concept, int(r.wave), str(r.variable))
+        book = {c.code: c.label for c in col.codes}
         if r.code not in book:
             continue
-        assert book[r.code].lower().startswith(str(r.hint).lower()), (r.wave, r.code, r.hint,
-                                                                      book[r.code])
+        label = book[r.code].lower().replace("  ", " ").replace('"', "'")
+        assert label.startswith(str(r.hint).lower()), (
+            r.wave, r.code, r.hint, book[r.code])
 
 
 def test_status_vocabulary_and_comparability():
     for concept in harmonize.concepts():
         cw = harmonize.crosswalk(concept)
-        assert set(cw["status"]) <= {"exact", "merge", "approximate", "only_here"}
+        assert set(cw["status"]) <= set(harmonize.STATUSES)
         # an approximate or merged row always explains itself
         needs_note = cw[cw["status"].isin(["approximate", "only_here"])]
         by_cat = cw.groupby("category")["note"].apply(lambda s: s.notna().any())
@@ -85,7 +94,7 @@ def test_apply_maps_each_wave_with_its_own_codes_and_drops_missing():
     with pytest.raises(ValueError, match="no summary level"):
         harmonize.apply(s, "purpose", 2017, level="summary")
     with pytest.raises(ValueError, match="unknown concept"):
-        harmonize.apply(s, "income", 2017)
+        harmonize.apply(s, "nonsense", 2017)
     with pytest.raises(ValueError, match="no crosswalk rows"):
         harmonize.apply(s, "mode", 1995)
 
@@ -115,7 +124,7 @@ def test_whytrp1s_has_three_code_systems_but_shared_categories():
 
 
 def test_purpose_codes_18_and_19_follow_the_codebook_not_the_guide_table():
-    book = _codebook("purpose", 2022, "WHYTO")
+    book = {c.code: c.label for c in _codebook("purpose", 2022, "WHYTO").codes}
     assert book["18"].startswith("Rest") and book["19"].startswith("Religious")
     out = harmonize.apply(pd.Series(["18", "19"], dtype="string"), "purpose", 2022)
     assert out.tolist() == ["other", "religious_community"]

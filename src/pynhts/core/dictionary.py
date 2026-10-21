@@ -48,15 +48,23 @@ def describe(variable: str, wave: int = 2017) -> dict[str, Any]:
 
     Returns a dictionary with the dictionary-row fields plus ``codes``: a list of
     ``{"code", "label", "n", "weighted"}`` with the unweighted and weighted frequency of each
-    code in the public file.
+    code in the public file; ``topcode`` (what a top- or bottom-coded value stands for, or
+    ``None``), ``national_only`` (2001 columns that exist only for the national sample) and
+    ``concepts`` (names of the entries of :mod:`pynhts.concepts` that use the variable).
 
     Raises:
         KeyError: ``variable`` is not in the wave.
     """
+    from pynhts import concepts
+    from pynhts.core import flags
+
     for table in wave_tables(wave):
         col = load_schema(table, wave).columns.get(variable)
         if col is not None and col.owner == table:
             return {
+                "topcode": flags.topcode(wave, variable),
+                "national_only": flags.national_only(wave, variable, table),
+                "concepts": [c["concept"] for c in concepts.find(variable, wave)],
                 "variable": variable, "owner": table, "label": col.label, "dtype": col.dtype,
                 "length": col.length, "missing_codes": dict(col.missing_codes),
                 "skip_code": col.skip_code, "range": col.range,

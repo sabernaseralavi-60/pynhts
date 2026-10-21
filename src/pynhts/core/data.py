@@ -323,6 +323,7 @@ class NHTSData:
         level: float = 0.95,
         weights: str = "all",
         clusters: Literal["all", "observed"] = "all",
+        convention: Literal["fhwa", "design"] = "fhwa",
     ) -> Survey | TaylorSurvey:
         """Rows of ``table`` bound to the weights and the wave's variance design.
 
@@ -341,6 +342,13 @@ class NHTSData:
             skip: Appropriate-skip handling (see :meth:`table`).
             level: Confidence level.
             weights: Weight set: ``"all"`` (default), ``"weekday"`` or ``"weekend"`` (2022 only).
+            convention: Jackknife waves only. ``"fhwa"`` (default) uses the variance multiplier and
+                degrees of freedom of the User's Guide and the published tables; ``"design"`` the
+                textbook convention of the replicate method (2009: multiplier 1, 99 df, as R's
+                ``svrepdesign(type="JK2")``; 2001: 98 df; 2017: 84 df). Standard errors differ by
+                about 0.5 % in 2009 (multiplier 1 instead of 0.99) and not at all in 2001 and
+                2017; the degrees of freedom change the t multiplier in the fourth digit (2017:
+                1.989 on 84 df against 1.984 on 98).
             clusters: 2022 only. ``"all"`` (default) keeps every sampled household in the design,
                 also those without a row in ``table`` (no trip on the travel day, no vehicle);
                 they contribute zeros, which is the design-correct variance. ``"observed"``
@@ -354,17 +362,19 @@ class NHTSData:
         """
         rows = self.table(table, columns, missing=missing, skip=skip, weight=True, keys=True,
                           weights=weights)
-        meta = self._meta(table, self.weight_column(table, weights), list(rows.columns))
+        meta = self._meta(table, self.weight_column(table, weights), list(rows.columns),
+                          convention)
         if self.variance_method == "taylor":
             return self._bind_taylor(rows, self._check_table(table), level, weights,
                                      clusters=clusters, meta=meta)
         if weights != "all":
             raise ValueError(f"NHTS {self.wave} has only the 'all' weight set")
         return self._bind(rows, _REPLICATE_LEVEL[self._check_table(table)],
-                          self.weight_column(table), level, meta=meta)
+                          self.weight_column(table), level, meta=meta, convention=convention)
 
     def survey_rows(
-        self, rows: pd.DataFrame, level: str, *, level_conf: float = 0.95, weights: str = "all"
+        self, rows: pd.DataFrame, level: str, *, level_conf: float = 0.95, weights: str = "all",
+        convention: Literal["fhwa", "design"] = "fhwa",
     ) -> Survey | TaylorSurvey:
         """Bind your own rows to the weights and variance design, e.g. tours (``level="trip"``).
 
@@ -381,16 +391,19 @@ class NHTSData:
         Raises:
             NHTSIntegrityError: a row has no replicate-weight unit.
         """
-        meta = self._meta(level, self.weight_column(level, weights), list(rows.columns))
+        meta = self._meta(level, self.weight_column(level, weights), list(rows.columns),
+                          convention)
         if self.variance_method == "taylor":
             return self._bind_taylor(rows, self._check_table(level), level_conf, weights,
                                      rows_are_table=False, meta=meta)
         levels = self._registry.replicate_jobs
         if level not in levels:
             raise ValueError(f"level must be one of {tuple(levels)}")
-        return self._bind(rows, level, None, level_conf, meta=meta)
+        return self._bind(rows, level, None, level_conf, meta=meta, convention=convention)
 
-    def _meta(self, table: str, weight: str, columns: list[str]) -> SurveyMeta:
+    def _meta(
+        self, table: str, weight: str, columns: list[str], convention: str = "fhwa"
+    ) -> SurveyMeta:
         """Wave, design, unit and cautions that travel with a survey object and its results."""
         unit = {
             "household": "households",
@@ -405,14 +418,19 @@ class NHTSData:
         }[table]
         cautions = column_cautions(self.wave, table, columns)
         system = "national-longdist" if (self.wave == 2001 and table == "longdist") else "main"
+        design = self._registry.design_description
+        if convention != "fhwa" and self.variance_method != "taylor":
+            factor, df = self._registry.convention(convention)
+            design += (f"; variance multiplier {factor:.6g} and {df:g} degrees of freedom (the "
+                       "textbook replicate-design convention, not the published-table one)")
         return SurveyMeta(
-            wave=self.wave, table=table, weight=weight, design=self._registry.design_description,
+            wave=self.wave, table=table, weight=weight, design=design,
             unit=unit, cautions=cautions, replicate_system=system,
         )
 
     def _bind(
         self, rows: pd.DataFrame, level_name: str, weight_col: str | None, level: float,
-        meta: SurveyMeta | None = None,
+        meta: SurveyMeta | None = None, convention: str = "fhwa",
     ) -> Survey:
         keys = list(self.key("household" if level_name == "household" else "person"))
         job = self._registry.replicate_jobs[level_name]
@@ -445,9 +463,9 @@ class NHTSData:
             atol=0
         ):
             raise NHTSIntegrityError("row weights differ from the replicate file's weights")
-        return Survey(rows, unit.astype(np.int64), unit_w, reps, level=level,
-                      df=self._registry.degrees_of_freedom,
-                      factor=self._registry.jackknife_factor, meta=meta)
+        factor, df = self._registry.convention(convention)
+        return Survey(rows, unit.astype(np.int64), unit_w, reps, level=level, df=df,
+                      factor=factor, meta=meta)
 
     def _taylor_design(self) -> tuple[pd.Index, NDArray[Any]]:
         """Household ids and the stratum label of each household (the clusters)."""

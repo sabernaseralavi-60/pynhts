@@ -1,5 +1,28 @@
 # Methods
 
+## Variance conventions
+
+`data.survey(..., convention="fhwa")` (default) uses the multiplier and degrees of freedom of the User's
+Guides and of the published tables; `convention="design"` the textbook convention of the replicate method:
+
+| wave | method | `fhwa`: multiplier, df | `design`: multiplier, df |
+|---|---|---|---|
+| 2001 | delete-one jackknife, 99 replicates | 98/99, 99 | 98/99, 98 (R `svrepdesign(type="JK1")`) |
+| 2009 | jackknife-2, 100 replicates | 99/100, 100 | 1, 99 (R `svrepdesign(type="JK2")`) |
+| 2017 | JKn, 98 replicates in 14 strata | 6/7, 98 | 6/7, 84 (98 replicates minus 14 strata; not checked in R) |
+
+For 2009 the standard errors differ by 0.5 % (multiplier 0.99 against 1). Both conventions equal R's
+`survey` package for 2001 and 2009 (`tools/validate_jackknife_r.R`, `tests/golden/jackknife_*_r.csv`).
+Replicates are stored as float32, so a standard error agrees with R to about 2e-5 relative.
+
+## Daily rates
+
+`pynhts.rates.daily_rate(data, "trips" | "miles", per="person" | "household", min_age=None)` returns
+person trips or miles per day (total / 365 / persons or households) from the trip weights, with a
+ratio variance across the two weight systems and the unit in `attrs`. 2009: 3.79 trips and 36.13 miles per
+person and day (published 3.79 and 36.13); 2001 with all ages 4.03 (published 4.03; with `min_age=5`
+4.10); 2017: 3.37; 2022: 2.275.
+
 ## What a total counts (units)
 
 Every result frame carries `result.attrs["pynhts"]` with the wave, table, weight, variance design

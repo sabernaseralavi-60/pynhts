@@ -1,0 +1,19 @@
+name: data
+# Real-data tests on the small public archive of NHTS 2022 (4.5 MB). Monthly and on demand: it
+# proves that the ORNL server still serves the file the registry pins (SHA-256) and that the
+# 2022 recipe, the codebook frequencies and the Taylor-series estimator still hold on a clean runner.
+on:
+  schedule:
+    - cron: "17 5 1 * *"
+  workflow_dispatch:
+jobs:
+  wave2022:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: python -m pynhts --cache local_data/cache fetch --wave 2022
+      - run: pytest -m data tests/data/test_wave2022.py -o addopts=-ra

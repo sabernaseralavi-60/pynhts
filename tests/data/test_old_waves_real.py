@@ -159,3 +159,44 @@ def test_2001_long_distance_survey_uses_the_person_replicates():
     rows = d.longdist(["TPTRPNUM"], weight=True)
     assert row["estimate"] == pytest.approx(rows["WTPTPFIN"].sum(), rel=1e-12)
     assert 0 < row["se"] < 0.05 * row["estimate"]
+
+
+# -- independent reference: R survey package on the raw csv files (tools/validate_jackknife_r.R) --
+GOLD = {2009: "jackknife_2009_r.csv", 2001: "jackknife_2001_r.csv"}
+
+
+@pytest.mark.parametrize("wave", [2009, 2001])
+@pytest.mark.parametrize("convention", ["fhwa", "design"])
+def test_jackknife_matches_r_survey_package(wave, convention):
+    from pathlib import Path
+
+    import pandas as pd
+
+    gold = pd.read_csv(Path(__file__).resolve().parents[1] / "golden" / GOLD[wave])
+    gold = gold[gold["convention"] == convention].set_index("estimand")
+    d = pynhts.load(wave, offline=True, replicates=True)
+    hh = d.survey("household", ["HHSIZE"], convention=convention)
+    pe = d.survey("person", ["R_AGE"], convention=convention)
+    got = {
+        "household_total": hh.total().iloc[0],
+        "household_mean_HHSIZE": hh.mean("HHSIZE").iloc[0],
+        "household_total_domain": hh.total(domain=hh.rows["HHSIZE"] >= 3).iloc[0],
+        "person_total": pe.total().iloc[0],
+        "person_mean_age": pe.mean("R_AGE").iloc[0],
+        "person_total_domain": pe.total(domain=pe.rows["R_AGE"] >= 65).iloc[0],
+    }
+    assert set(got) == set(gold.index)
+    for name, row in got.items():
+        ref = gold.loc[name]
+        assert row["estimate"] == pytest.approx(ref["estimate"], rel=1e-9), name
+        # replicates are stored as float32 (relative error 6e-8 per weight), which moves a
+        # standard error by up to ~1e-5 relative and, for a controlled total whose true standard
+        # error is zero, by about 2e-9 of the estimate
+        tol = {"rel": 2e-5, "abs": 1e-8 * ref["estimate"]}
+        assert row["se"] == pytest.approx(ref["se"], **tol), name
+    # degrees of freedom: R's degf for the design convention; the published-table value for fhwa
+    expected_df = {("fhwa", 2009): 100, ("fhwa", 2001): 99, ("design", 2009): 99,
+                   ("design", 2001): 98}[(convention, wave)]
+    assert hh.df == expected_df
+    if convention == "design":
+        assert hh.df == gold.loc["household_total", "df"]

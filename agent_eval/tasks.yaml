@@ -1,0 +1,48 @@
+# Agent tasks: questions with a known answer and a trap that a careless analysis falls into.
+# oracle: the expected number; tol: relative tolerance of the grader; source: where the number comes
+# from (published = a printed table, r = R's survey package on the raw csv files, reference = the
+# pynhts reference solution in reference.py, whose logic is documented in docs/). `naive` is the
+# value the typical careless solution gives (informational; measured when the guard did not exist).
+tasks:
+  - {id: T01, wave: 2009, unit: "thousand households", oracle: 113101.33, tol: 0.001, source: "published (Summary of Travel Trends 2009, Table 1: 113,101)",
+     question: "How many households did NHTS 2009 represent (in thousands)?",
+     trap: "control question: weights must be applied (the unweighted count is 150,147)", naive: 150.147}
+  - {id: T02, wave: 2009, unit: minutes, oracle: 24.2052, tol: 0.003, source: reference,
+     question: "What is the mean usual commute time (TIMETOWK) of NHTS 2009 workers?",
+     trap: "-4 and -5 (did not work) are not minutes", naive: 23.34}
+  - {id: T03, wave: 2009, unit: miles, oracle: 9.7198, tol: 0.003, source: reference,
+     question: "What is the mean distance (VMT_MILE) of the trips driven by the respondent in NHTS 2009?",
+     trap: "the skip code -1 sits on every non-driver trip", naive: 5.36}
+  - {id: T04, wave: 2001, unit: "thousand persons", oracle: 19626.32, tol: 0.002, source: reference,
+     question: "How many children under 5 did NHTS 2001 represent (in thousands)?",
+     trap: "only 2001 has them; the other waves start at age 5", naive: 0}
+  - {id: T05, wave: 2009, unit: "trips per person per day", oracle: 3.7945, tol: 0.005, source: "published (Summary of Travel Trends 2009, Table 3: 3.79)",
+     question: "How many person trips per person and day does NHTS 2009 give?",
+     trap: "travel-day weights are annual: the total divided by persons is 1,385", naive: 1385.0}
+  - {id: T06, wave: 2022, unit: "trips per person per day", oracle: 2.2752, tol: 0.005, source: reference,
+     question: "How many person trips per person and day does NHTS 2022 give, by the official route (trip weights)?",
+     trap: "CNTTDTR x the person weight gives 2.078; the official trip weights include the methods adjustment", naive: 2.078}
+  - {id: T07, wave: 2001, unit: "million trips per year", oracle: 2617.13, tol: 0.003, source: reference,
+     question: "How many long-distance (50+ miles) person trips per year does the NHTS 2001 long-distance file represent, in millions?",
+     trap: "one row per trip, national sample, annual weight (national person weight x 365/28)", naive: 0.045165}
+  - {id: T08, wave: 2009, unit: "percent of trips", oracle: 10.4683, tol: 0.005, source: reference,
+     question: "What share of the weighted trips of NHTS 2009 are walking trips?",
+     trap: "TRPTRANS code 01 is a CAR in 2009 and WALK in 2017; use the mode crosswalk", naive: 44.39}
+  - {id: T09, wave: 2001, unit: "percent of households", oracle: 67.9188, tol: 0.005, source: reference,
+     question: "What share of the weighted households of NHTS 2001 live in an urban area (not an urban cluster, not outside)?",
+     trap: "URBAN codes 1 and 2 are swapped in 2001", naive: 11.13}
+  - {id: T10, wave: 2009, unit: "percent of vehicles", oracle: 3.82, tol: 0.01, source: reference,
+     question: "What share of the weighted household vehicles of NHTS 2009 are 25 years old or older?",
+     trap: "VEHAGE is top-coded in 2009: 35 means 25 or older, so a mean or a threshold above 25 is wrong", naive: 0}
+  - {id: T11, wave: 2009, unit: "thousand persons", oracle: 37227.74, tol: 0.002, source: reference,
+     question: "How many persons made no trip on the travel day in NHTS 2009 (in thousands)?",
+     trap: "these persons have no travel-day weight in the replicate file; they still count in the person weight", naive: 0}
+  - {id: T12, wave: 2001, unit: "percent of households", oracle: 10.5378, tol: 0.005, source: reference,
+     question: "What share of the weighted households of NHTS 2001 had a family income of $100,000 or more (nominal)?",
+     trap: "18 income bands in 2001 against 11 in 2017; use the nested band crosswalk", naive: 0}
+  - {id: T13, wave: 2017, unit: "percent of trips", oracle: 2.5447, tol: 0.005, source: reference,
+     question: "What share of the weighted trips of NHTS 2017 are public-transit trips (summary mode)?",
+     trap: "mode codes differ in every wave; the summary level equals the official PUBTRANS flag", naive: 0}
+  - {id: T14, wave: 2009, unit: "thousand households", oracle: 53.3886, tol: 0.001, source: "r (survey::svrepdesign on the raw csv files: 53,388.56)",
+     question: "What is the standard error of the number of one-person households in NHTS 2009 (in thousands)?",
+     trap: "a simple-random-sample standard error is several times too small; the jackknife replicates give the design-based one", naive: 4.0}

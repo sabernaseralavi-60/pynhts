@@ -1,0 +1,386 @@
+# Concept dictionary: what a variable MEANS in each of the four waves and whether it can be compared.
+#
+# One entry per analysis concept. Fields
+#   title          what the concept is
+#   table          table the variable lives in (None where it differs by wave: see `variables`)
+#   variables      wave -> variable name (null = the wave has no such variable)
+#   universe       wave -> who is asked / which rows exist (omitted when identical everywhere)
+#   unit           what the number is
+#   comparability  C  comparable as is (after code padding)
+#                  H  comparable after the harmonization named in `harmonize`
+#                  N  do not compare across waves (definition or universe changed)
+#   harmonize      the pynhts function/crosswalk that makes it comparable, or null
+#   pitfalls       what goes wrong if you ignore the concept (each one was seen in the data)
+#   evidence       where the statement comes from: data = checked on the files (tests/data/
+#                  test_four_wave_guards.py and test_old_waves_real.py re-check the checkable
+#                  parts), doc = official document, review = the adversarial review of 0.4.0
+#                  (docs/opus_review_0.4.0.md), unverified = not checked.
+#
+# Waves: 2001, 2009, 2017, 2022.
+concepts:
+  age:
+    title: Age of the person (years)
+    table: person
+    variables: {2001: R_AGE, 2009: R_AGE, 2017: R_AGE, 2022: R_AGE}
+    imputed: {2001: R_AGEWGT, 2017: R_AGE_IMP}
+    universe: {2001: "all ages including children 0-4", 2009: "5 and older", 2017: "5 and older", 2022: "5 and older"}
+    unit: years
+    comparability: H
+    harmonize: pynhts.harmonize.age_bands
+    pitfalls:
+      - "Top-coded in every wave: 88 means 85+ in 2001, 92 means 89+ in 2009, 2017 and 2022 (core/flags.py). A mean age is biased."
+      - "2001 contains children 0-4; the other waves start at 5. A 2001 mean age or share under 16 is not comparable without restricting to 5+."
+      - "Missing age: 2001 has 2,399 persons without age, 2017 496 (use R_AGE_IMP); 2009 and 2022 have none (imputed during weighting; 2022 imputation unverified)."
+    evidence: [data, doc]
+  sex:
+    title: Sex of the person
+    table: person
+    variables: {2001: R_SEX, 2009: R_SEX, 2017: R_SEX, 2022: R_SEX}
+    unit: code
+    comparability: H
+    harmonize: "strip zero padding: 2001 uses '1'/'2', later waves '01'/'02'"
+    pitfalls:
+      - "2001 code format differs from the other waves; 2017 and 2022 keep -7/-8 answers (use the imputed versions where they exist)."
+    evidence: [data]
+  household_income:
+    title: Annual household income (nominal dollars of the survey year)
+    table: household
+    variables: {2001: HHFAMINC, 2009: HHFAMINC, 2017: HHFAMINC, 2022: HHFAMINC}
+    imputed: {2022: HHFAMINC_IMP}
+    unit: income band
+    comparability: H
+    harmonize: harmonize.crosswalk("income")
+    pitfalls:
+      - "18 bands in 2001/2009, 11 in 2017/2022, with different top bands; the eight nominal bands in the crosswalk nest exactly."
+      - "Dollars are nominal: the same band is a different real income in each wave."
+    evidence: [data]
+  education:
+    title: Highest education attained
+    table: person
+    variables: {2001: EDUC, 2009: EDUC, 2017: EDUC, 2022: EDUC}
+    universe: {2001: "16+ (skip below)", 2009: "18+", 2017: "from age 14 (answered by 14+)", 2022: "from age 14"}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("education")
+    pitfalls:
+      - "8 categories in 2001 and 2022, 5 in 2009 and 2017, with different meanings of the middle codes."
+      - "Universe differs: compare adults only (25+ is safest)."
+    evidence: [data]
+  race_household:
+    title: Race of the household respondent
+    table: household
+    variables: {2001: HHR_RACE, 2009: HH_RACE, 2017: HH_RACE, 2022: HH_RACE}
+    unit: category
+    comparability: N
+    harmonize: null
+    pitfalls:
+      - "The variable is called HHR_RACE in 2001 and HH_RACE later; in 2001 and 2009 Hispanic/Mexican is one of the race codes, in 2017 and 2022 it is a separate variable (HH_HISP). No crosswalk is offered: collapsing loses information that depends on the question."
+    evidence: [data]
+  worker:
+    title: The person has a job
+    table: person
+    variables: {2001: WORKER, 2009: WORKER, 2017: WORKER, 2022: WORKER}
+    universe: {2001: "skipped below age 15", 2009: "16+", 2017: "16+", 2022: "16+"}
+    unit: yes/no
+    comparability: H
+    harmonize: "restrict to 16+ and strip zero padding"
+    pitfalls: ["The rows outside the universe carry the skip code -1: do not read them as 'no'."]
+    evidence: [data]
+  driver:
+    title: The person is a driver
+    table: person
+    variables: {2001: DRIVER, 2009: DRIVER, 2017: DRIVER, 2022: DRIVER}
+    unit: yes/no
+    comparability: H
+    harmonize: "restrict to the driving-age universe and strip zero padding"
+    pitfalls: ["The universe is not the same in every wave (2001 asks from age 15, later waves similar): restrict to adults for comparisons."]
+    evidence: [data]
+  primary_activity:
+    title: Primary activity last week
+    table: person
+    variables: {2001: PRMACT, 2009: PRMACT, 2017: PRMACT, 2022: PRMACT}
+    unit: category
+    comparability: N
+    harmonize: null
+    pitfalls: ["In 2022 the question is asked of non-workers only and has no 'working' code (9,752 skips); earlier waves ask everybody."]
+    evidence: [data]
+  household_size:
+    title: Number of household members
+    table: household
+    variables: {2001: HHSIZE, 2009: HHSIZE, 2017: HHSIZE, 2022: HHSIZE}
+    unit: persons
+    comparability: C
+    harmonize: null
+    pitfalls: ["2001 counts all members including children 0-4, like the others; the 2022 completeness rule for a finished household changed (all members 5+ for small households)."]
+    evidence: [data, doc]
+  household_vehicles:
+    title: Number of household vehicles
+    table: household
+    variables: {2001: HHVEHCNT, 2009: HHVEHCNT, 2017: HHVEHCNT, 2022: HHVEHCNT}
+    unit: vehicles
+    comparability: C
+    harmonize: null
+    pitfalls: ["The 2009 file counts golf carts (292 vehicle rows); the FHWA 'household vehicles' are types 01-07."]
+    evidence: [data]
+  urban_rural:
+    title: Urban or rural area of the home
+    table: household
+    variables: {2001: URBRUR, 2009: URBRUR, 2017: URBRUR, 2022: URBRUR}
+    unit: category
+    comparability: C
+    harmonize: harmonize.crosswalk("urban_rural")
+    pitfalls: ["The Census delineation behind the flag is not the same in every wave (vintage not verified for each)."]
+    evidence: [data]
+  urbanized_area:
+    title: Urbanized area / urban cluster / outside
+    table: household
+    variables: {2001: URBAN, 2009: URBAN, 2017: URBAN, 2022: URBAN}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("urban_area")
+    pitfalls: ["Codes 1 and 2 are SWAPPED in 2001 (1 = urban cluster, 2 = urban area); compare_waves reports it as codes_permuted."]
+    evidence: [data]
+  block_group_density:
+    title: Claritas urban/rural class of the home block group
+    table: household
+    variables: {2001: HBHUR, 2009: HBHUR, 2017: HBHUR, 2022: HBHUR}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("density")
+    pitfalls: ["2009 merges town and rural into 'TC'; 2022 uses numeric codes 1-5; class thresholds may differ by wave."]
+    evidence: [data]
+  state:
+    title: State of the home
+    table: household
+    variables: {2001: HHSTATE, 2009: HHSTATE, 2017: HHSTATE, 2022: null}
+    unit: code
+    comparability: N
+    harmonize: null
+    pitfalls:
+      - "2022 has no state. 2001 hides small states as 'XX' (1,950 households), which pynhts masks as suppressed."
+      - "2001 is dominated by add-on states (e.g. Wisconsin): never use unweighted state shares."
+    evidence: [data]
+  cbsa:
+    title: Core-based statistical area of the home
+    table: household
+    variables: {2001: null, 2009: HH_CBSA, 2017: HH_CBSA, 2022: null}
+    unit: code
+    comparability: N
+    harmonize: null
+    pitfalls: ["'XXXXX' marks a suppressed CBSA (83,369 households in 2009, 73,746 in 2017); pynhts masks it. Only the large CBSAs are identified."]
+    evidence: [data]
+  trip_distance:
+    title: Trip distance (miles)
+    table: trip
+    variables: {2001: TRPMILES, 2009: TRPMILES, 2017: TRPMILES, 2022: TRPMILES}
+    unit: miles
+    comparability: N
+    harmonize: null
+    pitfalls:
+      - "2001 and 2009: self-reported (about 85 % whole numbers). 2017 and 2022: shortest-path distance between geocoded points; 2017 distances are about 10 % shorter than a self-report would be (compatibility document); TRPMILAD scales them back for 2001/2009 comparisons."
+      - "-1 (skip) rows exist in 2009 (181) and must not enter a sum; -8 'don't know' is 1.1-1.5 % of trips in 2001 and 2009."
+    evidence: [data, doc]
+  vehicle_miles_of_trip:
+    title: Distance of a trip driven by the respondent
+    table: trip
+    variables: {2001: null, 2009: VMT_MILE, 2017: VMT_MILE, 2022: VMT_MILE}
+    unit: miles
+    comparability: H
+    harmonize: "2001: TRPMILES of the trips on which DRVR_FLG is yes"
+    pitfalls: ["-1 on every non-driver trip: the mean over the file is about 45 % too low unless the skip code is NA (default skip='auto')."]
+    evidence: [data]
+  trip_duration:
+    title: Trip duration (minutes)
+    table: trip
+    variables: {2001: TRVLCMIN, 2009: TRVLCMIN, 2017: TRVLCMIN, 2022: TRVLCMIN}
+    unit: minutes
+    comparability: C
+    harmonize: null
+    pitfalls: ["2017 is capped at 1,200 minutes; the other waves reach 1,425-1,439."]
+    evidence: [data]
+  dwell_time:
+    title: Time spent at the destination (minutes)
+    table: trip
+    variables: {2001: DWELTIME, 2009: DWELTIME, 2017: DWELTIME, 2022: DWELTIME}
+    unit: minutes
+    comparability: H
+    harmonize: null
+    pitfalls: ["The 'missing' values are structural (the last trip of the day) and are coded differently: -1 in 2001, -9 later (21-34 % of trips)."]
+    evidence: [data]
+  travel_day:
+    title: Day of the week and date of the travel day
+    table: trip
+    variables: {2001: TRAVDAY, 2009: TRAVDAY, 2017: TRAVDAY, 2022: TRAVDAY}
+    unit: code (1 or 01 = Sunday)
+    comparability: H
+    harmonize: strip zero padding
+    pitfalls: ["Fieldwork periods differ (2001: March 2001 to June 2002 including September 11; 2009: March 2008 to April 2009; 2017: April 2016 to April 2017; 2022: January 2022 to January 2023, a pandemic recovery period)."]
+    evidence: [data, doc]
+  trip_mode:
+    title: Mode of transportation of the trip
+    table: trip
+    variables: {2001: TRPTRANS, 2009: TRPTRANS, 2017: TRPTRANS, 2022: TRPTRANS}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("mode")
+    pitfalls: ["The same code means different things in every wave (08 = airplane, golf cart, motorcycle, bus; 19 = cruise ship, taxi, airplane, e-scooter). Never pool raw codes."]
+    evidence: [data]
+  trip_purpose_detailed:
+    title: Purpose of the trip (WHYTO / WHYFROM)
+    table: trip
+    variables: {2001: WHYTO, 2009: WHYTO, 2017: WHYTO, 2022: WHYTO}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("purpose")
+    pitfalls: ["2001 and 2009 share one scheme (11 go to work, 41 buy goods ...), 2017 and 2022 another; only 2017/2022 are crosswalked in detail. Use purpose_1990 or purpose_summary across all four."]
+    evidence: [data, doc]
+  trip_purpose_summary:
+    title: ORNL summary trip purpose (WHYTRP1S)
+    table: trip
+    variables: {2001: WHYTRP1S, 2009: WHYTRP1S, 2017: WHYTRP1S, 2022: WHYTRP1S}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("purpose_summary")
+    pitfalls: ["Three code systems: 2001 uses 01-13 (01 = to work), 2009 and later 01/10/20/... (01 = home). 2009 code 60 (family/personal business) has no code from 2017 on: those trips are in 40."]
+    evidence: [data]
+  trip_purpose_1990:
+    title: Trip purpose in the 1990 NPTS scheme (WHYTRP90)
+    table: trip
+    variables: {2001: WHYTRP90, 2009: WHYTRP90, 2017: WHYTRP90, 2022: WHYTRP90}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("purpose_1990")
+    pitfalls: ["98 'N/A' and 99 'Refused' look like purposes and are masked by pynhts; 'vacation' exists in 2001 and 2009 only."]
+    evidence: [data]
+  trip_class:
+    title: Home-based trip class (HBW, HBSHOP, HBSOC, HBO, NHB)
+    table: trip
+    variables: {2001: TRIPPURP, 2009: TRIPPURP, 2017: TRIPPURP, 2022: TRIPPURP}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("trip_class")
+    pitfalls: ["Three code formats (1-5, HBW... strings, 01-05). Derived from each wave's own purpose codes, so shares are indicative."]
+    evidence: [data]
+  trip_counting:
+    title: How many trips a person reports
+    table: trip
+    variables: {2001: null, 2009: null, 2017: null, 2022: null}
+    unit: method
+    comparability: N
+    harmonize: null
+    pitfalls:
+      - "Collection changed: 2001 and 2009 telephone interviews with prompts; 2017 about 66 % web; 2022 about 99 % web without a travel log, with trip weights that contain a +10-12 % methods adjustment. Trips per person are not like for like."
+      - "2017 and 2022 report 'change type of transportation' segments as trips (1.07 % and 0.69 % of weighted trips); 2001 and 2009 link them."
+    evidence: [doc, data]
+  vehicle_type:
+    title: Type of household vehicle
+    table: vehicle
+    variables: {2001: VEHTYPE, 2009: VEHTYPE, 2017: VEHTYPE, 2022: VEHTYPE}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("vehicle_type")
+    pitfalls: ["Only 2009 has golf carts; 'other' is 91 in 2001 and 97 later."]
+    evidence: [data]
+  vehicle_fuel:
+    title: Fuel of the vehicle
+    table: vehicle
+    variables: {2001: FUELTYPE, 2009: FUELTYPE, 2017: FUELTYPE, 2022: null}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("fuel")
+    pitfalls: ["2001/2009: number (1 diesel ... 4 gasoline); 2017: string with reversed codes (01 gas, 02 diesel). 2001 is national-sample only. 2022 has HYBRID instead."]
+    evidence: [data]
+  vehicle_age:
+    title: Age of the vehicle (years) and model year
+    table: vehicle
+    variables: {2001: VEHAGE, 2009: VEHAGE, 2017: VEHAGE, 2022: VEHAGE}
+    unit: years
+    comparability: H
+    harmonize: "bands, not means"
+    pitfalls: ["Top-coded: 40 means 33+ in 2001, 2017 and 2022; 35 means 25+ in 2009. VEHYEAR has a bottom code (2009: 1974 = 1984 or earlier)."]
+    evidence: [data, doc]
+  annual_miles_best:
+    title: ORNL best estimate of annual vehicle miles
+    table: vehicle
+    variables: {2001: BESTMILE, 2009: BESTMILE, 2017: BESTMILE, 2022: null}
+    unit: miles per year
+    comparability: H
+    harmonize: null
+    pitfalls: ["2001: NATIONAL SAMPLE ONLY; with the full-sample weight annual VMT comes out 12.9 % low. 2022 has no BESTMILE."]
+    evidence: [data, doc]
+  annual_miles_self:
+    title: Self-reported annual vehicle miles
+    table: vehicle
+    variables: {2001: ANNMILES, 2009: ANNMILES, 2017: ANNMILES, 2022: ANNMILES}
+    unit: miles per year
+    comparability: H
+    harmonize: null
+    pitfalls: ["Item non-response differs a lot (4.3 % don't know in 2001, 2.2 % in 2009, 26 % in 2017, 1.5 % in 2022): the observed distributions are not comparable without modelling the missing."]
+    evidence: [data]
+  transit_use:
+    title: Use of public transit
+    table: person
+    variables: {2001: PTUSED, 2009: PTUSED, 2017: PTUSED, 2022: PTUSED}
+    unit: varies
+    comparability: N
+    harmonize: null
+    pitfalls: ["Four different definitions (a frequency category, a count of uses in the past month, days used of 30, and in 2022 asked of 9.5 % only). 2009 value 99 is a hidden missing code (masked)."]
+    evidence: [data]
+  commute_time:
+    title: Usual time to work (minutes)
+    table: person
+    variables: {2001: TIMETOWK, 2009: TIMETOWK, 2017: TIMETOWK, 2022: null}
+    unit: minutes
+    comparability: H
+    harmonize: null
+    pitfalls: ["-4 and -5 (did not work) are non-answers in 2001 and 2009 and used to pollute the mean (23.34 instead of 24.21 minutes in 2009); masked since 0.5.0. 2022 has no TIMETOWK."]
+    evidence: [data]
+  weight_household:
+    title: Household weight
+    table: household
+    variables: {2001: WTHHFIN, 2009: WTHHFIN, 2017: WTHHFIN, 2022: WTHHFIN}
+    unit: households
+    comparability: N
+    harmonize: null
+    pitfalls: ["Population baselines differ (2022 excludes group quarters, about -2.5 %): compare shares and rates, not totals. 2001 also has national weights (WTHHNTL) that pynhts does not offer."]
+    evidence: [doc, data]
+  weight_person:
+    title: Person weight
+    table: person
+    variables: {2001: WTPERFIN, 2009: WTPERFIN, 2017: WTPERFIN, 2022: WTPERFIN}
+    unit: persons
+    comparability: N
+    harmonize: null
+    pitfalls: ["2001 persons include children 0-4. 2022 weights include a non-traveler adjustment and calibration to the ACS commute modes."]
+    evidence: [doc, data]
+  weight_trip:
+    title: Travel-day (trip) weight
+    table: trip
+    variables: {2001: WTTRDFIN, 2009: WTTRDFIN, 2017: WTTRDFIN, 2022: WTTRDFIN}
+    unit: annual person trips
+    comparability: N
+    harmonize: null
+    pitfalls:
+      - "ANNUAL: 365 x the person weight in 2001, 2009 and 2017. A total is annual trips; divide by 365 for a daily figure."
+      - "2022: trip weights vary within a person-day and include the methods adjustment; daily trips per person are 2.275 from the trip weights and 2.078 from CNTTDTR x the person weight."
+    evidence: [data, doc]
+  long_distance_trips:
+    title: Long-distance (50+ mile) travel
+    table: longdist
+    variables: {2001: BEGTRIP, 2009: null, 2017: null, 2022: BEGTRIP}
+    unit: varies
+    comparability: N
+    harmonize: null
+    pitfalls:
+      - "2001: one row per long trip, national sample only, weight = national person weight x 365/28 (annual). 2022: one row per person (a total counts persons)."
+    evidence: [data, doc]
+  replicate_design:
+    title: How the standard error is obtained
+    table: null
+    variables: {2001: null, 2009: null, 2017: null, 2022: null}
+    unit: method
+    comparability: N
+    harmonize: "pynhts handles it per wave (registry)"
+    pitfalls:
+      - "2001: delete-one jackknife, 99 replicates (factor 98/99); 2009: jackknife-2, 100 replicates (99/100); 2017: JKn, 98 replicates (6/7); 2022: Taylor series. Filter by domain=, not by dropping rows, and never mix replicate systems (2001 long-distance replicates are a different system)."
+    evidence: [data, doc]

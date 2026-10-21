@@ -92,6 +92,13 @@ class TableSchema:
 
 
 @cache
+def _missing_overrides() -> dict[int, dict[str, dict[str, str]]]:
+    ref = resources.files("pynhts") / "_schema" / "missing_overrides.yaml"
+    raw: dict[int, dict[str, dict[str, str]]] = yaml.safe_load(ref.read_text(encoding="utf-8"))
+    return raw
+
+
+@cache
 def load_schema(table: str, wave: int = 2017) -> TableSchema:
     """Load the schema of ``table`` (household, person, trip or vehicle).
 
@@ -104,6 +111,7 @@ def load_schema(table: str, wave: int = 2017) -> TableSchema:
     if not ref.is_file():
         raise ValueError(f"no schema for table {table!r} in NHTS wave {wave}")
     raw: dict[str, Any] = yaml.safe_load(ref.read_text(encoding="utf-8"))
+    extra = _missing_overrides().get(int(raw["wave"]), {})
     cols = {
         name: Column(
             name=name,
@@ -111,7 +119,8 @@ def load_schema(table: str, wave: int = 2017) -> TableSchema:
             dtype=c["dtype"],
             length=c["length"],
             owner=c["owner"],
-            missing_codes=dict(c["missing_codes"]),
+            missing_codes={**c["missing_codes"],
+                           **{str(k): v for k, v in extra.get(name, {}).items()}},
             skip_code=c["skip_code"],
             range=c["range"],
             codes=tuple(Code(**k) for k in c["codes"]),

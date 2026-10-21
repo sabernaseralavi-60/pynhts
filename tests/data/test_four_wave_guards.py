@@ -186,3 +186,81 @@ def test_2009_day_weights_of_persons_without_trips_are_filled():
     s = d.survey_rows(persons.assign(n=1.0), "trip")
     assert s.total("n").iloc[0]["estimate"] == pytest.approx(
         d.persons(["WTPERFIN"], weight=False)["WTPERFIN"].sum() * 365, rel=1e-9)
+
+
+# ---- extended crosswalks (0.6.0) on the real files ----------------------------------------------
+def _cases():
+    waves = {"purpose": (2017, 2022), "fuel": (2001, 2009, 2017)}
+    return [(c, w) for c in harmonize.concepts() for w in waves.get(c, WAVES)]
+
+
+@pytest.mark.parametrize(("concept", "wave"), _cases())
+def test_crosswalk_maps_nearly_every_real_value(concept, wave):
+    info = harmonize.concept_info(concept)
+    d = pynhts.load(wave, offline=True)
+    frame = d.table(info["table"], [info["variable"]], weight=False, keys=False)
+    col = frame[info["variable"]]
+    mapped = harmonize.apply_column(frame, info["variable"], concept)
+    skip = d.schema(info["table"]).columns[info["variable"]].skip_code
+    known = col.notna()
+    if skip is not None:  # the skip code means "does not apply"
+        known &= (col.astype("string") != skip).fillna(False)
+    unmapped = (mapped.isna() & known).mean() / max(known.mean(), 1e-9)
+    assert unmapped < 0.001, (concept, wave, unmapped)
+
+
+def test_income_bands_are_ordered_and_nest_in_every_wave():
+    order = ["lt_10k", "10_15k", "15_25k", "25_35k", "35_50k", "50_75k", "75_100k", "100k_plus"]
+    for wave in WAVES:
+        d = pynhts.load(wave, offline=True)
+        hh = d.households(["HHFAMINC"], weight=False)
+        band = harmonize.apply_column(hh, "HHFAMINC", "income")
+        rank = band.map({b: i for i, b in enumerate(order)})
+        raw = pd.to_numeric(hh["HHFAMINC"], errors="coerce")
+        ok = rank.notna() & raw.notna()
+        assert (rank[ok].groupby(raw[ok]).nunique() == 1).all()   # one band per code
+        assert rank[ok].groupby(raw[ok]).first().is_monotonic_increasing, wave
+        assert set(band.dropna().unique()) == set(order), wave
+
+
+def test_urban_codes_are_swapped_in_2001_and_the_crosswalk_undoes_it():
+    shares = {}
+    for wave in WAVES:
+        hh = pynhts.load(wave, offline=True).households(["URBAN"], weight=False)
+        band = harmonize.apply_column(hh, "URBAN", "urban_area")
+        shares[wave] = (band == "urban_area").mean()
+        raw_one = (hh["URBAN"].astype("string").str.lstrip("0") == "1").mean()
+        if wave == 2001:
+            assert raw_one < 0.5 < shares[wave] + 0.5  # raw code 1 is the small class in 2001
+    assert all(0.4 < v < 0.95 for v in shares.values()), shares
+
+
+def test_whytrp90_non_answers_are_masked_and_vacation_exists_only_in_old_waves():
+    for wave in WAVES:
+        t = pynhts.load(wave, offline=True).trips(["WHYTRP90"], weight=False)
+        assert not t["WHYTRP90"].isin(["98", "99"]).any(), wave
+        cat = harmonize.apply_column(t, "WHYTRP90", "purpose_1990")
+        assert ("vacation" in set(cat.dropna())) == (wave in (2001, 2009)), wave
+
+
+def test_suppression_codes_are_not_places():
+    d01 = pynhts.load(2001, offline=True)
+    assert not (d01.households(["HHSTATE"], weight=False)["HHSTATE"] == "XX").any()
+    for wave in (2009, 2017):
+        hh = pynhts.load(wave, offline=True).households(["HH_CBSA"], weight=False)
+        assert not (hh["HH_CBSA"] == "XXXXX").any(), wave
+
+
+def test_numeric_fuel_codes_of_2001_map_like_the_string_codes_of_2017():
+    v01 = pynhts.load(2001, offline=True).vehicles(["FUELTYPE"], weight=False)
+    fuel = harmonize.apply_column(v01, "FUELTYPE", "fuel")
+    assert set(fuel.dropna()) == {"diesel", "alt_fuel", "gasoline"}
+    assert (fuel == "gasoline").sum() > (fuel == "diesel").sum() > 0
+
+
+def test_age_bands_end_at_85_and_agree_across_top_codes():
+    for wave in WAVES:
+        p = pynhts.load(wave, offline=True).persons(["R_AGE"], weight=False)
+        bands = harmonize.age_bands(p["R_AGE"], wave)
+        assert (bands == "85+").sum() > 0 and bands.notna().sum() > 0.99 * p["R_AGE"].notna().sum()
+        assert ("0-4" in set(bands.dropna())) == (wave == 2001)

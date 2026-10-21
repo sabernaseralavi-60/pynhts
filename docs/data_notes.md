@@ -142,6 +142,15 @@ Every item was checked against the files or the official documents and is covere
   `TRPMILES` (434,079), not a count.
 * `R_SEX` has -7/-8/-9 codes; they are masked (`missing="nan"`) like all coded missing values.
 
+# Suspected sentinels that pynhts does NOT mask
+
+Single values that sit above the rest of a column and look like a "none/unknown" code, but have no
+documentation: 2009 `MCUSED` = 999 (45 rows, the next value is 700), 2009 `NWALKTRP` = 99 (138 rows, the next
+is 98), 2022 `NUMONTRP` = 99 (16 rows, the next is 50), and `OD_READ*` = 999999 in 2001/2009 (not checked).
+They stay in the data as values; the review that found them recommends a documented decision before
+any masking. Masked, because the codebook says what they are: negative non-answer codes (-3 ... -6),
+2009 `PTUSED` 99, `WHYTRP90` 98 and 99, and the suppression codes `HHSTATE` "XX" and `HH_CBSA` "XXXXX".
+
 # NHTS 2009: pitfalls found while importing it
 
 Release 2.1 (October 2011). Every item was checked against the files or the official documents;

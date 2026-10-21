@@ -32,6 +32,9 @@ from pynhts.core.schema import load_schema, wave_tables
 
 MISSING_CODES = frozenset({"-9", "-8", "-7", "-1", "-88", "-77"})
 Level = Literal["category", "summary"]
+# statuses of a crosswalk row; "nested" = several codes collapse exactly into the category
+STATUSES = ("exact", "nested", "merge", "approximate", "only_here")
+COMPARABLE = {"exact", "nested"}
 
 
 @cache
@@ -42,7 +45,7 @@ def _load() -> dict[str, Any]:
 
 
 def concepts() -> list[str]:
-    """Names of the concepts with a curated crosswalk: purpose, purpose_summary and mode."""
+    """Names of the concepts with a curated crosswalk (``crosswalk(name)`` lists them)."""
     return sorted(_load())
 
 
@@ -58,9 +61,24 @@ def crosswalk(concept: str) -> pd.DataFrame:
         if col not in frame.columns:
             frame[col] = None
     frame.insert(0, "variable", spec["variable"])
-    cols = ["wave", "variable", "code", "hint", "category", "summary", "status", "note"]
+    frame.insert(1, "table", spec.get("table", "trip"))
+    cols = ["wave", "variable", "table", "code", "hint", "category", "summary", "status", "note"]
     out: pd.DataFrame = frame[cols]
     return out
+
+
+def concept_info(concept: str) -> dict[str, Any]:
+    """Variable(s), table, source and note of a crosswalk concept.
+
+    Keys: ``variable``, ``also`` (further variables with the same codes, e.g. ``WHYFROM``),
+    ``table`` (the table the variable lives in), ``source``, ``note``.
+    """
+    spec = _spec(concept)
+    return {
+        "variable": spec["variable"], "also": list(spec.get("also", [])),
+        "table": spec.get("table", "trip"), "source": spec.get("source", ""),
+        "note": str(spec.get("note", "")).strip(),
+    }
 
 
 def _spec(concept: str) -> dict[str, Any]:
@@ -123,19 +141,32 @@ def apply(
     frame = crosswalk(concept)
     if level == "summary" and frame["summary"].isna().all():
         raise ValueError(f"concept {concept!r} has no summary level")
-    mapping = dict(zip(frame.loc[frame["wave"] == wave, "code"],
-                       frame.loc[frame["wave"] == wave, level], strict=True))
+    mapping = {_canon(str(k)): v for k, v in zip(frame.loc[frame["wave"] == wave, "code"],
+                                                  frame.loc[frame["wave"] == wave, level],
+                                                  strict=True)}
     if not mapping:
         raise ValueError(f"no crosswalk rows for wave {wave}")
-    mapped = codes.astype("string").map(mapping)
+    mapped = _as_codes(codes).map(mapping)
     return mapped.astype("string")
+
+
+def _as_codes(codes: pd.Series) -> pd.Series:
+    """Codes as zero-unpadded strings; whole numbers stored as floats (2001 ``FUELTYPE``) too."""
+    if pd.api.types.is_numeric_dtype(codes):
+        whole = codes.where(codes == codes.round())
+        text = whole.astype("Int64").astype("string")
+    else:
+        text = codes.astype("string")
+    result: pd.Series = text.map(lambda x: _canon(x) if isinstance(x, str) else x)
+    return result.astype("string")
 
 
 def category_report(concept: str, wave_a: int = 2017, wave_b: int = 2022) -> pd.DataFrame:
     """Per category: the codes of two waves, and whether the category is equally defined.
 
     ``comparable`` is true when the category exists in both waves and every code in it is
-    ``exact`` in both. Everything else needs a decision from the analyst; ``issue`` says why.
+    ``exact`` or ``nested`` (an exact collapse of finer codes) in both. Everything else needs a
+    decision from the analyst; ``issue`` says why.
     """
     frame = crosswalk(concept)
     rows = []
@@ -149,14 +180,14 @@ def category_report(concept: str, wave_a: int = 2017, wave_b: int = 2022) -> pd.
         issue = ""
         if not in_both:
             issue = f"only in {wave_a if len(per[wave_a]) else wave_b}"
-        elif statuses - {"exact"}:
+        elif statuses - COMPARABLE:
             issue = "; ".join(sorted({str(n) for n in g["note"].dropna()})) or "/".join(
-                sorted(statuses - {"exact"}))
+                sorted(statuses - COMPARABLE))
         rows.append({
             "category": cat,
             f"codes_{wave_a}": ",".join(per[wave_a]["code"]),
             f"codes_{wave_b}": ",".join(per[wave_b]["code"]),
-            "comparable": in_both and statuses == {"exact"},
+            "comparable": in_both and statuses <= COMPARABLE,
             "issue": issue,
         })
     report: pd.DataFrame = pd.DataFrame(rows)
@@ -170,6 +201,21 @@ def _norm(text: object) -> str:
 def _canon(code: str) -> str:
     """Code without zero padding: 2001 writes "1", 2009 "01" for the same answer."""
     return str(int(code)) if re.fullmatch(r"\d+", code) else code
+
+
+def age_bands(age: pd.Series, wave: int | None = None) -> pd.Series:
+    """Age in comparable bands that end at "85+" (the top-codes differ: 88 = 85+, 92 = 89+).
+
+    Bands: 0-4 (2001 only), 5-15, 16-17, 18-24, 25-34, 35-44, 45-54, 55-64, 65-74, 75-84, 85+.
+    Missing ages stay missing. The wave is only needed to refuse a frame from another wave.
+    """
+    if wave is not None:
+        _wave_of(age, wave)
+    edges = [-1, 4, 15, 17, 24, 34, 44, 54, 64, 74, 84, 200]
+    labels = ["0-4", "5-15", "16-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65-74",
+              "75-84", "85+"]
+    banded: pd.Series = pd.cut(pd.to_numeric(age), edges, labels=labels).astype("string")
+    return banded
 
 
 def _raw(text: object) -> str:
@@ -261,4 +307,5 @@ def _codes(wave: int) -> dict[str, dict[str, str]]:
     return out
 
 
-__all__ = ["apply", "category_report", "compare_waves", "concepts", "crosswalk"]
+__all__ = ["age_bands", "apply", "apply_column", "category_report", "compare_waves",
+           "concept_info", "concepts", "crosswalk"]

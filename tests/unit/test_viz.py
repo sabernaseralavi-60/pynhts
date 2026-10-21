@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import matplotlib
 import numpy as np
 import pandas as pd
 import pytest
 
+matplotlib = pytest.importorskip("matplotlib")
 matplotlib.use("Agg")
 
 from pynhts import viz  # noqa: E402

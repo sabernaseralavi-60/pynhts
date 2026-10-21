@@ -4,6 +4,29 @@
 
 (nothing yet)
 
+## 0.6.0 (2026-10-21)
+
+Added value for researchers and AI agents, from the plan of the adversarial review.
+
+* **`pynhts.concepts`**: a machine-readable dictionary of 38 analysis concepts x 4 waves (variable of each
+  wave, universe, unit, comparability grade C/H/N, harmonization, pitfalls, evidence);
+  `concepts.find(variable, wave)`, `table()`, `get()`, `to_json()`; `describe()` now adds `topcode`,
+  `national_only` and the concepts that use the variable. Tests check every variable against the schemas and
+  the checkable statements against the real files (`tests/data/test_concepts_real.py`).
+* **9 new crosswalk concepts** (`income`, `education`, `urban_area`, `urban_rural`, `density`,
+  `vehicle_type`, `fuel`, `trip_class`, `purpose_1990`), status `nested` for exact collapses, `age_bands`
+  that end at 85+; `harmonize.apply` accepts numeric codes and ignores zero padding.
+  `WHYTRP90` 98/99 and the suppression codes `HHSTATE` "XX", `HH_CBSA` "XXXXX" are masked
+  (`_schema/missing_overrides.yaml`).
+* **`pynhts.rates.daily_rate`**: daily person trips or miles per person or household by the official route,
+  with the unit in the result.
+* **Variance conventions** (`convention="fhwa"` or `"design"`) for the jackknife waves, equal to R's `survey`
+  package (`tools/validate_jackknife_r.R`, golden files `tests/golden/jackknife_2001_r.csv`, `..._2009_r.csv`).
+* **AGENTS.md, llms.txt and an agent task harness** (`agent_eval/`): 14 questions with an oracle and a trap;
+  `python agent_eval/grade.py --reference` / `answers.json`.
+* Scheduled real-data workflow for NHTS 2022 (`.github/workflows/data.yml`); the visualization test skips
+  without matplotlib.
+
 ## 0.5.0 (2026-10-21)
 
 Guards and corrections from an adversarial review of 0.4.0 (`docs/opus_review_0.4.0.md`).

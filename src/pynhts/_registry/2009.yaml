@@ -10,6 +10,9 @@ variance:
   replicates: 100
   factor: 0.99
   df: 100
+  design:
+    factor: 1.0
+    df: 99
   description: jackknife-2 (JK2) with 100 replicate weights as in the 2009 User's Guide (variance = 99/100
     times the sum of squared deviations; t multiplier on 100 degrees of freedom)
   replicate_files:

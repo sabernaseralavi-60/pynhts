@@ -89,6 +89,23 @@ class Registry:
         """Multiplier of the summed squared deviations: 6/7 (2017), 99/100 (2009), 98/99 (2001)."""
         return float(self.variance.get("factor", 6 / 7))
 
+    def convention(self, name: str) -> tuple[float, float]:
+        """Variance multiplier and t degrees of freedom: ``"fhwa"`` or ``"design"``.
+
+        ``fhwa`` is what the User's Guide and the published tables use (99/100 and 100 df in
+        2009, 98/99 and 99 df in 2001, 6/7 and 98 df in 2017); ``design`` the textbook convention
+        of the replicate method (2009 JK2: multiplier 1 and 99 df; 2001 JK1: 98 df; 2017: 84 df,
+        replicates minus strata).
+        """
+        if name == "fhwa":
+            return self.jackknife_factor, self.degrees_of_freedom
+        if name == "design":
+            d = self.variance.get("design")
+            if not d:
+                raise ValueError(f"NHTS {self.wave} has no 'design' convention (Taylor series)")
+            return float(d["factor"]), float(d["df"])
+        raise ValueError("convention must be 'fhwa' or 'design'")
+
     @property
     def degrees_of_freedom(self) -> float:
         """Degrees of freedom of the t multiplier for margins of error."""

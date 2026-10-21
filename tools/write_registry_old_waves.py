@@ -47,6 +47,9 @@ VARIANCE = {
     # User's Guide V2 ch. 7: 100 replicate weights, Jackknife2; Var = 99/100 * sum (REP_i - x)^2
     2009: {
         "method": "jkn", "replicates": 100, "factor": 0.99, "df": 100,
+        # textbook JK2: sum of squared deviations without a multiplier; R survey::degf = 99
+        # (tools/validate_jackknife_r.R, tests/golden/jackknife_2009_r.csv)
+        "design": {"factor": 1.0, "df": 99},
         "description": (
             "jackknife-2 (JK2) with 100 replicate weights as in the 2009 User's Guide "
             "(variance = 99/100 times the sum of squared deviations; t multiplier on 100 "
@@ -69,6 +72,8 @@ VARIANCE = {
     # User's Guide V3 ch. 7-E: 99 replicate weights, delete-one jackknife; Var = 98/99 * sum
     2001: {
         "method": "jkn", "replicates": 99, "factor": 98 / 99, "df": 99,
+        # JK1: same multiplier, but R survey::degf = replicates - 1 = 98
+        "design": {"factor": 98 / 99, "df": 98},
         "description": (
             "delete-one jackknife with 99 replicate weights as in the 2001 User's Guide "
             "(variance = 98/99 times the sum of squared deviations; t multiplier on 99 "

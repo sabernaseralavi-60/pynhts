@@ -1,0 +1,18 @@
+# Non-answer codes that the codebooks list as ordinary values (checked on the files, 2026-10-21).
+# Applied by load_schema to the column of that name in every table of the wave. wave -> column ->
+# code -> kind of non-answer.
+#   WHYTRP90 (trip purpose in the 1990 NPTS scheme): 98 "N/A" (2001, 2009) and 99 "Refused"
+#     (all waves; "Refused / Don't Know" from 2017) are not purposes: 9,837 rows in 2009.
+#   HHSTATE 'XX' (2001) and HH_CBSA 'XXXXX' (2009, 2017) stand for a suppressed (censored) place.
+#     The 2017 codebook labels them "Suppressed, in an MSA of less than 1 million".
+2001:
+  WHYTRP90: {'98': not_applicable, '99': refused}
+  HHSTATE: {XX: suppressed}
+2009:
+  WHYTRP90: {'98': not_applicable, '99': refused}
+  HH_CBSA: {XXXXX: suppressed}
+2017:
+  WHYTRP90: {'99': refused}
+  HH_CBSA: {XXXXX: suppressed}
+2022:
+  WHYTRP90: {'99': refused}

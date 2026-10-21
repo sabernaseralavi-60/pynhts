@@ -11,6 +11,9 @@ variance:
   replicates: 98
   factor: 0.8571428571428571
   df: 98
+  # design convention: the 98 replicates carry 14 variance strata, so 98 - 14 = 84 degrees of
+  # freedom (2017 Weighting Report; FHWA's tables use 98)
+  design: {factor: 0.8571428571428571, df: 84}
   description: >-
     stratified jackknife (JKn) with 98 replicate weights, 14 variance strata of 7 units (variance = 6/7 times the sum of squared deviations; t multiplier on 98 degrees of freedom)
   replicate_files:

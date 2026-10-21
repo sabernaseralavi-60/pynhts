@@ -19,7 +19,8 @@
 # Codes -9, -8, -7 (not ascertained, don't know, refused) are missing values in both waves.
 
 purpose:
-  variable: WHYTO            # also applies to WHYFROM
+  variable: WHYTO
+  also: [WHYFROM]            # same codes
   source: "2022 NHTS Data User Guide, Table 12; codebooks 2017 v1.2 and 2022 v2.1"
   rows:
     - {wave: 2017, code: "01", hint: "Regular home activities", category: home_activities, status: exact}
@@ -252,3 +253,308 @@ purpose_summary:
     - {wave: 2017, code: "97", hint: "Something else", category: other, status: exact}
     - {wave: 2022, code: "97", hint: "Something else", category: other, status: exact}
     - {wave: 2001, code: "13", hint: "Trip purpose does not fall", category: other, status: approximate, note: "In 2001, 39.7 % (weighted) of the trips in this category have WHYTO 20 'School/religious activity', which 2009 files under 'School/Daycare/Religious' (20); so 2001 'other' is inflated and the school category deflated (cross-tabulation of the 2001 file)."}
+
+# ---- extended concepts (0.6.0): one row per (wave, code); hints are the start of the codebook label
+
+income:
+  variable: HHFAMINC
+  table: household
+  source: "codebooks 2001 (User's Guide v3, App. B), 2009 v2.1, 2017 v1.2, 2022 v2.1; checked against the data"
+  note: >-
+    Household income in NOMINAL dollars of the survey year: eight bands nest exactly in all four waves (the 2001/2009 $5,000 bands and the 2017/2022 wider bands). Bands at the same nominal dollar value are not the same real income; adjust for inflation before comparing the lower or upper tails. 2022 also has an imputed version HHFAMINC_IMP.
+  rows:
+    - {wave: 2001, code: "01", hint: "< $5,000", category: lt_10k, status: nested}
+    - {wave: 2001, code: "02", hint: "$5,000 - $9,999", category: lt_10k, status: nested}
+    - {wave: 2001, code: "03", hint: "$10,000 - $14,999", category: 10_15k, status: exact}
+    - {wave: 2001, code: "04", hint: "$15,000 - $19,999", category: 15_25k, status: nested}
+    - {wave: 2001, code: "05", hint: "$20,000 - $24,999", category: 15_25k, status: nested}
+    - {wave: 2001, code: "06", hint: "$25,000 - $29,999", category: 25_35k, status: nested}
+    - {wave: 2001, code: "07", hint: "$30,000 - $34,999", category: 25_35k, status: nested}
+    - {wave: 2001, code: "08", hint: "$35,000 - $39,999", category: 35_50k, status: nested}
+    - {wave: 2001, code: "09", hint: "$40,000 - $44,999", category: 35_50k, status: nested}
+    - {wave: 2001, code: "10", hint: "$45,000 - $49,999", category: 35_50k, status: nested}
+    - {wave: 2001, code: "11", hint: "$50,000 - $54,999", category: 50_75k, status: nested}
+    - {wave: 2001, code: "12", hint: "$55,000 - $59,999", category: 50_75k, status: nested}
+    - {wave: 2001, code: "13", hint: "$60,000 - $64,999", category: 50_75k, status: nested}
+    - {wave: 2001, code: "14", hint: "$65,000 - $69,999", category: 50_75k, status: nested}
+    - {wave: 2001, code: "15", hint: "$70,000 - $74,999", category: 50_75k, status: nested}
+    - {wave: 2001, code: "16", hint: "$75,000 - $79,999", category: 75_100k, status: nested}
+    - {wave: 2001, code: "17", hint: "$80,000 - $99,999", category: 75_100k, status: nested}
+    - {wave: 2001, code: "18", hint: "> = $100,000", category: 100k_plus, status: exact}
+    - {wave: 2017, code: "01", hint: "Less than $10,000", category: lt_10k, status: exact}
+    - {wave: 2017, code: "02", hint: "$10,000 to $14,999", category: 10_15k, status: exact}
+    - {wave: 2017, code: "03", hint: "$15,000 to $24,999", category: 15_25k, status: exact}
+    - {wave: 2017, code: "04", hint: "$25,000 to $34,999", category: 25_35k, status: exact}
+    - {wave: 2017, code: "05", hint: "$35,000 to $49,999", category: 35_50k, status: exact}
+    - {wave: 2017, code: "06", hint: "$50,000 to $74,999", category: 50_75k, status: exact}
+    - {wave: 2017, code: "07", hint: "$75,000 to $99,999", category: 75_100k, status: exact}
+    - {wave: 2017, code: "08", hint: "$100,000 to $124,999", category: 100k_plus, status: nested}
+    - {wave: 2017, code: "09", hint: "$125,000 to $149,999", category: 100k_plus, status: nested}
+    - {wave: 2017, code: "10", hint: "$150,000 to $199,999", category: 100k_plus, status: nested}
+    - {wave: 2017, code: "11", hint: "$200,000 or more", category: 100k_plus, status: nested}
+    - {wave: 2009, code: "01", hint: "< $5,000", category: lt_10k, status: nested}
+    - {wave: 2009, code: "02", hint: "$5,000 - $9,999", category: lt_10k, status: nested}
+    - {wave: 2009, code: "03", hint: "$10,000 - $14,999", category: 10_15k, status: exact}
+    - {wave: 2009, code: "04", hint: "$15,000 - $19,999", category: 15_25k, status: nested}
+    - {wave: 2009, code: "05", hint: "$20,000 - $24,999", category: 15_25k, status: nested}
+    - {wave: 2009, code: "06", hint: "$25,000 - $29,999", category: 25_35k, status: nested}
+    - {wave: 2009, code: "07", hint: "$30,000 - $34,999", category: 25_35k, status: nested}
+    - {wave: 2009, code: "08", hint: "$35,000 - $39,999", category: 35_50k, status: nested}
+    - {wave: 2009, code: "09", hint: "$40,000 - $44,999", category: 35_50k, status: nested}
+    - {wave: 2009, code: "10", hint: "$45,000 - $49,999", category: 35_50k, status: nested}
+    - {wave: 2009, code: "11", hint: "$50,000 - $54,999", category: 50_75k, status: nested}
+    - {wave: 2009, code: "12", hint: "$55,000 - $59,999", category: 50_75k, status: nested}
+    - {wave: 2009, code: "13", hint: "$60,000 - $64,999", category: 50_75k, status: nested}
+    - {wave: 2009, code: "14", hint: "$65,000 - $69,999", category: 50_75k, status: nested}
+    - {wave: 2009, code: "15", hint: "$70,000 - $74,999", category: 50_75k, status: nested}
+    - {wave: 2009, code: "16", hint: "$75,000 - $79,999", category: 75_100k, status: nested}
+    - {wave: 2009, code: "17", hint: "$80,000 - $99,999", category: 75_100k, status: nested}
+    - {wave: 2009, code: "18", hint: "> = $100,000", category: 100k_plus, status: exact}
+    - {wave: 2022, code: "01", hint: "Less than $10,000", category: lt_10k, status: exact}
+    - {wave: 2022, code: "02", hint: "$10,000 to $14,999", category: 10_15k, status: exact}
+    - {wave: 2022, code: "03", hint: "$15,000 to $24,999", category: 15_25k, status: exact}
+    - {wave: 2022, code: "04", hint: "$25,000 to $34,999", category: 25_35k, status: exact}
+    - {wave: 2022, code: "05", hint: "$35,000 to $49,999", category: 35_50k, status: exact}
+    - {wave: 2022, code: "06", hint: "$50,000 to $74,999", category: 50_75k, status: exact}
+    - {wave: 2022, code: "07", hint: "$75,000 to $99,999", category: 75_100k, status: exact}
+    - {wave: 2022, code: "08", hint: "$100,000 to $124,999", category: 100k_plus, status: nested}
+    - {wave: 2022, code: "09", hint: "$125,000 to $149,999", category: 100k_plus, status: nested}
+    - {wave: 2022, code: "10", hint: "$150,000 to $199,999", category: 100k_plus, status: nested}
+    - {wave: 2022, code: "11", hint: "$200,000 or more", category: 100k_plus, status: nested}
+
+education:
+  variable: EDUC
+  table: person
+  source: "codebooks 2001, 2009, 2017, 2022; checked against the data"
+  note: >-
+    Five levels. The UNIVERSE differs: 2001 asks 16+, 2009 18+, 2017 and 2022 from age 14 on, and an adult's attainment is not a child's: compare only adults (25+ is safest). 2001 'some graduate school, no degree' is mapped to bachelor's (the degree held).
+  rows:
+    - {wave: 2001, code: "1", hint: "Less then high school", category: less_than_hs, status: exact}
+    - {wave: 2001, code: "2", hint: "High school graduate,", category: hs_grad, status: exact}
+    - {wave: 2001, code: "3", hint: "Vocational/technical t", category: some_college_assoc, status: nested}
+    - {wave: 2001, code: "4", hint: "Some college, but no d", category: some_college_assoc, status: nested}
+    - {wave: 2001, code: "5", hint: "Associate's degree (fo", category: some_college_assoc, status: nested}
+    - {wave: 2001, code: "6", hint: "Bachelor's degree (for", category: bachelor, status: exact}
+    - {wave: 2001, code: "7", hint: "Some graduate or profe", category: bachelor, status: approximate, note: "'Some graduate school but no degree': the person holds a bachelor's degree."}
+    - {wave: 2001, code: "8", hint: "Graduate or profession", category: graduate, status: exact}
+    - {wave: 2009, code: "01", hint: "Less then high school", category: less_than_hs, status: exact}
+    - {wave: 2009, code: "02", hint: "High school graduate,", category: hs_grad, status: exact}
+    - {wave: 2009, code: "03", hint: "Some college or Associ", category: some_college_assoc, status: exact}
+    - {wave: 2009, code: "04", hint: "Bachelor's degree (BA,", category: bachelor, status: exact}
+    - {wave: 2009, code: "05", hint: "Graduate or Profession", category: graduate, status: exact}
+    - {wave: 2017, code: "01", hint: "Less than a high schoo", category: less_than_hs, status: exact}
+    - {wave: 2017, code: "02", hint: "High school graduate o", category: hs_grad, status: exact}
+    - {wave: 2017, code: "03", hint: "Some college or associ", category: some_college_assoc, status: exact}
+    - {wave: 2017, code: "04", hint: "Bachelor's degree", category: bachelor, status: exact}
+    - {wave: 2017, code: "05", hint: "Graduate degree or pro", category: graduate, status: exact}
+    - {wave: 2022, code: "01", hint: "Less than high school", category: less_than_hs, status: nested}
+    - {wave: 2022, code: "02", hint: "Some high school, no d", category: less_than_hs, status: nested}
+    - {wave: 2022, code: "03", hint: "High school graduate,", category: hs_grad, status: exact}
+    - {wave: 2022, code: "04", hint: "Some college, no degre", category: some_college_assoc, status: nested}
+    - {wave: 2022, code: "05", hint: "Associates degree (2-y", category: some_college_assoc, status: nested}
+    - {wave: 2022, code: "06", hint: "Bachelor's degree", category: bachelor, status: exact}
+    - {wave: 2022, code: "07", hint: "Master's degree", category: graduate, status: nested}
+    - {wave: 2022, code: "08", hint: "Professional/Doctorate", category: graduate, status: nested}
+
+urban_area:
+  variable: URBAN
+  table: household
+  source: "codebooks 2001, 2009, 2017, 2022; checked against the data"
+  note: >-
+    CODES 1 AND 2 ARE SWAPPED in 2001 (1 = urban cluster, 2 = urban area). The Census delineation behind the flag is not the same in every wave (vintage not verified for each).
+  rows:
+    - {wave: 2001, code: "1", hint: "In an Urban cluster", category: urban_cluster, status: exact, note: "Swapped against the later waves."}
+    - {wave: 2001, code: "2", hint: "In an urban area", category: urban_area, status: exact, note: "Swapped against the later waves."}
+    - {wave: 2001, code: "3", hint: "In an area surrounded", category: surrounded_by_urban, status: exact}
+    - {wave: 2001, code: "4", hint: "Not in urban area", category: not_urban, status: exact}
+    - {wave: 2009, code: "01", hint: "In an urban area", category: urban_area, status: exact}
+    - {wave: 2009, code: "02", hint: "In an Urban cluster", category: urban_cluster, status: exact}
+    - {wave: 2009, code: "03", hint: "In an area surrounded", category: surrounded_by_urban, status: exact}
+    - {wave: 2009, code: "04", hint: "Not in urban area", category: not_urban, status: exact}
+    - {wave: 2017, code: "01", hint: "In an urban area", category: urban_area, status: exact}
+    - {wave: 2017, code: "02", hint: "In an Urban cluster", category: urban_cluster, status: exact}
+    - {wave: 2017, code: "03", hint: "In an area surrounded", category: surrounded_by_urban, status: exact}
+    - {wave: 2017, code: "04", hint: "Not in urban area", category: not_urban, status: exact}
+    - {wave: 2022, code: "01", hint: "In an urban area", category: urban_area, status: exact}
+    - {wave: 2022, code: "02", hint: "In an Urban cluster", category: urban_cluster, status: exact}
+    - {wave: 2022, code: "03", hint: "In an area surrounded", category: surrounded_by_urban, status: exact}
+    - {wave: 2022, code: "04", hint: "Not in urban area", category: not_urban, status: exact}
+
+urban_rural:
+  variable: URBRUR
+  table: household
+  source: "codebooks 2001, 2009, 2017, 2022"
+  note: >-
+    Same two codes in every wave; the Census delineation behind the flag is not the same in every wave.
+  rows:
+    - {wave: 2001, code: "1", hint: "Urban", category: urban, status: exact}
+    - {wave: 2001, code: "2", hint: "Rural", category: rural, status: exact}
+    - {wave: 2009, code: "01", hint: "Urban", category: urban, status: exact}
+    - {wave: 2009, code: "02", hint: "Rural", category: rural, status: exact}
+    - {wave: 2017, code: "01", hint: "Urban", category: urban, status: exact}
+    - {wave: 2017, code: "02", hint: "Rural", category: rural, status: exact}
+    - {wave: 2022, code: "01", hint: "Urban", category: urban, status: exact}
+    - {wave: 2022, code: "02", hint: "Rural", category: rural, status: exact}
+
+density:
+  variable: HBHUR
+  table: household
+  source: "codebooks 2001, 2009, 2017, 2022"
+  note: >-
+    Claritas block-group urban/rural class of the home. 2009 merges 'town' and 'rural' into 'Town and Country' (TC); 2022 uses numeric codes 1-5. The class thresholds are not documented here and may differ by wave.
+  rows:
+    - {wave: 2001, code: "U", hint: "Urban", category: urban, status: exact}
+    - {wave: 2001, code: "S", hint: "Suburban", category: suburban, status: exact}
+    - {wave: 2001, code: "C", hint: "Second City", category: second_city, status: exact}
+    - {wave: 2001, code: "T", hint: "Town", category: town, status: exact}
+    - {wave: 2001, code: "R", hint: "Rural", category: rural, status: exact}
+    - {wave: 2009, code: "U", hint: "Urban", category: urban, status: exact}
+    - {wave: 2009, code: "S", hint: "Suburban", category: suburban, status: exact}
+    - {wave: 2009, code: "C", hint: "Second City", category: second_city, status: exact}
+    - {wave: 2009, code: "TC", hint: "Town and Country", category: town_country, status: approximate, note: "2009 merges the town and rural classes of the other waves."}
+    - {wave: 2009, code: "X", hint: "Unassigned", category: unassigned, status: only_here, note: "Unassigned block group; no counterpart in the other waves."}
+    - {wave: 2017, code: "U", hint: "Urban", category: urban, status: exact}
+    - {wave: 2017, code: "S", hint: "Suburban", category: suburban, status: exact}
+    - {wave: 2017, code: "C", hint: "Second City", category: second_city, status: exact}
+    - {wave: 2017, code: "T", hint: "Small Town", category: town, status: exact}
+    - {wave: 2017, code: "R", hint: "Rural", category: rural, status: exact}
+    - {wave: 2022, code: "05", hint: "Urban", category: urban, status: exact}
+    - {wave: 2022, code: "04", hint: "Suburban", category: suburban, status: exact}
+    - {wave: 2022, code: "03", hint: "Second City", category: second_city, status: exact}
+    - {wave: 2022, code: "02", hint: "Small Town", category: town, status: exact}
+    - {wave: 2022, code: "01", hint: "Rural", category: rural, status: exact}
+
+vehicle_type:
+  variable: VEHTYPE
+  table: vehicle
+  source: "codebooks 2001, 2009, 2017, 2022; checked against the data"
+  note: >-
+    2009 also holds golf carts (292 vehicle rows, 8) which the FHWA 'household vehicle' totals leave out. 2009 codebook frequencies of the four main classes differ from the file (see data notes).
+  rows:
+    - {wave: 2001, code: "01", hint: "Automobile/car/station", category: car, status: exact}
+    - {wave: 2001, code: "02", hint: "Van (mini, cargo, pass", category: van, status: exact}
+    - {wave: 2001, code: "03", hint: "Sports utility vehicle", category: suv, status: exact}
+    - {wave: 2001, code: "04", hint: "Pickup truck", category: pickup, status: exact}
+    - {wave: 2001, code: "05", hint: "Other truck", category: other_truck, status: exact}
+    - {wave: 2001, code: "06", hint: "RV (recreational vehic", category: rv, status: exact}
+    - {wave: 2001, code: "07", hint: "Motorcycle", category: motorcycle, status: exact}
+    - {wave: 2001, code: "91", hint: "Other", category: other, status: exact}
+    - {wave: 2009, code: "01", hint: "Automobile/car/station", category: car, status: exact}
+    - {wave: 2009, code: "02", hint: "Van (mini, cargo, pass", category: van, status: exact}
+    - {wave: 2009, code: "03", hint: "Sports utility vehicle", category: suv, status: exact}
+    - {wave: 2009, code: "04", hint: "Pickup truck", category: pickup, status: exact}
+    - {wave: 2009, code: "05", hint: "Other truck", category: other_truck, status: exact}
+    - {wave: 2009, code: "06", hint: "RV (recreational vehic", category: rv, status: exact}
+    - {wave: 2009, code: "07", hint: "Motorcycle", category: motorcycle, status: exact}
+    - {wave: 2009, code: "08", hint: "Golf cart", category: golf_cart, status: only_here, note: "Only 2009 has a golf-cart code."}
+    - {wave: 2009, code: "97", hint: "Other", category: other, status: exact}
+    - {wave: 2017, code: "01", hint: "Automobile/Car/Station", category: car, status: exact}
+    - {wave: 2017, code: "02", hint: "Van (Mini/Cargo/Passen", category: van, status: exact}
+    - {wave: 2017, code: "03", hint: "SUV (Santa Fe, Tahoe,", category: suv, status: exact}
+    - {wave: 2017, code: "04", hint: "Pickup Truck", category: pickup, status: exact}
+    - {wave: 2017, code: "05", hint: "Other Truck", category: other_truck, status: exact}
+    - {wave: 2017, code: "06", hint: "RV (Recreational Vehic", category: rv, status: exact}
+    - {wave: 2017, code: "07", hint: "Motorcycle/Motorbike", category: motorcycle, status: exact}
+    - {wave: 2017, code: "97", hint: "Something Else", category: other, status: exact}
+    - {wave: 2022, code: "01", hint: "Automobile/Car/Station", category: car, status: exact}
+    - {wave: 2022, code: "02", hint: "Van (Minivan/Cargo/Pas", category: van, status: exact}
+    - {wave: 2022, code: "03", hint: "SUV (Santa Fe, Tahoe,", category: suv, status: exact}
+    - {wave: 2022, code: "04", hint: "Pickup Truck", category: pickup, status: exact}
+    - {wave: 2022, code: "05", hint: "Other Truck", category: other_truck, status: exact}
+    - {wave: 2022, code: "06", hint: "Recreational vehicle (", category: rv, status: exact}
+    - {wave: 2022, code: "07", hint: "MotorcycleMoped", category: motorcycle, status: exact}
+    - {wave: 2022, code: "97", hint: "Something else", category: other, status: exact}
+
+fuel:
+  variable: FUELTYPE
+  table: vehicle
+  source: "codebooks 2001, 2009, 2017; checked against the data"
+  note: >-
+    2001 and 2009: ORNL's EIA-derived fuel as a NUMBER (1 diesel, 2 natural gas, 3 electricity, 4 gasoline; 2001 for national-sample vehicles only); 2017: a coded string with REVERSED meaning (01 gas, 02 diesel, 03 hybrid/electric/alternative). 2022 has no FUELTYPE (use HYBRID).
+  rows:
+    - {wave: 2001, code: "1", hint: "Diesel", category: diesel, status: exact}
+    - {wave: 2001, code: "2", hint: "Natural Gas", category: alt_fuel, status: nested}
+    - {wave: 2001, code: "3", hint: "Electricity", category: alt_fuel, status: nested}
+    - {wave: 2001, code: "4", hint: "Gasoline", category: gasoline, status: exact}
+    - {wave: 2009, code: "1", hint: "Diesel", category: diesel, status: exact}
+    - {wave: 2009, code: "2", hint: "Natural Gas", category: alt_fuel, status: nested}
+    - {wave: 2009, code: "3", hint: "Electricity", category: alt_fuel, status: nested}
+    - {wave: 2009, code: "4", hint: "Motor Gasoline", category: gasoline, status: exact}
+    - {wave: 2017, code: "01", hint: "Gas", category: gasoline, status: exact}
+    - {wave: 2017, code: "02", hint: "Diesel", category: diesel, status: exact}
+    - {wave: 2017, code: "03", hint: "Hybrid, electric or al", category: alt_fuel, status: approximate, note: "Hybrid, electric or alternative fuel in one code."}
+    - {wave: 2017, code: "97", hint: "Some other fuel", category: other, status: exact}
+
+trip_class:
+  variable: TRIPPURP
+  table: trip
+  source: "codebooks 2001, 2009, 2017, 2022"
+  note: >-
+    ORNL's derived home-based purpose class: HBW, home-based shopping, social/recreational, other, and not home-based. Three code formats (1-5, HBW...NHB strings, 01-05). It is derived from each wave's own purpose codes and the trips are counted differently (2017 and 2022 report some transfer segments as trips), so shares are indicative.
+  rows:
+    - {wave: 2001, code: "1", hint: "Home-base work", category: hbw, status: exact}
+    - {wave: 2001, code: "2", hint: "Home-based shopping", category: hb_shopping, status: exact}
+    - {wave: 2001, code: "3", hint: "Home-based social/recr", category: hb_social_rec, status: exact}
+    - {wave: 2001, code: "4", hint: "Other home-based", category: hb_other, status: exact}
+    - {wave: 2001, code: "5", hint: "Not home-based", category: nhb, status: exact}
+    - {wave: 2009, code: "HBW", hint: "Home-base work", category: hbw, status: exact}
+    - {wave: 2009, code: "HBSHOP", hint: "Home-based shopping", category: hb_shopping, status: exact}
+    - {wave: 2009, code: "HBSOCREC", hint: "Home-based social/recr", category: hb_social_rec, status: exact}
+    - {wave: 2009, code: "HBO", hint: "Other home-based", category: hb_other, status: exact}
+    - {wave: 2009, code: "NHB", hint: "Not home-based", category: nhb, status: exact}
+    - {wave: 2017, code: "HBW", hint: "Home-based trip (work)", category: hbw, status: exact}
+    - {wave: 2017, code: "HBSHOP", hint: "Home-based trip (shopp", category: hb_shopping, status: exact}
+    - {wave: 2017, code: "HBSOCREC", hint: "Home-based trip (socia", category: hb_social_rec, status: exact}
+    - {wave: 2017, code: "HBO", hint: "Home-based trip (other", category: hb_other, status: exact}
+    - {wave: 2017, code: "NHB", hint: "Not a home-based trip", category: nhb, status: exact}
+    - {wave: 2022, code: "01", hint: "Home-based work (HBW)", category: hbw, status: exact}
+    - {wave: 2022, code: "02", hint: "Home-based shopping (H", category: hb_shopping, status: exact}
+    - {wave: 2022, code: "03", hint: "Home-based social/recr", category: hb_social_rec, status: exact}
+    - {wave: 2022, code: "04", hint: "Home-based other (HBO)", category: hb_other, status: exact}
+    - {wave: 2022, code: "05", hint: "Not a home-based trip", category: nhb, status: exact}
+
+purpose_1990:
+  variable: WHYTRP90
+  table: trip
+  source: "codebooks 2001, 2009, 2017, 2022"
+  note: >-
+    ORNL's trip purpose in the 1990 NPTS scheme, present with the same 10 classes in all four waves (the best single cross-wave purpose variable). 'Vacation' (07) exists in 2001 and 2009 only; 98 'N/A' and 99 'Refused' are masked as non-answers.
+  rows:
+    - {wave: 2001, code: "01", hint: "ToFrmWrk", category: work, status: exact}
+    - {wave: 2001, code: "02", hint: "WorkRel", category: work_related, status: exact}
+    - {wave: 2001, code: "03", hint: "Shopping", category: shopping, status: exact}
+    - {wave: 2001, code: "04", hint: "Fam/Pers", category: family_personal, status: exact}
+    - {wave: 2001, code: "05", hint: "SchlChch", category: school_church, status: exact}
+    - {wave: 2001, code: "06", hint: "Md/DDS", category: medical, status: exact}
+    - {wave: 2001, code: "08", hint: "VistFrnd", category: visit, status: exact}
+    - {wave: 2001, code: "10", hint: "Soc/Rec", category: social_rec, status: exact}
+    - {wave: 2001, code: "11", hint: "Other", category: other, status: exact}
+    - {wave: 2001, code: "07", hint: "Vacation", category: vacation, status: only_here, note: "Only 2001 and 2009 have a vacation class."}
+    - {wave: 2009, code: "01", hint: "To/From Work", category: work, status: exact}
+    - {wave: 2009, code: "02", hint: "Work-Related Business", category: work_related, status: exact}
+    - {wave: 2009, code: "03", hint: "Shopping", category: shopping, status: exact}
+    - {wave: 2009, code: "04", hint: "Other Family/Personal", category: family_personal, status: exact}
+    - {wave: 2009, code: "05", hint: "School/Church", category: school_church, status: exact}
+    - {wave: 2009, code: "06", hint: "Medical/Dentral", category: medical, status: exact}
+    - {wave: 2009, code: "08", hint: "Visit Friends/Relative", category: visit, status: exact}
+    - {wave: 2009, code: "10", hint: "Other Social/Recreatio", category: social_rec, status: exact}
+    - {wave: 2009, code: "11", hint: "Other", category: other, status: exact}
+    - {wave: 2009, code: "07", hint: "Vacation", category: vacation, status: only_here, note: "Only 2001 and 2009 have a vacation class."}
+    - {wave: 2017, code: "01", hint: "To/From Work", category: work, status: exact}
+    - {wave: 2017, code: "02", hint: "Work-Related Business", category: work_related, status: exact}
+    - {wave: 2017, code: "03", hint: "Shopping", category: shopping, status: exact}
+    - {wave: 2017, code: "04", hint: "Other Family/Personal", category: family_personal, status: exact}
+    - {wave: 2017, code: "05", hint: "School/Church", category: school_church, status: exact}
+    - {wave: 2017, code: "06", hint: "Medical/Dentral", category: medical, status: exact}
+    - {wave: 2017, code: "08", hint: "Visit Friends/Relative", category: visit, status: exact}
+    - {wave: 2017, code: "10", hint: "Other Social/Recreatio", category: social_rec, status: exact}
+    - {wave: 2017, code: "11", hint: "Other", category: other, status: exact}
+    - {wave: 2022, code: "01", hint: "To/From Work", category: work, status: exact}
+    - {wave: 2022, code: "02", hint: "Work-Related Business", category: work_related, status: exact}
+    - {wave: 2022, code: "03", hint: "Shopping", category: shopping, status: exact}
+    - {wave: 2022, code: "04", hint: "Other Family/Personal", category: family_personal, status: exact}
+    - {wave: 2022, code: "05", hint: "School/Church", category: school_church, status: exact}
+    - {wave: 2022, code: "06", hint: "Medical/Dental", category: medical, status: exact}
+    - {wave: 2022, code: "08", hint: "Visit Friends/Relative", category: visit, status: exact}
+    - {wave: 2022, code: "10", hint: "Other Social/Recreatio", category: social_rec, status: exact}
+    - {wave: 2022, code: "11", hint: "Other", category: other, status: exact}
