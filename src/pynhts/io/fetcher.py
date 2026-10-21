@@ -94,9 +94,9 @@ def fetch(
     """Make the raw files of ``groups`` available in the cache and return their paths.
 
     Args:
-        wave: Survey year (only 2017 in Phase 1).
+        wave: Survey year (2001, 2009, 2017 or 2022).
         groups: ``"core"`` (household, person, trip, vehicle) and/or ``"replicates"``
-            (98 jackknife replicate weights; large).
+            (jackknife replicate weights; 80-440 MB; not in 2022).
         cache: Cache root override.
         offline: Never touch the network; raise if a file is missing.
         keep_archives: Keep the downloaded zip files after extraction.

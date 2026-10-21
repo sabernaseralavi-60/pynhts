@@ -11,7 +11,7 @@
 | Tables | + long trips | | | + long distance (per person) |
 | Variance | 99 jackknife replicates, 98/99 | 100 replicates, 99/100 | 98 replicates, 6/7 | Taylor series |
 | t degrees of freedom | 99 | 100 | 98 | by domain |
-| Children 0-4 | in the file (computed trips) | not in the file | not in the file | not in the file |
+| Children 0-4 | in the file (collected) | not in the file | not in the file | not in the file |
 | Yes/no and sex codes | `"1"`, `"2"` | `"01"`, `"02"` | `"01"`, `"02"` | `"01"`, `"02"` |
 
 ```python
@@ -55,7 +55,8 @@ variable names are in only one wave: 111 only in 2017, 142 only in 2022):
 |---|---|---:|
 | `identical` | same label, type and coded values | 19 |
 | `relabelled` | same coded values, other wording | 34 |
-| `review_labels` | same codes, labels share under a third of their words (often a false alarm: `Yes` against `Worker`) | 33 |
+| `review_labels` | same codes, labels share under a third of their words (often a false alarm: `Yes` against `Worker`) | 30 |
+| `codes_permuted` | same codes, but the meaning of some moved to another code (`R_RELAT`: 01 is "self" in 2017 and 07 in 2022; `URBAN` between 2001 and 2009) | 3 |
 | `codes_changed` | the set of coded values differs; **do not pool the raw column** | 47 |
 
 ```python
@@ -132,7 +133,10 @@ harmonize.category_report("mode", 2001, 2009)       # walk, bike, car, SUV, ... 
   with that adjustment. pynhts does not try to undo it.
 * **Distances.** 2017 `TRPMILES` is shortest-path distance (use `TRPMILAD` to compare with older
   surveys); check the 2022 compatibility document before pooling distances.
-* **Geography, vehicle models, state add-ons** exist in 2017 only.
+* **Geography** (`HHSTATE`; 2001 hides the state of some households as "XX", 2009 and 2017 hide
+  small CBSAs as "XXXXX"), vehicle make and model (`MAKECODE`, `MODLCODE`) and the state add-on
+  samples exist in 2001, 2009 and 2017; 2022 is a national sample without them. Suppression codes
+  are values of these columns, not states.
 * Weighted levels (`WTHHFIN`, ...) carry different population baselines; compare shares and
   rates, not totals, and never pool the two files into one weighted sample.
 

@@ -15,6 +15,8 @@ citation: >-
 # HHSTRATUMID_2010; the public household file carries it as STRATUMID.
 variance:
   method: taylor
+  description: >-
+    Taylor-series linearisation with variance strata (STRATUMID) and household clusters (t multiplier on the design degrees of freedom of each domain)
   strata: STRATUMID
   cluster: HOUSEID
   weight_sets:

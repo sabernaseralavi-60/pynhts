@@ -45,8 +45,11 @@ class ReplicateJob:
 
     ``weight`` is the full-sample weight column of the replicate file and ``prefix`` the stem of
     the replicate columns (``prefix1`` ... ``prefixR``, zero-padded to ``pad`` digits when the file
-    does so: the 2001 long-distance file has ``FPTPWT01``). ``rename`` maps key columns of the
-    replicate file to the key names of the data tables (2001 calls the household id ``ID9``).
+    does so: the 2001 long-distance file has ``FPTPWT01``). ``fill_from`` gives units without a
+    weight ``factor`` times the weights of another level (2009: persons without trips have no
+    travel-day weight; it is exactly 365 times their person weight). ``rename`` maps key
+    columns of the replicate file to the key names of the data tables (2001 calls the household
+    id ``ID9``).
     """
 
     level: str
@@ -57,6 +60,7 @@ class ReplicateJob:
     out: str
     rename: dict[str, str] = field(default_factory=dict)
     pad: int = 0
+    fill_from: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -69,6 +73,11 @@ class Registry:
     members: dict[str, Member]
     documentation: dict[str, dict[str, Any]]
     variance: dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def design_description(self) -> str:
+        """One sentence on how standard errors are obtained in this wave (for table footnotes)."""
+        return str(self.variance.get("description", "")).strip()
 
     @property
     def n_replicates(self) -> int:
@@ -95,6 +104,7 @@ class Registry:
                     level=e["level"], csv=csv, weight=e["weight"],
                     prefix=e.get("prefix", e["weight"]), keys=tuple(e["keys"]),
                     out=e["out"], rename=dict(e.get("rename", {})), pad=int(e.get("pad", 0)),
+                    fill_from=dict(e.get("fill_from", {})),
                 )
         return jobs
 

@@ -71,8 +71,35 @@ def _spec(concept: str) -> dict[str, Any]:
     return spec
 
 
+def _wave_of(codes: object, wave: int | None) -> int:
+    """The wave of ``codes``: the argument, checked against the tag ``pynhts`` put on the frame."""
+    attrs = getattr(codes, "attrs", {}) or {}
+    tagged = (attrs.get("pynhts") or {}).get("wave")
+    if wave is None:
+        if tagged is None:
+            raise ValueError("wave is required: these codes carry no pynhts wave tag")
+        return int(tagged)
+    if tagged is not None and int(tagged) != int(wave):
+        raise ValueError(
+            f"these codes come from NHTS {tagged} but wave={wave} was given; the same code means "
+            "different things in different waves, so the crosswalk would map them wrongly"
+        )
+    return int(wave)
+
+
+def apply_column(
+    frame: pd.DataFrame, column: str, concept: str, *, level: Level = "category"
+) -> pd.Series:
+    """Map ``frame[column]`` with the crosswalk of the wave the frame was loaded from.
+
+    The wave is read from ``frame.attrs["pynhts"]``, which :meth:`pynhts.NHTSData.table` and its
+    shortcuts set; a frame without that tag raises an error (use :func:`apply` with ``wave=``).
+    """
+    return apply(frame[column], concept, _wave_of(frame, None), level=level)
+
+
 def apply(
-    codes: pd.Series, concept: str, wave: int, *, level: Level = "category"
+    codes: pd.Series, concept: str, wave: int | None = None, *, level: Level = "category"
 ) -> pd.Series:
     """Map the raw codes of ``wave`` to the shared categories of ``concept``.
 
@@ -83,7 +110,8 @@ def apply(
     Args:
         codes: Raw coded column (strings such as ``"03"``) of the wave.
         concept: ``"purpose"`` or ``"mode"``.
-        wave: Survey year of ``codes``.
+        wave: Survey year of ``codes``. May be omitted when ``codes`` carries the wave tag set by
+            pynhts; if both are given and differ, an error is raised.
         level: ``"category"`` (default) or ``"summary"`` (mode only: the guide's summary groups).
 
     Returns:
@@ -91,6 +119,7 @@ def apply(
     """
     if level not in ("category", "summary"):
         raise ValueError("level must be 'category' or 'summary'")
+    wave = _wave_of(codes, wave)
     frame = crosswalk(concept)
     if level == "summary" and frame["summary"].isna().all():
         raise ValueError(f"concept {concept!r} has no summary level")
@@ -143,6 +172,11 @@ def _canon(code: str) -> str:
     return str(int(code)) if re.fullmatch(r"\d+", code) else code
 
 
+def _raw(text: object) -> str:
+    """Label with case and spacing folded but symbols kept ("Estimate/4" is not "Estimate*4")."""
+    return " ".join(str(text).lower().split())
+
+
 def _similar(a: str, b: str) -> bool:
     """Same meaning, judged by wording: equal after normalising, or sharing a third of the words."""
     na, nb = _norm(a), _norm(b)
@@ -160,6 +194,9 @@ def compare_waves(wave_a: int = 2017, wave_b: int = 2022) -> pd.DataFrame:
     * ``identical``    same label, type and coded values;
     * ``relabelled``   same coded values, different wording of the variable or of the labels;
     * ``codes_changed`` the set of coded values differs, so pooling the raw column is unsafe;
+    * ``codes_permuted`` the same codes but the meaning of some moved to another code (the label
+      of code 1 in one wave is the label of code 2 in the other): the most dangerous case,
+      because the values look compatible;
     * ``review_labels`` the same codes, but a label shares less than a third of its words with the
       other wave's (listed in ``conflicting_codes``). This is a wording heuristic: ``Yes`` against
       ``Worker`` is a false alarm, a permuted meaning is not, so read the labels;
@@ -195,11 +232,17 @@ def compare_waves(wave_a: int = 2017, wave_b: int = 2022) -> pd.DataFrame:
                 conflict = sorted(c for c in shared if not _similar(ca[c], cb[c]))
                 same_set = set(ca) - MISSING_CODES == set(cb) - MISSING_CODES
                 row["conflicting_codes"] = ",".join(conflict)
+                moved = sorted(c for c in shared if _raw(ca[c]) != _raw(cb[c]) and any(
+                    _raw(cb[j]) == _raw(ca[c]) for j in cb if j != c and j not in MISSING_CODES
+                ))
                 row["padding_differs"] = bool(
                     (set(raw_a) - MISSING_CODES) != (set(raw_b) - MISSING_CODES) and same_set
                 )
                 if not same_set:
                     row["status"] = "codes_changed"
+                elif moved:
+                    row["status"] = "codes_permuted"
+                    row["conflicting_codes"] = ",".join(moved)
                 elif conflict:
                     row["status"] = "review_labels"
                 else:

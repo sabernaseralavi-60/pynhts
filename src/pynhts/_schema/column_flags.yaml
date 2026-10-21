@@ -1,0 +1,44 @@
+# Per-wave facts about columns that the codebooks do not state in machine-readable form. Each
+# entry was verified on the real files (tests/data/test_column_flags.py re-checks all of them).
+#
+# topcodes: a value that stands for a range. kind top: the code replaces every value above
+#   `boundary` (the largest ordinary value; the values between boundary and code never occur);
+#   kind bottom: the code replaces every value below `boundary` (the smallest ordinary value).
+#   `source` says where the meaning comes from: codebook (printed) or data (inferred from the gap
+#   in the values; the meaning is then an inference).
+# national_only (2001): columns that exist only for the national-sample households. They are
+#   -1 for the nine add-on areas, which carry the weights WTHHFIN/WTPERFIN but are absent from
+#   the national weights WTHHNTL/WTPRNTL; analysing them with the full-sample weight leaves out
+#   the add-on records and misstates totals (BESTMILE: -12.9 % of annual VMT).
+topcodes:
+  2001:
+    R_AGE: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
+    R_AGEWGT: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
+    HHR_AGE: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
+    AGE_P1: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
+    AGE_P2: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
+    AGE_P3: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
+    AGE_P4: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
+    AGE_P5: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
+    AGE_P6: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
+    AGE_P7: {kind: top, code: 88, boundary: 84, meaning: "85 or older", source: data}
+    VEHAGE: {kind: top, code: 40, boundary: 32, meaning: "33 or older", source: data}
+  2009:
+    R_AGE: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: codebook}
+    VEHAGE: {kind: top, code: 35, boundary: 24, meaning: "25 or older", source: codebook}
+    VEHYEAR: {kind: bottom, code: 1974, boundary: 1985, meaning: "1984 or earlier", source: codebook}
+  2017:
+    R_AGE: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: codebook}
+    R_AGE_IMP: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: codebook}
+    VEHAGE: {kind: top, code: 40, boundary: 32, meaning: "33 or older", source: data}
+    VEHYEAR: {kind: bottom, code: 1977, boundary: 1985, meaning: "1984 or earlier", source: data}
+  2022:
+    R_AGE: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: data}
+    VEHAGE: {kind: top, code: 40, boundary: 32, meaning: "33 or older", source: data}
+    VEHYEAR: {kind: bottom, code: 1982, boundary: 1990, meaning: "1989 or earlier", source: data}
+national_only:
+  2001:
+    tables: [longdist]     # the whole long-distance file: national sample only
+    columns: [ANNUALZD, ANN_FLG, ANULZDSE, BESTMILE, BEST_FLG, BTUCOST, BTUTCOST, BTUYEAR, EIADMPG,
+              EPATMPG, EPATMPGF, FUELTYPE, GSCOST, GSTOTCST, GSYRGAL, VTYPFUEL, BEGTRAV, ENDTRAV,
+              CNTTPHH, CNTTPTR, CNTTPUNQ, TPOVRLAP]

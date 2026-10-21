@@ -4,6 +4,46 @@
 
 (nothing yet)
 
+## 0.5.0 (2026-10-21)
+
+Guards and corrections from an adversarial review of 0.4.0 (`docs/opus_review_0.4.0.md`).
+**Behaviour changes** (hence the minor version): `skip="auto"` is the new default and the 2001 and
+2009 schemas mask more codes.
+
+* **Safe skip default.** `skip="auto"` turns the appropriate-skip code -1 into NA in numeric columns
+  (where it is never a quantity) and keeps it in coded columns. Before, `survey("trip",
+  ["VMT_MILE"])` gave a mean of 5.36 in 2009 instead of 9.72 and total VMT 7 % low.
+  `skip="keep"` restores the old behaviour.
+* **More non-answer codes masked (2001, 2009).** Every labelled negative code (-3 no contact, -4 and
+  -5 did not work, -6 odometer broken) is now a missing code of its own kind; 2009 mean commute time
+  was 23.34 instead of 24.21 minutes. Schemas regenerated; the codebook-frequency tests still pass.
+* **Top-codes and national-only columns** (`pynhts.core.flags`, `_schema/column_flags.yaml`): age
+  (88 = 85+ in 2001, 92 = 89+ later), vehicle age (35 = 25+ in 2009, 40 = 33+ in the others), vehicle
+  year, and the 2001 columns that exist only for the national sample (`BESTMILE`, fuel block,
+  travel-period counts, the long-distance file). Estimators issue a `PynhtsWarning`.
+* **Results know where they come from:** `DataFrame.attrs["pynhts"]` holds wave, table, weight,
+  variance design and the unit of a total ("annual person trips", ...); `tables.note` writes the
+  design of the wave (it said "delete-a-group jackknife, 98 replicates" for every wave);
+  `harmonize.apply` raises when the frame came from another wave; `harmonize.apply_column`.
+* `compare_waves`: new status `codes_permuted` (`URBAN` 2001/2009, `R_RELAT`, `WHYTO`, `WHYFROM`
+  2017/2022), found by comparing labels with symbols kept.
+* Crosswalks corrected against ORNL's own variables: Amtrak (2001, 2009) is "other transit" like
+  the 2022 guide (summary `public_transit` now equals `PUBTRANS` for every trip of 2009, 2017,
+  2022); 2001 `WHYTRP1S` 13 is `approximate` (39.7 % of those trips are school or religious).
+* `data.tours()` raises unless the wave is 2017 or a `TourConfig` is passed (the 2017 purpose codes
+  found no home-based-work tour in 2001 and 2009).
+* `ratio_across` raises across different replicate systems or waves (2001 long-distance replicates
+  belong to the national sample).
+* 2009 travel-day weights of persons without trips (45,967) are filled with 365 x the person
+  weights (registry `fill_from`), so person-day analyses can include non-travelers.
+* **Documentation corrections:** the 45,967 persons without a 2009 `DAYWGT` are exactly the persons
+  without trips (the 0.4.0 text said "no complete travel day"); 2001 children 0-4 were collected,
+  not computed; top-codes exist in all four waves; the 2001 long-distance weight is the national
+  weight x 365/28; new pages [Defaults and guards](docs/guards.md) and units in
+  [Methods](docs/methods.md).
+* Tests: unit `test_guards.py`; real-data `test_four_wave_guards.py` (negative codes, top-codes, national-only
+  columns, defaults, wave tags, summary mode against `PUBTRANS`, replicate structure of all waves).
+
 ## 0.4.0 (2026-10-21)
 
 Adds the **2009** and **2001** waves.

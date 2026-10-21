@@ -47,7 +47,16 @@ def test_latex_booktabs_escaping_and_structure():
                  r"\label{tab:x}", r"Work \& 50\% of\_tours", r"1.0 $\pm$ 0.1", "$n$"):
         assert part in tex
     assert tex.count(r"\begin{tabular}{lrr}") == 1 and r"\end{table}" in tex
-    assert "98 replicate weights" in tex
+    assert "replicate weights" not in tex  # a bare result does not know its design
+
+
+def test_note_names_the_design_of_the_wave_the_result_came_from():
+    for design in ("jackknife-2 (JK2) with 100 replicate weights",
+                   "Taylor-series linearisation with variance strata"):
+        r = res(1.0, 0.1, 7)
+        r.attrs["pynhts"] = {"wave": 2009, "design": design}
+        note = tables.note(tables.build([tables.Row("a", r)]))
+        assert design in note and "98" not in note
 
 
 def test_markdown():

@@ -175,9 +175,12 @@ the tests are in `tests/data/test_old_waves_real.py` and `tests/unit/test_old_wa
   made with the jackknife-2 method. The User's Guide gives Var = 99/100 x sum of the 100 squared
   deviations. The 95 % margin of error is `t(0.975, 100) = 1.984` times the standard error (not
   1.96): all 27 printed margins of error of the report's Table 1 match that to rounding.
-* The replicate file's travel-day weight `DAYWGT` is **missing for 45,967 persons** (no complete
-  travel day). None of them has a trip row. pynhts zeroes the weights of units without rows and
-  raises an error if a row belongs to a unit with a missing weight.
+* The replicate file's travel-day weight `DAYWGT` is **missing for 45,967 persons: exactly the
+  persons without any trip on the travel day** (`CNTTDTR` = 0; 13.15 % of the weighted persons;
+  in 2001 and 2017 the zero-trip persons do have a weight). Because `WTTRDFIN` is 365 x `WTPERFIN`
+  everywhere else, pynhts fills the missing day weights and replicates with 365 x the person
+  weights (registry entry `fill_from`), so person-day analyses at `level="trip"` can include the
+  persons who did not travel. A trip row that belongs to a unit without any weight raises an error.
 * `WTTRDFIN` is 365 x `WTPERFIN`, as in 2017. Vehicles use the household weight.
 * The four per-person, per-driver and per-household PMT/VMT rows of the report's Table 3 print a
   margin of error that equals 1.96 x the standard error at the printed precision, not 1.984 x; the
@@ -187,8 +190,12 @@ the tests are in `tests/data/test_old_waves_real.py` and `tests/unit/test_old_wa
 
 ## Variables
 
-* The public person file starts at age 5, and **`R_AGE` is top-coded**: 92 stands for "89 or
-  older". Do not average it.
+* The public person file starts at age 5. **Age and vehicle age are top-coded in every wave**
+  (`pynhts.core.flags.topcoded_columns(wave)`, verified on the data): `R_AGE` 92 means "89 or
+  older" in 2009, 2017 and 2022 and 88 means "85 or older" in 2001; `VEHAGE` 40 means "33 or
+  older" in 2001, 2017 and 2022 (the values 33-39 never occur) and 35 means "25 or older" in 2009;
+  `VEHYEAR` has a bottom code (2009: 1974 = 1984 or earlier). Means of these columns are biased
+  upward by up to 0.4 years for vehicle age; use bands. The estimators warn.
 * `TRPMILES` is -1 (appropriate skip) on 181 trips and -9/-8/-7 on 18,484 more. Summing the
   column with only the -9/-8/-7 codes masked subtracts the 181 skip rows: the report's person
   miles (3,732,791 million) need `skip="nan"`.
@@ -211,8 +218,11 @@ The tests are the same files as for 2009.
   households), `PERPUB` (160,758 persons), `DAYPUB` (642,292 trips), `VEHPUB` (139,382 vehicles)
   and `LDTPUB` (45,165 long-distance trips).
 * **The long-distance file has one row per long trip** (key `HOUSEID, PERSONID, TPTRPNUM`), with
-  the travel-period person weight `WTPTPFIN`; 2022 has one row per person. Replicates exist for
-  the 60,282 persons of the travel-period sample.
+  the travel-period weight `WTPTPFIN`, which is the *national-sample* person weight times 365/28
+  (`WTPRNTL` x 13.0357 in all 45,165 rows; User's Guide Table 7-3), so `survey("longdist").total()`
+  is annual long-distance person trips of the national sample (2.617 billion); 2022 has one row
+  per person, and its total counts persons. Replicates exist for the 60,282 persons of the national
+  travel-period sample.
 * The codebook is Appendix B of the User's Guide (PDF); the schema is read from it with the same
   tool as 2009. All 6,327 compared code lines reproduce. The codebook labels a blank cell as
   `[missing]` (undefined weights): it is kept as a code and matches the empty cells.
@@ -225,7 +235,8 @@ The tests are the same files as for 2009.
 
 ## Children under 5
 
-* The file contains children 0-4, whose trips the survey contractor computed. The report's
+* The file contains children 0-4: for the first time all household members were eligible for a
+  person interview (User's Guide 2-D.2), so their travel was collected. The report's
   "2001" column leaves them out of the trips and the persons aged 5 and older (257,576 thousand),
   and its "includes 0-4" column adds them (277,203 thousand persons, 407,262 million trips).
 * **Table 3 of the report mixes the two**: its "2001" per-person rates (3.74 trips, 36.89
@@ -240,7 +251,8 @@ The tests are the same files as for 2009.
 
 * **99 replicate weights**, delete-one jackknife: Var = 98/99 x sum of the squared deviations.
   The guide's worked example (202,586,200 household vehicles, SE 672,072, interval = estimate
-  +/- 2 SE) is reproduced to the digit by the estimate and to 0.05 % by the SE.
+  +/- 2 SE) is reproduced to the unit by the estimate and the standard error (672,071.9, also from R's
+  `survey` package).
 * Replicates live in `replicates_ascii.zip` (439 MB): `hh50wt.csv`, `pr50wt.csv` (person and
   travel-day weights) and `ldt50wt.csv`. The household key is called `ID9` there; undefined weights
   are the quoted string `"."`; the long-distance file names its replicates `FPTPWT01` ... `FPTPWT99`

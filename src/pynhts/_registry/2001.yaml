@@ -9,6 +9,8 @@ variance:
   replicates: 99
   factor: 0.98989898989899
   df: 99
+  description: delete-one jackknife with 99 replicate weights as in the 2001 User's Guide (variance =
+    98/99 times the sum of squared deviations; t multiplier on 99 degrees of freedom)
   default_weights:
     longdist: WTPTPFIN
   weight_rtol: 1.0e-09

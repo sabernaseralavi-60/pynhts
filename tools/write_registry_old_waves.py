@@ -47,6 +47,10 @@ VARIANCE = {
     # User's Guide V2 ch. 7: 100 replicate weights, Jackknife2; Var = 99/100 * sum (REP_i - x)^2
     2009: {
         "method": "jkn", "replicates": 100, "factor": 0.99, "df": 100,
+        "description": (
+            "jackknife-2 (JK2) with 100 replicate weights as in the 2009 User's Guide "
+            "(variance = 99/100 times the sum of squared deviations; t multiplier on 100 "
+            "degrees of freedom)"),
         "replicate_files": {
             "hh50wt.csv": [
                 {"level": "household", "weight": "HHWGT", "keys": ["HOUSEID"],
@@ -56,13 +60,19 @@ VARIANCE = {
                 {"level": "person", "weight": "WTPERFIN", "keys": ["HOUSEID", "PERSONID"],
                  "out": "repw_person.parquet"},
                 {"level": "trip", "weight": "DAYWGT", "keys": ["HOUSEID", "PERSONID"],
-                 "out": "repw_trip.parquet"},
+                 "out": "repw_trip.parquet",
+                 # persons without trips have no DAYWGT; WTTRDFIN = 365 x WTPERFIN everywhere else
+                 "fill_from": {"level": "person", "factor": 365}},
             ],
         },
     },
     # User's Guide V3 ch. 7-E: 99 replicate weights, delete-one jackknife; Var = 98/99 * sum
     2001: {
         "method": "jkn", "replicates": 99, "factor": 98 / 99, "df": 99,
+        "description": (
+            "delete-one jackknife with 99 replicate weights as in the 2001 User's Guide "
+            "(variance = 98/99 times the sum of squared deviations; t multiplier on 99 "
+            "degrees of freedom)"),
         "default_weights": {"longdist": "WTPTPFIN"},
         # the long-distance file prints WTPTPFIN with 4 decimals, its replicate file with 6
         # (largest relative difference 7.6e-11)

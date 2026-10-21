@@ -112,6 +112,13 @@ def build(
     if not show_n:
         frame = frame.drop(columns=header[2])
     frame.attrs.update(style=style, level=level)
+    designs = {
+        str(r.result.attrs.get("pynhts", {}).get("design", "")) for r in rows
+    } - {""}
+    if len(designs) == 1:
+        frame.attrs["design"] = designs.pop()
+    elif designs:  # rows from different waves: the note must not claim one method
+        frame.attrs["design"] = "; ".join(sorted(designs))
     result: pd.DataFrame = frame
     return result
 
@@ -129,8 +136,9 @@ def note(frame: pd.DataFrame) -> str:
         "ci": f"Entries are weighted estimates with {pct} confidence intervals in brackets",
         "estimate": "Entries are weighted estimates",
     }[style]
-    return (f"{what} (delete-a-group jackknife, 98 replicate weights). "
-            "$n$ is the unweighted number of records.")
+    design = frame.attrs.get("design")
+    how = f" (standard errors: {design})" if design else ""
+    return f"{what}{how}. $n$ is the unweighted number of records."
 
 
 def latex_escape(text: str) -> str:

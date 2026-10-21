@@ -157,7 +157,7 @@ mode:
     - {wave: 2009, code: "12", hint: "Charter/tour bus", category: charter_intercity_bus, summary: other_transit, status: merge}
     - {wave: 2009, code: "13", hint: "City to city bus", category: charter_intercity_bus, summary: other_transit, status: merge}
     - {wave: 2009, code: "14", hint: "Shuttle bus", category: charter_intercity_bus, summary: other_transit, status: merge, note: "2017 code 13 is 'Private / Charter / Tour / Shuttle'."}
-    - {wave: 2009, code: "15", hint: "Amtrak", category: rail_commuter_amtrak, summary: public_transit, status: approximate}
+    - {wave: 2009, code: "15", hint: "Amtrak", category: rail_commuter_amtrak, summary: other_transit, status: approximate, note: "ORNL's own 2009 PUBTRANS does not count Amtrak (116 trips), like the 2022 guide ('other transit'); the commuter train (16) is public transit."}
     - {wave: 2009, code: "16", hint: "Commuter train", category: rail_commuter_amtrak, summary: public_transit, status: approximate}
     - {wave: 2009, code: "17", hint: "Subway", category: rail_local, summary: public_transit, status: merge}
     - {wave: 2009, code: "18", hint: "Street car", category: rail_local, summary: public_transit, status: merge}
@@ -182,7 +182,7 @@ mode:
     - {wave: 2001, code: "12", hint: "School bus", category: school_bus, summary: school_bus, status: exact}
     - {wave: 2001, code: "13", hint: "Charter/tour bus", category: charter_intercity_bus, summary: other_transit, status: merge}
     - {wave: 2001, code: "14", hint: "City to city bus", category: charter_intercity_bus, summary: other_transit, status: merge}
-    - {wave: 2001, code: "15", hint: "Amtrack", category: rail_commuter_amtrak, summary: public_transit, status: approximate}
+    - {wave: 2001, code: "15", hint: "Amtrack", category: rail_commuter_amtrak, summary: other_transit, status: approximate}
     - {wave: 2001, code: "16", hint: "Commuter train", category: rail_commuter_amtrak, summary: public_transit, status: approximate}
     - {wave: 2001, code: "17", hint: "Subway", category: rail_local, summary: public_transit, status: merge}
     - {wave: 2001, code: "18", hint: "Street car", category: rail_local, summary: public_transit, status: merge}
@@ -251,4 +251,4 @@ purpose_summary:
     - {wave: 2009, code: "97", hint: "Other reason", category: other, status: exact}
     - {wave: 2017, code: "97", hint: "Something else", category: other, status: exact}
     - {wave: 2022, code: "97", hint: "Something else", category: other, status: exact}
-    - {wave: 2001, code: "13", hint: "Trip purpose does not fall", category: other, status: exact}
+    - {wave: 2001, code: "13", hint: "Trip purpose does not fall", category: other, status: approximate, note: "In 2001, 39.7 % (weighted) of the trips in this category have WHYTO 20 'School/religious activity', which 2009 files under 'School/Daycare/Religious' (20); so 2001 'other' is inflated and the school category deflated (cross-tabulation of the 2001 file)."}

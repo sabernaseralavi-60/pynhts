@@ -6,7 +6,7 @@ Table 3) use the same definitions as the 2017 report, with these wave-specific p
 * Codes differ between waves in format: yes/no and sex are ``"01"``/``"02"`` in 2009 but
   ``"1"``/``"2"`` in 2001; the recipe takes them from :data:`CODES`.
 * Persons: the 2009 file has no children under 5. The 2001 file has them (their trips are
-  imputed by the survey contractor), and the 2001 report prints two columns: "2001" (persons and
+  collected for the first time), and the 2001 report prints two columns: "2001" (persons and
   trips of age 5 and older, age unknown included) and "2001 (includes 0-4)". ``Context.keep_person``
   selects the first; the targets with the suffix ``_all_ages`` are the second.
 * Household vehicles in the 2009 report are vehicles of types 01-07 (cars, vans, SUVs, pickups,
@@ -117,7 +117,7 @@ class Context:
         merged["one"] = 1.0
         merged["is_driver"] = (merged["DRIVER"] == self.c["yes"]).fillna(False).astype(float)
         return Survey(merged, base._unit, base._w, base._r, level=base.level, df=base.df,
-                      factor=base.factor)
+                      factor=base.factor, meta=base.meta)
 
     # -- domains --------------------------------------------------------------------------
     @cached_property

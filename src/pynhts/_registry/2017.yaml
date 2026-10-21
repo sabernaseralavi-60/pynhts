@@ -11,6 +11,8 @@ variance:
   replicates: 98
   factor: 0.8571428571428571
   df: 98
+  description: >-
+    stratified jackknife (JKn) with 98 replicate weights, 14 variance strata of 7 units (variance = 6/7 times the sum of squared deviations; t multiplier on 98 degrees of freedom)
   replicate_files:
     hhwgt.csv:
       - {level: household, weight: WTHHFIN, keys: [HOUSEID], out: repw_household.parquet}

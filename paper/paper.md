@@ -24,7 +24,7 @@ bibliography: paper.bib
 The US National Household Travel Survey (NHTS) is the main public source of household travel
 behavior in the United States. Its public-use microdata, released by the Federal Highway
 Administration (FHWA), combine four linked tables (households, persons, trips and vehicles) with
-sampling weights and 98 jackknife replicate weights. `pynhts` is a Python library that
+sampling weights and jackknife replicate weights (2001, 2009, 2017). `pynhts` is a Python library that
 downloads and verifies the 2017 NHTS files, converts them to typed Parquet, merges the tables
 without silent errors, computes weighted statistics with correct replicate-weight standard
 errors and margins of error, and reproduces published FHWA tables so that users can see how

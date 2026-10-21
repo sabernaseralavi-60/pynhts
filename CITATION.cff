@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use pynhts, please cite it as below."
 title: "pynhts: survey-weight-aware access to US National Household Travel Survey microdata"
-version: 0.4.0
+version: 0.5.0
 date-released: 2026-10-21
 license: BSD-3-Clause
 repository-code: "https://github.com/sabernaseralavi-60/pynhts"

@@ -6,7 +6,7 @@ Design notes:
   strings so leading zeros survive (``"01"``), numeric columns are float64.
 * Original survey codes (-9, -8, -7, -88, -77, -1) are **kept** in the Parquet files; masking
   to NaN is a load-time choice.
-* Replicate weights go to their own files. The 98 replicate columns are stored as float32
+* Replicate weights go to their own files. The replicate columns are stored as float32
   (relative error ~6e-8, irrelevant next to sampling variance); the full-sample weight in those
   files stays float64. Readers must cast to float64 before squaring deviations.
 * Conversion streams in 64 MiB blocks, so peak memory stays well below the CSV size.

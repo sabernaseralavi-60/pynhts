@@ -19,7 +19,7 @@ data = pynhts.load(2017)           # downloads, verifies (SHA-256) and converts 
 # 1. Lazy, validated tables; columns are joined from the table that owns them
 trips = data.trips(["TRPMILES", "TRPTRANS", "HHFAMINC", "R_AGE"])
 
-# 2. Correct weighted statistics with margins of error (jackknife, 98 replicate weights)
+# 2. Correct weighted statistics with margins of error (jackknife replicate weights)
 s = data.survey("person", ["R_AGE_IMP", "DRIVER"])
 s.total(domain=s.rows["DRIVER"] == "01")        # 223,277 thousand drivers, MOE 827 thousand
 
@@ -64,5 +64,6 @@ deleted: the Parquet files are enough.
 * [Validation against published tables](validation.md): what reproduces and what does not.
 * [Comparing waves](waves.md): the four waves, code crosswalks, what cannot be compared.
 * [Methods](methods.md): weights, jackknife and Taylor-series variance, margins of error.
+* [Defaults and guards](guards.md): what protects a result from being silently wrong.
 * [Data notes](data_notes.md): the NHTS 2017, 2022, 2009 and 2001 pitfalls found while building the library.
 * [Roadmap](roadmap.md)

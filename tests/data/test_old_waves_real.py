@@ -117,14 +117,19 @@ def test_replicate_files_agree_with_the_data_files(data, level):
     assert rep_totals.std() / total < 0.02
 
 
-def test_2009_persons_without_a_day_weight_have_no_trips():
+def test_2009_persons_without_a_day_weight_are_exactly_those_without_trips():
+    import pyarrow.parquet as pq
+
     d = pynhts.load(2009, offline=True, replicates=True)
-    reps = d.replicate_weights("trip")
-    missing = reps[reps["DAYWGT"].isna()][["HOUSEID", "PERSONID"]]
-    assert len(missing) == 45967  # persons without a complete travel day
+    raw = pq.read_table(d.directory / "repw_trip.parquet", columns=["HOUSEID", "PERSONID",
+                                                                      "DAYWGT"]).to_pandas()
+    missing = raw[raw["DAYWGT"].isna()][["HOUSEID", "PERSONID"]]
+    assert len(missing) == 45967  # as stored in the official replicate file
+    persons = d.persons(["CNTTDTR"], weight=False)
+    no_trips = persons[persons["CNTTDTR"] == 0][["HOUSEID", "PERSONID"]]
+    assert len(no_trips) == len(missing) and len(no_trips.merge(missing)) == len(missing)
     trips = d.trips(weight=False)[["HOUSEID", "PERSONID"]].drop_duplicates()
     assert trips.merge(missing, on=["HOUSEID", "PERSONID"]).empty
-    # NaN weights of unused units must not poison estimates
     assert np.isfinite(d.survey("trip", ["TRPMILES"]).total().iloc[0]["se"])
 
 

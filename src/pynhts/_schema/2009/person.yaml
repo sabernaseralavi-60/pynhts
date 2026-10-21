@@ -51,6 +51,7 @@ columns:
       '-9': not_ascertained
       '-8': dont_know
       '-7': refused
+      '-5': did_not_work_last_week
     skip_code: '-1'
     range: null
     codes:
@@ -4806,6 +4807,8 @@ columns:
       '-9': not_ascertained
       '-8': dont_know
       '-7': refused
+      '-5': did_not_work_last_week
+      '-4': did_not_work_in_usual_workplace_last_wee
     skip_code: '-1'
     range: 1-660
     codes:

@@ -10,6 +10,8 @@ variance:
   replicates: 100
   factor: 0.99
   df: 100
+  description: jackknife-2 (JK2) with 100 replicate weights as in the 2009 User's Guide (variance = 99/100
+    times the sum of squared deviations; t multiplier on 100 degrees of freedom)
   replicate_files:
     hh50wt.csv:
     - level: household
@@ -30,6 +32,9 @@ variance:
       - HOUSEID
       - PERSONID
       out: repw_trip.parquet
+      fill_from:
+        level: person
+        factor: 365
 citation: 'U.S. Department of Transportation, Federal Highway Administration, 2009 National Household
   Travel Survey, Version 2.1 (2011). URL: https://nhts.ornl.gov'
 archives:

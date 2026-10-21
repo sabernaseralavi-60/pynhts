@@ -1,5 +1,16 @@
 # Methods
 
+## What a total counts (units)
+
+Every result frame carries `result.attrs["pynhts"]` with the wave, table, weight, variance design
+and **unit** of a total. Totals from travel-day weights are **annual**: `WTTRDFIN` is 365 x the
+person weight in 2001, 2009 and 2017, so `survey("trip").total()` is annual person trips and must
+be divided by 365 for a daily figure (and by persons for a rate: 2009 gives 3.79 trips per person per
+day). In 2022 `WTTRDFIN` also contains the methods adjustment (about +10 %): daily trips per person
+are 2.275 from the trip weights (the official route) and 2.078 from `CNTTDTR` x the person weight.
+A 2001 long-distance total is annual long-distance trips of the national sample; a 2022
+long-distance total counts persons.
+
 ## Estimators
 
 `data.survey(table, columns)` returns the rows of a table bound to the weights and to the wave's
@@ -98,4 +109,4 @@ adjust for it.
 Variance for regression coefficients and other model-based estimates is not implemented yet;
 the 2017 replicate weights are available (`data.replicate_weights`) for users who refit a model
 once per replicate. For 2022 use a survey-regression package with the same design
-(`STRATUMID`, `HOUSEID`, weight). 2009 and earlier waves are not supported.
+(`STRATUMID`, `HOUSEID`, weight). Waves before 2001 are not supported.

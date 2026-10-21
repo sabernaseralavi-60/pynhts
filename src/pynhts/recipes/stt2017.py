@@ -95,7 +95,8 @@ class Context:
         cols = ["ntrips", "pmt", "pmt_adj", "vtrips", "vmt", "vmt_adj"]
         rows[cols] = rows[cols].fillna(0.0)
         rows["is_driver"] = (rows["DRIVER"] == "01").astype(float)
-        return Survey(rows, base._unit, base._w, base._r, level=base.level)
+        return Survey(rows, base._unit, base._w, base._r, level=base.level, df=base.df,
+                      factor=base.factor, meta=base.meta)
 
 
 def _pair(frame: pd.DataFrame) -> Result:

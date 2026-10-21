@@ -47,6 +47,14 @@ ANCESTORS = {
 }
 MISSING = {"-9": "not_ascertained", "-8": "dont_know", "-7": "refused"}
 SKIP = "-1"
+
+
+def _kind(label: str) -> str:
+    """Machine name of a non-answer kind from its codebook label ("Did not work last week")."""
+    slug = re.sub(r"[^a-z0-9]+", "_", label.lower()).strip("_")
+    return slug[:40].strip("_") or "other"
+
+
 # Evidence-based repairs of the printed codebook (checked against the CSV, 2026-10-21).
 # (wave, table, column, printed code) -> repaired code. The 2009 PDF prints control character
 # 0x16 for the digit 3 of "35 = NISSAN / DATSUN"; the CSV has MAKECODE "35" in 12,345 rows,
@@ -240,6 +248,13 @@ def build(wave: int, pdf: Path) -> None:
             for c in codes:
                 c["code"] = CODE_FIXES.get((wave, table, var, c["code"]), c["code"])
             missing = {c["code"]: MISSING[c["code"]] for c in codes if c["code"] in MISSING}
+            # every other labelled negative code (-3 no contact, -4/-5 did not work, ...) is a
+            # non-answer too: it is never a quantity (review of 0.4.0, P0-1)
+            for c in codes:
+                code = c["code"]
+                if (re.fullmatch(r"-\d+", code) and code not in MISSING and code != SKIP
+                        and c["label"]):
+                    missing[code] = _kind(c["label"])
             missing.update(EXTRA_MISSING.get((wave, table, var), {}))
             cols[var] = {
                 "label": spec["label"],

@@ -59,10 +59,15 @@ def test_missing_keep_leaves_all_codes(d):
 
 
 def test_skip_code_is_distinct_from_missing(d):
+    # default skip="auto": the skip code is never a quantity, so it is NA in numeric columns
     wait = d.trips(["TRWAITTM"])["TRWAITTM"]
-    assert wait.iloc[0] == -1 and np.isnan(wait.iloc[2])  # -1 kept, -8 masked
+    assert np.isnan(wait.iloc[0]) and np.isnan(wait.iloc[2])
+    keep = d.trips(["TRWAITTM"], skip="keep")["TRWAITTM"]
+    assert keep.iloc[0] == -1 and np.isnan(keep.iloc[2])  # -1 kept, -8 masked
     wait2 = d.trips(["TRWAITTM"], skip="nan")["TRWAITTM"]
     assert np.isnan(wait2.iloc[0]) and np.isnan(wait2.iloc[2])
+    with pytest.raises(ValueError, match="skip must be"):
+        d.trips(["TRWAITTM"], skip="drop")
     kept = d.trips(["TRWAITTM"], missing="keep")["TRWAITTM"]
     assert kept.iloc[0] == -1 and kept.iloc[2] == -8
 

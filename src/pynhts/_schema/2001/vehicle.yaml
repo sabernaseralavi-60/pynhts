@@ -3389,6 +3389,10 @@ columns:
       '-7': refused
       '-8': dont_know
       '-9': not_ascertained
+      '-3': no_contact
+      '-4': vehicle_sold_no_longer_in_hh
+      '-5': no_odometer
+      '-6': odometer_broken_unreliable
     skip_code: '-1'
     range: 0-999999
     codes:
@@ -3437,6 +3441,10 @@ columns:
       '-7': refused
       '-8': dont_know
       '-9': not_ascertained
+      '-3': no_contact
+      '-4': vehicle_sold_no_longer_in_hh
+      '-5': no_odometer
+      '-6': odometer_broken_unreliable
     skip_code: '-1'
     range: 0-999999
     codes:
