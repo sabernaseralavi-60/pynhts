@@ -2,8 +2,16 @@
 
 ## Estimators
 
-`data.survey(table, columns)` returns a `Survey`: the rows of a table bound to the 98 replicate
-weights of the unit that carries the weight.
+`data.survey(table, columns)` returns the rows of a table bound to the weights and to the wave's
+variance design:
+
+* **2017** (`Survey`): the 98 replicate weights of the unit that carries the weight, with
+  stratified-jackknife (JKn) variance;
+* **2022** (`TaylorSurvey`): the public files carry **no replicate weights**, so errors use
+  Taylor-series linearisation with the stratum (`STRATUMID`) and the household (`HOUSEID`) as
+  primary sampling unit, as the 2022 User Guide prescribes (see below).
+
+Both classes offer the same `total`, `mean`, `proportion` and `ratio` methods.
 
 | Table | Weight | Replicate unit |
 |---|---|---|
@@ -23,7 +31,7 @@ Supported estimators, each with optional `domain=` (subpopulation) and `by=` (gr
 Every result row has `estimate`, `se`, `moe`, `ci_low`, `ci_high`, `cv` and `n` (rows
 contributing).
 
-## Variance
+## Variance, 2017 (jackknife)
 
 For an estimate `theta` with replicate estimates `theta_1 ... theta_98`:
 
@@ -35,6 +43,37 @@ in the 2017 NHTS weighting report. For ratios, the ratio is recomputed under eve
 weight, so the variance reflects the variability of numerator and denominator jointly.
 `level=` changes the confidence level; the degrees of freedom default to 98 as in FHWA's
 tables.
+
+## Variance, 2022 (Taylor series)
+
+The 2022 User Guide (Appendix 1) and the Weighting Memo say to use Taylor-series
+linearisation with the analysis weight, the stratum and the household as cluster. This is the
+"ultimate cluster" estimator (clusters sampled with replacement within strata, no finite
+population correction), the one SAS `PROC SURVEYMEANS ... STRATA ... CLUSTER` and R's
+`survey::svydesign(ids=~HOUSEID, strata=~STRATUMID, weights=..., nest=TRUE)` compute:
+
+    Var(theta) = sum_h  n_h/(n_h - 1)  *  sum_{c in h} (Z_c - mean_h Z)^2
+
+where `Z_c` is the household total of the estimator's linearised values (for a ratio
+`R = Y/X`: `w (y - R x) / X`). The 7,893 households fall in 20 strata (18 strata plus the
+Alaska/Hawaii substrata of the Pacific division). The degrees of freedom are, as in `survey::degf`,
+the number of weighted clusters minus their strata, computed per domain, so a domain estimate
+has fewer degrees of freedom than the whole sample (`df` column of every result).
+
+Choices that matter:
+
+* **Households with no row stay in the design.** A household with no trip on the travel day
+  contributes zero to a trip total but is still a sampled cluster. `data.survey("trip", ...)`
+  keeps all 7,893 households (`clusters="all"`, the design-correct default). Software fed the
+  trip file alone sees only households with trips; `clusters="observed"` reproduces that, with
+  smaller standard errors (3.5 % smaller for the trip total here).
+* **Weights.** Seven-day weights by default; `weights="weekday"` (`...5D`) and `"weekend"`
+  (`...2D`) select the day-type sets. Households outside the day type have weight 0: they stay in
+  the variance but not in the degrees of freedom.
+* **Trips carry their own weight in 2022** (`WTTRDFIN` varies within a person-day, unlike 2017),
+  so every table row is its own weight unit.
+* **Validation.** Estimates, standard errors and degrees of freedom equal R's `survey` package
+  to 1e-9 for 24 estimands (`tools/validate_taylor_r.R`, `tests/golden/taylor_2022_r.csv`).
 
 ## Rows and units
 
@@ -53,5 +92,6 @@ adjust for it.
 ## What is not provided
 
 Variance for regression coefficients and other model-based estimates is not implemented yet;
-the replicate weights are available (`data.replicate_weights`) for users who refit a model once
-per replicate. Only the 2017 wave is supported.
+the 2017 replicate weights are available (`data.replicate_weights`) for users who refit a model
+once per replicate. For 2022 use a survey-regression package with the same design
+(`STRATUMID`, `HOUSEID`, weight). 2009 and earlier waves are not supported.

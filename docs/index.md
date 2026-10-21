@@ -1,7 +1,7 @@
 # pynhts
 
 Typed, survey-weight-aware Python access to US National Household Travel Survey (NHTS)
-microdata. Phase 1 covers the **2017** wave.
+microdata. Two waves are supported: **2017** and **2022** (NextGen).
 
 ## Install
 
@@ -35,8 +35,22 @@ from pynhts import ml
 arr = ml.to_arrays(trips, ["TRPMILES", "R_AGE"], target="TRPTRANS", weight="WTTRDFIN")
 ```
 
-Command line: `pynhts fetch --replicates`, `pynhts register <folder-with-your-CSVs>`,
-`pynhts info`, `pynhts validate`.
+```python
+# 2022 has no replicate weights: Taylor-series errors (strata + households), same interface
+d22 = pynhts.load(2022)
+d22.survey("household", ["HHSIZE"]).mean("HHSIZE")          # 2.44 persons, SE 0.022, df 7873
+
+# the two waves use different codes: compare and harmonize them explicitly
+from pynhts import harmonize
+harmonize.compare_waves()                                    # 253 names in one wave only, 47 with changed codes
+trips = d22.trips(["TRPTRANS"], missing="keep")
+trips["mode"] = harmonize.apply(trips["TRPTRANS"], "mode", wave=2022)
+
+pynhts.dictionary(2022)                                      # every variable, owner table, type, codes
+```
+
+Command line: `pynhts fetch [--wave 2022] [--replicates]`, `pynhts docs --wave 2022`,
+`pynhts register <folder-with-your-CSVs>`, `pynhts info`, `pynhts validate [stt2017|ug2022|...]`.
 
 ## Where the data live
 
@@ -48,6 +62,7 @@ deleted: the Parquet files are enough.
 ## Pages
 
 * [Validation against published tables](validation.md): what reproduces and what does not.
-* [Methods](methods.md): weights, jackknife variance, margins of error.
-* [Data notes](data_notes.md): the NHTS 2017 pitfalls found while building the library.
+* [Comparing waves](waves.md): 2017 against 2022, code crosswalks, what cannot be compared.
+* [Methods](methods.md): weights, jackknife and Taylor-series variance, margins of error.
+* [Data notes](data_notes.md): the NHTS 2017 and 2022 pitfalls found while building the library.
 * [Roadmap](roadmap.md)

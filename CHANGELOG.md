@@ -4,6 +4,39 @@
 
 (nothing yet)
 
+## 0.3.0 (2026-10-21)
+
+Adds the **2022 NextGen NHTS**, completes the 2017 wave and compares the two.
+
+* **NHTS 2022** (public release V2.1): hash-pinned download of `csv.zip` (4.5 MB), codebook-derived
+  schema for five tables (household, person, trip, vehicle and the new person-level `longdist`),
+  all 2,639 codebook code frequencies reproduce (unweighted and weighted). `pynhts.load(2022)`,
+  `pynhts fetch|info|register --wave 2022`.
+* **Taylor-series variance** (`pynhts.stats.TaylorSurvey`, `taylor_variance`) for waves without
+  replicate weights: strata `STRATUMID`, clusters `HOUSEID`, degrees of freedom per domain as in
+  `survey::degf`. `data.survey(...)` picks the design from the wave; `clusters="all"|"observed"`,
+  `weights="all"|"weekday"|"weekend"`. Estimates, standard errors and df equal R's `survey` package
+  to 1e-9 for 24 estimands (`tools/validate_taylor_r.R`, `tests/golden/taylor_2022_r.csv`).
+* Recipe `ug2022`: the control totals of the 2022 User Guide (Tables 10 and 11): 15 of 18 reproduce;
+  vehicle-trip weight, VMT cases and VMT weight do not (documented, not tuned).
+* **2017 completed:** recipe `stt2017` grows from 24 to 37 targets with the report's "2017 adj."
+  rows (`TRPMILAD`, version 1.2 adjusted trip miles) and the 2017 rows of its Table 1d (annual
+  totals with margins of error): 31 reproduce completely, 3 reproduce only the estimate, 3 do not.
+  The unexplained printed total of persons is traced to the report's Census control total.
+* **Official documents** are pinned in the registry and downloadable with `fetch_docs` /
+  `pynhts docs --wave 2017|2022` (codebooks, user guides, derived variables, release notes,
+  compatibility notes, weighting documents). The 2022 registry pins the current V2.x guide; the
+  site still links the V1 guide whose control totals no longer match the data.
+* `pynhts.dictionary(wave)` and `pynhts.describe(variable, wave)`.
+* **`pynhts.harmonize`:** `compare_waves` (386 variable names: 19 identical, 34 relabelled, 33 to
+  review, 47 with changed codes, 253 in one wave only) and crosswalks of trip purpose and trip
+  mode (`crosswalk`, `apply`, `category_report`) with a status per code, validated against the
+  codebooks and ORNL's derived variables (`WHYTRP1S`, `TRIPMODE`). Documents that the User Guide
+  and the 2022 codebook disagree on purpose codes 18/19.
+* Conversion downloads each zip once (several tables share one archive).
+* Registry members carry their table; `Registry.variance`, `Registry.tables`.
+* Breaking for code that imported `pynhts.io.converter.CORE_TABLES` (now in the registry).
+
 ## 0.2.1 (2026-10-20)
 
 Memory fix found by running the full real-data test suite on a free 13 GB Colab runtime.

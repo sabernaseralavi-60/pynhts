@@ -5,6 +5,7 @@ theme:
   name: material
 nav:
   - Home: index.md
+  - Comparing waves: waves.md
   - Validation: validation.md
   - Tours: tours.md
   - Methods: methods.md

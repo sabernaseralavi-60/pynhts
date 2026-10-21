@@ -18,11 +18,12 @@ from __future__ import annotations
 import os
 from collections.abc import Sequence
 from pathlib import Path
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING, Any, Literal
 
 import numpy as np
 import pandas as pd
 import pyarrow.parquet as pq
+from numpy.typing import NDArray
 
 from pynhts.core.cache import arrow_to_pandas, cached_frames, derived_dir, fingerprint
 from pynhts.core.schema import (
@@ -82,7 +83,7 @@ class NHTSData:
         self._registry = load_registry(wave)
         self._schemas: dict[str, TableSchema] = {t: load_schema(t, wave) for t in self.tables}
         self._owner_spec: dict[str, Column] = {}
-        self._taylor_cache: tuple[pd.Index, np.ndarray] | None = None
+        self._taylor_cache: tuple[pd.Index, NDArray[Any]] | None = None
         for t in self.tables:
             for name, col in self._schemas[t].columns.items():
                 if col.owner == t:
@@ -401,7 +402,7 @@ class NHTSData:
         reps = rep[replicate_columns(wcol)].to_numpy(dtype=np.float64)
         return Survey(rows, unit.astype(np.int64), unit_w, reps, level=level)
 
-    def _taylor_design(self) -> tuple[pd.Index, np.ndarray]:
+    def _taylor_design(self) -> tuple[pd.Index, NDArray[Any]]:
         """Household ids and the stratum label of each household (the clusters)."""
         if self._taylor_cache is None:
             col = str(self._registry.variance["strata"])
@@ -443,11 +444,14 @@ class NHTSData:
         ):
             raise NHTSIntegrityError("row weights differ from the table's weights")
         hh_ids, hh_stratum = self._taylor_design()
-        cluster = hh_ids.get_indexer(pd.Index(units["HOUSEID"]))
+        cluster: NDArray[np.int64] = np.asarray(
+            hh_ids.get_indexer(pd.Index(units["HOUSEID"])), dtype=np.int64
+        )
         if (cluster < 0).any():
             raise NHTSIntegrityError(f"{table} rows without a household row")
         if clusters == "observed":
-            present, cluster = np.unique(cluster, return_inverse=True)
+            present, inverse = np.unique(cluster, return_inverse=True)
+            cluster = np.asarray(inverse, dtype=np.int64).ravel()
             hh_stratum = hh_stratum[present]
         elif clusters != "all":
             raise ValueError("clusters must be 'all' or 'observed'")
