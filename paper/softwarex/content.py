@@ -12,8 +12,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 RES = ROOT / "docs" / "paper_data_audit" / "results"
 
-VERSION = "0.8.0"
-VERSION_DOI = "10.5281/zenodo.23573455"
+VERSION = "0.8.1"
+VERSION_DOI = "10.5281/zenodo.23575312"
 CONCEPT_DOI = "10.5281/zenodo.23573454"
 REPO = "https://github.com/sabernaseralavi-60/pynhts"
 
