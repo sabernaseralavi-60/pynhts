@@ -68,6 +68,7 @@ def fig1() -> None:
         "attrs['pynhts'] holds wave, table, weight, variance design and unit;|PynhtsWarning names annual totals, top-coded values and|2001 national-sample-only columns; docs/guards.md lists each trap", **grey)
     arrow(ax, 6.0, 2.1, 6.0, 1.5)
     fig.savefig(OUT / "fig1_architecture.png", dpi=300, bbox_inches="tight")
+    fig.savefig(OUT / "fig1_architecture.pdf", bbox_inches="tight")
     plt.close(fig)
 
 
@@ -89,6 +90,7 @@ def fig2() -> None:
     ax.set_ylabel("Value computed with pynhts")
     ax.legend(frameon=False, loc="upper left", title=f"{len(d)} cells of Tables 3 and 4")
     fig.savefig(OUT / "fig3_agreement_lidbe.png", dpi=300, bbox_inches="tight")
+    fig.savefig(OUT / "fig3_agreement_lidbe.pdf", bbox_inches="tight")
     plt.close(fig)
 
 
@@ -109,6 +111,7 @@ def fig3() -> None:
     ax.set_xlabel("Share of the paper's printed numbers (%)")
     ax.legend(frameon=False, ncol=4, loc="lower center", bbox_to_anchor=(0.45, 1.0), handlelength=1, columnspacing=1)
     fig.savefig(OUT / "fig2_audit_overview.png", dpi=300, bbox_inches="tight")
+    fig.savefig(OUT / "fig2_audit_overview.pdf", bbox_inches="tight")
     plt.close(fig)
     print(d[["paper", "n", "EXACT", "CLOSE", "ACCEPTABLE", "GAP"]].round(1).to_string(index=False))
 

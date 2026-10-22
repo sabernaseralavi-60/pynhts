@@ -39,3 +39,10 @@ paper/softwarex/template/
 # generated manuscript files (contain [[AUTHOR-TODO]] markers until the author fills them)
 paper/softwarex/pynhts_softwarex.docx
 paper/softwarex/pynhts_softwarex.pdf
+paper/softwarex/pynhts_softwarex_latex_sources.zip
+paper/softwarex/latex/*.aux
+paper/softwarex/latex/*.log
+paper/softwarex/latex/*.out
+paper/softwarex/latex/*.pdf
+paper/softwarex/latex/*.spl
+paper/softwarex/literature/abstracts.json
