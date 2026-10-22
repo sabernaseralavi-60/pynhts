@@ -1,0 +1,29 @@
+item,published,pynhts,status,note
+2009: persons 65+ with a walk count,,85091,INFO,alone: 21130
+"2009 white: weekly walk trips, alone / with others",,3.64 / 3.60  (n = 76349),INFO,
+"2009 black: weekly walk trips, alone / with others",,3.30 / 3.07  (n = 4342),INFO,
+"2009 asian: weekly walk trips, alone / with others",,3.60 / 3.27  (n = 872),INFO,
+"2009 aian: weekly walk trips, alone / with others",,4.66 / 4.93  (n = 438),INFO,
+"2009 nhpi: weekly walk trips, alone / with others",,4.05 / 3.00  (n = 124),INFO,
+"2009 multiple: weekly walk trips, alone / with others",,7.09 / 10.42  (n = 354),INFO,
+"2009 other: weekly walk trips, alone / with others",,2.81 / 2.56  (n = 2060),INFO,
+2017: persons 65+ with a walk count,,73068,INFO,alone: 19419
+"2017 white: weekly walk trips, alone / with others",,5.40 / 4.99  (n = 64811),INFO,
+"2017 black: weekly walk trips, alone / with others",,4.71 / 4.34  (n = 3897),INFO,
+"2017 asian: weekly walk trips, alone / with others",,5.90 / 4.30  (n = 1616),INFO,
+"2017 aian: weekly walk trips, alone / with others",,4.54 / 2.16  (n = 312),INFO,
+"2017 nhpi: weekly walk trips, alone / with others",,5.11 / 2.21  (n = 82),INFO,
+"2017 multiple: weekly walk trips, alone / with others",,6.77 / 5.05  (n = 1311),INFO,
+"2017 other: weekly walk trips, alone / with others",,4.94 / 3.55  (n = 731),INFO,
+2017 white: alone > with others (1 = yes),1.0,1.0,EXACT,paper: 'among all races'
+2017 black: alone > with others (1 = yes),1.0,1.0,EXACT,paper: 'among all races'
+2017 asian: alone > with others (1 = yes),1.0,1.0,EXACT,paper: 'among all races'
+2017 aian: alone > with others (1 = yes),1.0,1.0,EXACT,paper: 'among all races'
+2017 nhpi: alone > with others (1 = yes),1.0,1.0,EXACT,paper: 'among all races'
+2017 multiple: alone > with others (1 = yes),1.0,1.0,EXACT,paper: 'among all races'
+2017 other: alone > with others (1 = yes),1.0,1.0,EXACT,paper: 'among all races'
+2009 black: alone > with others (1 = yes),1.0,1.0,EXACT,paper: all races except Whites and Asians
+2009 other: alone > with others (1 = yes),1.0,1.0,EXACT,paper: all races except Whites and Asians
+2009 white: alone > with others (0 = no),0.0,1.0,GAP,paper: the exception in 2009
+2009 asian: alone > with others (0 = no),0.0,1.0,GAP,paper: the exception in 2009
+magnitudes of Figures 2-6,,,NOT_COMPUTABLE,bar charts without printed values; the walk question is 'past week' in both waves (NWALKTRP)

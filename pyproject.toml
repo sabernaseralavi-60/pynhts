@@ -63,10 +63,12 @@ ignore = ["D203", "D213", "D105"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["D"]
+"tests/unit/test_study.py" = ["D", "E501"]  # hand-worked arithmetic in comments and one-line specs
+"tests/data/test_study_real.py" = ["D", "E501"]
 "tools/*" = ["D"]
 "agent_eval/*" = ["D"]
 # documentation-heavy modules of 0.7.0: long prose lines in docstrings and registry strings
-"src/pynhts/{aggregate,eda,features,quality,transform,trends,tables,__init__}.py" = ["E501"]
+"src/pynhts/{aggregate,eda,features,quality,study,transform,trends,tables,__init__}.py" = ["E501"]
 "src/pynhts/viz/plots.py" = ["E501"]
 "src/pynhts/core/validity.py" = ["E501"]
 "src/pynhts/recipes/stt2017.py" = ["D102", "D103"]  # one-line target functions, see module doc
@@ -84,7 +86,7 @@ files = ["src"]
 
 [[tool.mypy.overrides]]
 # pandas-stubs types many DataFrame/Series methods as Any; the 0.7.0 modules return them untyped
-module = ["pynhts.aggregate", "pynhts.eda", "pynhts.features", "pynhts.quality", "pynhts.transform", "pynhts.trends", "pynhts.tables", "pynhts.core.validity", "pynhts.viz.plots"]
+module = ["pynhts.aggregate", "pynhts.eda", "pynhts.features", "pynhts.quality", "pynhts.transform", "pynhts.trends", "pynhts.study", "pynhts.tables", "pynhts.core.validity", "pynhts.viz.plots"]
 warn_return_any = false
 
 [[tool.mypy.overrides]]

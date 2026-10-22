@@ -360,7 +360,7 @@ concepts:
     unit: varies
     comparability: N
     harmonize: null
-    pitfalls: ["Four different definitions (2001 a frequency category for the last two months; 2009 a count of uses in the past month; 2017 a count of uses with range 0-30, question text not checked; 2022 days used in the last 30, asked of 9.5 % only). 2009 value 99 is a hidden missing code (masked)."]
+    pitfalls: ["Four different definitions (2001 a frequency category for the last two months; 2009 a count of uses in the past month; 2017 a count of uses capped at 30 (1,194 persons stand exactly at 30, the next value is 29; papers that print a maximum of 190 or 240 used another file version); 2022 days used in the last 30, capped at 30 and asked of 9.5 % only). 2009 value 99 is a hidden missing code (masked); the 2009 count is uncapped (maximum 180)."]
     evidence: [data]
   commute_time:
     title: Usual time to work (minutes)

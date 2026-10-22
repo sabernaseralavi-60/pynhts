@@ -1,0 +1,48 @@
+item,published,pynhts,status,note
+EV (HFUEL 02 + 03) vehicles in the file,,1089.0,INFO,"of 256,115 vehicles"
+"EV share of ALL vehicles, %",,0.4251996173593894,INFO,"the paper says 1.29 % of the surveyed vehicles (sample, see below)"
+analysis sample (same rule as the AFV paper),31322.0,31174.0,CLOSE,the EV paper prints the same N as the AFV paper
+"EV share in the sample, %",1.29,1.2863,EXACT,text: 'only 1.29 % of the vehicles are EV'
+Table 1 mean of EV,0.012,0.0129,GAP,
+Table 1 sd of EV,0.199,0.1127,GAP,"sd 0.199 is the sd of a 4.2 % share (sqrt(.042*.958) = 0.2006), not of a 1.2 % share (0.109)"
+AFV share (FUELTYPE 03) in the sample,,0.040610765381407586,INFO,AFV paper: 4.2 %; the EV paper's Table 1 reuses its sd
+sd implied by the EV share,,0.11268460162303832,INFO,
+hybrids (HFUEL 04) that are neither EV nor CV in the paper's two classes,,827.0,INFO,"the paper does not say whether non-plug-in hybrids, biodiesel and 'other fuel' stay in the sample"
+T1 mean income,3.824,3.8263,CLOSE,identical in the AFV paper
+T1 sd income,1.304,1.3005,CLOSE,
+T1 mean homeown,0.851,0.8511,EXACT,identical in the AFV paper
+T1 sd homeown,0.356,0.356,EXACT,
+T1 mean HHSIZE,2.447,2.4486,CLOSE,identical in the AFV paper
+T1 sd HHSIZE,1.173,1.1744,CLOSE,
+T1 mean YOUNGCHILD,0.11,0.1103,EXACT,identical in the AFV paper
+T1 sd YOUNGCHILD,0.391,0.3919,CLOSE,
+T1 mean HHVEHCNT,2.426,2.4262,EXACT,identical in the AFV paper
+T1 sd HHVEHCNT,1.185,1.1848,EXACT,
+T1 mean urban,0.761,0.7608,EXACT,identical in the AFV paper
+T1 sd urban,0.426,0.4266,CLOSE,
+T1 mean popden,3.843,3.9909,ACCEPTABLE,identical in the AFV paper
+T1 sd popden,1.301,1.8911,GAP,
+T1 mean PRICE,2.984,2.9847,CLOSE,identical in the AFV paper
+T1 sd PRICE,1.283,1.2829,EXACT,
+T1 mean PLACE,3.003,3.0028,EXACT,identical in the AFV paper
+T1 sd PLACE,1.052,1.0517,EXACT,
+T1 mean R_AGE,53.372,53.3724,EXACT,identical in the AFV paper
+T1 sd R_AGE,15.81,15.8508,CLOSE,
+T1 mean female,0.536,0.5366,CLOSE,identical in the AFV paper
+T1 sd female,0.498,0.4987,CLOSE,
+T1 mean educ,3.639,3.6389,EXACT,identical in the AFV paper
+T1 sd educ,1.069,1.0704,CLOSE,
+T1 mean race,1.392,1.3552,ACCEPTABLE,identical in the AFV paper
+T1 sd race,1.196,1.0716,GAP,
+T1 mean multijob,0.055,0.0557,CLOSE,identical in the AFV paper
+T1 sd multijob,0.227,0.2294,CLOSE,
+T1 mean occ,3.835,3.8355,EXACT,identical in the AFV paper
+T1 sd occ,1.325,1.3252,EXACT,
+T1 mean carshare,0.005,0.0055,EXACT,identical in the AFV paper
+T1 sd carshare,0.074,0.0739,EXACT,
+T1 mean ttw,14.772,14.7646,CLOSE,identical in the AFV paper
+T1 sd ttw,25.276,25.2755,EXACT,
+T1 mean ymile,10955.48,10950.9217,CLOSE,identical in the AFV paper
+T1 sd ymile,11951.9,11955.7626,CLOSE,
+Table 1 of this paper equals Table 1 of the AFV paper (P06) except the first row,,,INFO,"all 18 other means and sds, N = 31,322 and the rounding are identical; the AFV mean 0.042 was replaced by 0.012 and the sd 0.199 kept"
+regional EV penetration map (state level),,,INFO,HHSTATE is in the public household table; the paper's agent-based regional model needs unstated synthetic population steps

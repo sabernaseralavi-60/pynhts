@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+* **`pynhts.study`: from a research statement to data, tables and figures.** A `Study` (wave, unit, ordered sample rules `Keep`/`Drop`/`Complete`,
+  variables, weight or explicitly none, stated assumptions; as objects, a dictionary or YAML) runs to a `StudyResult` with the analysis frame, the
+  **sample-flow table**, a descriptive table (mean, sd, min, max, share; per group with the difference), `count_distribution` (zeros and users by band),
+  a methods paragraph, a Markdown report, figures (flow, outcome distribution with its share of zeros, shares by group) and `compare`/`grade` against
+  published numbers (EXACT / CLOSE / ACCEPTABLE / GAP). The skip code is not a non-answer (`Complete(skip=...)`); a variable may not share a raw column's
+  name; the wave is checked. Docs: `docs/study.md`, example `docs/examples/ridesharing_35_states.yaml` (reproduces Zhang & Zhang 2018's sample to 0.09 %).
+* **Cap flags** found in the paper audit: `PTUSED` is capped at 30 in 2017 (1,194 persons) and 2022 (42), `NWALKTRP` at 99 in 2009 (138); estimators and
+  `quality.report` now warn about them. `concepts` `transit_use` states it.
+* **Paper audit extended to 21 US papers** (`tools/paper_audit/p13..p23`, 11 new: sample flows, Table 1 and distributions rebuilt with pynhts and graded
+  against the printed numbers; 9 of 21 SUFFICIENT; 9 recovered unwritten conventions in `docs/paper_data_audit/recovered_conventions.md`).
 * **Race and Hispanic-origin crosswalks** (4 new `harmonize` concepts: `race_household`, `hispanic_household` for all four waves, `race_person`,
   `hispanic_person` for 2017 and 2022) and `harmonize.race_ethnicity(frame, level=)`, which combines race with the separate Hispanic-origin
   question into `hispanic` / `nh_white` / `nh_black` / ... because the race groups are not non-Hispanic in any wave. The statuses rest on a

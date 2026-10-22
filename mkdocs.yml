@@ -6,6 +6,7 @@ theme:
 nav:
   - Home: index.md
   - Analysis toolkit: analysis.md
+  - From a study statement to tables: study.md
   - Feature registry: data/FEATURES.md
   - Variable registry: data/VARIABLE_REGISTRY.md
   - Cross-wave harmonization: data/CROSSWAVE_HARMONIZATION.md

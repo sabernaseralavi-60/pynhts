@@ -60,6 +60,9 @@ pynhts.recipes.run("stt2009", d)                             # reproduce the pub
   **household** weight; trip features the trip weight.
 - `notna()` is not validity in coded columns (`-1` is a skip, `-7/-8/-9` non-answers): use `pynhts.valid(series)`.
 - Member counts from the person file are lower bounds when `hh_n_unlisted > 0`; the official `WRKCOUNT`, `DRVRCNT`, `NUMADLT` are exact.
+- To go from a research statement (sample rules, variables, weighting) to data, a sample-flow table, a Table 1 and figures in one step use
+  `pynhts.study.Study(...).run(data)` (docs/study.md); `Complete(skip="ok")` keeps a skip (-1), the default removes it. `study.compare` grades against a
+  paper's printed numbers; never adjust a rule to reach one.
 - Split train and test **by household** (`transform.split_by_household`); fit transformations on training rows only.
 - Compare waves with `pynhts.trends` (per-wave estimates); pool only with `trends.pool`, which refuses non-comparable concepts. Trip distance,
   trip counts and trip weights are not comparable across waves.

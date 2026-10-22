@@ -87,6 +87,7 @@ pynhts.dictionary(2022)                                     # every variable wit
 | `pynhts.recipes` | replication of published tables with honest status per figure |
 | `pynhts.tours` | tour formation (HBW/HBO/NHB, work-tour patterns), FHWA-style chains; flexible home/work rules |
 | `pynhts.ml` | NumPy / PyTorch / graph export (PyTorch optional) |
+| `pynhts.study` | a research statement (wave, sample rules, variables, weighting) to data + sample-flow table + Table 1 + figures + methods text; `compare` grades the result against a paper's printed numbers |
 | `pynhts.aggregate` | trips to persons, persons to households: no row multiplication, stated missing-value policy, true zeros, diagnostics report |
 | `pynhts.features` | 93 documented person, household, trip and vehicle features (formula, eligibility, denominator, weight, waves) with lineage |
 | `pynhts.eda`, `pynhts.quality` | missing-value reasons, weighted descriptives, correlation that refuses nominal columns, key and weight integrity report |

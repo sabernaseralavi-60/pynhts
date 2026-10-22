@@ -1,0 +1,48 @@
+item,published,pynhts,status,note
+2009 persons,308901.0,308901.0,EXACT,
+2009 households,150147.0,150147.0,EXACT,
+2009 households after aggregation,,150147.0,INFO,
+2009 households with all members' purchase answers,,74155.0,INFO,"the paper drops a household when a member's record is missing; 2009 uses PURCHASE (times purchased via the internet in the past month, asked of everyone 16+); DELIVER (2009) is a follow-up asked only of buyers"
+2009 mean purchases,3.4,3.3395,CLOSE,
+2009 sd purchases,6.3,6.2903,EXACT,
+2009 max purchases,265.0,404.0,GAP,
+2009 mean avg_age,52.7,55.1011,ACCEPTABLE,read from Table 3; its columns are misaligned in the paper
+2009 sd avg_age,14.2,14.2217,EXACT,
+2009 max avg_age,92.0,92.0,EXACT,
+2009 mean male_pct,44.2,44.6084,CLOSE,read from Table 3; its columns are misaligned in the paper
+2009 sd male_pct,33.2,31.9365,ACCEPTABLE,
+2009 max male_pct,100.0,100.0,EXACT,
+2009 mean hhsize,2.6,2.0523,GAP,read from Table 3; its columns are misaligned in the paper
+2009 sd hhsize,1.3,0.9042,GAP,
+2009 max hhsize,14.0,11.0,GAP,
+2009 mean income_k,64.4,64.1098,CLOSE,read from Table 3; its columns are misaligned in the paper
+2009 sd income_k,29.7,29.9228,CLOSE,
+2009 max income_k,100.0,100.0,EXACT,
+2009 mean trips_day,7.4,7.1627,ACCEPTABLE,read from Table 3; its columns are misaligned in the paper
+2009 sd trips_day,4.7,4.9516,GAP,
+2009 max trips_day,52.0,50.0,ACCEPTABLE,
+2017 persons,264234.0,264234.0,EXACT,
+2017 households,129696.0,129696.0,EXACT,
+2017 households after aggregation,,129696.0,INFO,
+2017 households with all members' purchase answers,,111492.0,INFO,"the paper drops a household when a member's record is missing; 2009 uses PURCHASE (times purchased via the internet in the past month, asked of everyone 16+); DELIVER (2009) is a follow-up asked only of buyers"
+2017 mean purchases,4.2,4.3267,ACCEPTABLE,
+2017 sd purchases,6.4,6.8683,GAP,
+2017 max purchases,198.0,396.0,GAP,
+2017 mean avg_age,57.6,57.7011,CLOSE,read from Table 3; its columns are misaligned in the paper
+2017 sd avg_age,23.8,16.4641,GAP,
+2017 max avg_age,92.0,92.0,EXACT,
+2017 mean male_pct,45.2,45.1195,CLOSE,read from Table 3; its columns are misaligned in the paper
+2017 sd male_pct,34.6,32.5422,GAP,
+2017 max male_pct,100.0,100.0,EXACT,
+2017 mean hhsize,1.7,1.8233,GAP,read from Table 3; its columns are misaligned in the paper
+2017 sd hhsize,0.7,0.8262,GAP,
+2017 max hhsize,10.0,10.0,EXACT,
+2017 mean income_k,72.7,74.3279,ACCEPTABLE,read from Table 3; its columns are misaligned in the paper
+2017 sd income_k,53.2,60.2325,GAP,
+2017 max income_k,2000.0,250.0,GAP,
+2017 mean trips_day,7.3,6.1649,GAP,read from Table 3; its columns are misaligned in the paper
+2017 sd trips_day,4.5,4.7084,ACCEPTABLE,
+2017 max trips_day,60.0,60.0,EXACT,
+"Table 3: shopping-trip percentage 149.5-446 (2009), 201-295 (2017)",,,INFO,a percentage cannot exceed 100: the row holds another quantity (probably a count or a mis-shifted column)
+Table 3: household size mean 1.7 in 2017 (2.6 in 2009),,,INFO,the 2017 national mean household size is 2.1; 1.7 with max 10 is not the household-size column of the data
+"Table 3: 'Number of vehicles' typed Binary with mean 0.9 / 0.8, and 'Number of trips per day' listed twice",,,INFO,rows are shifted against the labels; values cannot be matched to variables beyond the ones compared above

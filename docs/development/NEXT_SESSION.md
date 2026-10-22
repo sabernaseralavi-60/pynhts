@@ -9,6 +9,12 @@ the last ledger entries `PKG-20261022-02..10`, then `git status` here.
   `docs/development/REPOSITORY_AUDIT.md`, `docs/research/`; paper audit in `docs/paper_data_audit/` (scripts `tools/paper_audit/`, run_all ~40 s).
 * Uncommitted by design: `tools/pilot_bench/run_sprint.py` (the user's own work; never commit it). Third-party PDFs in `some papers/` are ignored.
 
+## Added after the first note (2026-10-22, later)
+* Race/Hispanic crosswalks (commit 0fe1f32), `pynhts.study`, cap flags for `PTUSED`/`NWALKTRP`, and the paper audit extended to 21 US papers (P13-P23).
+  All pushed or ready to push; NOT released (plan: 0.8.0 with the medical-condition crosswalk; run the adversarial review with real data BEFORE tagging).
+* Proposed, not started: an explicit "base" for conditional daily means in `aggregate` (audit P22), forest/marginal-effect plots in `viz`, a purpose-sequence
+  proxy for mobility motifs (the public file has no location IDs), a state map of a share (needs state shapes).
+
 ## Suggested next steps (none started)
 1. A second fact-check of the corrected 0.7.1 documentation (statement by statement), as done for 0.6.0; the adversarial review covered the new code once.
 2. Race and Hispanic origin: DONE after 0.7.1 (unreleased, see CHANGELOG; `harmonize.race_ethnicity`). Still to do: a crosswalk for medical condition; then re-run

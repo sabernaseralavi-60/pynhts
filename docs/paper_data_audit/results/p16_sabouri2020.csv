@@ -1,0 +1,36 @@
+item,published,pynhts,status,note
+trips in the pooled data,923572.0,923572.0,EXACT,
+households,129696.0,129696.0,EXACT,
+[all households] n,,129696.0,INFO,"paper's sample: 115,755 households with a known home census tract"
+[all households] mean veh,2.021,1.9747,ACCEPTABLE,
+[all households] sd veh,1.173,1.1778,CLOSE,
+[all households] mean hhsize,2.184,2.1288,ACCEPTABLE,
+[all households] sd hhsize,1.181,1.1666,CLOSE,
+[all households] mean employed,1.05,0.9891,GAP,
+[all households] sd employed,0.899,0.8993,EXACT,
+[all households] mean lnincome,1.686,1.6868,CLOSE,
+[all households] sd lnincome,0.554,0.9395,GAP,
+[all households] mean drivers,1.719,1.6766,ACCEPTABLE,
+[all households] sd drivers,0.761,0.7666,CLOSE,
+[all households] mean gas,240.238,240.2462,CLOSE,
+[all households] sd gas,22.867,22.8711,CLOSE,
+[all households] mean rideshare,0.351,0.3208,GAP,
+[all households] sd rideshare,1.685,1.655,CLOSE,
+[households with a trip record] n,,117222.0,INFO,"paper's sample: 115,755 households with a known home census tract"
+[households with a trip record] mean veh,2.021,2.02,CLOSE,
+[households with a trip record] sd veh,1.173,1.1738,CLOSE,
+[households with a trip record] mean hhsize,2.184,2.1812,CLOSE,
+[households with a trip record] sd hhsize,1.181,1.1803,CLOSE,
+[households with a trip record] mean employed,1.05,1.0484,EXACT,
+[households with a trip record] sd employed,0.899,0.8989,EXACT,
+[households with a trip record] mean lnincome,1.686,1.7364,ACCEPTABLE,
+[households with a trip record] sd lnincome,0.554,0.9181,GAP,
+[households with a trip record] mean drivers,1.719,1.7179,CLOSE,
+[households with a trip record] sd drivers,0.761,0.7601,CLOSE,
+[households with a trip record] mean gas,240.238,240.2462,CLOSE,
+[households with a trip record] sd gas,22.867,22.8711,CLOSE,
+[households with a trip record] mean rideshare,0.351,0.3322,GAP,
+[households with a trip record] sd rideshare,1.685,1.6708,CLOSE,
+households with a trip record (gas price known),,117222.0,INFO,"the gas price exists only for households with trips and the paper has it for all 115,755 households, so its sample is a subset of these 117,222; on this base the means of vehicles, size, workers and drivers agree with Table 1 within 0.2 %"
+share of households that report taxi/rideshare use (TAXI 01-04),,0.2947122501850481,INFO,"TAXI answered: 104,219 in the paper; not an NHTS count here"
+"D variables (activity density, job-pop balance, transit stops, intersection density, Uber years)",,,NOT_COMPUTABLE,need the home census tract (restricted file) and ACS/LEHD/Intermodal/Uber external data

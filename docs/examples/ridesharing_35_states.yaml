@@ -1,0 +1,34 @@
+# A study written as data: who uses ridesharing, with the sample rules of Zhang & Zhang (2018), Sustainability 10:2720.
+# Run:  from pynhts import study; res = study.Study.from_yaml("ridesharing_35_states.yaml").run(pynhts.load(2017))
+title: Household vehicle ownership and ridesharing (35 states and DC)
+aim: Is the number of household vehicles related to how often people use ridesharing apps?
+wave: 2017
+unit: person
+weight: null            # the paper's Stata tables are unweighted; "auto" would use the person weight WTPERFIN
+assumptions:
+  - "The 15 states where ridesharing use is below 4 % are excluded, as in the paper (WV MS WY SD AR KS ND MT ID DE ME AL UT VT OR)."
+  - "Complete cases on the model variables; the paper does not say which variables, so all variables below are required."
+steps:
+  - label: 15 low-use states excluded
+    drop: {column: HHSTATE, op: in, value: [WV, MS, WY, SD, AR, KS, ND, MT, ID, DE, ME, AL, UT, VT, OR]}
+  - label: answered the ridesharing question
+    keep: {column: RIDESHARE, op: ">=", value: 0}
+  - label: complete key variables
+    complete: [veh, age, female, edu, inc, white, worker, driver, lndens, rent, pt]
+variables:
+  - {name: ride, source: RIDESHARE, kind: count, label: Rideshare uses in 30 days, role: outcome}
+  - {name: pt, source: PTUSED, kind: count, label: Public transit uses in 30 days}
+  - {name: veh, source: HHVEHCNT, kind: number, label: Household vehicles}
+  - {name: female, kind: binary, label: Female, where: {column: R_SEX, op: "==", value: "02"}}
+  - {name: age, source: R_AGE, kind: number, label: Age (years)}
+  - {name: edu, source: EDUC, kind: number, label: "Education level (1 = less than high school ... 5 = graduate)"}
+  - {name: white, kind: binary, label: White, where: {column: R_RACE, op: "==", value: "01"}}
+  - {name: worker, kind: binary, label: Worker, where: {column: WORKER, op: "==", value: "01"}}
+  - {name: driver, kind: binary, label: Driver, where: {column: DRIVER, op: "==", value: "01"}}
+  - {name: inc, source: HHFAMINC, kind: number, label: Household income level (1-11)}
+  - {name: lndens, source: HBPPOPDN, transform: log, kind: number, label: Population density of the home block group (log)}
+  - name: rent
+    kind: binary
+    label: Home not owned
+    where: {column: HOMEOWN, op: in, value: ["02", "97"]}
+    note: "Owner = 01 only. The printed mean 0.212 is reproduced only when 'some other arrangement' (97) counts as not owned."
