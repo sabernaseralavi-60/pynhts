@@ -143,7 +143,9 @@ Race is the answer of one person per household (the household respondent); only 
   98.7 % (2009 code 07) of those respondents also answer "Hispanic: yes". The later waves have no such code: 82 % (2017) and 67 % (2022) of the
   respondents who choose "Some other race" are Hispanic. The crosswalk files those codes under `other` as `approximate`, so `other` is not comparable
   before 2017, and 2001 White, Black and American Indian (which absorb "White & Hispanic" and similar codes) are not comparable with later waves.
-  From 2009 on the five single-race groups and `multiple` are exact; Asian and Pacific Islander are exact in all four waves.
+  From 2009 on Black, Asian, American Indian, Pacific Islander and `multiple` are exact, and Asian and Pacific Islander in all four waves. **White is exact from 2017 on only**:
+  of the Hispanic households 47.8 % are filed as White in 2009, 69.0 % in 2017 and 71.0 % in 2022 (unweighted; the rest mostly as `other`: 44.5 % in 2009,
+  19.2 % in 2017). The overall weighted White share moves little (76.7 % in 2009, 75.5 % in 2017), but it is not the same group; compare the `race_ethnicity` groups.
 * **The race groups are not non-Hispanic.** Hispanic respondents sit inside White (5.7 % of 2017 White households) and the other groups in every wave.
 
 For non-Hispanic groups use `harmonize.race_ethnicity(frame)`: a respondent who answers "Hispanic" is `hispanic`, the others are `nh_white`,
@@ -165,7 +167,7 @@ cross-tabulated against age, `MEDCOND6` and the effect items; the numbers are re
 * **The universe changes.** Ages 16+ answer in 2001 and 2009 (15 and younger carry the skip `-1`; 6 adults are skipped in 2009), everybody aged 5+ in
   2017 and 2022. Compare adults (18+).
 * **2022 has 5.4 % non-answers** among adults (weighted; 0.04 to 0.14 % in 2001 to 2017) and asks about a "condition or disability". The yes share among
-  the valid answers of 18+ is 8.7 % (2001), 10.5 % (2009), 10.0 % (2017) and 7.5 % (2022). The crosswalk marks 2022 `approximate`, so
+  the valid answers of 18+ is 8.8 % (2001), 10.5 % (2009), 10.0 % (2017) and 7.5 % (2022). The crosswalk marks 2022 `approximate`, so
   `category_report("medical_condition", 2017, 2022)` says not comparable: do not report the fall as a trend.
 * **The effect items (`condition_effect`: `CONDTRAV`, `CONDNIGH`, `CONDPUB`, `CONDRIDE`, `CONDRIVE`, `CONDSPEC`) are asked of different people.**
   2001 and 2009: only of those who answered yes to `MEDCOND`; 2017 and 2022: also of every person aged 80+ whatever they answered (9,291 and 382

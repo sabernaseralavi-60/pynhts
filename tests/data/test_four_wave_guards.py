@@ -55,7 +55,9 @@ def test_topcodes_are_what_the_flags_say(data):
                 continue  # AGE_P8.. etc. exist but hold nothing
             code, edge = tc["code"], tc["boundary"]
             if tc["kind"] == "cap":
-                assert x.max() == code and (x == code).sum() >= 5, (data.wave, col)
+                # a pile at the cap; a few isolated values above it are allowed (NWALKTRP 2017)
+                assert (x == code).sum() >= 5 and (x > code).sum() <= 5, (data.wave, col)
+                assert x.max() == code or col == "NWALKTRP", (data.wave, col)
                 continue
             lo, hi = (edge, code) if tc["kind"] == "top" else (code, edge)
             assert (x == code).any() or x.max() < code, (data.wave, col)
@@ -300,11 +302,12 @@ def test_race_ethnicity_on_real_households_is_complete_and_agrees_with_the_hispa
     hh = pynhts.load(wave, offline=True).households([race, hisp], weight=False)
     out = harmonize.race_ethnicity(hh)
     assert out.notna().mean() > 0.99, (wave, out.notna().mean())   # measured 99.1 % to 100 %
-    yes = hh[hisp].astype("string").str.lstrip("0") == "1"
+    yes = (hh[hisp].astype("string").str.lstrip("0") == "1").fillna(False).astype(bool)
     # everyone who answers 'Hispanic' is Hispanic; the race-code fallback (question unanswered)
-    # never fires in the real files, only on the synthetic cases of test_harmonize.py
+    # fires
+    # only in 2009, for the 15 households with the Hispanic race code 07 and no Hispanic answer
     assert (out[yes] == "hispanic").all()
-    assert ((out == "hispanic") & ~yes).sum() == 0
+    assert ((out == "hispanic") & ~yes).sum() == (15 if wave == 2009 else 0)
     # measured 5.4 %, 6.9 %, 7.0 %, 7.7 % of the classified households (NA is skipped by mean)
     share = (out == "hispanic").mean()
     assert 0.05 < share < 0.09, (wave, share)
@@ -383,3 +386,26 @@ def test_condition_effect_universe_and_the_2009_to_2017_fall_are_the_quoted_ones
         assert yes_share[2017][i] < yes_share[2009][i], i
         assert yes_share[2022][i] < yes_share[2017][i], i
         assert abs(yes_share[2009][i] - yes_share[2001][i]) < 0.08, i
+
+
+def test_hispanic_respondents_are_filed_under_white_differently_in_2009_than_later():
+    """Why 2009 White is `approximate`: Hispanic households filed White, 47.8 / 69.0 / 71.0 %."""
+    share = {}
+    for wave in (2009, 2017, 2022):
+        race, hisp = harmonize.variable_of("race_household", wave), harmonize.variable_of(
+            "hispanic_household", wave)
+        hh = pynhts.load(wave, offline=True).households([race, hisp], weight=False)
+        yes = hh[hisp].astype("string").str.lstrip("0") == "1"
+        share[wave] = (hh.loc[yes.fillna(False).astype(bool), race].astype("string") == "01").mean()
+    assert 0.46 < share[2009] < 0.49 and 0.68 < share[2017] < 0.70, share
+    assert 0.70 < share[2022] < 0.72, share
+
+
+def test_nwalktrp_is_flagged_as_capped_in_2009_and_2017_only():
+    from pynhts.core import flags
+
+    for wave in (2009, 2017):
+        assert flags.topcode(wave, "NWALKTRP")["code"] == 99
+    assert flags.topcode(2001, "NWALKTRP") is None
+    p = pynhts.load(2017, offline=True).persons(["NWALKTRP"], weight=False)["NWALKTRP"]
+    assert int((p == 99).sum()) == 364 and int((p == 98).sum()) == 2

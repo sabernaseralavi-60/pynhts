@@ -28,6 +28,7 @@ printed (EXACT, CLOSE, ACCEPTABLE or GAP) without tuning anything.
 
 from __future__ import annotations
 
+import warnings
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from decimal import ROUND_HALF_UP, Decimal
@@ -38,7 +39,8 @@ import numpy as np
 import pandas as pd
 
 from pynhts.aggregate import Cond, Where
-from pynhts.core.validity import ANSWERED, answer_status, valid
+from pynhts.core.flags import PynhtsWarning, cautions
+from pynhts.core.validity import answer_status, valid
 
 if TYPE_CHECKING:
     from pynhts.core.data import NHTSData
@@ -52,18 +54,30 @@ Source = str | Cond | Callable[[pd.DataFrame], "pd.Series[Any]"]
 # ---- steps ---------------------------------------------------------------------------------------
 @dataclass(frozen=True)
 class Keep:
-    """Keep the rows that satisfy ``cond`` (a population or an eligibility rule)."""
+    """Keep the rows that satisfy ``cond`` (a population or an eligibility rule).
+
+    The rule reads the columns with the skip (-1), the non-answers (-7, -8, -9) and the hidden missing codes of the
+    codebook (e.g. 99 of the 2009 ``PTUSED``) set to missing, so none of them can satisfy ``<``, ``<=`` or ``!=``;
+    a missing value never satisfies the rule. ``raw=True`` evaluates the rule on the codes as they are in the file
+    (to select the skip itself, ``Where("TIMETOWK", "==", "-1")``).
+    """
 
     label: str
     cond: Cond
+    raw: bool = False
 
 
 @dataclass(frozen=True)
 class Drop:
-    """Remove the rows that satisfy ``cond`` (an exclusion rule)."""
+    """Remove the rows that satisfy ``cond`` (an exclusion rule); see :class:`Keep` for ``raw`` and missing values.
+
+    A row with a missing value in a column the rule reads does not satisfy it and stays (use :class:`Complete`
+    to remove it).
+    """
 
     label: str
     cond: Cond
+    raw: bool = False
 
 
 @dataclass(frozen=True)
@@ -90,10 +104,12 @@ class Var:
 
     Args:
         name: Column name in the result frame (must not equal a raw NHTS column name).
-        source: A raw column (numbers are read as numbers, codes stay codes), a :class:`pynhts.aggregate.Cond`
-            (a 0/1 dummy), or a function of the raw frame that returns a Series.
+        source: A raw column (numbers are read as numbers, codes stay codes; the skip, the non-answers and the
+            hidden missing codes of the codebook are missing), a :class:`pynhts.aggregate.Cond` (a 0/1 dummy), or a
+            function of the frame (skips and non-answers already missing) that returns a Series.
         kind: ``"number"`` (mean, sd, min, max), ``"count"`` (a number that also reports the share of zeros),
-            ``"binary"`` (a 0/1 value; its mean is a share) or ``"category"`` (one row per code).
+            ``"binary"`` (a 0/1 value; its mean is a share; a raw column must hold only 0 and 1, otherwise build the
+            dummy with a :class:`pynhts.aggregate.Cond`) or ``"category"`` (one row per code).
         label: Text for tables and figures.
         role: ``"outcome"`` marks the variable whose distribution gets a figure; ``"group"`` is not needed here.
         needs: Raw columns a function ``source`` reads (the study loads them).
@@ -125,24 +141,34 @@ class Var:
             return tuple(self.source.columns)
         return tuple(self.needs)
 
-    def build(self, frame: pd.DataFrame) -> pd.Series:
-        """The variable's values on ``frame`` (NaN where it is missing)."""
+    def build(self, frame: pd.DataFrame, masked: pd.DataFrame | None = None) -> pd.Series:
+        """The variable's values (NaN where it is missing).
+
+        ``frame`` holds the codes as they are in the file, ``masked`` the same rows with the skip, the non-answers
+        and the hidden missing codes set to missing (``frame`` is used for both when ``masked`` is omitted).
+        """
+        view = frame if masked is None else masked
         src = self.source
         if isinstance(src, str):
-            s = frame[src]
+            col = view[src]
             if self.kind == "category":
-                return s.astype("string").where(valid(s))
-            x = pd.to_numeric(s, errors="coerce")
-            return x.where(x >= 0) if self.kind != "binary" else x
+                return col.astype("string").where(valid(col))
+            x = pd.to_numeric(col, errors="coerce")
+            x = x.where(x >= 0)
+            if self.kind == "binary" and not set(x.dropna().unique()) <= {0.0, 1.0}:
+                raise ValueError(
+                    f"variable {self.name!r}: kind='binary' needs a column that holds only 0 and 1, {src} has "
+                    f"{sorted(x.dropna().unique())[:6]}; build the dummy with Where(...)")
+            return x
         if isinstance(src, Cond):
             hit = src.mask(frame).astype(float)
             if self.na == "nan":
                 ok = pd.Series(True, index=frame.index)
                 for c in src.columns:
-                    ok &= valid(frame[c])
+                    ok &= view[c].notna() & valid(frame[c])
                 hit = hit.where(ok)
             return hit
-        out = src(frame)
+        out = src(view)
         return pd.Series(out, index=frame.index)
 
 
@@ -305,12 +331,13 @@ class StudyResult:
             if v.role == "outcome" and v.kind in ("number", "count"):
                 x = pd.to_numeric(self.data[v.name], errors="coerce")
                 ok = x.notna()
-                ax2 = plots.histogram(x[ok], weight=None if w is None else w[ok], xlabel=v.label or v.name,
-                                      title=f"Distribution of {v.label or v.name}")
+                fig2 = plots.histogram(x[ok], weight=None if w is None else w[ok], xlabel=v.label or v.name,
+                                       title=f"Distribution of {v.label or v.name}")
+                ax2 = fig2.axes[0]
                 if v.kind == "count":
                     zero = float(((x[ok] == 0) * (w[ok] if w is not None else 1.0)).sum() / (w[ok].sum() if w is not None else ok.sum()))
                     ax2.text(0.97, 0.93, f"zero: {zero * 100:.1f} %", transform=ax2.transAxes, ha="right", va="top", fontsize=9)
-                figs[f"dist_{v.name}"] = ax2.figure
+                figs[f"dist_{v.name}"] = fig2
         if by is not None:
             t = self.table(by=by)
             t = t[t["share_pct"].notna() & (t["variable"] != by)]
@@ -383,7 +410,7 @@ class Study:
             if isinstance(st, Complete):
                 cols += [c for c in st.columns if c not in names]
             else:
-                cols += list(st.cond.columns)
+                cols += [c for c in st.cond.columns if c not in names]
         for v in self.variables:
             cols += list(v.columns())
         return list(dict.fromkeys(cols))
@@ -397,35 +424,47 @@ class Study:
         taken = {v.name for v in self.variables}
         if len(taken) != len(self.variables):
             raise ValueError("variable names must be unique")
-        raw = data.table(self.unit, self.required_columns(), missing="keep", skip="keep", keys=True)
-        clash = taken & set(raw.columns)
+        clash = sorted(n for n in taken if _is_nhts_column(data, self.unit, n))
         if clash:
-            raise ValueError(f"variable names {sorted(clash)} equal raw NHTS columns; rename them")
+            raise ValueError(f"variable names {clash} equal raw NHTS columns; rename them")
+        columns = self.required_columns()
+        raw = data.table(self.unit, columns, missing="keep", skip="keep", keys=True)
         wcol = raw.attrs.get("pynhts", {}).get("weight")
         if self.weight == "auto":
             weight = wcol
         else:
             weight = self.weight
             if weight is not None and weight not in raw.columns:
-                raw = data.table(self.unit, [*self.required_columns(), weight], missing="keep", skip="keep", keys=True)
+                columns = [*columns, weight]
+                raw = data.table(self.unit, columns, missing="keep", skip="keep", keys=True)
+        # the same rows with the skip, the non-answers and the codebook's hidden missing codes (99 of the 2009
+        # PTUSED, "XX" of the 2001 HHSTATE) set to missing: what variables and rules read by default
+        masked = data.table(self.unit, columns, missing="nan", skip="nan", keys=True)
+        if not masked.index.equals(raw.index):  # pragma: no cover - the two loads read the same file
+            raise RuntimeError("the masked and the raw load differ in their rows")
         work = raw.copy()
+        work_m = masked.copy()
         for v in self.variables:
-            work[v.name] = v.build(raw)
+            work[v.name] = work_m[v.name] = v.build(raw, masked)
         flow = [{"rule": f"{self.unit} records in the {self.wave} file", "n_before": len(work), "n_removed": 0,
                  "n_after": len(work)}]
         for st in self.steps:
             before = len(work)
-            work = work[_step_mask(st, work, taken)]
+            keep_rows = _step_mask(st, work, work_m, taken)
+            work, work_m = work[keep_rows], work_m[keep_rows]
             flow.append({"rule": st.label, "n_before": before, "n_removed": before - len(work), "n_after": len(work)})
-        keep = [c for c in ("HOUSEID", "PERSONID", "VEHID", "TDTRPNUM") if c in work.columns]
+        keep = [c for c in data.key(self.unit) if c in work.columns]
         cols = [*keep, *[v.name for v in self.variables]] + ([weight] if weight and weight in work.columns else [])
         out = work[cols].reset_index(drop=True)
         out.attrs["pynhts"] = {"wave": self.wave, "table": self.unit, "weight": weight}
         labels = _labels(data, self.unit, self.variables)
         notes = list(self.assumptions) + [f"{v.name}: {v.note}" for v in self.variables if v.note]
         notes.append("weighted with " + weight if weight else "statistics are unweighted (weight=None)")
-        notes.append("skip code -1 and non-answer codes -7/-8/-9 are never read as quantities; "
-                     "a step or variable says where a skip counts as an answer")
+        notes.append("skip code -1, non-answer codes -7/-8/-9 and the hidden missing codes of the codebook are never "
+                     "read as quantities or as members of a rule; a step says where a skip counts as an answer")
+        for text in cautions(self.wave, self.unit, sorted({c for v in self.variables for c in v.columns()})).values():
+            warnings.warn(text, PynhtsWarning, stacklevel=2)
+            notes.append(text)
         meta = {"wave": self.wave, "table": self.unit, "version": pynhts.__version__}
         return StudyResult(self, out, pd.DataFrame(flow), weight, meta, notes, labels)
 
@@ -444,9 +483,9 @@ class Study:
             if "complete" in s:
                 steps.append(Complete(s["label"], list(s["complete"]), s.get("skip", "invalid")))
             elif "keep" in s:
-                steps.append(Keep(s["label"], _cond(s["keep"])))
+                steps.append(Keep(s["label"], _cond(s["keep"]), bool(s.get("raw", False))))
             elif "drop" in s:
-                steps.append(Drop(s["label"], _cond(s["drop"])))
+                steps.append(Drop(s["label"], _cond(s["drop"]), bool(s.get("raw", False))))
             else:
                 raise ValueError(f"a step needs one of keep, drop, complete: {s}")
         vs = []
@@ -503,20 +542,31 @@ def _cond(d: Mapping[str, Any]) -> Cond:
     return Where(d["column"], d["op"], d.get("value"))
 
 
-def _step_mask(step: Step, work: pd.DataFrame, names: set[str]) -> pd.Series:
+def _step_mask(step: Step, work: pd.DataFrame, masked: pd.DataFrame, names: set[str]) -> pd.Series:
+    """Rows that stay after ``step``; ``work`` holds the codes of the file, ``masked`` the same rows with missing set."""
     if isinstance(step, Keep):
-        return step.cond.mask(work).fillna(False).astype(bool)
+        return step.cond.mask(work if step.raw else masked).fillna(False).astype(bool)
     if isinstance(step, Drop):
-        return ~step.cond.mask(work).fillna(False).astype(bool)
+        return ~step.cond.mask(work if step.raw else masked).fillna(False).astype(bool)
     ok = pd.Series(True, index=work.index)
     for c in step.columns:
         if c in names:
             ok &= work[c].notna()
         elif step.skip == "ok":
-            ok &= answer_status(work[c]).isin([ANSWERED, "skip"])
+            # a real answer, or a skip; not a non-answer, a blank or a hidden missing code
+            ok &= masked[c].notna() | answer_status(work[c]).eq("skip")
         else:
-            ok &= valid(work[c])
+            ok &= masked[c].notna() & valid(work[c])
     return ok
+
+
+def _is_nhts_column(data: NHTSData, table: str, name: str) -> bool:
+    """True when ``name`` is a column of ``table`` or of a parent table that ``table`` can read."""
+    try:
+        data._find_ancestor(table, name)
+    except KeyError:
+        return name in data.schema(table).columns
+    return True
 
 
 def _labels(data: NHTSData, table: str, variables: Sequence[Var]) -> dict[str, dict[str, str]]:
@@ -529,6 +579,11 @@ def _labels(data: NHTSData, table: str, variables: Sequence[Var]) -> dict[str, d
         if v.kind == "category" and isinstance(v.source, str) and v.source in cols:
             out[v.name] = {c.code: c.label for c in cols[v.source].codes}
     return out
+
+
+def _code(text: str) -> str:
+    """A code without zero padding ("01" and "1" are the same answer)."""
+    return str(int(text)) if text.isdigit() else text
 
 
 def _round(t: pd.DataFrame) -> pd.DataFrame:
@@ -545,7 +600,7 @@ def _md(t: pd.DataFrame) -> str:
 
 
 # ---- comparison with published numbers ---------------------------------------------------------------
-def grade(published: float, ours: float) -> str:
+def grade(published: float | str, ours: float) -> str:
     """``EXACT`` when ours prints the same at the printed precision, ``CLOSE`` within 2 %, ``ACCEPTABLE`` within 5 %, else ``GAP``.
 
     The precision is that of the printed number (``5.0`` is one decimal, ``5`` none); rounding is half-up, like a
@@ -553,13 +608,15 @@ def grade(published: float, ours: float) -> str:
     """
     if published is None or ours is None or ours != ours or published != published:
         return "NOT_COMPUTED"
-    dec = max(0, -Decimal(str(published)).as_tuple().exponent)  # type: ignore[operator]
+    text = str(published).strip()  # a string keeps a trailing zero: "5.10" is two decimals
+    dec = max(0, -Decimal(text).as_tuple().exponent)  # type: ignore[operator]
     shown = Decimal(str(float(ours))).quantize(Decimal(1).scaleb(-dec), rounding=ROUND_HALF_UP)
-    if shown == Decimal(str(published)):
+    if shown == Decimal(text):
         return "EXACT"
-    if published == 0:
+    value = float(text)
+    if value == 0:
         return "GAP"
-    rel = abs(ours - published) / abs(published)
+    rel = abs(ours - value) / abs(value)
     return "CLOSE" if rel <= 0.02 else "ACCEPTABLE" if rel <= 0.05 else "GAP"
 
 
@@ -567,8 +624,9 @@ def compare(result: StudyResult, published: pd.DataFrame | Sequence[Mapping[str,
     """Grade what a paper printed against the study's own numbers; nothing is adjusted to match.
 
     ``published`` has the columns ``variable``, ``stat`` (``mean``, ``sd``, ``min``, ``max``, ``n``, ``share_pct`` or
-    ``zero_pct``), ``value`` and optionally ``level`` and ``group`` (when ``by`` is given). The rows ``n_records`` with
-    the stat ``n`` and the variable ``"sample"`` compare the final sample size.
+    ``zero_pct``), ``value`` (a number, or a string such as ``"5.10"`` to keep the printed precision) and optionally
+    ``level`` (the category code, compared exactly after removing zero padding) and ``group`` (required for every row
+    when ``by`` is given). The row with the variable ``"sample"`` compares the final sample size.
     """
     pub = pd.DataFrame(published)
     t = result.table(by=by)
@@ -579,8 +637,11 @@ def compare(result: StudyResult, published: pd.DataFrame | Sequence[Mapping[str,
         else:
             sel = t[t["variable"] == d["variable"]]
             if d.get("level") not in (None, "") and not (isinstance(d.get("level"), float) and np.isnan(d["level"])):
-                sel = sel[sel["level"].astype(str).str.startswith(str(d["level"]))]
-            if by is not None and d.get("group") is not None:
+                want = _code(str(d["level"]))
+                sel = sel[sel["level"].astype(str).map(lambda x: _code(x.split(" ", 1)[0])) == want]
+            if by is not None:
+                if d.get("group") is None or (isinstance(d.get("group"), float) and np.isnan(d["group"])):
+                    raise ValueError(f"compare(by={by!r}) needs a group for every published row: {d['variable']}")
                 sel = sel[sel["group"] == str(d["group"])]
             ours = float(sel.iloc[0][d["stat"]]) if len(sel) and d["stat"] in sel.columns else float("nan")
         row: dict[str, Any] = {"variable": d["variable"], "stat": d["stat"]}

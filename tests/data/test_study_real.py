@@ -62,3 +62,26 @@ def test_count_distribution_reproduces_the_printed_usage_bands(result):
     assert s["1"] == pytest.approx(28.32, abs=0.05) and s["2"] == pytest.approx(25.15, abs=0.05)
     assert s["1-5"] == pytest.approx(81.19, abs=0.05) and s["6-20"] == pytest.approx(17.61, abs=0.05)
     assert s["21-99"] == pytest.approx(1.21, abs=0.05)
+
+
+# ---- adversarial review of 0.8.0 on the real files ---------------------------------------------------------
+def test_study_mean_equals_the_default_loader_when_a_hidden_missing_code_is_present():
+    """2009 PTUSED: 99 is a hidden missing code (608 persons); the study mean must be the default loader's (1.4673)."""
+    import numpy as np
+
+    d = pynhts.load(2009, offline=True)
+    res = S.Study(title="t", wave=2009, unit="person", weight=None, steps=[S.Complete("answered", ["PTUSED"])],
+                  variables=[S.Var("pt", "PTUSED", "count")]).run(d)
+    ref = d.persons(["PTUSED"], weight=False)["PTUSED"].dropna()
+    assert len(res.data) == len(ref) and (res.data["pt"] == 99).sum() == 0
+    assert np.isclose(res.data["pt"].mean(), ref.mean()) and 1.46 < ref.mean() < 1.48
+
+
+def test_keep_and_drop_on_the_real_2017_person_file_ignore_skips_and_non_answers():
+    d = pynhts.load(2017, offline=True)
+    res = S.Study(title="t", wave=2017, unit="person", weight=None,
+                  steps=[S.Keep("commute up to 60 minutes", pynhts.aggregate.Where("TIMETOWK", "<=", 60))],
+                  variables=[S.Var("t", "TIMETOWK")]).run(d)
+    ref = d.persons(["TIMETOWK"], weight=False)["TIMETOWK"]
+    assert len(res.data) == int((ref <= 60).sum())            # 101,700; the raw rule kept 225,850
+    assert res.data["t"].min() >= 0

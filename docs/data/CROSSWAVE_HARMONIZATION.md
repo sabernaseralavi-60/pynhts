@@ -19,7 +19,7 @@ Generated from `pynhts.harmonize` and `pynhts.concepts`. See also `docs/waves.md
 | purpose | 2017, 2022 | 40 | {'exact': 29, 'approximate': 6, 'merge': 5} |
 | purpose_1990 | 2001, 2009, 2017, 2022 | 38 | {'exact': 24, 'approximate': 12, 'only_here': 2} |
 | purpose_summary | 2001, 2009, 2017, 2022 | 41 | {'exact': 29, 'approximate': 8, 'merge': 4} |
-| race_household | 2001, 2009, 2017, 2022 | 38 | {'exact': 25, 'approximate': 10, 'nested': 3} |
+| race_household | 2001, 2009, 2017, 2022 | 38 | {'exact': 24, 'approximate': 11, 'nested': 3} |
 | race_person | 2017, 2022 | 14 | {'exact': 14} |
 | trip_class | 2001, 2009, 2017, 2022 | 20 | {'exact': 12, 'approximate': 8} |
 | urban_area | 2001, 2009, 2017, 2022 | 16 | {'exact': 16} |

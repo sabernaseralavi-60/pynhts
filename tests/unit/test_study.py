@@ -146,8 +146,11 @@ def test_report_and_files(d, tmp_path):
     assert "# Adults with a degree answer" in text and "Test study." in text
     assert "removed" in r.methods() and "WTPERFIN" in r.methods() and "leaving 3 records" in r.methods()
     assert "| aged 18+ | 6 | 1 | 5 |" in text and "worker=0" in text and "Difference" in text
-    assert any("unweighted" in a or "weighted with WTPERFIN" in a for a in r.assumptions)
-    assert "unweighted" in _spec(weight=None).run(d).methods()
+    assert any(a == "weighted with WTPERFIN" for a in r.assumptions)
+    un = _spec(weight=None).run(d)
+    assert any("statistics are unweighted" in a for a in un.assumptions)
+    assert not any(a.startswith("weighted with") for a in un.assumptions)
+    assert "unweighted" in un.methods()
     pytest.importorskip("matplotlib")
     out = r.save(tmp_path / "out", by="worker")
     names = {p.name for p in out}
@@ -164,3 +167,84 @@ def test_count_distribution_reports_zeros_and_bands(d):
     assert t.loc[2, "share_of_users_pct"] == 0 and t.loc[3, "share_of_users_pct"] == 100
     w = _spec().run(d).count_distribution("k", bands=[(5, 5)])      # weights 1 and 2 on the users, 6 on the zero
     assert w.loc[0, "share_of_all_pct"] == pytest.approx(600 / 9) and w.loc[2, "band"] == "5"
+
+
+# ---- adversarial review of 0.8.0: skips, non-answers and hidden codes never act as numbers -----------------
+@pytest.fixture
+def d2(tmp_path: Path) -> NHTSData:
+    """Ages 40, -7 (refused), 10, 70; TIMETOWK 30, -1 (skip), 90, -7; R_SEX 01, 02, -7, 02; WORKER 01, 02, 01, 02."""
+    _write(tmp_path, "household", {"HOUSEID": ["H1", "H2"], "HHSIZE": [2, 2], "WTHHFIN": [1.0, 1.0]}, {"HOUSEID"})
+    _write(tmp_path, "person", {
+        "HOUSEID": ["H1", "H1", "H2", "H2"], "PERSONID": ["01", "02", "01", "02"], "R_AGE": [40, -7, 10, 70],
+        "TIMETOWK": [30, -1, 90, -7], "R_SEX": ["01", "02", "-7", "02"], "WORKER": ["01", "02", "01", "02"],
+        "EDUC": ["10", "10", "02", "10"], "WTPERFIN": [1.0, 2.0, 3.0, 4.0]},
+           {"HOUSEID", "PERSONID", "R_SEX", "WORKER", "EDUC"})
+    return NHTSData(2017, tmp_path)
+
+
+def _run(d, *steps, variables=None, **kw):
+    return S.Study(title="t", wave=2017, unit="person", weight=None, steps=list(steps),
+                   variables=variables or [S.Var("age", "R_AGE")], **kw).run(d)
+
+
+def test_a_drop_rule_does_not_remove_a_non_answer_by_its_negative_code(d2):
+    r = _run(d2, S.Drop("under 18", Where("R_AGE", "<", 18)))
+    assert len(r.data) == 3                         # only age 10 goes; the refused age (-7) stays
+    assert r.flow["n_removed"].tolist() == [0, 1]
+    assert _run(d2, S.Drop("under 18", Where("R_AGE", "<", 18), raw=True)).flow["n_removed"].tolist() == [0, 2]
+
+
+def test_a_keep_rule_does_not_admit_skips_or_non_answers(d2):
+    r = _run(d2, S.Keep("commute up to 60", Where("TIMETOWK", "<=", 60)))
+    assert len(r.data) == 1                         # the skip (-1) and the refusal (-7) are not minutes
+    assert len(_run(d2, S.Keep("not male", Where("R_SEX", "!=", "01"))).data) == 2     # not the -7
+    skipped = _run(d2, S.Keep("the skip itself", Where("TIMETOWK", "==", -1), raw=True))
+    assert skipped.data["age"].isna().tolist() == [True] and len(skipped.data) == 1
+
+
+def test_a_binary_variable_from_a_raw_column_must_hold_only_0_and_1(d2):
+    with pytest.raises(ValueError, match="only 0 and 1"):
+        _run(d2, variables=[S.Var("worker", "WORKER", "binary")])
+    out = _run(d2, variables=[S.Var("worker", Where("WORKER", "==", "01"), "binary")])
+    assert out.table().set_index("variable").loc["worker", "share_pct"] == pytest.approx(50.0)
+
+
+def test_variable_names_may_not_equal_any_nhts_column_loaded_or_not(d2):
+    with pytest.raises(ValueError, match="equal raw NHTS columns"):
+        _run(d2, variables=[S.Var("HHFAMINC", "R_AGE")])
+
+
+def test_a_rule_on_a_study_variable_needs_no_raw_column(d2):
+    r = _run(d2, S.Keep("old", Where("age", ">", 50)), variables=[S.Var("age", "R_AGE")])
+    assert r.data["age"].tolist() == [70.0]
+
+
+def test_cap_and_top_code_warnings_reach_the_study(d2):
+    from pynhts.core.flags import PynhtsWarning
+
+    with pytest.warns(PynhtsWarning, match="R_AGE is top-coded"):
+        r = _run(d2)
+    assert any("R_AGE is top-coded" in a for a in r.assumptions)
+
+
+def test_figures_and_save_work_for_a_count_outcome(d2, tmp_path):
+    pytest.importorskip("matplotlib").use("Agg")          # no display needed (a broken Tk would fail otherwise)
+    r = _run(d2, variables=[S.Var("age", "R_AGE", "count", role="outcome"), S.Var("w", Where("WORKER", "==", "01"), "binary")])
+    figs = r.figures()
+    assert "dist_age" in figs and hasattr(figs["dist_age"], "savefig")
+    assert "dist_age.png" in {p.name for p in r.save(tmp_path / "o", by="w")}
+
+
+def test_compare_matches_the_category_code_exactly_and_needs_a_group_with_by(d2):
+    r = _run(d2, variables=[S.Var("edu", "EDUC", "category"), S.Var("w", Where("WORKER", "==", "01"), "binary")])
+    # codes are 10 and 02: a published level 1 must not be graded against 10 (it was, by prefix), 2 is the padded 02
+    assert S.compare(r, [{"variable": "edu", "level": "1", "stat": "share_pct", "value": 75.0}]).loc[0, "status"] == (
+        "NOT_COMPUTED")
+    assert S.compare(r, [{"variable": "edu", "level": "2", "stat": "share_pct", "value": 25.0}]).loc[0, "status"] == "EXACT"
+    assert S.compare(r, [{"variable": "edu", "level": "10", "stat": "share_pct", "value": 75.0}]).loc[0, "status"] == "EXACT"
+    with pytest.raises(ValueError, match="needs a group"):
+        S.compare(r, [{"variable": "w", "stat": "mean", "value": 0.5}], by="w")
+
+
+def test_grade_keeps_the_printed_precision_of_a_string():
+    assert S.grade("5.10", 5.14) == "CLOSE" and S.grade(5.1, 5.14) == "EXACT" and S.grade("5.14", 5.14) == "EXACT"

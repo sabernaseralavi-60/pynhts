@@ -189,8 +189,14 @@ def test_race_column_is_named_differently_in_2001_and_the_crosswalk_knows_it():
 def test_single_race_groups_are_comparable_from_2009_on_but_2001_breaks_three():
     for a, b in [(2009, 2017), (2017, 2022), (2009, 2022)]:
         rep = harmonize.category_report("race_household", a, b).set_index("category")
-        for cat in ("white", "black", "asian", "aian", "nhpi"):
+        for cat in ("black", "asian", "aian", "nhpi"):
             assert rep.loc[cat, "comparable"], (a, b, cat)
+    # 2009 offered a Hispanic race answer, so its White is not 2017's White (review of 0.8.0)
+    for b in (2017, 2022):
+        rep = harmonize.category_report("race_household", 2009, b).set_index("category")
+        assert not rep.loc["white", "comparable"] and "Hispanic" in rep.loc["white", "issue"], b
+    assert harmonize.category_report("race_household", 2017, 2022).set_index("category").loc[
+        "white", "comparable"]
     # 2001 files 'White & Hispanic', 'African American & Hispanic' and 'American Indian & Hispanic'
     # under the race part (approximate), so only Asian and Pacific Islander are clean
     for b in (2009, 2017, 2022):

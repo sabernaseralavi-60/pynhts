@@ -50,7 +50,15 @@ The same study as data: `Study.from_yaml("docs/examples/ridesharing_35_states.ya
   of the work questions is 76,476 of the 191,150 adults who travelled: treating it as missing would drop 40 % of the sample.
 * **A variable is never a raw column.** A variable name may not equal an NHTS column name, so a derived `age` cannot be confused
   with `R_AGE`. Numbers are read as numbers with negatives as missing; a dummy built from a condition is missing when a column it
-  reads is a skip or non-answer (`na="false"` evaluates the condition as it is).
+  reads is a skip or non-answer (`na="false"` evaluates the condition as it is). A `kind="binary"` variable from a raw column must hold only 0 and 1
+  (otherwise it raises; build the dummy with `Where`).
+* **Rules never see a non-answer as a number.** `Keep` and `Drop` read the columns with the skip (`-1`), the non-answers (`-7 -8 -9`) and the codebook's
+  hidden missing codes (99 of the 2009 `PTUSED`, "XX" of the 2001 `HHSTATE`) set to missing, so `Drop(Where("R_AGE", "<", 18))` does not remove a
+  refused age and `Keep(Where("TIMETOWK", "<=", 60))` does not admit a skip; a row with a missing value does not satisfy the rule (add a `Complete`
+  step to remove it). `raw=True` evaluates a rule on the codes as they are in the file (to select the skip itself: `Where("TIMETOWK", "==", -1)`). Variables are
+  read the same way, so a mean agrees with the one from `data.persons(...)`.
+* **Cautions are not lost.** A top-coded or capped column (age 92 = 89+, `PTUSED` 30, `NWALKTRP` 99) raises the usual `PynhtsWarning` when the study runs and
+  the text is added to the assumption register.
 * **Weighted or not is stated, never implied.** `weight=None` is explicit; many papers print unweighted Stata tables, and a
   weighted table describes the population, not the sample.
 * **The base of a mean is a rule.** "Mean over persons with at least one auto trip" and "mean over persons with any trip" differ by

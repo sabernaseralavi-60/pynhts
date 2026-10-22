@@ -575,7 +575,7 @@ race_household:
   source: "codebooks 2001 (User's Guide v3, App. B), 2009 v2.1, 2017 v1.2, 2022 v2.1; cross-tabulation with the Hispanic-origin answer (see above)"
   hispanic_codes: {2001: ["06", "10", "11", "12"], 2009: ["07"]}
   note: >-
-    Race of the household respondent (one person per household). The five single-race groups and "multiple" have the same meaning in all waves; the two older waves differ in how they treat Hispanic origin. 2001 codes 06 and 10-12 and 2009 code 07 name Hispanic origin as a race. The categories are NOT non-Hispanic: Hispanic respondents are inside White and the other groups in every wave (use race_ethnicity() for the combined variable).
+    Race of the household respondent (one person per household). Asian, Black, American Indian, Pacific Islander and "multiple" have the same meaning from 2009 on, White only from 2017 on (2009 offered a Hispanic race answer, so Hispanic respondents are filed elsewhere); the two older waves differ in how they treat Hispanic origin. 2001 codes 06 and 10-12 and 2009 code 07 name Hispanic origin as a race. The categories are NOT non-Hispanic: Hispanic respondents are inside White and the other groups in every wave (use race_ethnicity() for the combined variable).
   rows:
     - {wave: 2001, code: "01", hint: "White", category: white, status: exact}
     - {wave: 2001, code: "02", hint: "African American, Black", category: black, status: exact}
@@ -593,7 +593,7 @@ race_household:
     - {wave: 2001, code: "14", hint: "Other Combination 3 Races", category: multiple, status: approximate, note: "As code 13 (93 % answer Hispanic: yes)."}
     - {wave: 2001, code: "16", hint: "Other multiracial not listed", category: multiple, status: approximate, note: "As code 13 (10 % answer Hispanic: yes)."}
     - {wave: 2001, code: "17", hint: "Other specify", category: other, status: approximate, note: "A write-in in 2001 and 2009; 'Some other race' in 2017 and 2022 (see code 06)."}
-    - {wave: 2009, code: "01", hint: "White", category: white, status: exact}
+    - {wave: 2009, code: "01", hint: "White", category: white, status: approximate, note: "2009 offered 'Hispanic/Mexican' as a race answer, so Hispanic respondents are filed differently from 2017 and 2022: of the Hispanic households 47.8 % are filed as White in 2009, 69.0 % in 2017 and 71.0 % in 2022 (unweighted; 44.5 % as 'other' in 2009, 19.2 % in 2017). The overall weighted White share moves little (76.7 % in 2009, 75.5 % in 2017), but White is not the same group; compare race_ethnicity() groups instead."}
     - {wave: 2009, code: "02", hint: "African American, Black", category: black, status: exact}
     - {wave: 2009, code: "03", hint: "Asian Only", category: asian, status: exact}
     - {wave: 2009, code: "04", hint: "American Indian, Alaskan", category: aian, status: exact}
@@ -673,7 +673,7 @@ hispanic_person:
 #   * MEDCOND is a yes/no in all four waves, but it is asked of ages 16+ in 2001 and 2009 (15 and
 #     younger carry the skip -1; one 15-year-old answers in 2009) and of everybody aged 5+ in 2017 and 2022.
 #   * the weighted share of 18+ who do not answer (-7/-8/-9) is 0.1 % (2001), 0.1 % (2009), 0.04 % (2017)
-#     and 5.4 % (2022); the yes share among the valid answers of 18+ is 8.7 %, 10.5 %, 10.0 % and 7.5 %.
+#     and 5.4 % (2022); the yes share among the valid answers of 18+ is 8.8 %, 10.5 %, 10.0 % and 7.5 %.
 #   * MEDCOND6 is asked of the persons who answered yes, and of nobody else, in all four waves.
 
 medical_condition:
@@ -689,7 +689,7 @@ medical_condition:
     - {wave: 2009, code: "02", hint: "No", category: "no", status: exact}
     - {wave: 2017, code: "01", hint: "Yes", category: "yes", status: exact}
     - {wave: 2017, code: "02", hint: "No", category: "no", status: exact}
-    - {wave: 2022, code: "01", hint: "Yes", category: "yes", status: approximate, note: "2022 asks about a 'condition or disability' and 5.4 % of the adults (weighted) do not answer, against 0.04 to 0.14 % in 2001 to 2017; the yes share among the valid answers of 18+ is 7.5 % (8.7 %, 10.5 %, 10.0 % before)."}
+    - {wave: 2022, code: "01", hint: "Yes", category: "yes", status: approximate, note: "2022 asks about a 'condition or disability' and 5.4 % of the adults (weighted) do not answer, against 0.04 to 0.14 % in 2001 to 2017; the yes share among the valid answers of 18+ is 7.5 % (8.8 %, 10.5 %, 10.0 % before)."}
     - {wave: 2022, code: "02", hint: "No", category: "no", status: approximate, note: "As code 01: the 'no' share is inflated or deflated by the 5.4 % who decline, so a trend in the yes share is not established."}
 
 condition_duration:

@@ -46,6 +46,7 @@ topcodes:
     ANNMILES: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
     YEARMILE: {kind: cap, code: 200000, boundary: 200000, meaning: "200,000 miles or more", source: data}
     PTUSED: {kind: cap, code: 30, boundary: 30, meaning: "30 or more public transit uses in 30 days (1,194 persons at 30, 29 at 29)", source: data}
+    NWALKTRP: {kind: cap, code: 99, boundary: 99, meaning: "99 or more walk trips in the past week (364 persons at 99, 2 at 98, two isolated values above: 140 and 200)", source: data}
   2022:
     R_AGE: {kind: top, code: 92, boundary: 88, meaning: "89 or older", source: data}
     VEHAGE: {kind: top, code: 40, boundary: 32, meaning: "33 or older", source: data}

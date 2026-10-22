@@ -17,8 +17,9 @@
   question into `hispanic` / `nh_white` / `nh_black` / ... because the race groups are not non-Hispanic in any wave. The statuses rest on a
   cross-tabulation of race against Hispanic origin in the four files: 2001 code 06 and 2009 code 07 ("Hispanic/Mexican") are 99.7 % and 98.7 %
   Hispanic, and the later waves file such respondents under "Some other race" (82 % Hispanic in 2017, 67 % in 2022). Consequence: `other` is
-  comparable only from 2017 on; 2001 White, Black and American Indian absorb the "& Hispanic" codes (approximate); the other single-race groups
-  and `multiple` are exact from 2009 on.
+  comparable only from 2017 on; 2001 White, Black and American Indian absorb the "& Hispanic" codes (approximate); Black, Asian, American Indian,
+  Pacific Islander and `multiple` are exact from 2009 on, **White only from 2017 on** (the independent review found that 2009's Hispanic race answer
+  files 47.8 % of the Hispanic households under White against 69.0 % in 2017).
 * `harmonize.variable_of(concept, wave)` and the `variable_by_wave` key of `concept_info`: some concepts have another column name in one wave
   (2001 `HHR_RACE`, `HHR_HISP`); `crosswalk()["variable"]` is now per wave. Existing concepts are unchanged.
 * `concepts`: `race_household` is now grade H (was N, no crosswalk); new `hispanic_household`, `race_person`, `hispanic_person` (41 concepts; 44 with the medical-condition ones below).
@@ -27,11 +28,24 @@
   bands of 2001/2009 and three of 2017/2022 into `up_to_6_months` / `over_6_months` / `lifelong`) and `condition_effect` (`CONDTRAV`, `CONDNIGH`,
   `CONDPUB`, `CONDRIDE`, `CONDRIVE`, `CONDSPEC`). Cross-tabulation of the four files shows: `MEDCOND` is asked of ages 16+ in 2001 and 2009 and of everybody
   aged 5+ later (the 0.4.0 review table said 15+ for 2001 and 2009; the data say 16+); 2022 has 5.4 % non-answers among adults against 0.04 to 0.14 %
-  before, so 2022 is `approximate` (the yes share of 18+ is 8.7, 10.5, 10.0, 7.5 %); the effect items are asked of every person aged 80+ in 2017 and
+  before, so 2022 is `approximate` (the yes share of 18+ is 8.8, 10.5, 10.0, 7.5 %); the effect items are asked of every person aged 80+ in 2017 and
   2022 whatever `MEDCOND` says, 2022 is a select-all list, and the yes share falls on all six items from 2009 to 2017 with unchanged codes (cause
   undocumented), so only 2001 to 2009 are comparable. `concepts`: `medical_condition` and `condition_duration` grade H, `condition_effect` grade N (44 concepts).
   Docs: `docs/waves.md`, "Medical condition that makes travel difficult".
 * 4 new unit tests and 4 real-data tests.
+* **Independent adversarial review of this release** (`docs/review_0.8.0.md`, 3 P0, 3 P1, 10 P2, all reproduced on the real files; fixed here):
+  * **P0 `pynhts.study`** variables and `Keep`/`Drop` rules read raw codes: the 2009 `PTUSED` hidden missing code 99 raised a mean from 1.467 to 1.814;
+    `Drop(R_AGE < 18)` removed 496 refused ages and `Keep(TIMETOWK <= 60)` kept 259,474 person rows of which 157,774 are skips or non-answers (101,700 are real minutes); `kind="binary"` of a raw column gave a
+    "share" of 120 %. Now variables and rules read a masked view (skip, non-answers and hidden codes missing; `raw=True` on a step selects the codes),
+    and a binary column that is not 0/1 raises. Studies written before may select different rows (a refused age is no longer "under 18"); the
+    Zhang & Zhang 2018 example still reproduces to 0.09 %.
+  * **P1** 2009 White is `approximate` (Hispanic respondents are filed under White in 47.8 % of the Hispanic households in 2009, 69.0 % in 2017, 71.0 % in 2022);
+    `StudyResult.figures()`/`save()` crashed for a count outcome; the study dropped the top-code and cap warnings.
+  * **P2** the 2001 `MEDCOND` yes share is 8.8 % (not 8.7 %); `compare` matched category "1" to "10 ..." by prefix, graded a missing group against the first group and
+    lost the printed precision (`grade("5.10", 5.14)`); `Keep` on a study variable failed; the name-clash guard checked only loaded columns; trip studies
+    kept no trip key in 2022; a test that could not fail (race fallback: it fires for 15 households in 2009); `NWALKTRP` is flagged as capped in 2017 too
+    (364 persons at 99); README said 16 crosswalks.
+* 12 new unit tests and 4 new real-data tests for the review fixes.
 
 ## 0.7.1 (2026-10-22)
 

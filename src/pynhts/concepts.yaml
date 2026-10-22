@@ -74,7 +74,7 @@ concepts:
     comparability: H
     harmonize: harmonize.crosswalk("race_household")
     pitfalls:
-      - "The variable is called HHR_RACE in 2001 and HH_RACE later. The five single-race groups and 'multiple' are comparable; 'other' is not (2001 code 06 and 2009 code 07 carry Hispanic/Mexican as a race, which the later waves file under 'some other race')."
+      - "The variable is called HHR_RACE in 2001 and HH_RACE later. Black, Asian, American Indian, Pacific Islander and 'multiple' are comparable from 2009 on, White from 2017 on (2009 filed fewer Hispanic households under White: 47.8 % against 69.0 % in 2017); 'other' is not (2001 code 06 and 2009 code 07 carry Hispanic/Mexican as a race, which the later waves file under 'some other race')."
       - "Hispanic respondents are inside White and every other group in every wave (5.7 % of 2017 'White' households): the groups are not non-Hispanic. Use harmonize.race_ethnicity (race plus the separate Hispanic variable) for non-Hispanic groups."
       - "2001 combination codes 07-17 mix race and Hispanic origin: 07-09 are exact 'multiple', 10-12 keep the race part, 13/14/16 are unknown mixtures (approximate)."
       - "Race is the household respondent's answer (one person per household), not the race of each member."
