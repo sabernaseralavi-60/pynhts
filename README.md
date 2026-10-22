@@ -81,7 +81,7 @@ pynhts.dictionary(2022)                                     # every variable wit
 | `pynhts.io` | verified download, offline mode, deterministic Parquet cache |
 | `pynhts.core` | codebook-derived schema, `NHTSData` loader, missing-code handling |
 | `pynhts.stats` | totals, means, proportions, ratios with jackknife (2001, 2009, 2017) or Taylor-series (2022) errors and margins of error |
-| `pynhts.harmonize` | variable inventory of two waves; 12 crosswalk concepts (mode, three trip-purpose schemes, trip class, income, education, urban area, density, vehicle type, fuel ...) with a status per code |
+| `pynhts.harmonize` | variable inventory of two waves; 16 crosswalk concepts (mode, three trip-purpose schemes, trip class, income, education, race, Hispanic origin, urban area, density, vehicle type, fuel ...) with a status per code; `race_ethnicity` combines race and Hispanic origin |
 | `pynhts.concepts` | machine-readable dictionary: variable, universe, unit, comparability and pitfalls of each concept in each wave |
 | `pynhts.rates` | daily trips and miles per person or household by the official route, with units |
 | `pynhts.recipes` | replication of published tables with honest status per figure |

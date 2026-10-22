@@ -2,7 +2,17 @@
 
 ## Unreleased
 
-(nothing yet)
+* **Race and Hispanic-origin crosswalks** (4 new `harmonize` concepts: `race_household`, `hispanic_household` for all four waves, `race_person`,
+  `hispanic_person` for 2017 and 2022) and `harmonize.race_ethnicity(frame, level=)`, which combines race with the separate Hispanic-origin
+  question into `hispanic` / `nh_white` / `nh_black` / ... because the race groups are not non-Hispanic in any wave. The statuses rest on a
+  cross-tabulation of race against Hispanic origin in the four files: 2001 code 06 and 2009 code 07 ("Hispanic/Mexican") are 99.7 % and 98.7 %
+  Hispanic, and the later waves file such respondents under "Some other race" (82 % Hispanic in 2017, 67 % in 2022). Consequence: `other` is
+  comparable only from 2017 on; 2001 White, Black and American Indian absorb the "& Hispanic" codes (approximate); the other single-race groups
+  and `multiple` are exact from 2009 on.
+* `harmonize.variable_of(concept, wave)` and the `variable_by_wave` key of `concept_info`: some concepts have another column name in one wave
+  (2001 `HHR_RACE`, `HHR_HISP`); `crosswalk()["variable"]` is now per wave. Existing concepts are unchanged.
+* `concepts`: `race_household` is now grade H (was N, no crosswalk); new `hispanic_household`, `race_person`, `hispanic_person` (41 concepts).
+* 8 new unit tests and 3 real-data tests (every quoted percentage is re-checked on the files).
 
 ## 0.7.1 (2026-10-22)
 

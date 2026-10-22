@@ -15,7 +15,8 @@ UNOBSERVED = {("mode", 2022, "22")}
 # scheme, aligned through the summary purpose WHYTRP1S and the 1990-scheme purpose WHYTRP90);
 # 2022 has no FUELTYPE
 ALL = (2001, 2009, 2017, 2022)
-WAVES = {"purpose": (2017, 2022), "fuel": (2001, 2009, 2017)}
+WAVES = {"purpose": (2017, 2022), "fuel": (2001, 2009, 2017),
+         "race_person": (2017, 2022), "hispanic_person": (2017, 2022)}
 
 
 def _codebook(concept: str, wave: int, variable: str):
@@ -36,7 +37,8 @@ def test_every_observed_code_has_a_category_and_every_crosswalk_code_exists(conc
     assert not cw.duplicated(["wave", "code"]).any()
     info = harmonize.concept_info(concept)
     listed = set(cw.loc[cw["wave"] == wave, "code"])
-    for variable in [info["variable"], *info["also"]]:
+    primary = harmonize.variable_of(concept, wave)
+    for variable in [primary, *info["also"]]:
         col = _codebook(concept, wave, variable)
         real = {c.code for c in col.codes
                 if c.code not in col.missing_codes and c.code != col.skip_code
@@ -45,7 +47,7 @@ def test_every_observed_code_has_a_category_and_every_crosswalk_code_exists(conc
         canon_listed = {_canon(x) for x in listed}
         missing = {c for c in real if c not in listed and _canon(c) not in canon_listed}
         assert not missing, (concept, wave, variable, sorted(missing))
-    book = {c.code for c in _codebook(concept, wave, info["variable"]).codes}
+    book = {c.code for c in _codebook(concept, wave, primary).codes}
     extra = {c for c in listed if c not in book and (concept, wave, c) not in UNOBSERVED}
     assert not extra, extra
 
@@ -160,3 +162,108 @@ def test_dictionary_and_describe():
     assert info["owner"] == "trip" and {c["code"] for c in info["codes"]} >= {"01", "20"}
     with pytest.raises(KeyError):
         pynhts.describe("NOT_A_VARIABLE", 2017)
+
+
+# ---- race and Hispanic origin (0.8.0) ---------------------------------------------------------
+def _py(series: pd.Series) -> list:
+    """Values as a plain list with None for NA (pd.NA compares unequal to everything)."""
+    return [None if pd.isna(v) else v for v in series]
+
+
+def _tagged(frame: pd.DataFrame, wave: int) -> pd.DataFrame:
+    frame.attrs["pynhts"] = {"wave": wave}
+    return frame
+
+
+def test_race_column_is_named_differently_in_2001_and_the_crosswalk_knows_it():
+    assert harmonize.variable_of("race_household", 2001) == "HHR_RACE"
+    assert harmonize.variable_of("race_household", 2009) == "HH_RACE"
+    assert harmonize.variable_of("hispanic_household", 2001) == "HHR_HISP"
+    assert harmonize.variable_of("mode", 2001) == "TRPTRANS"
+    cw = harmonize.crosswalk("race_household")
+    assert set(cw.loc[cw["wave"] == 2001, "variable"]) == {"HHR_RACE"}
+    assert set(cw.loc[cw["wave"] != 2001, "variable"]) == {"HH_RACE"}
+    assert harmonize.concept_info("race_household")["variable_by_wave"] == {2001: "HHR_RACE"}
+
+
+def test_single_race_groups_are_comparable_from_2009_on_but_2001_breaks_three():
+    for a, b in [(2009, 2017), (2017, 2022), (2009, 2022)]:
+        rep = harmonize.category_report("race_household", a, b).set_index("category")
+        for cat in ("white", "black", "asian", "aian", "nhpi"):
+            assert rep.loc[cat, "comparable"], (a, b, cat)
+    # 2001 files 'White & Hispanic', 'African American & Hispanic' and 'American Indian & Hispanic'
+    # under the race part (approximate), so only Asian and Pacific Islander are clean
+    for b in (2009, 2017, 2022):
+        rep = harmonize.category_report("race_household", 2001, b).set_index("category")
+        assert rep.loc[["asian", "nhpi"], "comparable"].all()
+        for cat in ("white", "black", "aian"):
+            assert not rep.loc[cat, "comparable"] and "Hispanic" in rep.loc[cat, "issue"], (b, cat)
+    rep = harmonize.category_report("race_household", 2017, 2022).set_index("category")
+    assert rep.loc["other", "comparable"] and rep.loc["multiple", "comparable"]
+    for a in (2001, 2009):
+        rep = harmonize.category_report("race_household", a, 2017).set_index("category")
+        assert not rep.loc["other", "comparable"] and "Hispanic" in rep.loc["other", "issue"]
+    # 2009 'Multiracial' equals 2017; the 2001 combination codes do not (13, 14, 16 are mixes)
+    assert harmonize.category_report("race_household", 2009, 2017).set_index(
+        "category").loc["multiple", "comparable"]
+    assert not harmonize.category_report("race_household", 2001, 2017).set_index(
+        "category").loc["multiple", "comparable"]
+
+
+def test_same_race_code_means_the_same_in_2009_2017_2022_but_2001_hispanic_codes_move():
+    s = pd.Series(["01", "06", "07", "97"], dtype="string")
+    assert _py(harmonize.apply(s, "race_household", 2017)) == ["white", "multiple", None, "other"]
+    assert _py(harmonize.apply(s, "race_household", 2022)) == ["white", "multiple", None, "other"]
+    # 06 is 'Hispanic/Mexican' in 2001 and 'Multiracial' in 2009; 07 is 'White & African American'
+    # in 2001 and 'Hispanic/Mexican' in 2009
+    assert _py(harmonize.apply(s, "race_household", 2001)) == ["white", "other", "multiple", None]
+    assert _py(harmonize.apply(s, "race_household", 2009)) == [
+        "white", "multiple", "other", "other"]
+    # non-answers are not categories
+    na = pd.Series(["-7", "-8", "-9", "-1"], dtype="string")
+    assert harmonize.apply(na, "race_household", 2009).isna().all()
+
+
+def test_race_ethnicity_combines_race_and_hispanic_origin_in_every_wave():
+    f01 = _tagged(pd.DataFrame({
+        "HHR_RACE": ["01", "01", "06", "10", "02", "13", "-7", "03", "06"],
+        "HHR_HISP": ["2", "1", "1", None, "2", "2", "2", None, "2"]}), 2001)
+    # white non-Hispanic; white Hispanic (the question wins over the race code); Hispanic race code
+    # and Hispanic yes; Hispanic race code, question unanswered; black non-Hispanic; unknown
+    # combination, non-Hispanic; unknown race; Asian with unknown origin (cannot be placed);
+    # Hispanic race code but the question says no (the question wins)
+    assert _py(harmonize.race_ethnicity(f01)) == [
+        "nh_white", "hispanic", "hispanic", "hispanic", "nh_black", "nh_multiple", None, None,
+        "nh_other"]
+    f09 = _tagged(pd.DataFrame({"HH_RACE": ["07", "01", "97"],
+                                "HH_HISP": ["02", "01", None]}), 2009)
+    assert _py(harmonize.race_ethnicity(f09)) == ["nh_other", "hispanic", None]
+    f17 = _tagged(pd.DataFrame({"HH_RACE": ["01", "06", "97", "05"],
+                                "HH_HISP": ["02", "02", "01", "02"]}), 2017)
+    assert harmonize.race_ethnicity(f17).tolist() == [
+        "nh_white", "nh_multiple", "hispanic", "nh_nhpi"]
+    p22 = _tagged(pd.DataFrame({"R_RACE": ["02", "01"], "R_HISP": ["02", "01"]}), 2022)
+    assert harmonize.race_ethnicity(p22, level="person").tolist() == ["nh_black", "hispanic"]
+
+
+def test_race_ethnicity_refuses_what_it_cannot_do():
+    f = _tagged(pd.DataFrame({"HH_RACE": ["01"], "HH_HISP": ["01"]}), 2009)
+    with pytest.raises(ValueError, match="do not exist in NHTS 2009"):
+        harmonize.race_ethnicity(f, level="person")
+    with pytest.raises(KeyError, match="HH_HISP"):
+        harmonize.race_ethnicity(_tagged(pd.DataFrame({"HH_RACE": ["01"]}), 2009))
+    with pytest.raises(ValueError, match="wave is required"):
+        harmonize.race_ethnicity(pd.DataFrame({"HH_RACE": ["01"], "HH_HISP": ["01"]}))
+    with pytest.raises(ValueError, match="level"):
+        harmonize.race_ethnicity(f, level="trip")
+
+
+def test_hispanic_race_codes_named_in_the_crosswalk_really_say_hispanic():
+    spec = harmonize._spec("race_household")
+    for wave, codes in spec["hispanic_codes"].items():
+        column = _codebook("race_household", wave, harmonize.variable_of("race_household", wave))
+        book = {c.code: c.label for c in column.codes}
+        assert codes and all("hispanic" in book[c].lower() for c in codes), (wave, codes)
+        # and no other code of the wave names Hispanic origin
+        others = [c for c, lab in book.items() if "hispanic" in lab.lower() and c not in codes]
+        assert not others, (wave, others)

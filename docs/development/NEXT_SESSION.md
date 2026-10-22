@@ -11,7 +11,10 @@ the last ledger entries `PKG-20261022-02..10`, then `git status` here.
 
 ## Suggested next steps (none started)
 1. A second fact-check of the corrected 0.7.1 documentation (statement by statement), as done for 0.6.0; the adversarial review covered the new code once.
-2. Crosswalks for race (HHR_RACE 2001 / HH_RACE 2009 / R_RACE 2017), income (HHINCTTL vs HHFAMINC), medical condition; then re-run the paper audit for P01, P02, P10.
+2. Race and Hispanic origin: DONE after 0.7.1 (unreleased, see CHANGELOG; `harmonize.race_ethnicity`). Still to do: a crosswalk for medical condition; then re-run
+   the paper audit for P01, P02, P10 with the new race code (P01 uses `HHR_RACE` and `HHINCTTL`). Income needs no new crosswalk: `HHFAMINC` is crosswalked since 0.6.0,
+   and `HHINCTTL` is a 2001-only column with the same 18 bands (P01's cut points on it give shares 15.2 / 25.1 / 36.4 / 23.3, on `HHFAMINC` 16.9 / 25.9 / 36.1 / 21.1);
+   map it by the 2001 rows of `crosswalk("income")` only if a recipe needs it.
 3. Regression-coefficient variance (refit per replicate) for the logistic/ZINB papers; then reproduce Yang 2011 Table 2 with standard errors.
 4. Resolve open audit items: Lidbe 2001 medical-condition cells, Zhou 2014 sample rule, Quinn 2016 denominator; ask the authors if needed.
 5. Systematic literature review (the landscape is a first pass: 11 papers read in full, 17 abstract-only leads) before any novelty claim.

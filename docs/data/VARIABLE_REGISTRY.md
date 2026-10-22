@@ -17,7 +17,7 @@ Cross-wave comparability categories used in the concept dictionary: `C` comparab
 | 2017 | 247 | household, person, trip, vehicle | 235 |
 | 2022 | 278 | household, person, trip, vehicle, longdist | 253 |
 
-## Concepts (38): comparability {'H': 23, 'N': 12, 'C': 3}
+## Concepts (41): comparability {'H': 27, 'N': 11, 'C': 3}
 
 | concept | table | 2001 | 2009 | 2017 | 2022 | comparability | harmonize |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -25,7 +25,10 @@ Cross-wave comparability categories used in the concept dictionary: `C` comparab
 | sex | person | R_SEX | R_SEX | R_SEX | R_SEX | H | strip zero padding: 2001 uses '1'/'2', later waves '01'/'02' |
 | household_income | household | HHFAMINC | HHFAMINC | HHFAMINC | HHFAMINC | H | harmonize.crosswalk("income") |
 | education | person | EDUC | EDUC | EDUC | EDUC | H | harmonize.crosswalk("education") |
-| race_household | household | HHR_RACE | HH_RACE | HH_RACE | HH_RACE | N |  |
+| race_household | household | HHR_RACE | HH_RACE | HH_RACE | HH_RACE | H | harmonize.crosswalk("race_household") |
+| hispanic_household | household | HHR_HISP | HH_HISP | HH_HISP | HH_HISP | H | harmonize.crosswalk("hispanic_household") |
+| race_person | person |  |  | R_RACE | R_RACE | H | harmonize.crosswalk("race_person") |
+| hispanic_person | person |  |  | R_HISP | R_HISP | H | harmonize.crosswalk("hispanic_person") |
 | worker | person | WORKER | WORKER | WORKER | WORKER | H | restrict to 16+ and strip zero padding |
 | driver | person | DRIVER | DRIVER | DRIVER | DRIVER | H | restrict to the driving-age universe and strip zero padding |
 | primary_activity | person | PRMACT | PRMACT | PRMACT | PRMACT | N |  |

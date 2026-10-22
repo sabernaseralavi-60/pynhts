@@ -116,9 +116,10 @@ happened, 50 variables for 2001 and 2009). Two examples that would corrupt a poo
   business") has no code from 2017 on; in the 2017 data those trips (WHYTO "other general
   errands", "buy goods" and "buy services") all have `WHYTRP1S` 40.
 
-12 crosswalk concepts are available (`harmonize.concepts()`): `mode`, `purpose_summary`
+16 crosswalk concepts are available (`harmonize.concepts()`): `mode`, `purpose_summary`
 (`WHYTRP1S`), `purpose_1990` (`WHYTRP90`, ORNL's own cross-wave purpose), `trip_class` (`TRIPPURP`),
-`income` (eight nominal bands that nest exactly in all four waves), `education` (five levels), `urban_area`
+`income` (eight nominal bands that nest exactly in all four waves), `education` (five levels), `race_household`, `race_person`,
+`hispanic_household`, `hispanic_person` (see below), `urban_area`
 (`URBAN`, codes swapped in 2001), `urban_rural`, `density` (`HBHUR`), `vehicle_type`, `fuel`, and the
 detailed `purpose` (2017/2022). Status `nested` means several codes collapse exactly into the category,
 so the category is comparable. `harmonize.age_bands` ends at 85+ whatever the top-code;
@@ -130,6 +131,30 @@ scheme. `category_report(concept, wave_a, wave_b)` compares any two waves.
 ```python
 harmonize.apply(trips["TRPTRANS"], "mode", wave=2009)
 harmonize.category_report("mode", 2001, 2009)       # walk, bike, car, SUV, ... are comparable
+```
+
+### Race and Hispanic origin
+
+Race is the answer of one person per household (the household respondent); only 2017 and 2022 also ask each person
+(`R_RACE`, `R_HISP`). Three things make a raw `HH_RACE` comparison wrong, all found in the data (households, unweighted):
+
+* **The column is renamed in 2001** (`HHR_RACE`, `HHR_HISP`). `harmonize.variable_of("race_household", 2001)` returns the name of the wave.
+* **Hispanic origin is a race code in 2001 and 2009.** 2001 codes 06 and 10-12 and 2009 code 07 name Hispanic origin; 99.7 % (2001 code 06) and
+  98.7 % (2009 code 07) of those respondents also answer "Hispanic: yes". The later waves have no such code: 82 % (2017) and 67 % (2022) of the
+  respondents who choose "Some other race" are Hispanic. The crosswalk files those codes under `other` as `approximate`, so `other` is not comparable
+  before 2017, and 2001 White, Black and American Indian (which absorb "White & Hispanic" and similar codes) are not comparable with later waves.
+  From 2009 on the five single-race groups and `multiple` are exact; Asian and Pacific Islander are exact in all four waves.
+* **The race groups are not non-Hispanic.** Hispanic respondents sit inside White (5.7 % of 2017 White households) and the other groups in every wave.
+
+For non-Hispanic groups use `harmonize.race_ethnicity(frame)`: a respondent who answers "Hispanic" is `hispanic`, the others are `nh_white`,
+`nh_black`, `nh_asian`, `nh_aian`, `nh_nhpi`, `nh_multiple` or `nh_other`; the dedicated Hispanic question decides, and a Hispanic race code only
+when the question is unanswered. Unknown origin or race stays missing (0 to 0.9 % of households). In the real files the household respondent is
+Hispanic in 5.4 % (2001), 6.9 % (2009), 7.0 % (2017) and 7.7 % (2022) of the households that could be classified (unweighted; use the household weight for population shares).
+
+```python
+hh = pynhts.load(2001).households(["HHR_RACE", "HHR_HISP"])
+hh["race_eth"] = harmonize.race_ethnicity(hh)       # same call and same categories in 2009, 2017, 2022
+harmonize.category_report("race_household", 2009, 2017)   # white ... nhpi, multiple: comparable
 ```
 
 ## What is not harmonized

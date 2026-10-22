@@ -71,10 +71,46 @@ concepts:
     table: household
     variables: {2001: HHR_RACE, 2009: HH_RACE, 2017: HH_RACE, 2022: HH_RACE}
     unit: category
-    comparability: N
-    harmonize: null
+    comparability: H
+    harmonize: harmonize.crosswalk("race_household")
     pitfalls:
-      - "The variable is called HHR_RACE in 2001 and HH_RACE later. All four waves have a separate Hispanic variable (HHR_HISP in 2001, HH_HISP later); in addition 2001 (code 06) and 2009 (code 07) carry Hispanic/Mexican as a race code, and 2001 has multi-race combination codes 07-17. No crosswalk is offered: collapsing loses information that depends on the question."
+      - "The variable is called HHR_RACE in 2001 and HH_RACE later. The five single-race groups and 'multiple' are comparable; 'other' is not (2001 code 06 and 2009 code 07 carry Hispanic/Mexican as a race, which the later waves file under 'some other race')."
+      - "Hispanic respondents are inside White and every other group in every wave (5.7 % of 2017 'White' households): the groups are not non-Hispanic. Use harmonize.race_ethnicity (race plus the separate Hispanic variable) for non-Hispanic groups."
+      - "2001 combination codes 07-17 mix race and Hispanic origin: 07-09 are exact 'multiple', 10-12 keep the race part, 13/14/16 are unknown mixtures (approximate)."
+      - "Race is the household respondent's answer (one person per household), not the race of each member."
+    evidence: [data]
+  hispanic_household:
+    title: Hispanic origin of the household respondent
+    table: household
+    variables: {2001: HHR_HISP, 2009: HH_HISP, 2017: HH_HISP, 2022: HH_HISP}
+    unit: yes/no
+    comparability: H
+    harmonize: harmonize.crosswalk("hispanic_household")
+    pitfalls:
+      - "The variable is called HHR_HISP in 2001 and HH_HISP later, with codes 1/2 (2001) and 01/02 (later); 2001 to 2017 keep -7/-8 non-answers (masked by default)."
+      - "2001 and 2009 also carry Hispanic origin inside the race variable; the dedicated yes/no answer is the one to use."
+    evidence: [data]
+  race_person:
+    title: Race of the person (self-reported by each person who answered)
+    table: person
+    variables: {2001: null, 2009: null, 2017: R_RACE, 2022: R_RACE}
+    imputed: {2022: R_RACE_IMP}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("race_person")
+    pitfalls:
+      - "Person-level race exists in 2017 and 2022 only; 2001 and 2009 have the household respondent's race (race_household) on every person row."
+      - "Hispanic persons are inside every race group; use harmonize.race_ethnicity(frame, level='person')."
+    evidence: [data]
+  hispanic_person:
+    title: Hispanic origin of the person
+    table: person
+    variables: {2001: null, 2009: null, 2017: R_HISP, 2022: R_HISP}
+    unit: yes/no
+    comparability: H
+    harmonize: harmonize.crosswalk("hispanic_person")
+    pitfalls:
+      - "Person-level Hispanic origin exists in 2017 and 2022 only (the 2022 question is asked of persons 5 or older); 2001 and 2009 have the household respondent's answer (hispanic_household)."
     evidence: [data]
   worker:
     title: The person has a job

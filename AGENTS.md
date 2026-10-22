@@ -10,7 +10,7 @@ below was a real silent error found in the data (see `docs/guards.md`, `docs/opu
 import pynhts
 pynhts.concepts.find("VEHAGE", 2009)     # what the variable means, top-code, national-only, comparability
 pynhts.describe("TRPTRANS", 2017)        # codebook facts + top-code + the concepts that use it
-pynhts.concepts.table()                  # the 38 concepts x 4 waves (grade C / H / N)
+pynhts.concepts.table()                  # the 41 concepts x 4 waves (grade C / H / N)
 pynhts.harmonize.compare_waves(2009, 2017)   # which same-name variables really are the same
 ```
 
@@ -25,6 +25,8 @@ pynhts.harmonize.compare_waves(2009, 2017)   # which same-name variables really 
    airplane, golf cart, motorcycle, bus; `URBAN` 1/2 swapped in 2001; `WHYTRP1S` has two numbering systems). Map with
    `pynhts.harmonize.apply_column(frame, "TRPTRANS", "mode")`; it reads the wave from the frame and refuses a wrong one.
    Available concepts: `harmonize.concepts()`. Check `category_report` for `comparable`.
+   Race is not a non-Hispanic variable in any wave (Hispanic respondents sit inside White and the other groups):
+   `harmonize.race_ethnicity(frame)` combines race with the separate Hispanic-origin question.
 4. **Never pool weights across waves.** Compare shares, rates and distributions per wave; totals have
    different population bases (2022 excludes group quarters; 2001 includes children 0-4).
 5. **2001 contains children aged 0-4; the other waves start at 5.** Use `min_age=5` or `harmonize.age_bands`.

@@ -11,6 +11,8 @@ Two tools:
   categories. Every code carries a status (``exact``, ``merge``, ``approximate``, ``only_here``)
   and the reason for it, taken from the 2022 User Guide's Appendix 2 for 2017 and 2022 and checked
   against the codebooks and, for 2001 and 2009, against the codebooks and the data.
+* :func:`race_ethnicity` combines race and Hispanic origin (separate questions, and Hispanic race
+  codes in 2001 and 2009) into one variable that means the same in all four waves.
 
 >>> from pynhts import harmonize
 >>> harmonize.crosswalk("mode").query("wave == 2022")                    # doctest: +SKIP
@@ -52,15 +54,16 @@ def concepts() -> list[str]:
 def crosswalk(concept: str) -> pd.DataFrame:
     """One row per (wave, code): ``category`` (and ``summary`` for mode), ``status``, ``note``.
 
-    ``variable`` names the NHTS column the codes belong to (``WHYTO``/``WHYFROM`` for purpose,
-    ``TRPTRANS`` for mode).
+    ``variable`` names the NHTS column the codes belong to in that wave (``WHYTO``/``WHYFROM`` for
+    purpose, ``TRPTRANS`` for mode, ``HHR_RACE`` in 2001 and ``HH_RACE`` later for household race).
     """
     spec = _spec(concept)
     frame = pd.DataFrame(spec["rows"])
     for col in ("summary", "note"):
         if col not in frame.columns:
             frame[col] = None
-    frame.insert(0, "variable", spec["variable"])
+    renamed = _renamed(spec)
+    frame.insert(0, "variable", [renamed.get(int(w), spec["variable"]) for w in frame["wave"]])
     frame.insert(1, "table", spec.get("table", "trip"))
     cols = ["wave", "variable", "table", "code", "hint", "category", "summary", "status", "note"]
     out: pd.DataFrame = frame[cols]
@@ -70,15 +73,28 @@ def crosswalk(concept: str) -> pd.DataFrame:
 def concept_info(concept: str) -> dict[str, Any]:
     """Variable(s), table, source and note of a crosswalk concept.
 
-    Keys: ``variable``, ``also`` (further variables with the same codes, e.g. ``WHYFROM``),
-    ``table`` (the table the variable lives in), ``source``, ``note``.
+    Keys: ``variable``, ``variable_by_wave`` (wave -> column name where it differs from
+    ``variable``, e.g. ``{2001: "HHR_RACE"}``), ``also`` (further variables with the same codes,
+    e.g. ``WHYFROM``), ``table`` (the table the variable lives in), ``source``, ``note``.
     """
     spec = _spec(concept)
     return {
         "variable": spec["variable"], "also": list(spec.get("also", [])),
+        "variable_by_wave": _renamed(spec),
         "table": spec.get("table", "trip"), "source": spec.get("source", ""),
         "note": str(spec.get("note", "")).strip(),
     }
+
+
+def _renamed(spec: dict[str, Any]) -> dict[int, str]:
+    """Waves whose column has another name than ``variable`` (2001 ``HHR_RACE`` for ``HH_RACE``)."""
+    return {int(w): str(v) for w, v in (spec.get("variable_by_wave") or {}).items()}
+
+
+def variable_of(concept: str, wave: int) -> str:
+    """The column that holds the codes of ``concept`` in ``wave`` (it is renamed for some)."""
+    info = concept_info(concept)
+    return str(info["variable_by_wave"].get(int(wave), info["variable"]))
 
 
 def _spec(concept: str) -> dict[str, Any]:
@@ -148,6 +164,53 @@ def apply(
         raise ValueError(f"no crosswalk rows for wave {wave}")
     mapped = _as_codes(codes).map(mapping)
     return mapped.astype("string")
+
+
+def race_ethnicity(
+    frame: pd.DataFrame, level: Literal["household", "person"] = "household"
+) -> pd.Series:
+    """Race and Hispanic origin in one variable that means the same in every wave.
+
+    NHTS asks Hispanic origin separately from race, but 2001 and 2009 also have Hispanic race
+    codes, and the Hispanic respondents sit inside White and every other group in all four waves.
+    Reading ``HH_RACE`` alone therefore does not give non-Hispanic groups. This function combines
+    the two columns: a respondent who answers "Hispanic" is ``hispanic``; the others fall in
+    ``nh_white``, ``nh_black``, ``nh_asian``, ``nh_aian``, ``nh_nhpi``, ``nh_multiple`` or
+    ``nh_other``. The dedicated Hispanic question decides when it was answered; only if it was not,
+    a Hispanic race code (2001 codes 06, 10-12; 2009 code 07) does. A respondent whose Hispanic
+    origin is unknown and whose race code does not say it, or whose race is unknown, is NA.
+
+    Args:
+        frame: Frame loaded by pynhts (it carries the wave) with both columns: household level
+            ``HH_RACE`` and ``HH_HISP`` (``HHR_RACE`` and ``HHR_HISP`` in 2001; also on person
+            frames, where it is the household respondent's), person level ``R_RACE`` and ``R_HISP``
+            (2017 and 2022 only).
+        level: ``"household"`` (all four waves) or ``"person"`` (2017 and 2022).
+
+    Returns:
+        A string Series with the same index as ``frame``.
+    """
+    if level not in ("household", "person"):
+        raise ValueError("level must be 'household' or 'person'")
+    wave = _wave_of(frame, None)
+    race_concept, hisp_concept = f"race_{level}", f"hispanic_{level}"
+    if wave not in set(crosswalk(race_concept)["wave"]):
+        raise ValueError(f"{level}-level race and Hispanic origin do not exist in NHTS {wave}")
+    race_col, hisp_col = variable_of(race_concept, wave), variable_of(hisp_concept, wave)
+    absent = [c for c in (race_col, hisp_col) if c not in frame.columns]
+    if absent:
+        raise KeyError(f"load {absent} with the frame: race_ethnicity needs {race_col} and "
+                       f"{hisp_col}")
+    race = apply(frame[race_col], race_concept, wave)
+    hisp = apply(frame[hisp_col], hisp_concept, wave)
+    old_codes = (_spec(race_concept).get("hispanic_codes") or {}).get(wave, [])
+    race_codes = {_canon(c) for c in old_codes}
+    asks_hispanic = hisp.eq("not_hispanic").fillna(False).astype(bool)
+    hispanic = hisp.eq("hispanic").fillna(False).astype(bool) | (
+        hisp.isna() & _as_codes(frame[race_col]).isin(race_codes).fillna(False).astype(bool))
+    non_hispanic = asks_hispanic & race.notna()
+    out: pd.Series = ("nh_" + race).where(non_hispanic).mask(hispanic, "hispanic")
+    return out.astype("string")
 
 
 def _as_codes(codes: pd.Series) -> pd.Series:
@@ -308,4 +371,4 @@ def _codes(wave: int) -> dict[str, dict[str, str]]:
 
 
 __all__ = ["age_bands", "apply", "apply_column", "category_report", "compare_waves",
-           "concept_info", "concepts", "crosswalk"]
+           "concept_info", "concepts", "crosswalk", "race_ethnicity", "variable_of"]

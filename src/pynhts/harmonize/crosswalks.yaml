@@ -558,3 +558,111 @@ purpose_1990:
     - {wave: 2022, code: "08", hint: "Visit Friends/Relative", category: visit, status: exact}
     - {wave: 2022, code: "10", hint: "Other Social/Recreatio", category: social_rec, status: exact}
     - {wave: 2022, code: "11", hint: "Other", category: other, status: approximate, note: "Class 11 is 0.8 percent of trips in 2001 and 2009, 4.0 in 2017 and 1.9 in 2022: 2017 and 2022 put 'change type of transportation' segments here (29 and 45 percent of the class)."}
+
+# ---- race and Hispanic origin (0.8.0) ----------------------------------------------------------
+# Evidence (households, unweighted, cross-tabulation of the race and Hispanic-origin answers of the
+# household respondent in the four files, 2026-10-22): in 2001 99.7 % of "Hispanic/Mexican only" (06)
+# and in 2009 98.7 % of "Hispanic/Mexican" (07) also answer "Hispanic: yes"; in 2017 82 % (1,743 of
+# 2,131) and in 2022 67 % (117 of 175) of "Some other race" do, and 2009's "Other specify" 46 %. The
+# later waves have no Hispanic race code: respondents who see Hispanic origin as their race land in
+# "other". Single-race groups (White ... Pacific Islander) hold Hispanic respondents in every wave
+# (5.7 % of 2017 "White" households), so the groups are NOT non-Hispanic; use race_ethnicity().
+
+race_household:
+  variable: HH_RACE
+  variable_by_wave: {2001: HHR_RACE}
+  table: household
+  source: "codebooks 2001 (User's Guide v3, App. B), 2009 v2.1, 2017 v1.2, 2022 v2.1; cross-tabulation with the Hispanic-origin answer (see above)"
+  hispanic_codes: {2001: ["06", "10", "11", "12"], 2009: ["07"]}
+  note: >-
+    Race of the household respondent (one person per household). The five single-race groups and "multiple" have the same meaning in all waves; the two older waves differ in how they treat Hispanic origin. 2001 codes 06 and 10-12 and 2009 code 07 name Hispanic origin as a race. The categories are NOT non-Hispanic: Hispanic respondents are inside White and the other groups in every wave (use race_ethnicity() for the combined variable).
+  rows:
+    - {wave: 2001, code: "01", hint: "White", category: white, status: exact}
+    - {wave: 2001, code: "02", hint: "African American, Black", category: black, status: exact}
+    - {wave: 2001, code: "03", hint: "Asian Only", category: asian, status: exact}
+    - {wave: 2001, code: "04", hint: "American Indian, Alaskan", category: aian, status: exact}
+    - {wave: 2001, code: "05", hint: "Native Hawaiian, other Pacific", category: nhpi, status: exact}
+    - {wave: 2001, code: "06", hint: "Hispanic/Mexican Only", category: other, status: approximate, note: "Hispanic origin was a race answer in 2001 and 2009; later waves ask it separately and 82 % (2017) and 67 % (2022) of 'some other race' respondents are Hispanic, so this code is filed under 'other'. 99.7 % of these 2001 respondents answer Hispanic: yes."}
+    - {wave: 2001, code: "07", hint: "White & African American", category: multiple, status: nested}
+    - {wave: 2001, code: "08", hint: "White & Asian", category: multiple, status: nested}
+    - {wave: 2001, code: "09", hint: "White & American Indian", category: multiple, status: nested}
+    - {wave: 2001, code: "10", hint: "White & Hispanic", category: white, status: approximate, note: "2001 combines a race with Hispanic origin in one code; the race part is kept, the Hispanic part is in the Hispanic-origin variable (99.8 % answer Hispanic: yes)."}
+    - {wave: 2001, code: "11", hint: "African American & Hispanic", category: black, status: approximate, note: "Race part kept; the Hispanic part is in the Hispanic-origin variable (see code 10)."}
+    - {wave: 2001, code: "12", hint: "American Indian & Hispanic", category: aian, status: approximate, note: "Race part kept; the Hispanic part is in the Hispanic-origin variable (see code 10)."}
+    - {wave: 2001, code: "13", hint: "Other Combination 2 Races", category: multiple, status: approximate, note: "The codebook does not say which races; 59 % of these households answer Hispanic: yes, so Hispanic origin is probably one of the two."}
+    - {wave: 2001, code: "14", hint: "Other Combination 3 Races", category: multiple, status: approximate, note: "As code 13 (93 % answer Hispanic: yes)."}
+    - {wave: 2001, code: "16", hint: "Other multiracial not listed", category: multiple, status: approximate, note: "As code 13 (10 % answer Hispanic: yes)."}
+    - {wave: 2001, code: "17", hint: "Other specify", category: other, status: approximate, note: "A write-in in 2001 and 2009; 'Some other race' in 2017 and 2022 (see code 06)."}
+    - {wave: 2009, code: "01", hint: "White", category: white, status: exact}
+    - {wave: 2009, code: "02", hint: "African American, Black", category: black, status: exact}
+    - {wave: 2009, code: "03", hint: "Asian Only", category: asian, status: exact}
+    - {wave: 2009, code: "04", hint: "American Indian, Alaskan", category: aian, status: exact}
+    - {wave: 2009, code: "05", hint: "Native Hawaiian, other Pacific", category: nhpi, status: exact}
+    - {wave: 2009, code: "06", hint: "Multiracial", category: multiple, status: exact}
+    - {wave: 2009, code: "07", hint: "Hispanic/Mexican", category: other, status: approximate, note: "See 2001 code 06 (98.7 % of these 2009 respondents answer Hispanic: yes)."}
+    - {wave: 2009, code: "97", hint: "Other specify", category: other, status: approximate, note: "A write-in; 46 % answer Hispanic: yes in 2009 against 82 % of 'some other race' in 2017."}
+    - {wave: 2017, code: "01", hint: "White", category: white, status: exact}
+    - {wave: 2017, code: "02", hint: "Black or African American", category: black, status: exact}
+    - {wave: 2017, code: "03", hint: "Asian", category: asian, status: exact}
+    - {wave: 2017, code: "04", hint: "American Indian or Alaska Native", category: aian, status: exact}
+    - {wave: 2017, code: "05", hint: "Native Hawaiian or other Pacific", category: nhpi, status: exact}
+    - {wave: 2017, code: "06", hint: "Multiple responses selected", category: multiple, status: exact}
+    - {wave: 2017, code: "97", hint: "Some other race", category: other, status: exact}
+    - {wave: 2022, code: "01", hint: "White", category: white, status: exact}
+    - {wave: 2022, code: "02", hint: "Black or African American", category: black, status: exact}
+    - {wave: 2022, code: "03", hint: "Asian", category: asian, status: exact}
+    - {wave: 2022, code: "04", hint: "American Indian/Alaska Native", category: aian, status: exact}
+    - {wave: 2022, code: "05", hint: "Native Hawaiian/Pacific", category: nhpi, status: exact}
+    - {wave: 2022, code: "06", hint: "Multiple races selected", category: multiple, status: exact}
+    - {wave: 2022, code: "97", hint: "Other race", category: other, status: exact}
+
+race_person:
+  variable: R_RACE
+  table: person
+  source: "codebooks 2017 v1.2 and 2022 v2.1"
+  note: >-
+    Race of each person who answered (2017 and 2022 only): 2001 and 2009 record the race of the household respondent only (race_household). Same seven codes in both waves. 2022 also ships R_RACE_IMP (imputed, no non-answers). Hispanic respondents are inside every group; use race_ethnicity(level="person").
+  rows:
+    - {wave: 2017, code: "01", hint: "White", category: white, status: exact}
+    - {wave: 2017, code: "02", hint: "Black or African American", category: black, status: exact}
+    - {wave: 2017, code: "03", hint: "Asian", category: asian, status: exact}
+    - {wave: 2017, code: "04", hint: "American Indian or Alaska Native", category: aian, status: exact}
+    - {wave: 2017, code: "05", hint: "Native Hawaiian or other Pacific", category: nhpi, status: exact}
+    - {wave: 2017, code: "06", hint: "Multiple responses selected", category: multiple, status: exact}
+    - {wave: 2017, code: "97", hint: "Some other race", category: other, status: exact}
+    - {wave: 2022, code: "01", hint: "White", category: white, status: exact}
+    - {wave: 2022, code: "02", hint: "Black or African American", category: black, status: exact}
+    - {wave: 2022, code: "03", hint: "Asian", category: asian, status: exact}
+    - {wave: 2022, code: "04", hint: "American Indian/Alaska Native", category: aian, status: exact}
+    - {wave: 2022, code: "05", hint: "Native Hawaiian/Pacific", category: nhpi, status: exact}
+    - {wave: 2022, code: "06", hint: "Multiple races selected", category: multiple, status: exact}
+    - {wave: 2022, code: "97", hint: "Other race", category: other, status: exact}
+
+hispanic_household:
+  variable: HH_HISP
+  variable_by_wave: {2001: HHR_HISP}
+  table: household
+  source: "codebooks 2001, 2009, 2017, 2022; checked against the data"
+  note: >-
+    Hispanic origin of the household respondent, a separate yes/no question in all four waves (2001 names the variable HHR_HISP). The 2001 and 2009 race variables also contain Hispanic codes, so the answer to this question is the one to use (race_ethnicity() does).
+  rows:
+    - {wave: 2001, code: "1", hint: "Yes", category: hispanic, status: exact}
+    - {wave: 2001, code: "2", hint: "No", category: not_hispanic, status: exact}
+    - {wave: 2009, code: "01", hint: "Yes", category: hispanic, status: exact}
+    - {wave: 2009, code: "02", hint: "No", category: not_hispanic, status: exact}
+    - {wave: 2017, code: "01", hint: "Yes", category: hispanic, status: exact}
+    - {wave: 2017, code: "02", hint: "No", category: not_hispanic, status: exact}
+    - {wave: 2022, code: "01", hint: "Hispanic or Latino", category: hispanic, status: exact}
+    - {wave: 2022, code: "02", hint: "Not Hispanic or Latino", category: not_hispanic, status: exact}
+
+hispanic_person:
+  variable: R_HISP
+  table: person
+  source: "codebooks 2017 v1.2 and 2022 v2.1"
+  note: >-
+    Hispanic origin of each person (2017 and 2022 only; 2001 and 2009 have the household respondent's answer only, hispanic_household). The 2022 question is asked of persons 5 or older.
+  rows:
+    - {wave: 2017, code: "01", hint: "Yes, Hispanic or Latino", category: hispanic, status: exact}
+    - {wave: 2017, code: "02", hint: "No, Not Hispanic", category: not_hispanic, status: exact}
+    - {wave: 2022, code: "01", hint: "Hispanic", category: hispanic, status: exact}
+    - {wave: 2022, code: "02", hint: "Not Hispanic", category: not_hispanic, status: exact}

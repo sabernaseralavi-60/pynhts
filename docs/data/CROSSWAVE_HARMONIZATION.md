@@ -9,11 +9,15 @@ Generated from `pynhts.harmonize` and `pynhts.concepts`. See also `docs/waves.md
 | density | 2001, 2009, 2017, 2022 | 20 | {'exact': 18, 'approximate': 1, 'only_here': 1} |
 | education | 2001, 2009, 2017, 2022 | 26 | {'exact': 16, 'nested': 9, 'approximate': 1} |
 | fuel | 2001, 2009, 2017 | 12 | {'approximate': 8, 'exact': 3, 'only_here': 1} |
+| hispanic_household | 2001, 2009, 2017, 2022 | 8 | {'exact': 8} |
+| hispanic_person | 2017, 2022 | 4 | {'exact': 4} |
 | income | 2001, 2009, 2017, 2022 | 58 | {'nested': 40, 'exact': 18} |
 | mode | 2001, 2009, 2017, 2022 | 94 | {'exact': 54, 'merge': 24, 'approximate': 12, 'only_here': 4} |
 | purpose | 2017, 2022 | 40 | {'exact': 29, 'approximate': 6, 'merge': 5} |
 | purpose_1990 | 2001, 2009, 2017, 2022 | 38 | {'exact': 24, 'approximate': 12, 'only_here': 2} |
 | purpose_summary | 2001, 2009, 2017, 2022 | 41 | {'exact': 29, 'approximate': 8, 'merge': 4} |
+| race_household | 2001, 2009, 2017, 2022 | 38 | {'exact': 25, 'approximate': 10, 'nested': 3} |
+| race_person | 2017, 2022 | 14 | {'exact': 14} |
 | trip_class | 2001, 2009, 2017, 2022 | 20 | {'exact': 12, 'approximate': 8} |
 | urban_area | 2001, 2009, 2017, 2022 | 16 | {'exact': 16} |
 | urban_rural | 2001, 2009, 2017, 2022 | 8 | {'exact': 8} |

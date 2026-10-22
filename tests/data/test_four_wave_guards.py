@@ -193,18 +193,20 @@ def test_2009_day_weights_of_persons_without_trips_are_filled():
 
 # ---- extended crosswalks (0.6.0) on the real files ----------------------------------------------
 def _cases():
-    waves = {"purpose": (2017, 2022), "fuel": (2001, 2009, 2017)}
+    waves = {"purpose": (2017, 2022), "fuel": (2001, 2009, 2017),
+             "race_person": (2017, 2022), "hispanic_person": (2017, 2022)}
     return [(c, w) for c in harmonize.concepts() for w in waves.get(c, WAVES)]
 
 
 @pytest.mark.parametrize(("concept", "wave"), _cases())
 def test_crosswalk_maps_nearly_every_real_value(concept, wave):
     info = harmonize.concept_info(concept)
+    variable = harmonize.variable_of(concept, wave)
     d = pynhts.load(wave, offline=True)
-    frame = d.table(info["table"], [info["variable"]], weight=False, keys=False)
-    col = frame[info["variable"]]
-    mapped = harmonize.apply_column(frame, info["variable"], concept)
-    skip = d.schema(info["table"]).columns[info["variable"]].skip_code
+    frame = d.table(info["table"], [variable], weight=False, keys=False)
+    col = frame[variable]
+    mapped = harmonize.apply_column(frame, variable, concept)
+    skip = d.schema(info["table"]).columns[variable].skip_code
     known = col.notna()
     if skip is not None:  # the skip code means "does not apply"
         known &= (col.astype("string") != skip).fillna(False)
@@ -267,3 +269,43 @@ def test_age_bands_end_at_85_and_agree_across_top_codes():
         bands = harmonize.age_bands(p["R_AGE"], wave)
         assert (bands == "85+").sum() > 0 and bands.notna().sum() > 0.99 * p["R_AGE"].notna().sum()
         assert ("0-4" in set(bands.dropna())) == (wave == 2001)
+
+
+# ---- race and Hispanic origin (0.8.0): the numbers quoted in crosswalks.yaml -------------------
+def _hispanic_share_by_race(wave):
+    """Share of households answering Hispanic: yes, by race code (unweighted, as in the notes)."""
+    race, hisp = harmonize.variable_of("race_household", wave), harmonize.variable_of(
+        "hispanic_household", wave)
+    hh = pynhts.load(wave, offline=True).households([race, hisp], weight=False)
+    answered = hh[hisp].astype("string").str.lstrip("0").isin(["1", "2"])
+    yes = hh[hisp].astype("string").str.lstrip("0") == "1"
+    return yes[answered].groupby(hh.loc[answered, race].astype("string")).mean()
+
+
+def test_hispanic_race_codes_of_2001_and_2009_are_hispanic_and_later_waves_file_them_under_other():
+    s01, s09 = _hispanic_share_by_race(2001), _hispanic_share_by_race(2009)
+    s17, s22 = _hispanic_share_by_race(2017), _hispanic_share_by_race(2022)
+    assert s01["06"] > 0.995 and s01["10"] > 0.995          # quoted: 99.7 % and 99.8 %
+    assert s09["07"] > 0.98                                 # 98.7 %
+    assert 0.80 < s17["97"] < 0.84 and 0.64 < s22["97"] < 0.70   # 82 % and 67 %
+    assert 0.44 < s09["97"] < 0.48                          # 46 %
+    assert 0.55 < s01["13"] < 0.62 and s01["14"] > 0.90 and 0.08 < s01["16"] < 0.12
+    assert 0.05 < s17["01"] < 0.065                         # Hispanic people are inside 'White'
+
+
+@pytest.mark.parametrize("wave", WAVES)
+def test_race_ethnicity_on_real_households_is_complete_and_agrees_with_the_hispanic_answer(wave):
+    race, hisp = harmonize.variable_of("race_household", wave), harmonize.variable_of(
+        "hispanic_household", wave)
+    hh = pynhts.load(wave, offline=True).households([race, hisp], weight=False)
+    out = harmonize.race_ethnicity(hh)
+    assert out.notna().mean() > 0.99, (wave, out.notna().mean())   # measured 99.1 % to 100 %
+    yes = hh[hisp].astype("string").str.lstrip("0") == "1"
+    # everyone who answers 'Hispanic' is Hispanic; the race-code fallback (question unanswered)
+    # never fires in the real files, only on the synthetic cases of test_harmonize.py
+    assert (out[yes] == "hispanic").all()
+    assert ((out == "hispanic") & ~yes).sum() == 0
+    # measured 5.4 %, 6.9 %, 7.0 %, 7.7 % of the classified households (NA is skipped by mean)
+    share = (out == "hispanic").mean()
+    assert 0.05 < share < 0.09, (wave, share)
+    assert {"nh_white", "nh_black", "nh_asian"} <= set(out.dropna())

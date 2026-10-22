@@ -11,7 +11,7 @@ checked in the repository or by running it; items that were not checked are in s
 | core | `core.schema`, `core.data` (`NHTSData`), `core.cache`, `core.flags`, `core.dictionary` | codebook-derived typed schema, lazy column loading, validated many-to-one joins parent -> child, missing/skip masking, top-code and national-only flags |
 | stats | `stats.survey`, `stats.jackknife`, `stats.taylor`, `stats.distributions` | design-based totals, means, proportions, ratios: delete-one jackknife (2001, 2009, 2017; per-wave factor and df as registry data), Taylor series (2022); Student t without SciPy |
 | rates | `rates` | daily trip/mile rates by the documented weight route |
-| harmonize / concepts | `harmonize`, `concepts` | crosswalks (mode, purpose, income, education, fuel, vehicle type...) and the concept dictionary (38 concepts x 4 waves, comparability C/H/N, pitfalls with evidence) |
+| harmonize / concepts | `harmonize`, `concepts` | crosswalks (mode, purpose, income, education, fuel, vehicle type...) and the concept dictionary (41 concepts x 4 waves, comparability C/H/N, pitfalls with evidence) |
 | recipes | `recipes.*` | reproduction of published tables (stt2001/2009/2017, ug2022, McNally and Rafiq 2021) with statuses |
 | tours / viz / ml / tables / cli | `tours`, `viz.diary`, `ml`, `tables`, `cli` | tours (2017 only, by design), activity-diary figure, arrays and tensors, LaTeX/Markdown tables, `pynhts fetch|register|info|validate|docs` |
 

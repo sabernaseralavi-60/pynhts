@@ -37,7 +37,8 @@ def test_named_harmonizations_exist_and_cover_the_concept_variable():
             info = harmonize.concept_info(concept)
             for wave, var in c["variables"].items():
                 if var is not None and wave in set(harmonize.crosswalk(concept)["wave"]):
-                    assert var in (info["variable"], *info["also"]), (name, wave, var)
+                    assert var in (harmonize.variable_of(concept, wave), *info["also"]), (
+                        name, wave, var)
 
 
 def test_grades_are_consistent_with_the_flags():
