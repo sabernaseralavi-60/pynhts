@@ -30,8 +30,16 @@ import pandas as pd
 Style = Literal["pm", "ci", "se", "estimate"]
 
 _LATEX_ESCAPES = {
-    "\\": r"\textbackslash{}", "&": r"\&", "%": r"\%", "$": r"\$", "#": r"\#", "_": r"\_",
-    "{": r"\{", "}": r"\}", "~": r"\textasciitilde{}", "^": r"\textasciicircum{}",
+    "\\": r"\textbackslash{}",
+    "&": r"\&",
+    "%": r"\%",
+    "$": r"\$",
+    "#": r"\#",
+    "_": r"\_",
+    "{": r"\{",
+    "}": r"\}",
+    "~": r"\textasciitilde{}",
+    "^": r"\textasciicircum{}",
 }
 
 
@@ -112,9 +120,7 @@ def build(
     if not show_n:
         frame = frame.drop(columns=header[2])
     frame.attrs.update(style=style, level=level)
-    designs = {
-        str(r.result.attrs.get("pynhts", {}).get("design", "")) for r in rows
-    } - {""}
+    designs = {str(r.result.attrs.get("pynhts", {}).get("design", "")) for r in rows} - {""}
     if len(designs) == 1:
         frame.attrs["design"] = designs.pop()
     elif designs:  # rows from different waves: the note must not claim one method
@@ -171,6 +177,7 @@ def to_latex(
     Returns:
         The LaTeX source.
     """
+
     def tex(s: str) -> str:
         s = latex_escape(s).replace(r"\$n\$", "$n$")
         return s.replace("±", r"$\pm$").replace("–", "--")
@@ -199,15 +206,118 @@ def to_markdown(frame: pd.DataFrame, *, notes: str | None = None) -> str:
 
     The first column is left-aligned, the others right-aligned. ``|`` inside cells is escaped.
     """
+
     def md(s: str) -> str:
         return s.replace("|", r"\|").replace("$n$", "n")
 
     head = "| " + " | ".join(md(str(c)) for c in frame.columns) + " |"
     sep = "| :-- | " + " | ".join("--:" for _ in frame.columns[1:]) + " |"
-    body = ["| " + " | ".join(md(str(v)) for v in rec) + " |"
-            for rec in frame.itertuples(index=False)]
+    body = [
+        "| " + " | ".join(md(str(v)) for v in rec) + " |" for rec in frame.itertuples(index=False)
+    ]
     text = md(note(frame)) if notes is None else notes
     parts = [head, sep, *body]
     if text:
         parts += ["", f"*{text}*"]
     return "\n".join(parts) + "\n"
+
+
+def to_html(frame: pd.DataFrame, *, caption: str | None = None, notes: str | None = None) -> str:
+    """Render a table made by :func:`build` or :func:`sample_characteristics` as an HTML table."""
+    import html
+
+    cap = f"<caption>{html.escape(caption)}</caption>" if caption else ""
+    head = "".join(f"<th>{html.escape(str(c))}</th>" for c in frame.columns)
+    body = "".join(
+        "<tr>" + "".join(f"<td>{html.escape(str(v))}</td>" for v in rec) + "</tr>"
+        for rec in frame.itertuples(index=False)
+    )
+    text = frame.attrs.get("notes") if notes is None else notes
+    foot = f"<p><small>{html.escape(str(text))}</small></p>" if text else ""
+    return f"<table>{cap}<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table>{foot}\n"
+
+
+def to_csv(frame: pd.DataFrame, path: str) -> None:
+    """Write a table to CSV; the footnote goes to ``<path>.notes.txt`` so the CSV stays rectangular."""
+    frame.to_csv(path, index=False)
+    text = frame.attrs.get("notes")
+    if text:
+        with open(f"{path}.notes.txt", "w", encoding="utf-8") as fh:
+            fh.write(str(text) + "\n")
+
+
+def to_excel(frame: pd.DataFrame, path: str, *, sheet: str = "table") -> None:
+    """Write a table (and its footnote on a second sheet) to an Excel file (needs ``openpyxl``)."""
+    with pd.ExcelWriter(path) as xl:
+        frame.to_excel(xl, sheet_name=sheet, index=False)
+        pd.DataFrame({"notes": [str(frame.attrs.get("notes", ""))]}).to_excel(
+            xl, sheet_name="notes", index=False
+        )
+
+
+def sample_characteristics(
+    frame: pd.DataFrame,
+    columns: Sequence[str],
+    *,
+    weight: str | None = None,
+    labels: Mapping[str, str] | None = None,
+    digits: int = 1,
+    max_levels: int = 12,
+) -> pd.DataFrame:
+    """A "Table 1": one block per variable with unweighted n, weighted share or mean, and missing n.
+
+    Categorical (string) columns give a row per level (share of non-missing, in percent); numeric
+    columns give the weighted mean and standard deviation. ``frame.attrs["pynhts"]`` (wave, table,
+    weight) goes into the footnote. Estimates are descriptive; they carry no standard errors, so
+    use :class:`pynhts.stats.Survey` with :func:`build` for tables that need a margin of error.
+    """
+    from pynhts import eda
+
+    lab = labels or {}
+    d = eda.describe(frame, list(columns), weight=weight, max_levels=max_levels)
+    rows: list[dict[str, object]] = []
+    for c in columns:
+        sub = d[d["column"] == c]
+        name = lab.get(c, c)
+        if sub.empty:
+            continue
+        if (sub["kind"] == "numeric").any():
+            r = sub.iloc[0]
+            rows.append(
+                {
+                    "Characteristic": name,
+                    "Level": "mean (sd)",
+                    "n": int(r["n"]),
+                    "Estimate": f"{r['mean']:.{digits + 1}f} ({r['sd']:.{digits + 1}f})",
+                    "Missing n": int(r["n_missing"]),
+                }
+            )
+        else:
+            rows.append(
+                {
+                    "Characteristic": name,
+                    "Level": "",
+                    "n": int(sub["n"].sum()),
+                    "Estimate": "",
+                    "Missing n": int(sub["n_missing"].iloc[0]),
+                }
+            )
+            for _, r in sub.iterrows():
+                rows.append(
+                    {
+                        "Characteristic": "",
+                        "Level": str(r["level"]),
+                        "n": int(r["n"]),
+                        "Estimate": f"{100 * r['share']:.{digits}f}%",
+                        "Missing n": "",
+                    }
+                )
+    out = pd.DataFrame(rows)
+    meta = frame.attrs.get("pynhts", {})
+    how = f"weighted with {weight}" if weight else "unweighted (sample, not population)"
+    out.attrs["notes"] = (
+        f"NHTS {meta.get('wave', '?')} {meta.get('table', '')} file, {how}. Shares are of non-missing values; "
+        "n is the unweighted number of records; estimates carry no standard errors."
+    )
+    out.attrs["weight"] = weight
+    return out

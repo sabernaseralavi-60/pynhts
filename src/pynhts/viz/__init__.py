@@ -6,6 +6,7 @@
 >>> fig = viz.plot_activity_diary(res.trips, persons)                        # doctest: +SKIP
 """
 
+from pynhts.viz import plots
 from pynhts.viz.diary import (
     DEFAULT_GROUPS,
     TRANSIT,
@@ -20,4 +21,5 @@ __all__ = [
     "activity_profile",
     "plot_activity_diary",
     "plot_profile",
+    "plots",
 ]

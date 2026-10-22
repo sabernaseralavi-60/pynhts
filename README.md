@@ -8,7 +8,7 @@
 Typed, survey-weight-aware Python access to US National Household Travel Survey (NHTS)
 microdata.
 
-> **Scope and status (0.6.1, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
+> **Scope and status (0.7.0, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
 > waves are supported. The API may still change. Results are validated against published tables:
 > for 2009, 35 of 40 figures of the *Summary of Travel Trends* reproduce completely (the other 5
 > reproduce the estimate; the report's margin of error uses another multiplier), for 2001 40 of
@@ -87,6 +87,18 @@ pynhts.dictionary(2022)                                     # every variable wit
 | `pynhts.recipes` | replication of published tables with honest status per figure |
 | `pynhts.tours` | tour formation (HBW/HBO/NHB, work-tour patterns), FHWA-style chains; flexible home/work rules |
 | `pynhts.ml` | NumPy / PyTorch / graph export (PyTorch optional) |
+| `pynhts.aggregate` | trips to persons, persons to households: no row multiplication, stated missing-value policy, true zeros, diagnostics report |
+| `pynhts.features` | 89 documented person, household, trip and vehicle features (formula, eligibility, denominator, weight, waves) with lineage |
+| `pynhts.eda`, `pynhts.quality` | missing-value reasons, weighted descriptives, correlation that refuses nominal columns, key and weight integrity report |
+| `pynhts.transform` | leakage-safe transformations (fit on training rows, JSON parameters, split by household) |
+| `pynhts.trends` | per-wave harmonized estimates; guarded pooled workflow that refuses non-comparable concepts |
+
+```python
+# 0.7.0: from trips to a documented household table, with diagnostics (see docs/analysis.md)
+from pynhts import features, aggregate as A, valid
+hh = features.create_household_features(d, groups=["composition", "travel", "modes"])
+hh.attrs["pynhts_features"]            # lineage: sources, formula, missing rule per feature
+```
 
 ## Why a library
 
@@ -114,9 +126,17 @@ They are documented in [docs/data_notes.md](https://github.com/sabernaseralavi-6
   transit trips) exactly, plus 33 of their figures in all: 21 reproduce, 12 gaps are documented
   (`pynhts.tours`). See [docs/validation.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md).
 
+* **Independent evidence (2026-10-22, `docs/paper_data_audit`):** the analysis data of ten published NHTS papers
+  that pynhts was never tuned on were rebuilt from the public files. The national totals and rates of Lidbe et al.
+  (2021) for 2001 and 2017, Tables 1 to 4 of Alberini et al. (2021) and the 130,222-person sample with 21 odds
+  ratios of Yang et al. (2011) reproduce; where papers do not reproduce, the cause is an unstated sample rule or an
+  inconsistency in the paper (documented per paper, none tuned away). In every household whose person file is a
+  complete roster, the worker and driver counts of `pynhts.features` equal the survey's own `WRKCOUNT` and `DRVRCNT`
+  in all four waves.
+
 ## Documentation
 
-[Comparing waves](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/waves.md) · [Defaults and guards](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/guards.md) · [AGENTS.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/AGENTS.md) · [Methods](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/methods.md) · [Data notes](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data_notes.md) · [Validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md)
+[Analysis toolkit](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/analysis.md) · [Feature registry](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data/FEATURES.md) · [Research landscape](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/research/NHTS_RESEARCH_LANDSCAPE.md) · [Comparing waves](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/waves.md) · [Defaults and guards](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/guards.md) · [AGENTS.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/AGENTS.md) · [Methods](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/methods.md) · [Data notes](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data_notes.md) · [Validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md)
 · [Roadmap](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/roadmap.md) · [Contributing](https://github.com/sabernaseralavi-60/pynhts/blob/main/CONTRIBUTING.md) · [Changelog](https://github.com/sabernaseralavi-60/pynhts/blob/main/CHANGELOG.md)
 
 ## Data

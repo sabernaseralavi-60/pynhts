@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pynhts"
-version = "0.6.1"
+version = "0.7.0"
 description = "Typed, survey-weight-aware access to US National Household Travel Survey microdata."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -59,12 +59,16 @@ src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "D"]
-ignore = ["D203", "D213"]
+ignore = ["D203", "D213", "D105"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["D"]
 "tools/*" = ["D"]
 "agent_eval/*" = ["D"]
+# documentation-heavy modules of 0.7.0: long prose lines in docstrings and registry strings
+"src/pynhts/{aggregate,eda,features,quality,transform,trends,tables,__init__}.py" = ["E501"]
+"src/pynhts/viz/plots.py" = ["E501"]
+"src/pynhts/core/validity.py" = ["E501"]
 "src/pynhts/recipes/stt2017.py" = ["D102", "D103"]  # one-line target functions, see module doc
 "src/pynhts/recipes/mcnally_rafiq2021.py" = ["D102", "D103"]
 "src/pynhts/recipes/ug2022.py" = ["D102", "D103"]
@@ -77,6 +81,11 @@ convention = "google"
 strict = true
 python_version = "3.10"
 files = ["src"]
+
+[[tool.mypy.overrides]]
+# pandas-stubs types many DataFrame/Series methods as Any; the 0.7.0 modules return them untyped
+module = ["pynhts.aggregate", "pynhts.eda", "pynhts.features", "pynhts.quality", "pynhts.transform", "pynhts.trends", "pynhts.tables", "pynhts.core.validity", "pynhts.viz.plots"]
+warn_return_any = false
 
 [[tool.mypy.overrides]]
 module = ["matplotlib", "matplotlib.*", "pooch", "pooch.*", "pyarrow", "pyarrow.*", "torch", "torch.*", "torch_geometric", "torch_geometric.*"]

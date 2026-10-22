@@ -51,6 +51,17 @@ t["mode"] = pynhts.harmonize.apply_column(t, "TRPTRANS", "mode")
 pynhts.recipes.run("stt2009", d)                             # reproduce the published tables, with gaps reported
 ```
 
+## Building analysis tables (0.7.0)
+
+- Collapse trips to persons or households with `pynhts.aggregate.aggregate(...)` or `pynhts.features.create_*_features(...)`, never with a
+  hand-written `groupby` plus a merge: they report orphans, missing inputs and the weight of the target table. Household features use the
+  **household** weight; trip features the trip weight.
+- `notna()` is not validity in coded columns (`-1` is a skip, `-7/-8/-9` non-answers): use `pynhts.valid(series)`.
+- Member counts from the person file are lower bounds when `hh_n_unlisted > 0`; the official `WRKCOUNT`, `DRVRCNT`, `NUMADLT` are exact.
+- Split train and test **by household** (`transform.split_by_household`); fit transformations on training rows only.
+- Compare waves with `pynhts.trends` (per-wave estimates); pool only with `trends.pool`, which refuses non-comparable concepts. Trip distance,
+  trip counts and trip weights are not comparable across waves.
+
 ## What not to do
 
 - Do not add waves before 2001, mask "suspicious" sentinel values without documentation, undo the 2022 trip

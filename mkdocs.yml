@@ -5,6 +5,10 @@ theme:
   name: material
 nav:
   - Home: index.md
+  - Analysis toolkit: analysis.md
+  - Feature registry: data/FEATURES.md
+  - Variable registry: data/VARIABLE_REGISTRY.md
+  - Cross-wave harmonization: data/CROSSWAVE_HARMONIZATION.md
   - Comparing waves: waves.md
   - Validation: validation.md
   - Tours: tours.md
@@ -13,3 +17,6 @@ nav:
   - Data notes: data_notes.md
   - Roadmap: roadmap.md
   - Tours design notes: tours_design_notes.md
+  - Research landscape: research/NHTS_RESEARCH_LANDSCAPE.md
+  - Repository audit: development/REPOSITORY_AUDIT.md
+  - Paper data audit: paper_data_audit/README.md

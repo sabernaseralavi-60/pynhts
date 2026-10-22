@@ -4,6 +4,30 @@
 
 (nothing yet)
 
+## 0.7.0 (2026-10-22)
+
+From access to analysis. No existing behaviour changed; new modules and helpers only.
+
+* `pynhts.aggregate`: `aggregate(data, source, target, specs)` collapses trips, persons or vehicles onto persons or households with
+  one result row per target row, orphan and unique-key checks, an explicit missing-value policy (`propagate` or `skip`), true zeros
+  for targets without child rows, the target table's weight, and a diagnostics report in `attrs["pynhts_aggregate"]`. Declarative
+  conditions (`Where`, `&`, `|`, `~`, `Custom`) and 14 functions (`n, count, sum, mean, median, min, max, std, quantile, nunique, any, share, first, last`).
+* `pynhts.features`: registry of 89 features (person 19, household 56, trip 11, vehicle 3) with scientific meaning, sources, formula,
+  eligibility, missing rule, denominator, weight and waves; creators for four levels; lineage in `attrs["pynhts_features"]`.
+  Member counts equal the survey's own `WRKCOUNT` and `DRVRCNT` in all complete-roster households of all four waves. The person file is
+  not always a complete roster (`hh_n_unlisted`: 14.5 % of 2001, 19.8 % of 2009, 7.0 % of 2017, 9.1 % of 2022 households).
+* `pynhts.valid` and `answer_status`: real answers versus skip (-1) and non-answer codes (`notna()` is not validity in coded columns).
+* `pynhts.eda`: `missing_report`, `describe`, weighted quantiles, `correlation_matrix` (Pearson, Spearman, Kendall; refuses nominal columns; no
+  interval for weighted data), `cramers_v`, `association_matrix`, `compare_groups`, `compare_distributions`.
+* `pynhts.quality.report`: key uniqueness, referential integrity, weight sanity and top-coded shares per table.
+* `pynhts.transform`: `Transformer` (log, log1p, sqrt, Box-Cox, Yeo-Johnson, standardize, robust, winsorize, bins; fit on training rows, JSON
+  parameters), `diagnostics`, `split_by_household`, `recommend`.
+* `pynhts.trends`: `trip_shares`, `wave_means` (warns for non-comparable concepts), `pool` (refuses non-comparable concepts, requires explicit crosswalks, within-wave weights, always warns).
+* `pynhts.tables`: `sample_characteristics`, `to_html`, `to_csv`, `to_excel`. `pynhts.viz.plots`: histogram, bar_share, wave_trend, corr_heatmap, save;
+  every figure states weighting and sample size.
+* Docs: `docs/analysis.md`, generated `docs/data/{FEATURES,VARIABLE_REGISTRY,CROSSWAVE_HARMONIZATION}.md`, `docs/development/REPOSITORY_AUDIT.md`,
+  `docs/research/NHTS_RESEARCH_LANDSCAPE.md` with an evidence table, and `docs/paper_data_audit/` (ten published NHTS papers rebuilt from the public files).
+
 ## 0.6.1 (2026-10-22)
 
 Corrections from an independent fact-check of the 0.6.0 documentation (`docs/factcheck_0.6.0.md`: about
