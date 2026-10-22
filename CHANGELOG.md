@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.8.1 (2026-10-22)
+
+* **Release for citation and journal submission; no change to the package code.** `LICENSE.txt` added (a copy of `LICENSE`, the name journals look for).
 
 * **Zenodo DOI.** Version 0.8.0 is archived (10.5281/zenodo.23573455); the all-versions DOI is 10.5281/zenodo.23573454 (in `CITATION.cff` and the README). `.zenodo.json` holds the record metadata.
 

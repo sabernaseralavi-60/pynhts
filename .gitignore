@@ -33,3 +33,6 @@ lit/txt/
 
 # third-party papers under audit (never commit)
 some papers/*.pdf
+
+# third-party journal templates (Elsevier SoftwareX), fetched 2026-10-22, sha256 9fcf40ed...b916d; not redistributed
+paper/softwarex/template/

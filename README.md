@@ -8,7 +8,7 @@
 Typed, survey-weight-aware Python access to US National Household Travel Survey (NHTS)
 microdata.
 
-> **Scope and status (0.8.0, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
+> **Scope and status (0.8.1, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
 > waves are supported. The API may still change. Results are validated against published tables:
 > for 2009, 35 of 40 figures of the *Summary of Travel Trends* reproduce completely (the other 5
 > reproduce the estimate; the report's margin of error uses another multiplier), for 2001 40 of
