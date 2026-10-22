@@ -1,0 +1,52 @@
+item,published,pynhts,status,note
+"final sample, at least 1 trip (first audit's rule)",85663.0,106211.0,GAP,"Study; replaces the hand-written rule, same sample as p02"
+"final sample, at least 2 trips (Table 2 min of cnttdtr = 2)",85663.0,104641.0,GAP,"rule read from the paper's Table 2, not tuned to the count"
+T2 mean age [1+ trips],47.85,47.4678,CLOSE,
+T2 mean purchase [1+ trips],2.277,2.1816,ACCEPTABLE,
+T2 mean trips [1+ trips],4.844,4.7175,ACCEPTABLE,
+T2 mean hhsize [1+ trips],2.909,2.9338,CLOSE,
+T2 mean vehicles [1+ trips],2.593,2.5767,CLOSE,
+T2 mean renters [1+ trips],22.44,22.9946,ACCEPTABLE,
+T2 mean webuse1 [1+ trips],0.815,0.8016,CLOSE,
+T2 mean webuse2 [1+ trips],0.117,0.1233,GAP,
+T2 mean income_lt50 [1+ trips],0.224,0.247,GAP,
+T2 mean educ_hs [1+ trips],0.202,0.2173,GAP,
+T2 mean educ_bachelor [1+ trips],0.576,0.2736,GAP,
+T2 mean educ_college [1+ trips],0.576,0.573,CLOSE,
+T2 mean fulltime [1+ trips],0.807,0.7937,CLOSE,
+T2 mean urban [1+ trips],0.629,0.6277,CLOSE,
+T2 mean female [1+ trips],0.468,0.4943,GAP,
+T2 mean age [2+ trips],47.85,47.4889,CLOSE,
+T2 mean purchase [2+ trips],2.277,2.1827,ACCEPTABLE,
+T2 mean trips [2+ trips],4.844,4.7733,CLOSE,
+T2 mean hhsize [2+ trips],2.909,2.9327,CLOSE,
+T2 mean vehicles [2+ trips],2.593,2.5752,CLOSE,
+T2 mean renters [2+ trips],22.44,23.0069,ACCEPTABLE,
+T2 mean webuse1 [2+ trips],0.815,0.8026,CLOSE,
+T2 mean webuse2 [2+ trips],0.117,0.1228,ACCEPTABLE,
+T2 mean income_lt50 [2+ trips],0.224,0.2472,GAP,
+T2 mean educ_hs [2+ trips],0.202,0.2167,GAP,
+T2 mean educ_bachelor [2+ trips],0.576,0.2741,GAP,
+T2 mean educ_college [2+ trips],0.576,0.5727,CLOSE,
+T2 mean fulltime [2+ trips],0.807,0.7931,CLOSE,
+T2 mean urban [2+ trips],0.629,0.629,EXACT,
+T2 mean female [2+ trips],0.468,0.4965,GAP,
+T3 final dataset % female [1+ trips],46.8,49.4346,GAP,
+T3 final dataset % income_lt50 [1+ trips],22.4,24.7037,GAP,
+T3 final dataset % webuse1 [1+ trips],81.5,80.1574,CLOSE,
+T3 final dataset % educ_bachelor [1+ trips],57.6,27.3597,GAP,
+T3 final dataset % educ_college [1+ trips],57.6,57.3029,CLOSE,
+T3 final dataset % female [2+ trips],46.8,49.6478,GAP,
+T3 final dataset % income_lt50 [2+ trips],22.4,24.7188,GAP,
+T3 final dataset % webuse1 [2+ trips],81.5,80.2553,CLOSE,
+T3 final dataset % educ_bachelor [2+ trips],57.6,27.4137,GAP,
+T3 final dataset % educ_college [2+ trips],57.6,57.272,CLOSE,
+persons left if no trip has a missing/skip TRVL_MIN,,105914,INFO,"hypothesis only; the published count is 85,663"
+persons left if no trip has a missing/skip STRTTIME,,105916,INFO,"hypothesis only; the published count is 85,663"
+persons left if no trip has a missing/skip TRPTRANS,,105969,INFO,"hypothesis only; the published count is 85,663"
+persons left if no trip has a missing/skip WHYTRP1S,,106034,INFO,"hypothesis only; the published count is 85,663"
+persons left if no trip has a missing/skip TRPMILES,,103924,INFO,"hypothesis only; the published count is 85,663"
+"DWELTIME is -9 for the last trip of every person's day, so 'no missing dwell time' leaves",,0,INFO,dwell time can only be a sum over the trips that have one; the rule cannot be 'every trip valid'
+"education shares in the rebuilt sample (01 < high school, 02 high school, 03 some college, 04 bachelor, 05 graduate)",,"{'03': 0.299, '04': 0.274, '05': 0.21, '02': 0.198, '01': 0.019}",INFO,"the paper prints 57.6 % 'bachelor's degree' (educ2): codes 03 + 04 together give 57.3 %, code 04 alone 27.4 %, so the paper's label is wider than the codebook's"
+"T2 mean tdwknd, TDWKND flag [1+ trips]",0.298,0.3495,GAP,the NHTS weekend flag (Friday evening is weekend)
+"T2 mean tdwknd, Saturday + Sunday by TRAVDAY [1+ trips]",0.298,0.2721,GAP,reading that reproduces Lidbe's Table 4 weekend cells (P10)

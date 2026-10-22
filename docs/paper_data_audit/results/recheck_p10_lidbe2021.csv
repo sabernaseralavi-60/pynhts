@@ -1,0 +1,341 @@
+item,published,pynhts,status,note
+2001: share of trips by persons with a valid MEDCOND answer (%),,80.143,INFO,the rest are persons the question did not reach (skip -1: ages 0-15 in 2001) and non-answers
+T3 2001 non-older all with condition (%),3.76,3.76,EXACT,trips of persons with a valid answer
+T3 2001 non-older all without condition (%),83.71,83.7065,EXACT,trips of persons with a valid answer
+T3 2001 non-older all overall condition (%),89.94,89.9351,EXACT,all trips
+T3 2001 non-older short with condition (%),3.63,3.5635,CLOSE,trips of persons with a valid answer
+T3 2001 non-older short without condition (%),81.39,79.8702,CLOSE,trips of persons with a valid answer
+T3 2001 non-older short overall condition (%),87.64,85.9907,CLOSE,all trips
+T3 2001 non-older long with condition (%),0.1,0.0994,EXACT,trips of persons with a valid answer
+T3 2001 non-older long without condition (%),2.32,2.2767,CLOSE,trips of persons with a valid answer
+T3 2001 non-older long overall condition (%),2.28,2.2379,CLOSE,all trips
+T3 2001 older all with condition (%),1.73,1.729,EXACT,trips of persons with a valid answer
+T3 2001 older all without condition (%),10.8,10.8045,EXACT,trips of persons with a valid answer
+T3 2001 older all overall condition (%),10.06,10.0649,EXACT,all trips
+T3 2001 older short with condition (%),1.68,1.6511,CLOSE,trips of persons with a valid answer
+T3 2001 older short without condition (%),10.58,10.387,CLOSE,trips of persons with a valid answer
+T3 2001 older short overall condition (%),9.85,9.6671,CLOSE,all trips
+T3 2001 older long with condition (%),0.03,0.0323,EXACT,trips of persons with a valid answer
+T3 2001 older long without condition (%),0.26,0.2509,ACCEPTABLE,trips of persons with a valid answer
+T3 2001 older long overall condition (%),0.23,0.2278,EXACT,all trips
+T3 2001 total with medical condition (%),5.49,5.489,EXACT,base: valid answers
+T3 2001 total without medical condition (%),94.51,94.511,EXACT,base: valid answers
+"T3 2001 with medical condition, base = ALL trips (the first audit's convention)",,4.399,INFO,counts the skip as 'no': understates the share in 2001
+2017: share of trips by persons with a valid MEDCOND answer (%),,99.978,INFO,the rest are persons the question did not reach (skip -1: ages 0-15 in 2001) and non-answers
+T3 2017 non-older all with condition (%),3.61,3.6087,EXACT,trips of persons with a valid answer
+T3 2017 non-older all without condition (%),81.48,81.4768,EXACT,trips of persons with a valid answer
+T3 2017 non-older all overall condition (%),85.08,85.0802,EXACT,all trips
+T3 2017 non-older short with condition (%),3.55,3.5498,EXACT,trips of persons with a valid answer
+T3 2017 non-older short without condition (%),79.45,79.393,CLOSE,trips of persons with a valid answer
+T3 2017 non-older short overall condition (%),83.0,82.938,CLOSE,all trips
+T3 2017 non-older long with condition (%),0.05,0.0535,EXACT,trips of persons with a valid answer
+T3 2017 non-older long without condition (%),2.03,2.0305,EXACT,trips of persons with a valid answer
+T3 2017 non-older long overall condition (%),2.09,2.0836,CLOSE,all trips
+T3 2017 older all with condition (%),2.3,2.2955,EXACT,trips of persons with a valid answer
+T3 2017 older all without condition (%),12.62,12.619,EXACT,trips of persons with a valid answer
+T3 2017 older all overall condition (%),14.92,14.9198,EXACT,all trips
+T3 2017 older short with condition (%),2.27,2.2635,CLOSE,trips of persons with a valid answer
+T3 2017 older short without condition (%),12.3,12.2985,EXACT,trips of persons with a valid answer
+T3 2017 older short overall condition (%),14.57,14.5673,EXACT,all trips
+T3 2017 older long with condition (%),0.03,0.0304,EXACT,trips of persons with a valid answer
+T3 2017 older long without condition (%),0.31,0.3139,EXACT,trips of persons with a valid answer
+T3 2017 older long overall condition (%),0.34,0.3443,EXACT,all trips
+T3 2017 total with medical condition (%),5.9,5.9042,EXACT,base: valid answers
+T3 2017 total without medical condition (%),94.1,94.0958,EXACT,base: valid answers
+"T3 2017 with medical condition, base = ALL trips (the first audit's convention)",,5.903,INFO,counts the skip as 'no': understates the share in 2001
+T4 2001 day=Weekday short-distance with condition (million trips),4083.9,4083.8755,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 day=Weekday short-distance without condition (million trips),24847.2,24847.2051,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 day=Weekday long-distance with condition (million trips),74.3,74.297,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 day=Weekday long-distance without condition (million trips),534.2,534.2378,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 day=Weekday short-distance with condition (million trips),5969.7,5969.726,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 day=Weekday short-distance without condition (million trips),33590.5,33590.4589,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 day=Weekday long-distance with condition (million trips),62.7,62.7297,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 day=Weekday long-distance without condition (million trips),777.0,776.9881,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 day=Weekday short-distance with condition (million trips) [TDWKND flag],4083.9,3984.105,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 day=Weekday short-distance without condition (million trips) [TDWKND flag],24847.2,24107.9202,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 day=Weekday long-distance with condition (million trips) [TDWKND flag],74.3,73.0509,CLOSE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 day=Weekday long-distance without condition (million trips) [TDWKND flag],534.2,520.2073,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 day=Weekday short-distance with condition (million trips) [TDWKND flag],5969.7,5860.0663,CLOSE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 day=Weekday short-distance without condition (million trips) [TDWKND flag],33590.5,32710.3912,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 day=Weekday long-distance with condition (million trips) [TDWKND flag],62.7,60.6716,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 day=Weekday long-distance without condition (million trips) [TDWKND flag],777.0,755.7846,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 day=Weekend short-distance with condition (million trips),1305.2,1305.2329,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 day=Weekend short-distance without condition (million trips),9055.3,9055.2749,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 day=Weekend long-distance with condition (million trips),31.0,31.0276,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 day=Weekend long-distance without condition (million trips),284.8,284.8122,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 day=Weekend short-distance with condition (million trips),2429.5,2429.539,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 day=Weekend short-distance without condition (million trips),12045.3,12045.3254,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 day=Weekend long-distance with condition (million trips),50.2,50.1568,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 day=Weekend long-distance without condition (million trips),387.9,387.9444,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 day=Weekend short-distance with condition (million trips) [TDWKND flag],1305.2,1405.0034,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 day=Weekend short-distance without condition (million trips) [TDWKND flag],9055.3,9794.5599,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 day=Weekend long-distance with condition (million trips) [TDWKND flag],31.0,32.2737,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 day=Weekend long-distance without condition (million trips) [TDWKND flag],284.8,298.8426,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 day=Weekend short-distance with condition (million trips) [TDWKND flag],2429.5,2539.1988,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 day=Weekend short-distance without condition (million trips) [TDWKND flag],12045.3,12925.393,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 day=Weekend long-distance with condition (million trips) [TDWKND flag],50.2,52.2149,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 day=Weekend long-distance without condition (million trips) [TDWKND flag],387.9,409.1479,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 dur=< 60 min short-distance with condition (million trips),5243.3,5243.2533,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 dur=< 60 min short-distance without condition (million trips),33021.4,33021.4323,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 dur=< 60 min long-distance with condition (million trips),4.5,4.5423,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 dur=< 60 min long-distance without condition (million trips),58.5,58.463,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 dur=< 60 min short-distance with condition (million trips),7995.2,7995.1962,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 dur=< 60 min short-distance without condition (million trips),43844.0,43844.0064,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 dur=< 60 min long-distance with condition (million trips),9.6,9.577,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 dur=< 60 min long-distance without condition (million trips),84.2,84.2075,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 dur=>= 60 min short-distance with condition (million trips),145.9,145.8552,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 dur=>= 60 min short-distance without condition (million trips),881.0,881.0478,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 dur=>= 60 min long-distance with condition (million trips),100.8,100.7823,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 dur=>= 60 min long-distance without condition (million trips),760.6,760.5869,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 dur=>= 60 min short-distance with condition (million trips),404.1,404.0689,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 dur=>= 60 min short-distance without condition (million trips),1791.8,1791.7779,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 dur=>= 60 min long-distance with condition (million trips),103.3,103.3095,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 dur=>= 60 min long-distance without condition (million trips),1080.7,1080.7251,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 sex=Male short-distance with condition (million trips),2126.1,2126.0957,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 sex=Male short-distance without condition (million trips),16619.7,16619.6881,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 sex=Male long-distance with condition (million trips),52.7,52.6994,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 sex=Male long-distance without condition (million trips),430.6,430.59,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 sex=Male short-distance with condition (million trips),3422.2,3422.1739,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 sex=Male short-distance without condition (million trips),21890.1,21890.1323,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 sex=Male long-distance with condition (million trips),59.3,59.3043,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 sex=Male long-distance without condition (million trips),629.5,629.4778,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 sex=Female short-distance with condition (million trips),3263.0,3263.0127,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 sex=Female short-distance without condition (million trips),17282.8,17282.792,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 sex=Female long-distance with condition (million trips),52.6,52.6251,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 sex=Female long-distance without condition (million trips),388.5,388.4599,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 sex=Female short-distance with condition (million trips),4977.1,4977.0912,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 sex=Female short-distance without condition (million trips),23712.4,23712.377,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 sex=Female long-distance with condition (million trips),53.6,53.5822,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 sex=Female long-distance without condition (million trips),535.3,535.3139,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 race=White short-distance with condition (million trips) [race reading v2],4468.9,4468.9089,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=White short-distance without condition (million trips) [race reading v2],29117.0,29113.9309,CLOSE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=White long-distance with condition (million trips) [race reading v2],83.0,83.0389,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=White long-distance without condition (million trips) [race reading v2],744.6,744.5935,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=White short-distance with condition (million trips) [race reading v2],5397.6,5393.1834,CLOSE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=White short-distance without condition (million trips) [race reading v2],35111.7,35109.9657,CLOSE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=White long-distance with condition (million trips) [race reading v2],89.5,89.5485,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=White long-distance without condition (million trips) [race reading v2],939.7,939.6709,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=White short-distance with condition (million trips) [race reading v3],4468.9,4468.9089,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=White short-distance without condition (million trips) [race reading v3],29117.0,29117.0296,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=White long-distance with condition (million trips) [race reading v3],83.0,83.0389,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=White long-distance without condition (million trips) [race reading v3],744.6,744.5935,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=White short-distance with condition (million trips) [race reading v3],5397.6,5397.5983,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=White short-distance without condition (million trips) [race reading v3],35111.7,35111.6764,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=White long-distance with condition (million trips) [race reading v3],89.5,89.5485,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=White long-distance without condition (million trips) [race reading v3],939.7,939.6709,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=African American short-distance with condition (million trips) [race reading v2],451.8,451.7602,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=African American short-distance without condition (million trips) [race reading v2],2139.8,2139.8013,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=African American long-distance with condition (million trips) [race reading v2],11.3,11.2625,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=African American long-distance without condition (million trips) [race reading v2],29.5,29.4543,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=African American short-distance with condition (million trips) [race reading v2],1233.1,1233.1264,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=African American short-distance without condition (million trips) [race reading v2],4198.8,4198.803,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=African American long-distance with condition (million trips) [race reading v2],9.2,9.1824,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=African American long-distance without condition (million trips) [race reading v2],90.6,90.636,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=African American short-distance with condition (million trips) [race reading v3],451.8,451.7602,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=African American short-distance without condition (million trips) [race reading v3],2139.8,2139.8257,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=African American long-distance with condition (million trips) [race reading v3],11.3,11.2625,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=African American long-distance without condition (million trips) [race reading v3],29.5,29.4543,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=African American short-distance with condition (million trips) [race reading v3],1233.1,1233.1264,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=African American short-distance without condition (million trips) [race reading v3],4198.8,4198.803,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=African American long-distance with condition (million trips) [race reading v3],9.2,9.1824,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=African American long-distance without condition (million trips) [race reading v3],90.6,90.636,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Asian short-distance with condition (million trips) [race reading v2],24.8,24.7864,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Asian short-distance without condition (million trips) [race reading v2],254.5,254.4914,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Asian long-distance with condition (million trips) [race reading v2],0.0,0.0,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Asian long-distance without condition (million trips) [race reading v2],5.8,5.7892,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Asian short-distance with condition (million trips) [race reading v2],239.9,239.9092,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Asian short-distance without condition (million trips) [race reading v2],1078.8,1078.8289,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Asian long-distance with condition (million trips) [race reading v2],0.9,0.938,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Asian long-distance without condition (million trips) [race reading v2],15.4,15.4085,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Asian short-distance with condition (million trips) [race reading v3],24.8,24.7864,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Asian short-distance without condition (million trips) [race reading v3],254.5,254.4914,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Asian long-distance with condition (million trips) [race reading v3],0.0,0.0,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Asian long-distance without condition (million trips) [race reading v3],5.8,5.7892,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Asian short-distance with condition (million trips) [race reading v3],239.9,239.9092,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Asian short-distance without condition (million trips) [race reading v3],1078.8,1078.8289,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Asian long-distance with condition (million trips) [race reading v3],0.9,0.938,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Asian long-distance without condition (million trips) [race reading v3],15.4,15.4085,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Hispanic short-distance with condition (million trips) [race reading v2],151.6,271.1096,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Hispanic short-distance without condition (million trips) [race reading v2],867.5,1419.346,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Hispanic long-distance with condition (million trips) [race reading v2],2.5,7.1802,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Hispanic long-distance without condition (million trips) [race reading v2],17.7,19.6375,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Hispanic short-distance with condition (million trips) [race reading v2],855.4,1184.1553,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Hispanic short-distance without condition (million trips) [race reading v2],3277.9,4235.2033,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Hispanic long-distance with condition (million trips) [race reading v2],3.3,8.3133,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Hispanic long-distance without condition (million trips) [race reading v2],68.9,92.5507,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Hispanic short-distance with condition (million trips) [race reading v3],151.6,150.7419,CLOSE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Hispanic short-distance without condition (million trips) [race reading v3],867.5,855.0633,CLOSE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Hispanic long-distance with condition (million trips) [race reading v3],2.5,2.4982,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Hispanic long-distance without condition (million trips) [race reading v3],17.7,17.734,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Hispanic short-distance with condition (million trips) [race reading v3],855.4,855.3721,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Hispanic short-distance without condition (million trips) [race reading v3],3277.9,3277.8765,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Hispanic long-distance with condition (million trips) [race reading v3],3.3,3.329,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Hispanic long-distance without condition (million trips) [race reading v3],68.9,68.899,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Other short-distance with condition (million trips) [race reading v2],260.1,143.9694,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Other short-distance without condition (million trips) [race reading v2],1187.8,681.7316,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Other long-distance with condition (million trips) [race reading v2],6.2,3.5748,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Other long-distance without condition (million trips) [race reading v2],16.0,14.1203,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Other short-distance with condition (million trips) [race reading v2],636.4,307.6198,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Other short-distance without condition (million trips) [race reading v2],1848.7,891.3258,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Other long-distance with condition (million trips) [race reading v2],9.8,4.7813,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Other long-distance without condition (million trips) [race reading v2],48.1,24.4088,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Other short-distance with condition (million trips) [race reading v3],260.1,264.337,CLOSE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Other short-distance without condition (million trips) [race reading v3],1187.8,1246.1028,ACCEPTABLE,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Other long-distance with condition (million trips) [race reading v3],6.2,8.2568,GAP,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 race=Other long-distance without condition (million trips) [race reading v3],16.0,16.0238,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Other short-distance with condition (million trips) [race reading v3],636.4,636.4029,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Other short-distance without condition (million trips) [race reading v3],1848.7,1848.6527,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Other long-distance with condition (million trips) [race reading v3],9.8,9.7656,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2017 race=Other long-distance without condition (million trips) [race reading v3],48.1,48.0605,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6; v2 = harmonize.race_ethnicity(), v3 = race group first, Hispanic origin overrides White/Black/Asian/unknown only"
+T4 2001 veh=0 short-distance with condition (million trips),561.7,561.7206,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=0 short-distance without condition (million trips),1146.5,1146.4743,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=0 long-distance with condition (million trips),9.2,9.2361,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=0 long-distance without condition (million trips),18.9,18.9206,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=0 short-distance with condition (million trips),1244.7,1244.7348,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=0 short-distance without condition (million trips),2062.9,2062.9424,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=0 long-distance with condition (million trips),1.9,1.8693,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=0 long-distance without condition (million trips),26.7,26.6908,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=1 short-distance with condition (million trips),2552.7,2552.6847,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=1 short-distance without condition (million trips),12573.3,12573.252,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=1 long-distance with condition (million trips),39.3,39.2911,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=1 long-distance without condition (million trips),238.8,238.8358,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=1 short-distance with condition (million trips),3674.9,3674.8868,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=1 short-distance without condition (million trips),16001.9,16001.9476,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=1 long-distance with condition (million trips),44.6,44.5513,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=1 long-distance without condition (million trips),296.4,296.4254,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=2 short-distance with condition (million trips),1643.8,1643.8028,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=2 short-distance without condition (million trips),14533.7,14533.7164,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=2 long-distance with condition (million trips),33.8,33.7509,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=2 long-distance without condition (million trips),340.4,340.4024,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=2 short-distance with condition (million trips),2137.1,2137.1349,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=2 short-distance without condition (million trips),17024.1,17024.1481,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=2 long-distance with condition (million trips),31.8,31.7627,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=2 long-distance without condition (million trips),446.7,446.7101,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=3 short-distance with condition (million trips),414.4,414.4329,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=3 short-distance without condition (million trips),4018.0,4018.0187,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=3 long-distance with condition (million trips),17.2,17.2021,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=3 long-distance without condition (million trips),183.8,183.8314,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=3 short-distance with condition (million trips),812.7,812.6543,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=3 short-distance without condition (million trips),6978.2,6978.2497,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=3 long-distance with condition (million trips),19.1,19.1366,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=3 long-distance without condition (million trips),283.4,283.3647,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=4 short-distance with condition (million trips),216.5,216.4674,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=4 short-distance without condition (million trips),1631.0,1631.0186,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=4 long-distance with condition (million trips),5.8,5.8442,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 veh=4 long-distance without condition (million trips),37.1,37.0597,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=4 short-distance with condition (million trips),529.9,529.8543,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=4 short-distance without condition (million trips),3568.5,3568.4964,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=4 long-distance with condition (million trips),15.6,15.5666,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 veh=4 long-distance without condition (million trips),111.7,111.7416,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=0 short-distance with condition (million trips),447.3,447.3238,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=0 short-distance without condition (million trips),852.1,852.15,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=0 long-distance with condition (million trips),8.0,8.012,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=0 long-distance without condition (million trips),19.9,19.9345,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=0 short-distance with condition (million trips),918.9,918.8929,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=0 short-distance without condition (million trips),1557.0,1557.022,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=0 long-distance with condition (million trips),1.9,1.8646,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=0 long-distance without condition (million trips),25.2,25.1825,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=1 short-distance with condition (million trips),2282.4,2282.3809,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=1 short-distance without condition (million trips),10492.0,10491.968,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=1 long-distance with condition (million trips),37.9,37.8703,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=1 long-distance without condition (million trips),217.1,217.1305,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=1 short-distance with condition (million trips),3663.0,3662.9732,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=1 short-distance without condition (million trips),14704.2,14704.2442,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=1 long-distance with condition (million trips),48.4,48.3808,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=1 long-distance without condition (million trips),287.6,287.6484,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=2 short-distance with condition (million trips),2331.7,2331.6811,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=2 short-distance without condition (million trips),20125.4,20125.363,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=2 long-distance with condition (million trips),49.3,49.3205,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=2 long-distance without condition (million trips),537.3,537.3032,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=2 short-distance with condition (million trips),3135.7,3135.7342,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=2 short-distance without condition (million trips),25143.5,25143.5409,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=2 long-distance with condition (million trips),48.1,48.1376,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=2 long-distance without condition (million trips),729.2,729.1952,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=3 short-distance with condition (million trips),290.4,290.3784,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=3 short-distance without condition (million trips),2054.2,2054.2377,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=3 long-distance with condition (million trips),9.5,9.4953,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=3 long-distance without condition (million trips),37.7,37.7311,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=3 short-distance with condition (million trips),471.0,471.0263,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=3 short-distance without condition (million trips),3427.2,3427.1607,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=3 long-distance with condition (million trips),10.5,10.5051,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=3 long-distance without condition (million trips),107.8,107.8173,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=4 short-distance with condition (million trips),37.3,37.3442,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=4 short-distance without condition (million trips),378.8,378.7614,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=4 long-distance with condition (million trips),0.6,0.6263,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 drv=4 long-distance without condition (million trips),7.0,6.9506,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=4 short-distance with condition (million trips),210.6,210.6384,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=4 short-distance without condition (million trips),803.8,803.8164,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=4 long-distance with condition (million trips),4.0,3.9984,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2017 drv=4 long-distance without condition (million trips),15.1,15.0891,EXACT,"trips of persons 65+, annual weight WTTRDFIN / 1e6"
+T4 2001 CONDNIGH=yes short-distance with condition (million trips),2526.1,2526.0592,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDNIGH=yes long-distance with condition (million trips),38.9,38.9432,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDNIGH=yes short-distance with condition (million trips),2576.8,2576.7684,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDNIGH=yes short-distance without condition (million trips),1890.9,1890.9183,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDNIGH=yes long-distance with condition (million trips),41.5,41.4845,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDNIGH=yes long-distance without condition (million trips),18.3,18.348,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDNIGH=no short-distance with condition (million trips),2529.6,2529.6226,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDNIGH=no long-distance with condition (million trips),64.5,64.5428,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDNIGH=no short-distance with condition (million trips),5822.5,5822.4966,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDNIGH=no short-distance without condition (million trips),4095.9,4095.8904,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDNIGH=no long-distance with condition (million trips),71.4,71.402,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDNIGH=no long-distance without condition (million trips),98.2,98.1919,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDRIDE=yes short-distance with condition (million trips),2483.2,2483.2378,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDRIDE=yes long-distance with condition (million trips),48.4,48.3673,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIDE=yes short-distance with condition (million trips),3199.8,3199.7953,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIDE=yes short-distance without condition (million trips),978.1,978.135,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIDE=yes long-distance with condition (million trips),39.5,39.5313,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIDE=yes long-distance without condition (million trips),12.7,12.7365,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDRIDE=no short-distance with condition (million trips),2905.7,2905.7318,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDRIDE=no long-distance with condition (million trips),57.0,56.9572,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIDE=no short-distance with condition (million trips),5199.5,5199.4698,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIDE=no short-distance without condition (million trips),5008.7,5008.6737,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIDE=no long-distance with condition (million trips),73.4,73.3552,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIDE=no long-distance without condition (million trips),103.8,103.8034,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDPUB=yes short-distance with condition (million trips),713.5,713.4694,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDPUB=yes long-distance with condition (million trips),23.4,23.4149,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDPUB=yes short-distance with condition (million trips),752.3,752.289,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDPUB=yes short-distance without condition (million trips),220.9,220.9417,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDPUB=yes long-distance with condition (million trips),3.5,3.4977,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDPUB=yes long-distance without condition (million trips),1.5,1.4754,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDPUB=no short-distance with condition (million trips),4487.1,4487.1229,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDPUB=no long-distance with condition (million trips),78.7,78.6614,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDPUB=no short-distance with condition (million trips),7647.0,7646.9761,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDPUB=no short-distance without condition (million trips),5765.9,5765.867,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDPUB=no long-distance with condition (million trips),109.4,109.3888,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDPUB=no long-distance without condition (million trips),115.1,115.0645,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDRIVE=yes short-distance with condition (million trips),1040.4,1040.4282,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDRIVE=yes long-distance with condition (million trips),27.0,27.01,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIVE=yes short-distance with condition (million trips),1725.0,1725.0061,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIVE=yes short-distance without condition (million trips),404.1,404.1182,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIVE=yes long-distance with condition (million trips),16.2,16.1548,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIVE=yes long-distance without condition (million trips),0.6,0.5792,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDRIVE=no short-distance with condition (million trips),4004.6,4004.6274,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDRIVE=no long-distance with condition (million trips),70.1,70.0753,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIVE=no short-distance with condition (million trips),6674.3,6674.2589,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIVE=no short-distance without condition (million trips),5582.7,5582.6905,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIVE=no long-distance with condition (million trips),96.7,96.7317,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDRIVE=no long-distance without condition (million trips),116.0,115.9607,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDSPEC=yes short-distance with condition (million trips),437.1,437.1034,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDSPEC=yes long-distance with condition (million trips),9.4,9.3747,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDSPEC=yes short-distance with condition (million trips),877.4,877.4393,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDSPEC=yes short-distance without condition (million trips),132.3,132.2617,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDSPEC=yes long-distance with condition (million trips),3.0,3.0112,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDSPEC=yes long-distance without condition (million trips),0.3,0.2543,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDSPEC=no short-distance with condition (million trips),4749.9,4749.9464,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDSPEC=no long-distance with condition (million trips),91.1,91.0596,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDSPEC=no short-distance with condition (million trips),7521.8,7521.8258,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDSPEC=no short-distance without condition (million trips),5854.5,5854.547,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDSPEC=no long-distance with condition (million trips),109.9,109.8753,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDSPEC=no long-distance without condition (million trips),116.3,116.2857,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDTRAV=yes short-distance with condition (million trips),4138.8,4138.7988,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDTRAV=yes long-distance with condition (million trips),81.3,81.304,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDTRAV=yes short-distance with condition (million trips),5631.2,5631.16,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDTRAV=yes short-distance without condition (million trips),1663.0,1663.0196,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDTRAV=yes long-distance with condition (million trips),78.2,78.2363,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDTRAV=yes long-distance without condition (million trips),22.2,22.1594,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDTRAV=no short-distance with condition (million trips),1244.0,1244.0391,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2001 CONDTRAV=no long-distance with condition (million trips),24.0,24.0206,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDTRAV=no short-distance with condition (million trips),2768.1,2768.105,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDTRAV=no short-distance without condition (million trips),4323.8,4323.7891,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDTRAV=no long-distance with condition (million trips),34.7,34.6502,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)
+T4 2017 CONDTRAV=no long-distance without condition (million trips),94.4,94.3805,EXACT,condition_effect crosswalk; the item is asked only of persons with a condition (2017 also of everybody 80+)

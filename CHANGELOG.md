@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+* **Paper audit re-check with the 0.8.0 Study and crosswalks** (`tools/paper_audit/recheck_p01/p02/p10_*.py`; docs only, no package change). Lidbe 2021: 262 of 280
+  cells EXACT (Table 3 base = trips of persons with a valid `MEDCOND` answer; Table 4 weekend = `TRAVDAY` Saturday+Sunday, duration = `TRVLCMIN`, 72 of 72 condition-item
+  cells via `condition_effect`); Yang 2011 sample reproduced as a `Study`; Zhou & Wang 2014 still partial. Conventions A-25..A-32.
+
 ## 0.8.0 (2026-10-22)
 
 * **`pynhts.study`: from a research statement to data, tables and figures.** A `Study` (wave, unit, ordered sample rules `Keep`/`Drop`/`Complete`,

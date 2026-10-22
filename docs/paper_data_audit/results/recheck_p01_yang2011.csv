@@ -1,0 +1,34 @@
+item,published,pynhts,status,note
+[a] analysis sample (persons),130222.0,130222.0,EXACT,recovered reading (HHR_RACE 01/02/03/06); sample stated as a Study
+[a] T1 race=White % (All),77.3,77.2611,EXACT,recovered reading (HHR_RACE 01/02/03/06)
+[a] T1 race=Black % (All),12.9,12.867,EXACT,recovered reading (HHR_RACE 01/02/03/06)
+[a] T1 race=Asian % (All),2.5,2.5335,EXACT,recovered reading (HHR_RACE 01/02/03/06)
+[a] T1 race=Hispanic % (All),7.3,7.3384,EXACT,recovered reading (HHR_RACE 01/02/03/06)
+"[a] T2 OR race_Black, 18-64",0.88,0.8798,EXACT,recovered reading (HHR_RACE 01/02/03/06)
+"[a] T2 OR race_Asian, 18-64",0.82,0.8237,EXACT,recovered reading (HHR_RACE 01/02/03/06)
+"[a] T2 OR race_Hispanic, 18-64",0.83,0.8292,EXACT,recovered reading (HHR_RACE 01/02/03/06)
+"[a] T2 sample n, 18-64",84712.0,84712.0,EXACT,recovered reading (HHR_RACE 01/02/03/06)
+"[a] T2 OR race_Black, 11-17",1.5,1.5021,EXACT,recovered reading (HHR_RACE 01/02/03/06)
+"[a] T2 sample n, 11-17",13651.0,13651.0,EXACT,recovered reading (HHR_RACE 01/02/03/06)
+[b] analysis sample (persons),130222.0,133538.0,ACCEPTABLE,race_ethnicity(); sample stated as a Study
+[b] T1 race=White % (All),77.3,72.9049,GAP,race_ethnicity()
+[b] T1 race=Black % (All),12.9,12.195,GAP,race_ethnicity()
+[b] T1 race=Asian % (All),2.5,2.3957,ACCEPTABLE,race_ethnicity()
+[b] T1 race=Hispanic % (All),7.3,12.5044,GAP,race_ethnicity()
+"[b] T2 OR race_Black, 18-64",0.88,0.869,CLOSE,race_ethnicity()
+"[b] T2 OR race_Asian, 18-64",0.82,0.815,EXACT,race_ethnicity()
+"[b] T2 OR race_Hispanic, 18-64",0.83,0.7823,GAP,race_ethnicity()
+"[b] T2 sample n, 18-64",84712.0,86934.0,ACCEPTABLE,race_ethnicity()
+"[b] T2 OR race_Black, 11-17",1.5,1.5044,EXACT,race_ethnicity()
+"[b] T2 sample n, 11-17",13651.0,14090.0,ACCEPTABLE,race_ethnicity()
+[c] analysis sample (persons),130222.0,128928.0,CLOSE,"race first, Hispanic overrides White/Black/Asian; sample stated as a Study"
+[c] T1 race=White % (All),77.3,79.0012,ACCEPTABLE,"race first, Hispanic overrides White/Black/Asian"
+[c] T1 race=Black % (All),12.9,13.2144,ACCEPTABLE,"race first, Hispanic overrides White/Black/Asian"
+[c] T1 race=Asian % (All),2.5,2.596,ACCEPTABLE,"race first, Hispanic overrides White/Black/Asian"
+[c] T1 race=Hispanic % (All),7.3,5.1884,GAP,"race first, Hispanic overrides White/Black/Asian"
+"[c] T2 OR race_Black, 18-64",0.88,0.8558,ACCEPTABLE,"race first, Hispanic overrides White/Black/Asian"
+"[c] T2 OR race_Asian, 18-64",0.82,0.8075,CLOSE,"race first, Hispanic overrides White/Black/Asian"
+"[c] T2 OR race_Hispanic, 18-64",0.83,0.7148,GAP,"race first, Hispanic overrides White/Black/Asian"
+"[c] T2 sample n, 18-64",84712.0,83856.0,CLOSE,"race first, Hispanic overrides White/Black/Asian"
+"[c] T2 OR race_Black, 11-17",1.5,1.4791,EXACT,"race first, Hispanic overrides White/Black/Asian"
+"[c] T2 sample n, 11-17",13651.0,13501.0,CLOSE,"race first, Hispanic overrides White/Black/Asian"
