@@ -1,4 +1,4 @@
-# Where we stopped (2026-10-22, pynhts 0.7.1 on PyPI, commit d86d777, CI green)
+# Where we stopped (2026-10-22, pynhts 0.7.1 on PyPI; main at the commit after 7555c2e, CI green)
 
 Resume with the phrase «کارخانه بسته نرم‌افزاری» (or "ادامه pynhts"). Read `~/.claude/research-kit/PACKAGES.md` (section "Updates 2026-10-22"),
 the last ledger entries `PKG-20261022-02..10`, then `git status` here.
@@ -8,6 +8,12 @@ the last ledger entries `PKG-20261022-02..10`, then `git status` here.
   `valid`/`answer_status`, `eda`, `quality`, `transform`, `trends`, `tables` exports, `viz.plots`; docs in `docs/analysis.md`, `docs/data/`,
   `docs/development/REPOSITORY_AUDIT.md`, `docs/research/`; paper audit in `docs/paper_data_audit/` (scripts `tools/paper_audit/`, run_all ~40 s).
 * Uncommitted by design: `tools/pilot_bench/run_sprint.py` (the user's own work; never commit it). Third-party PDFs in `some papers/` are ignored.
+
+## NEXT SESSION, in this order (user decision 2026-10-22)
+1. Crosswalk for medical condition (`MEDCOND` and its companions; evidence by cross-tabulation in all four waves, as done for race; tests; docs).
+2. Adversarial review with the real data BEFORE tagging (read-only reviewer; apply P0/P1; ledger PKG-20261022-09 is the reason).
+3. Release 0.8.0 under the standing PyPI rule (version in pyproject/__init__/CITATION/README/CHANGELOG, fresh py3.10 parity, build + twine check, CI green, tag + release, fresh-venv install check).
+Contents of 0.8.0: race/Hispanic crosswalks + `race_ethnicity`, `pynhts.study`, cap flags (PTUSED, NWALKTRP), medical-condition crosswalk.
 
 ## Added after the first note (2026-10-22, later)
 * Race/Hispanic crosswalks (commit 0fe1f32), `pynhts.study`, cap flags for `PTUSED`/`NWALKTRP`, and the paper audit extended to 21 US papers (P13-P23).
