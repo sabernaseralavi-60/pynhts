@@ -1,0 +1,23 @@
+{
+  "title": "pynhts: survey-weight-aware access to US National Household Travel Survey microdata",
+  "description": "<p>Python library that downloads and verifies the 2001, 2009, 2017 and 2022 NHTS public-use files, converts them to typed Parquet, merges the tables without silent errors, computes design-correct standard errors (jackknife for 2001, 2009 and 2017, Taylor series for 2022) and margins of error, compares the waves through validated code crosswalks, and reproduces published FHWA tables. The package does not redistribute NHTS data.</p>",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Naseralavi, Seyed Saber",
+      "affiliation": "Department of Civil Engineering, Shahid Bahonar University of Kerman, Kerman, Iran",
+      "orcid": "0000-0002-5392-910X"
+    }
+  ],
+  "license": "bsd-3-clause",
+  "access_right": "open",
+  "language": "eng",
+  "keywords": ["NHTS", "travel survey", "transportation", "replicate weights", "jackknife", "Taylor series", "survey weights"],
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://github.com/sabernaseralavi-60/pynhts",
+      "scheme": "url"
+    }
+  ]
+}
