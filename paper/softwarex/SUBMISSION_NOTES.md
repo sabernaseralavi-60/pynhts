@@ -72,3 +72,13 @@ after submission are nearly impossible: both authors should read and approve the
 * **Audit wording.** Keep the neutral wording if the text is edited.
 * **Journal facts** (CiteScore about 4.1, impact factor 1.9 to 2.4, Q3 in software engineering) come from third-party sites only; verify in the journal's own pages if they matter to the decision.
 * **JOSS** is not an option before about April 2027 (six months of public history; evidence of research use).
+
+## Four reading copies (Word and PDF, English and Persian), 2026-10-23
+
+`paper/softwarex/final/`: `pynhts_softwarex_EN.docx`, `pynhts_softwarex_EN.pdf`, `pynhts_softwarex_FA.docx`, `pynhts_softwarex_FA.pdf`. Same content in both languages (the
+Persian text is written in Persian from `content_fa.py`, numbers come from the same result files; Persian figures are twins made by `make_figures_fa.py`).
+* EN PDF = the Elsevier-template PDF (`latex/pynhts_softwarex.pdf`, the one to submit). EN Word = generic layout from `build_docx.py`, not the Elsevier template.
+* FA Word = RTL, B Nazanin (Latin: Times New Roman), Persian digits; FA PDF = the same Word file exported by Word itself (so the two Persian files are identical in layout).
+* SoftwareX does not need a Persian version; these copies are for the authors. Rebuild: `python paper/softwarex/build_docx.py` (needs python-docx; equation through Quarto's pandoc),
+  `python paper/softwarex/make_figures_fa.py` (needs arabic-reshaper and python-bidi), then export the FA Word file to PDF.
+* Edit the English or Persian source and rebuild; never edit the Word files by hand (changes would not reach the other files).
