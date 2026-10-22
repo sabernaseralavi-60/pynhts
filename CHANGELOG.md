@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.0 (2026-10-22)
 
 * **`pynhts.study`: from a research statement to data, tables and figures.** A `Study` (wave, unit, ordered sample rules `Keep`/`Drop`/`Complete`,
   variables, weight or explicitly none, stated assumptions; as objects, a dictionary or YAML) runs to a `StudyResult` with the analysis frame, the
