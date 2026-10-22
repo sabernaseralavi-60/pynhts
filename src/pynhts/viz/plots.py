@@ -69,7 +69,7 @@ def histogram(
         hq = weighted_quantile(pd.Series(xv), pd.Series(wv), clip_quantile)
         hi = float(hq[0] if isinstance(hq, list) else hq)
         keep = xv <= hi
-        lost = float(wv[~keep].sum() / wv.sum()) if (~keep).any() else 0.0
+        lost = float(wv[~keep].sum()) / float(wv.sum()) if (~keep).any() else 0.0
         note = f"values above {hi:.3g} ({100 * lost:.1f}% of the weight) not drawn" if lost else ""
         xv, wv = xv[keep], wv[keep]
     fig = None
