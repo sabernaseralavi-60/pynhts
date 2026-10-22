@@ -1,6 +1,6 @@
 """Figures of the SoftwareX paper, generated from the repository's own audit results (no hand-drawn numbers).
 
-Fig. 1 architecture (drawn), Fig. 2 outcome of the 21-paper audit per paper (first-audit results, never edited after the fact),
+Fig. 1 architecture (drawn), Fig. 2 outcome of the 22-paper audit per paper (first-audit results, never edited after the fact),
 Fig. 3 published against pynhts values for the Lidbe et al. tables (recheck_p10 results).
 Run: python paper/softwarex/make_figures.py   (needs pandas and matplotlib)
 """
@@ -24,6 +24,12 @@ OUT.mkdir(exist_ok=True)
 COL = {"EXACT": "#1b6ca8", "CLOSE": "#7fb7de", "ACCEPTABLE": "#e8a33d", "GAP": "#c0392b"}
 plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "axes.spines.top": False, "axes.spines.right": False})
 NL = chr(10)
+
+
+def n_graded() -> int:
+    """Graded printed values of the audit (first-audit files p??_*.csv), the same count as in content.py."""
+    import csv
+    return sum(r["status"] in COL for f in sorted(RES.glob("p[0-9][0-9]_*.csv")) for r in csv.DictReader(f.open(encoding="utf8")))
 
 
 def box(ax, x, y, w, h, title, body="", fc="#eef3f8", ec="#1b6ca8", fs=7.5):
@@ -60,7 +66,7 @@ def fig1() -> None:
         arrow(ax, x, 5.4, xt, 5.1)
     green = dict(fc="#e8f4ea", ec="#3a8a4f")
     box(ax, 0.2, 2.1, 3.6, 1.2, "pynhts.recipes", "5 sources, 175 figures,|expected status for each", **green)
-    box(ax, 4.2, 2.1, 3.6, 1.2, "tools/paper_audit", "21 published papers rebuilt,|1,096 printed values graded", **green)
+    box(ax, 4.2, 2.1, 3.6, 1.2, "tools/paper_audit", f"22 published papers rebuilt,|{n_graded():,} printed values graded", **green)
     box(ax, 8.2, 2.1, 3.6, 1.2, "pynhts.ml and CLI", "arrays, tensors, graphs;|fetch | register | docs".replace(" | ", " / "), **green)
     for x in (2.0, 6.0, 10.0):
         arrow(ax, x, 3.8, x, 3.3)

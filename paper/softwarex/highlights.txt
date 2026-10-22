@@ -1,5 +1,5 @@
 Typed, survey-weighted Python access to four US NHTS waves
 Variance method of each wave: jackknife for 2001-2017, Taylor for 2022
 Checked crosswalks between waves and guards for skip and top-coded values
-142 of 175 official figures reproduced; 21 published studies rebuilt
+142 of 175 official figures reproduced; 22 published studies rebuilt
 Sample-flow tables state the sample rules and missing-value policy as code

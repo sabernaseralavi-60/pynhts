@@ -1,0 +1,9 @@
+step,households
+start,129696
+R1 vehicles >= 1,123447
+R2 income 1-11,119405
+R3 race 1-5,113784
+R4 life cycle 1-10,113783
+R5 owned or rented,113012
+R6 at least one trip,103318
+complete household variables,103317

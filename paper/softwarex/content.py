@@ -32,6 +32,14 @@ AUD_N = len(_a)
 _l = [r for r in _rows("recheck_p10_lidbe2021.csv") if r["status"] in AUD and "race reading v2" not in r["item"] and "TDWKND flag" not in r["item"]]
 LID_N = len(_l)
 LID_EXACT = sum(r["status"] == "EXACT" for r in _l)
+_p24 = _rows("p24_naseralavi2025.csv")
+P24_S = {s: sum(r["status"] == s for r in _p24) for s in ("EXACT", "CLOSE", "ACCEPTABLE", "GAP")}
+P24_K = len(_p24)
+P24_N = int(float(next(r["pynhts"] for r in _p24 if r["item"] == "variant A: sample size N")))
+P24_DIFF = (106287 - P24_N) / 106287 * 100
+_sizes = sorted(int(r["households"]) for r in _rows("aux_p24_state_sizes.csv"))
+P24_SMALL = sum(n < 500 for n in _sizes)
+P24_MED = _sizes[len(_sizes) // 2]
 
 TITLE = "pynhts: survey-weight-aware Python access to the US National Household Travel Survey"
 
@@ -56,7 +64,7 @@ ABSTRACT = (
     "the variance method of each wave (jackknife replicate weights for 2001, 2009 and 2017; Taylor linearisation for 2022). "
     "It adds validated crosswalks between waves, guards for top-coded and non-answer values, and a study module that turns a "
     "written research statement into an analysis file with a sample-flow table. Validation is part of the package: 142 of 175 "
-    "figures printed in official reports reproduce completely, Taylor-series errors agree with R to 1e-9, and 21 published "
+    "figures printed in official reports reproduce completely, Taylor-series errors agree with R to 1e-9, and 22 published "
     f"studies were rebuilt and {AUD_N:,} printed numbers graded. The rebuilding recovered unstated rules, such as the base of "
     "a percentage and the definition of a weekend, that move published values by several per cent. The package is young and "
     "has no external users yet; its contribution is a tested, documented way to state and check the assumptions of NHTS analyses."
@@ -85,12 +93,12 @@ SECTIONS["motivation"] = [
           "(households, persons, trips, vehicles), sampling weights and, for three waves, replicate weights. The files are used "
           "for many topics. Recent examples are access to health care [2], the mobility of older adults across waves [3-5], "
           "taxi and ridehailing use [6,7], ridesharing and vehicle ownership [8], alternative fuel vehicles [9], vehicle miles "
-          "travelled [10,11], active travel [12] and online shopping [13]."),
+          "travelled [10,11], active travel [12], online shopping [13] and household trip generation by state [14]."),
     ("p", "Working with the files is less simple than the number of such studies suggests. Several authors have shown how the "
-          "survey itself shapes results: respondents who agree to be contacted again differ from those who do not [14], proxy "
-          "responses contain more rounded departure and arrival times [15], and a representation measure built from sampling "
+          "survey itself shapes results: respondents who agree to be contacted again differ from those who do not [15], proxy "
+          "responses contain more rounded departure and arrival times [16], and a representation measure built from sampling "
           "weights found under-representation of vulnerable traveller groups in 43 US household travel surveys, the 2017 NHTS "
-          "among them [16]. Beyond the properties of the survey, correct use requires work that every project repeats and that "
+          "among them [17]. Beyond the properties of the survey, correct use requires work that every project repeats and that "
           "is easy to get wrong. A skipped question is stored as the number -1, so the mean of the 2009 vehicle miles driven "
           "(VMT_MILE) is 5.36 instead of 9.72 and its total is 7 % low. The same code means different things in different "
           "waves: transport mode \"01\" is a car in 2009, where it is 44 % of trips, and walking in 2017, where it is 10.5 %. "
@@ -99,10 +107,10 @@ SECTIONS["motivation"] = [
           "change estimates and, more often, understate their uncertainty. Papers rarely state the rules they applied, which "
           "makes their numbers hard to reproduce."),
     ("p", "This matters beyond one survey. Calls for reproducible transportation research ask for open code and documented "
-          "methods [17,18], and name insufficient methodological detail and the lack of code sharing among the barriers [18]; "
-          "agent-based travel-demand research is rarely replicable when it rests on proprietary data and tools [19]. In the "
-          "wider research-software community, the FAIR principles have been adapted to software [20,21] and principles for "
-          "software citation have been proposed [22]. pynhts follows them in practice: every release is archived with a "
+          "methods [18,19], and name insufficient methodological detail and the lack of code sharing among the barriers [19]; "
+          "agent-based travel-demand research is rarely replicable when it rests on proprietary data and tools [20]. In the "
+          "wider research-software community, the FAIR principles have been adapted to software [21,22] and principles for "
+          "software citation have been proposed [23]. pynhts follows them in practice: every release is archived with a "
           "persistent identifier and a machine-readable citation file."),
     ("p", "pynhts addresses these problems in one Python package. It (i) fetches and verifies the official files and exposes them "
           "as typed tables that cannot be merged wrongly, (ii) computes every estimate with the variance method of its wave, "
@@ -112,13 +120,13 @@ SECTIONS["motivation"] = [
           "explicit, testable and reusable. A user installs the package, downloads a wave with one command, loads it lazily, "
           "and asks for weighted statistics, rates, harmonised categories or a complete study ({sec:examples}). Results carry "
           "the wave, weight, variance design and unit, so a table footnote can be written from the result itself."),
-    ("p", "Related work. The R package summarizeNHTS [23] downloads and summarises NHTS data, and the R survey package [24] "
+    ("p", "Related work. The R package summarizeNHTS [24] downloads and summarises NHTS data, and the R survey package [25] "
           "offers general replicate-weight and Taylor-series analysis that users can apply to NHTS data after setting up the "
-          "design themselves. The Python package samplics [25] covers complex-sample estimation in general but does not know "
+          "design themselves. The Python package samplics [26] covers complex-sample estimation in general but does not know "
           "the NHTS files, codes or weights. A search of GitHub and PyPI on 22 October 2026 (queries \"NHTS python\" and "
           "\"national household travel survey\", and the package names nhts, nhts-py and summarizenhts) found analysis scripts "
           "for single projects and no other general Python package for NHTS access. The variance estimators follow the "
-          "standard replicate-weight theory [26] and the weighting report of the 2017 survey [27]."),
+          "standard replicate-weight theory [27] and the weighting report of the 2017 survey [28]."),
 ]
 
 SECTIONS["architecture"] = [
@@ -136,7 +144,7 @@ SECTIONS["architecture"] = [
     ("p", "pynhts.stats implements the stratified jackknife of the 2017 weighting design. With 14 variance strata of 7 units, the "
           "variance of an estimate is 6/7 times the sum over the 98 replicates of the squared deviation of the replicate "
           "estimate from the full estimate, and the margin of error (MOE) is the t quantile with 98 degrees of freedom times "
-          "the standard error [26,27]:"),
+          "the standard error [27,28]:"),
     ("eq", r"\hat V(\hat\theta)=\frac{6}{7}\sum_{r=1}^{98}\bigl(\hat\theta_r-\hat\theta\bigr)^{2},\qquad "
            r"\mathrm{MOE}=t_{0.975,\,98}\,\sqrt{\hat V(\hat\theta)}."),
     ("p", "The 2009 and 2001 files have 100 and 99 replicates with their own factors. The 2022 file has no replicate weights, so "
@@ -160,7 +168,30 @@ SECTIONS["architecture"] = [
           "A Study object takes the wave, the unit of analysis, ordered sample rules (Keep, Drop, Complete), variables, the weight "
           "(or an explicit none) and stated assumptions. It returns the analysis file, a sample-flow table with the number "
           "removed by each rule, a descriptive table, a methods paragraph and a comparison with published numbers graded exact, close, "
-          "acceptable or gap. It never tunes a rule to reach a number."),
+          "acceptable or gap. It never tunes a rule to reach a number. {tab:modules} lists every module with its function. "
+          "Two aids are meant for assistants that write analysis code: AGENTS.md states the ten rules that prevent the silent "
+          "errors above, and agent_eval grades an answers file on 14 tasks that contain those traps."),
+    ("table", "modules", "Modules of pynhts 0.8.1 and what each does.", [
+        ("pynhts.io", "Verified download (SHA-256 of every archive), registration of files already on disk, deterministic Parquet cache."),
+        ("pynhts.core", "Typed schema from the codebook, lazy loader with validated joins, missing-code policy, top-code and "
+                        "national-sample-only flags."),
+        ("pynhts.stats", "Totals, means, proportions and ratios with jackknife (2001, 2009, 2017) or Taylor-series (2022) errors; "
+                         "subpopulations as domains."),
+        ("pynhts.rates", "Daily trips and miles per person or household by the official route, with the unit stated."),
+        ("pynhts.concepts", "44 concepts in four waves: universe, unit, comparability grade, pitfalls."),
+        ("pynhts.harmonize", "Comparison of two waves; 19 crosswalks (mode, purpose, income, race, Hispanic origin, medical condition, "
+                             "and others) with the status of each code."),
+        ("pynhts.aggregate, features", "Trips to persons and households with a stated missing-value policy; 93 documented features "
+                                       "with formula and lineage."),
+        ("pynhts.eda, quality", "Reasons for missing values, weighted descriptives, key and weight integrity report."),
+        ("pynhts.transform, trends", "Leakage-safe transformations and split by household; per-wave estimates and guarded pooling."),
+        ("pynhts.tours", "Home-based work, other and non-home-based tours and FHWA-style trip chains (2017 only)."),
+        ("pynhts.study", "Research statement to analysis file, sample-flow table, descriptive table, methods text and grading."),
+        ("pynhts.tables, viz", "Tables as LaTeX, Markdown, HTML or Excel with a methods footnote; plots, including activity diaries."),
+        ("pynhts.recipes", "Published tables with the expected status of each figure and a generated gap report."),
+        ("pynhts.ml", "Arrays, PyTorch tensors and household graphs."),
+        ("Command line", "pynhts fetch, register and docs (official documents, hash-checked)."),
+    ]),
 ]
 
 SECTIONS["examples"] = [
@@ -213,17 +244,23 @@ SECTIONS["impact"] = [
           "the Taylor-series errors equal those of the R survey package. There are 333 unit tests that need no data and more "
           "than 600 tests when the real files are present, run on Linux and Windows."),
     ("h", "Rebuilding published studies"),
-    ("p", "To test whether the package supports real analyses, the data of 21 published NHTS studies were rebuilt with the package "
+    ("p", "To test whether the package supports real analyses, the data of 22 published NHTS studies were rebuilt with the package "
           "only, one script per study, and every number the study prints about its data was graded against the result: exact "
           "(equal at the printed precision), close (within 2 %), acceptable (within 5 %) or gap. No rule was adjusted to reach a "
           f"number. Of {AUD_N:,} graded values, {AUD['EXACT']} are exact, {AUD['CLOSE']} close, {AUD['ACCEPTABLE']} acceptable and "
           f"{AUD['GAP']} gaps ({{fig:audit}}). In nine studies the analysis data could be rebuilt convincingly; in the others the printed "
           "numbers depend on sample rules or external variables that the paper does not state or that the public files do not "
           "contain. We treat each gap as a statement about the information available in the paper, not about its authors' work."),
-    ("fig", "audit", "fig2_audit_overview", "Outcome of the audit of 21 published NHTS studies (P01-P23; listed in the repository, first-audit "
+    ("fig", "audit", "fig2_audit_overview", "Outcome of the audit of 22 published NHTS studies (P01-P24; listed in the repository, first-audit "
             "scripts). Bars show the share of each study's printed numbers that pynhts reproduces exactly, closely (2 %), "
             "acceptably (5 %) or not."),
-    ("p", "The exercise produced 32 recovered conventions, written down with their evidence, and several of them change published "
+    ("p", f"One of the 22 studies is the authors' own earlier work on household trip generation by state [14], so that case is not "
+          "independent. It states its cleaning only as removal of incomplete records and outliers. The rules that its printed tables imply "
+          f"(at least one vehicle and one trip, valid income, race, life cycle and tenure) leave {P24_N:,} households against 106,287 "
+          f"printed ({P24_DIFF:.1f} % fewer); of its {P24_K} checked values, {P24_S['EXACT']} are exact at the printed precision, "
+          f"{P24_S['CLOSE']} close and {P24_S['ACCEPTABLE']} acceptable. The rebuilt sample also shows that {P24_SMALL} of the 51 "
+          f"states contribute fewer than 500 households (median {P24_MED}), which bears on any model fitted state by state."),
+    ("p", "The exercise produced 33 recovered conventions, written down with their evidence, and several of them change published "
           f"numbers. A re-check of one study [5] with the crosswalks and the study module illustrates this: {LID_EXACT} of {LID_N} "
           "cells of its Tables 3 and 4 are reproduced exactly ({fig:lidbe}). The percentages in its Table 3 use the trips of persons "
           "with a valid answer as the base (Example 2); its weekend is Saturday and Sunday of the travel-day variable, whereas "
@@ -243,7 +280,7 @@ SECTIONS["impact"] = [
           "the code. We have not measured any change in practice yet."),
     ("h", "Extent of use"),
     ("p", "The first version was released on PyPI in October 2026 and the package has had 13 releases in total; version "
-          f"{VERSION} is archived on Zenodo [28]. The package has no known external users, no publication has used it, and it has no "
+          f"{VERSION} is archived on Zenodo [29]. The package has no known external users, no publication has used it, and it has no "
           "commercial use. PyPI records downloads, but they include automated mirrors, so we do not report them as users. The "
           "evidence of impact is therefore the validation and the audit, which can be repeated by anyone with the public files, "
           "and the intended use is by researchers who analyse the NHTS and by those who review such analyses."),
@@ -271,9 +308,10 @@ AI = ("During the preparation of this work the authors used Claude (Anthropic) a
       "references and text) and take full responsibility for the content of the publication. Numbers in the text are taken by "
       "code from the result files of the repository, and the references were checked against a bibliographic database.")
 
-CREDIT = ("Seyed Saber Naseralavi: Conceptualization, Data curation, Formal analysis, Investigation, Methodology, Project "
-          "administration, Resources, Software, Validation, Visualization, Writing - original draft, Writing - review and editing. "
-          "Akram Mazaheri: [[AUTHOR-TODO: CRediT roles of A. Mazaheri; not stated by the authors]]")
+# roles as dictated by the corresponding author on 2026-10-22: all research roles to A. Mazaheri, guidance and management to S. S. Naseralavi
+CREDIT = ("Seyed Saber Naseralavi: Project administration, Supervision. "
+          "Akram Mazaheri: Conceptualization, Data curation, Formal analysis, Investigation, Methodology, Resources, Software, "
+          "Validation, Visualization, Writing - original draft, Writing - review and editing.")
 
 FUNDING = "This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors."
 COMPETING = ("The authors declare that they have no known competing financial interests or personal relationships that could "
@@ -314,6 +352,8 @@ REFS = [
              r"Int J Behav Nutr Phys Act 2011;8:96. \url{https://doi.org/10.1186/1479-5868-8-96}."),
     ("zhou", "Zhou Y, Wang X(C). Explore the relationship between online shopping and shopping trips: an analysis with the 2009 NHTS "
              r"data. Transp Res Part A Policy Pract 2014;70:1-9. \url{https://doi.org/10.1016/j.tra.2014.09.014}."),
+    ("naseralavi", "Naseralavi S, Soltanirad M, Ranjbar E, Lucero M, Gorzin F, Hakiminejad Y, et al. Machine learning modeling of household trip "
+                   r"generation by state using NHTS data. Urban Sci 2025;9:353. \url{https://doi.org/10.3390/urbansci9090353}."),
     ("wang", "Wang X, Shaw FA, Mokhtarian PL, Watkins KE. Response willingness in consecutive travel surveys: an investigation based on "
              "the National Household Travel Survey using a sample selection model. Transportation 2023;50:2339-73. "
              r"\url{https://doi.org/10.1007/s11116-022-10312-w}."),

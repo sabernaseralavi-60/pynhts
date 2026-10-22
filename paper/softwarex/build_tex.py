@@ -32,6 +32,8 @@ NUM2KEY = {v: k for k, v in KEY2NUM.items()}
 CITED: list[int] = []
 FIG_ORDER: list[str] = []
 FIG_USED: set[str] = set()
+TAB_ORDER: list[str] = []
+TAB_USED: set[str] = set()
 SEC_USED: set[str] = set()
 WORDS = {"abstract": 0, "text": 0, "other": 0}
 
@@ -62,7 +64,7 @@ def expand(group: str) -> list[int]:
 def tex(text: str, count: str | None = None) -> str:
     """Plain text with [n] citations and {fig:x}/{sec:x} tokens -> LaTeX; also records words and citation order."""
     if count:
-        WORDS[count] += len(re.findall(r"\S+", re.sub(r"\{(?:fig|sec):\w+\}", "1", text)))
+        WORDS[count] += len(re.findall(r"\S+", re.sub(r"\{(?:fig|sec|tab):\w+\}", "1", text)))
     holders: list[str] = []
 
     def hold(latex: str) -> str:
@@ -83,10 +85,13 @@ def tex(text: str, count: str | None = None) -> str:
         if kind == "fig":
             FIG_USED.add(key)
             return hold(r"Fig.~\ref{fig:" + key + "}")
+        if kind == "tab":
+            TAB_USED.add(key)
+            return hold(r"Table~\ref{tab:" + key + "}")
         SEC_USED.add(key)
         return hold(r"Section~\ref{sec:" + key + "}")
 
-    text = re.sub(r"\{(fig|sec):(\w+)\}", ref, text)
+    text = re.sub(r"\{(fig|sec|tab):(\w+)\}", ref, text)
     out = esc(text)
     return re.sub(r"\x00(\d+)\x00", lambda m: holders[int(m.group(1))], out)
 
@@ -105,6 +110,15 @@ def blocks(items: list[tuple], count: str = "text") -> str:
         elif kind == "code":
             WORDS[count] += len(re.findall(r"\S+", b[1]))
             out.append("\\begin{footnotesize}\\begin{verbatim}\n" + b[1] + "\n\\end{verbatim}\\end{footnotesize}\n")
+        elif kind == "table":
+            _, key, cap, rows = b
+            TAB_ORDER.append(key)
+            WORDS[count] += sum(len(a.split()) + len(c.split()) for a, c in rows) + 2
+            body = "".join("\\texttt{" + esc(a) + "} & " + esc(c) + " \\\\\n" for a, c in rows)
+            out.append("\\begin{table}[!ht]\n\\centering\\small\n"
+                       f"\\caption{{{tex(cap, count)}}}\n\\label{{tab:{key}}}\n"
+                       "\\begin{tabular}{@{}p{3.7cm}p{11.0cm}@{}}\n\\hline\n\\textbf{Module} & \\textbf{Function} \\\\\n\\hline\n"
+                       + body + "\\hline\n\\end{tabular}\n\\end{table}\n")
         elif kind == "fig":
             _, key, fname, cap = b
             FIG_ORDER.append(key)
@@ -182,6 +196,7 @@ doc = head + front + table + main + tail + bib + final
 assert CITED == sorted(CITED) == list(range(1, len(CITED) + 1)), f"citations out of order: {CITED}"
 assert set(CITED) == set(KEY2NUM.values()), f"uncited references: {set(KEY2NUM.values()) - set(CITED)}"
 assert set(FIG_ORDER) == FIG_USED, f"figures never referenced: {set(FIG_ORDER) - FIG_USED}"
+assert set(TAB_ORDER) == TAB_USED, f"tables never referenced: {set(TAB_ORDER) - TAB_USED}"
 assert SEC_USED <= set(SEC_LABELS)
 total = WORDS["abstract"] + WORDS["text"]
 print("words:", WORDS, "| counted against the 4,000-word limit (abstract + running text + captions + code):", total)

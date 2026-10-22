@@ -16,10 +16,10 @@ context, (d) existing software. No claim of novelty beyond "no other general Pyt
 
 ## What was read
 Only the **abstracts** returned by the search tool (and, for the studies of the audit, the full papers in the project folder
-`some papers/`). Claims in the Motivation section are limited to what those abstracts say. Full texts of the new references were not read.
+`some papers/`). Claims in the Motivation section are limited to what those abstracts say. Full texts of the new references were not read, with one exception: Naseralavi et al. 2025 (the authors' own study, number 14) was read in full from the project folder `some papers/` and rebuilt as audit study P24.
 
 ## Verification
-All 24 references with a DOI were rebuilt from Crossref with `bib_from_dois.py` (`refs.bib`) and passed `retraction_check.py`
-(`retraction_check.csv`: OK = 24, retracted/flagged = 0). The three references without a DOI are official documents (FHWA summary report,
+All 25 references with a DOI were rebuilt from Crossref with `bib_from_dois.py` (`refs.bib`) and passed `retraction_check.py`
+(`retraction_check.csv`: OK = 25, retracted/flagged = 0; the 25th, Naseralavi et al. 2025, was added on 2026-10-22 and checked the same way). The three references without a DOI are official documents (FHWA summary report,
 Westat weighting report, summarizeNHTS repository), reachable on 2026-10-22. The Zenodo record is verified through the Zenodo API
 (it is a DataCite DOI, so Crossref does not know it).

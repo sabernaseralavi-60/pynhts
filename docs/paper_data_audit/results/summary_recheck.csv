@@ -1,4 +1,4 @@
 script,ok,seconds,code_lines,EXACT,ACCEPTABLE,GAP,CLOSE,error,INFO
-recheck_p01_yang2011,True,5.1,94,14,8,6,5,,0.0
-recheck_p02_zhou_wang2014,True,8.6,72,1,6,17,18,,7.0
-recheck_p10_lidbe2021,True,23.5,165,283,12,21,20,,4.0
+recheck_p01_yang2011,True,6.3,94,14,8,6,5,,0.0
+recheck_p02_zhou_wang2014,True,173.5,79,1,6,19,18,,7.0
+recheck_p10_lidbe2021,True,35.7,165,283,12,21,20,,4.0

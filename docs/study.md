@@ -11,7 +11,7 @@ statements (as Python objects, a dictionary or a YAML file) and returns
 * **figures** (the flow, the distribution of the outcome with its share of zeros, shares by group),
 * a **comparison with published numbers** (EXACT, CLOSE, ACCEPTABLE, GAP), with nothing tuned to match.
 
-It exists because 21 published US NHTS papers were rebuilt with pynhts (`docs/paper_data_audit/`) and the same work was done by
+It exists because 22 published US NHTS papers were rebuilt with pynhts (`docs/paper_data_audit/`) and the same work was done by
 hand each time. What took the time was never the computation; it was recovering the unwritten rules of each paper: which records
 were dropped, whether a skip counts as an answer, whether the mean is over everybody or over the people who travelled.
 

@@ -1,10 +1,13 @@
 # SoftwareX submission notes (Original Software Publication), LaTeX route, prepared 2026-10-22
 
 **کارهای دستیِ نویسندگان پیش از ارسال (فارسی):**
-۱. نقش‌های CRediT خانم مظاهری را بنویسید (در `content.py`، متغیر `CREDIT`، یک برچسب `[[AUTHOR-TODO]]` مانده). ۲. تأیید کنید بیانیهٔ «تعارض منافع ندارند» درست است
-(جملهٔ استاندارد گذاشته شده). ۳. هزینهٔ APC را در صفحهٔ رسمی مجله ببینید. ۴. اگر خانم مظاهری در نوشتن **نرم‌افزار** هم سهم داشته، نامش به `CITATION.cff` و Zenodo
-اضافه شود (الان فقط نویسندهٔ نرم‌افزار آقای ناصرعلوی است). ۵. ORCID خانم مظاهری (`0009-0000-1439-3915`) فقط با نام و دانشگاه در ORCID پیدا شد و تأیید نشده؛
-در مقاله چاپ نشده. ۶. سپس فایل‌ها را طبق بخش «How to submit» آپلود کنید.
+۱. **CRediT (به دستور نویسندهٔ مسئول، ۱۴۰۵/۰۷/۳۰):** خانم مظاهری همهٔ نقش‌های پژوهشی (مفهوم‌سازی، داده، تحلیل صوری، پژوهش، روش، منابع، نرم‌افزار، اعتبارسنجی، تصویرسازی،
+نوشتن پیش‌نویس، بازبینی و ویرایش)؛ آقای ناصرعلوی فقط Project administration و Supervision. این بیانیه شهادت نویسندگان است و باید **خانم مظاهری آن را بخواند و تأیید کند**
+(مجله می‌خواهد همهٔ نویسندگان متن را تأیید کنند). **نتیجه‌ای که باید تصمیم بگیرید:** اگر نقش Software به ایشان داده می‌شود، نام ایشان باید در رکورد نرم‌افزار (`CITATION.cff`، Zenodo) هم
+بیاید؛ اکنون فقط آقای ناصرعلوی نویسندهٔ نرم‌افزار است و این ناسازگاری را داور می‌تواند ببیند. کارِ شما: یا نام ایشان را به رکورد نرم‌افزار بیفزایید (نسخهٔ تازهٔ Zenodo)، یا نقش را تغییر دهید.
+۲. تأیید کنید بیانیهٔ «تعارض منافع ندارند» درست است (جملهٔ استاندارد گذاشته شده). ۳. هزینهٔ APC را در صفحهٔ رسمی مجله ببینید. ۴. ORCID خانم مظاهری (`0009-0000-1439-3915`)
+فقط با نام و دانشگاه در ORCID پیدا شد و تأیید نشده؛ در مقاله چاپ نشده. ۵. مقالهٔ ۲۰۲۵ خودتان (Urban Science) اکنون استناد ۱۴ است و در ممیزی مطالعهٔ ۲۲ام با برچسب «غیرمستقل»؛
+هم‌نویسندگان آن مقاله باید از این به‌کارگیری خبر داشته باشند. ۶. سپس فایل‌ها را طبق بخش «How to submit» آپلود کنید.
 
 Nothing has been submitted. Sources of every rule: the SoftwareX Guide for Authors text pasted by the author on 2026-10-22, and the official OSP
 templates v6 (March 2026): `template/softwarex-osp-template.tex` (sha256 2b18dfd1...3b8649) and `.docx` (sha256 9fcf40ed...b916d), both from
@@ -36,8 +39,8 @@ after submission are nearly impossible: both authors should read and approve the
 
 * Template: the official `softwarex-osp-template.tex` (elsarticle, preprint 12 pt), five mandatory numbered sections, metadata table C1-C8, "Before you begin"
   block deleted; additions: AI-use section, CRediT, funding, competing interests, data availability (the Guide requires them), a thin `\parskip` for readability.
-* Word limit 4,000 (abstract, text, captions, code; not title, authors, metadata, references): 2,744 counted. Abstract 248 words (limit 250), no citations in it. Keywords 6 (limit 6). Highlights 5 x at most 85 characters. Figures 3 (limit 6).
-* References: 28, numbered in order of first appearance (asserted by the build), journal style of the Guide with abbreviated journal names; 25 have a DOI that was checked in Crossref
+* Word limit 4,000 (abstract, text, captions, code, the module table; not title, authors, metadata, references): 3,141 counted. Abstract 248 words (limit 250), no citations in it. Keywords 6 (limit 6). Highlights 5 x at most 85 characters. Figures 3 (limit 6), one table of modules (Table 2).
+* References: 29, numbered in order of first appearance (asserted by the build), journal style of the Guide with abbreviated journal names; 26 have a DOI that was checked in Crossref
   and screened for retraction; the three web references and the software record were checked on 2026-10-22; the software is cited with its Zenodo DOI (version 10.5281/zenodo.23575312; all versions 10.5281/zenodo.23573454).
 * Figures and sections are cross-referenced by `\ref` (no typed numbers); every figure is referenced; the equation is typeset.
 * Repository: public GitHub, README.md, LICENSE.txt (added in 0.8.1), source in `src/`, BSD 3-Clause, tag `v0.8.1`, PyPI 0.8.1, Zenodo record.
@@ -46,7 +49,7 @@ after submission are nearly impossible: both authors should read and approve the
 
 ## Open items (all marked `[[AUTHOR-TODO]]` in the sources)
 
-1. CRediT roles of A. Mazaheri (not stated by the authors).
+1. CRediT roles: written as dictated by the corresponding author on 2026-10-22 (all research roles A. Mazaheri; Project administration and Supervision S. S. Naseralavi); A. Mazaheri must confirm, and the software record must agree if she is credited with Software (see the Persian note, item 1).
 2. Competing interests: the standard "no known competing interests" sentence is written; the authors must confirm it (also in the submission system's declarations tool).
 3. Funding: "no specific grant" was stated by the author on 2026-10-22 and is written as the standard sentence.
 4. Open-access fee (APC): not in the pasted text; USD 760 appears only in third-party directories. Check the journal's open-access page. The checklist says the corresponding author is responsible if the paper is accepted.
@@ -63,7 +66,7 @@ after submission are nearly impossible: both authors should read and approve the
 ## Risks (honest)
 
 * **Impact section.** The template calls it the main section. pynhts was made public on 2026-10-16 and has no external users, no citing publications and no commercial use; downloads cannot be told from mirrors.
-  The evidence offered is validation (142 of 175 official figures; 1,096 graded numbers from 21 published studies). Reviewers may judge this too thin; no chance of acceptance is claimed.
+  The evidence offered is validation (142 of 175 official figures; 1,150 graded numbers from 22 published studies, one of them the authors' own). Reviewers may judge this too thin; no chance of acceptance is claimed.
   Strengthening: a replication or methods paper that uses pynhts, outside users, citations.
 * **Scope.** SoftwareX stresses software with impact across domains; this package is domain-specific (survey analysis of one national survey), with a general reproducibility message.
 * **Audit wording.** Keep the neutral wording if the text is edited.
