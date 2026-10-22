@@ -272,8 +272,13 @@ def sample_characteristics(
     use :class:`pynhts.stats.Survey` with :func:`build` for tables that need a margin of error.
     """
     from pynhts import eda
+    from pynhts.core.validity import valid
 
     lab = labels or {}
+    frame = frame.copy()
+    for c in columns:  # skips (-1) and non-answers are missing, not categories
+        if not pd.api.types.is_numeric_dtype(frame[c]):
+            frame[c] = frame[c].where(valid(frame[c]))
     d = eda.describe(frame, list(columns), weight=weight, max_levels=max_levels)
     rows: list[dict[str, object]] = []
     for c in columns:

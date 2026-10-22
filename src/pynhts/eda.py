@@ -189,11 +189,11 @@ def _weighted_rank(x: np.ndarray[Any, Any], w: np.ndarray[Any, Any]) -> np.ndarr
     o = np.argsort(x, kind="stable")
     xs, ws = x[o], w[o]
     cs = np.cumsum(ws)
-    mid = cs - ws / 2.0
     r = np.empty(len(x))
     start = 0
     for end in np.flatnonzero(np.r_[xs[1:] != xs[:-1], True]) + 1:
-        r[o[start:end]] = mid[start:end].mean()
+        # mid-rank of a tie group: cumulative weight up to its end minus half of the group's own weight
+        r[o[start:end]] = cs[end - 1] - ws[start:end].sum() / 2.0
         start = int(end)
     return r
 
@@ -230,7 +230,7 @@ def correlation_matrix(
       returned for weighted data because the sampling variance depends on the survey design.
     * Without weights, Pearson gets a Fisher-z interval that assumes a simple random sample (the
       NHTS is not one: treat it as optimistic).
-    * ``kendall`` is unweighted; samples above ``kendall_max`` pairs are subsampled with ``seed``.
+    * ``kendall`` is unweighted; pairs with more than ``kendall_max`` rows are subsampled with ``seed``.
     * Nominal columns are refused: use :func:`association_matrix` (Cramér's V).
     """
     if method not in ("pearson", "spearman", "kendall"):
@@ -257,6 +257,7 @@ def correlation_matrix(
         "and still negligible, judge the size of r"
     ]
     rng = np.random.default_rng(seed)
+    subsampled = False
     tcrit = None
     for i, a in enumerate(columns):
         for j in range(i, k):
@@ -281,10 +282,7 @@ def correlation_matrix(
                 if len(xa) > kendall_max:
                     idx = rng.choice(len(xa), kendall_max, replace=False)
                     xa, xb = xa[idx], xb[idx]
-                    if i == 0 and j == 1:
-                        notes.append(
-                            f"Kendall computed on a random subsample of {kendall_max} rows (seed {seed})"
-                        )
+                    subsampled = True
                 val = _kendall(xa, xb)
             r.iloc[i, j] = r.iloc[j, i] = val
             if (
@@ -299,6 +297,11 @@ def correlation_matrix(
                 tcrit = t_ppf(0.5 + level / 2, 1e6)
                 lo.iloc[i, j] = lo.iloc[j, i] = np.tanh(z - tcrit * se)
                 hi.iloc[i, j] = hi.iloc[j, i] = np.tanh(z + tcrit * se)
+    if subsampled:
+        notes.append(
+            f"Kendall computed on random subsamples of {kendall_max} rows (seed {seed}) for pairs with more rows; "
+            "the printed n is the full pairwise count"
+        )
     if weight:
         notes.append(
             "weighted: no interval is given; use a replicate-weight estimate (pynhts.stats) for inference"
@@ -374,15 +377,19 @@ def compare_groups(
     The standardized difference is (mean - mean_ref) / pooled weighted sd, an effect size, not a test.
     For a design-based standard error of group means use ``survey.mean(value, by=...)``.
     """
-    w = frame[weight] if weight else None
     rows = []
+    pooled_var = 0.0
+    pooled_w = 0.0
     for g, sub in frame.groupby(by, observed=True, dropna=True):
         m, sd = weighted_mean_sd(sub[value], sub[weight] if weight else None)
-        xv, _ = _clean(sub[value], sub[weight] if weight else None)
+        xv, wv = _clean(sub[value], sub[weight] if weight else None)
+        if len(xv):
+            pooled_var += float(wv.sum()) * sd**2
+            pooled_w += float(wv.sum())
         rows.append({by: g, "n": len(xv), "mean": m, "sd": sd})
     out = pd.DataFrame(rows).set_index(by)
     ref = reference if reference is not None else out.index[0]
-    _, sd_all = weighted_mean_sd(frame[value], w)
+    sd_all = float(np.sqrt(pooled_var / pooled_w)) if pooled_w else float("nan")
     ref_mean = float(out["mean"].to_numpy(float)[list(out.index).index(ref)])
     out["diff_vs_ref"] = out["mean"].to_numpy(float) - ref_mean
     out["std_diff"] = out["diff_vs_ref"] / sd_all if sd_all else np.nan

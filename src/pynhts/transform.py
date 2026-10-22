@@ -111,14 +111,18 @@ def _loglik(y: np.ndarray[Any, Any], w: np.ndarray[Any, Any], jac: float) -> flo
     return float(-0.5 * w.sum() * np.log(var) + jac) if var > 0 else -np.inf
 
 
-def _bc_objective(x: np.ndarray[Any, Any], w: np.ndarray[Any, Any], jac: float) -> Callable[[float], float]:
+def _bc_objective(
+    x: np.ndarray[Any, Any], w: np.ndarray[Any, Any], jac: float
+) -> Callable[[float], float]:
     def f(lam: float) -> float:
         return _loglik(_bc(x, lam), w, (lam - 1) * jac)
 
     return f
 
 
-def _yj_objective(x: np.ndarray[Any, Any], w: np.ndarray[Any, Any], jac: float) -> Callable[[float], float]:
+def _yj_objective(
+    x: np.ndarray[Any, Any], w: np.ndarray[Any, Any], jac: float
+) -> Callable[[float], float]:
     def f(lam: float) -> float:
         return _loglik(_yj(x, lam), w, (lam - 1) * jac)
 
@@ -170,14 +174,10 @@ class Transformer:
                         f"Box-Cox of {col!r} needs strictly positive values (use yeojohnson)"
                     )
                 jac_bc = float(np.sum(wv * np.log(xv)))
-                p["lambda"] = _golden(
-                    _bc_objective(xv, wv, jac_bc), -5, 5
-                )
+                p["lambda"] = _golden(_bc_objective(xv, wv, jac_bc), -5, 5)
             elif m == "yeojohnson":
                 jac_yj = float(np.sum(wv * np.sign(xv) * np.log1p(np.abs(xv))))
-                p["lambda"] = _golden(
-                    _yj_objective(xv, wv, jac_yj), -5, 5
-                )
+                p["lambda"] = _golden(_yj_objective(xv, wv, jac_yj), -5, 5)
             elif m == "standardize":
                 p["mean"], p["sd"] = weighted_mean_sd(pd.Series(xv), pd.Series(wv))
             elif m == "robust":
@@ -265,7 +265,9 @@ def split_by_household(
     """
     if not 0 < test_size < 1:
         raise ValueError("test_size must be in (0, 1)")
-    ids = frame[group].drop_duplicates().to_numpy()
+    ids = np.sort(
+        frame[group].drop_duplicates().to_numpy()
+    )  # sorted: the split does not depend on row order
     rng = np.random.default_rng(seed)
     test_ids = set(rng.choice(ids, int(round(len(ids) * test_size)), replace=False))
     mask = frame[group].isin(test_ids)

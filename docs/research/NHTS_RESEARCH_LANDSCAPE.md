@@ -1,7 +1,7 @@
 # How NHTS data are used in research: what the analyses need from a package
 
-Status: **a first pass, not a systematic review.** Evidence: (a) eleven papers read in full during the paper-data audit of 2026-10-22
-(E01-E11 in `NHTS_FUNCTIONALITY_EVIDENCE.csv`), where every descriptive number was checked against pynhts; (b) seventeen further studies
+Status: **a first pass, not a systematic review.** Evidence: (a) ten US NHTS papers and one out-of-scope South African report (E11) read in full during the paper-data audit of 2026-10-22
+(E01-E11 in `NHTS_FUNCTIONALITY_EVIDENCE.csv`); the descriptive numbers that can be reconstructed from each text were checked against pynhts (E07 and E10 could not be reproduced: the analysed population is not stated); (b) seventeen further studies
 found by five OpenAlex searches the same day, of which only the **abstract snippet** was read (L01-L17). Nothing below is cited from memory.
 Research areas without evidence in these two sets are marked *not yet searched*; the absence of a study here is not evidence that none exists,
 and no feature is claimed to be novel because of it. Official sources (nhts.ornl.gov documentation, user guides, codebooks, weighting reports,
@@ -12,7 +12,7 @@ FHWA publications) are the basis of the package registry; their pinned copies we
 * The **unit of analysis is rarely the unit of the file**: person-day (active-travel prevalence, E01, E03), person (E02, E04, E10), household
   (fee burden, L03, L13; vehicle ownership, L11), vehicle (E05, E09), trip (mode shares, E06, L05, L06). Studies collapse trips to persons or persons
   to households themselves, with the rule often unstated (E02, E03, E07, E10: the analysed population cannot be reconstructed from the text).
-* **Weights are used inconsistently**: replicate-weight jackknife (E03), scaled weights stated but unweighted numbers printed (E04), no weights in SEM (E02, E10, E05).
+* **Weights are used inconsistently**: replicate-weight jackknife (E03), scaled weights stated but unweighted numbers printed (E04), no weights stated for the SEMs (E02, E10) and none for the classifiers of E05.
 * **Cross-wave comparison is common** (E08, L05, L06, L08, L14, L16) and always flagged by the authors as method-sensitive; distance changed its measurement
   between 2009 and 2017.
 * **Machine-learning studies** (E05, L11, L12) use person- or household-level feature tables built by hand, with class imbalance and no group-aware splitting mentioned in the snippets.

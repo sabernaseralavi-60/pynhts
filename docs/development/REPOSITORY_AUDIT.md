@@ -38,7 +38,7 @@ Size: about 5,400 lines of source at 0.6.1. Data: raw CSV and Parquet stay in th
 
 1. **No relational aggregation layer.** Collapsing trips to persons or persons to households was rewritten by hand in 6 of 10 audited papers; the only help was the parent-to-child join of the loader. A hand-written `groupby` has no row-multiplication guard, no stated missing-value policy and no zero-versus-missing rule.
 2. **No documented derived features** beyond official columns; no lineage for user-created variables.
-3. **A usability trap:** with `skip="keep"` (and by default in coded columns) `-1` stays a valid-looking string, so `.notna()` is not a validity test (2009 `WKFTPT`: 262,694 "valid" values, 128,726 real answers).
+3. **A usability trap:** with `skip="keep"` (and by default in coded columns) `-1` stays a valid-looking string, so `.notna()` is not a validity test (2009 `WKFTPT`: 308,619 non-missing values, 138,786 real answers).
 4. **The person file is not a complete roster** (2001: 14.5 % of households have fewer listed persons than `HHSIZE`; 2009: 19.8 %; 2017: 7.0 %; 2022: 9.1 %). Member counts built from it are lower bounds; the official household counts (`WRKCOUNT`, `DRVRCNT`) are exact. Nothing in 0.6.1 said so.
 5. **No exploratory layer** (missing-value reasons, weighted descriptives, correlation that refuses nominal variables), no transformation helper, no leakage-safe split by household, no quality report, no table export beyond LaTeX/Markdown, only one figure type.
 6. **Cross-wave comparison was a manual job**: `compare_waves` compares variable definitions, not estimates; nothing stopped pooled stacking of non-comparable concepts.

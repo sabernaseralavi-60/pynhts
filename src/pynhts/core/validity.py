@@ -4,8 +4,8 @@ NHTS columns carry three different kinds of "no value": a **skip** (code ``-1``:
 apply to this person), a **non-answer** (``-7`` refused, ``-8`` don't know, ``-9`` not ascertained, and
 the ``-77``/``-88`` variants of numeric columns) and a real **blank**. In coded (string) columns
 pynhts keeps ``-1`` as a category by default, so ``Series.notna()`` is *not* a validity test there:
-in the 2009 person file it counts 262,694 "valid" ``WKFTPT`` values where only 128,726 persons were
-actually asked. Use :func:`valid` for the answer mask and :func:`answer_status` to see the reasons.
+in the 2009 person file it counts 308,619 non-missing ``WKFTPT`` values where only 138,786 persons gave a
+real answer. Use :func:`valid` for the answer mask and :func:`answer_status` to see the reasons.
 """
 
 from __future__ import annotations

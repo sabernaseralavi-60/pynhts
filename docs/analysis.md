@@ -21,6 +21,7 @@ print(p.attrs["pynhts_aggregate"])   # rows, orphans, missing inputs per output,
 * one result row per target row (no row multiplication), unique target key, orphan child rows raise;
 * `missing="propagate"` (default) makes a sum or mean NaN when a contributing value is missing; `"skip"` ignores them (FHWA's convention for miles);
 * a target without child rows is a true zero for counts, sums and indicators (`empty="auto"`); `empty="nan"` refuses the inference;
+* a DataFrame source defaults to `empty="nan"` (a frame you filtered may lack rows for reasons other than "no trips"); pass `empty="auto"` for a complete frame; repeated rows of a frame raise; `first`/`last` need an order column;
 * the result carries the target table's weight (person, household or trip) and `attrs["pynhts"]`; never another table's weight.
 
 Functions: `n count sum mean median min max std quantile nunique any share first last`; conditions `Where(col, op, value)` combined with `& | ~`

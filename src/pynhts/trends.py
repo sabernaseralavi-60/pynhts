@@ -48,11 +48,13 @@ def trip_shares(
 
     Each wave is estimated with its own trip weights and variance design (jackknife replicates for
     2001-2017, Taylor series for 2022). ``min_age=5`` drops the 2001 children aged 0-4 so that the
-    universes agree. Returns one row per wave and category (``share``, ``se``, ``moe``, ``n``).
+    universes agree (trips of persons with an unknown age are dropped too and are not in the shares).
+    Returns one row per wave and category (``share``, ``se``, ``moe``, ``n``).
     """
     if concept not in ("mode", "purpose", "purpose_summary"):
         raise ValueError("concept must be 'mode', 'purpose' or 'purpose_summary'")
-    var = "TRPTRANS" if concept == "mode" else "WHYTRP1S"
+    # each crosswalk is defined on its own variable: purpose -> WHYTO (detailed), purpose_summary -> WHYTRP1S
+    var = {"mode": "TRPTRANS", "purpose": "WHYTO", "purpose_summary": "WHYTRP1S"}[concept]
     rows: list[dict[str, Any]] = []
     for w in waves:
         d = pynhts.load(w, replicates=True)
@@ -132,6 +134,8 @@ def pool(
     *,
     harmonize_concepts: dict[str, str] | None = None,
     allow_noncomparable: bool = False,
+    min_age: int | None = 5,
+    allow_raw_codes: bool = False,
 ) -> pd.DataFrame:
     """Stack several waves of one table for pooled modelling (see the module docstring).
 
@@ -144,6 +148,11 @@ def pool(
             the same code means different things in different waves.
         harmonize_concepts: ``{column: crosswalk concept}``; the harmonized column is named ``<col>_h``.
         allow_noncomparable: Proceed for ``N`` concepts (distance, trip counts) knowing the consequences.
+        min_age: Keep persons (and their trips) aged at least this, default 5, because 2001 also lists
+            children aged 0-4 and the other waves do not; ignored for tables without ``R_AGE``. Rows with an
+            unknown age are dropped when it is applied. ``None`` keeps everyone.
+        allow_raw_codes: Coded columns without a crosswalk raise unless this is True; then their codes are
+            only zero-unpadded ("01" and "1" agree), which does not make different meanings agree.
 
     Returns:
         Stacked rows with ``wave``, ``w`` (original weight), ``w_norm`` (weight / mean weight of the
@@ -160,18 +169,28 @@ def pool(
                         "pass allow_noncomparable=True to pool it anyway"
                     )
         d = pynhts.load(w)
-        f = d.table(table, list(columns))
+        use_age = min_age is not None and "R_AGE" in d.columns(table)
+        load = list(columns) + (["R_AGE"] if use_age and "R_AGE" not in columns else [])
+        f = d.table(table, load)
         wcol = d.weight_column(table)
+        if use_age:
+            keep = pd.to_numeric(f["R_AGE"], errors="coerce") >= min_age
+            f = f[keep].reset_index(drop=True)
+            if "R_AGE" not in columns:
+                f = f.drop(columns="R_AGE")
         for col, cw in hc.items():
             f[f"{col}_h"] = harmonize.apply(f[col], cw, w)
+            f = f.rename(
+                columns={col: f"{col}_raw"}
+            )  # a raw code means different things in different waves
         raw = [c for c in columns if c not in hc and str(f[c].dtype) == "string"]
-        if raw and w == waves[0]:
-            warnings.warn(
-                f"coded columns {raw} are stacked with raw codes; give a crosswalk in "
-                "harmonize_concepts or recode them yourself",
-                PynhtsWarning,
-                stacklevel=2,
+        if raw and not allow_raw_codes:
+            raise ValueError(
+                f"coded columns {raw} have no crosswalk: raw codes differ between waves; give them in "
+                "harmonize_concepts or pass allow_raw_codes=True to stack zero-unpadded codes"
             )
+        for col in raw:
+            f[col] = f[col].astype("string").str.replace(r"^(-?)0+(?=\d)", r"\1", regex=True)
         f["wave"] = w
         f["w"] = f[wcol]
         f["w_norm"] = f[wcol] / f[wcol].mean()

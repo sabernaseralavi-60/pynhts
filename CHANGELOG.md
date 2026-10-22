@@ -4,6 +4,19 @@
 
 (nothing yet)
 
+## 0.7.1 (2026-10-22)
+
+Fixes from an independent adversarial review of 0.7.0 (`docs/review_0.7.0.md`: 4 P0, 7 P1, 15 P2, all reproduced). **0.7.0 gave wrong numbers
+in two places; upgrade:**
+
+* **P0** The skip code `-1` was summed as a mile by `aggregate` and by `p_miles`, `hh_miles`, `hh_vmt` in 2001 and 2009 (now unknown, NaN).
+  `trends.trip_shares("purpose")` read the wrong variable (now `WHYTO`). Weighted Spearman tie ranks and the `compare_groups` effect size corrected.
+* **P1** Education universe is adults 18+; unknown-input companion counts added; `first`/`last` and duplicate rows on user frames guarded; frames default
+  to `empty="nan"`; `trends.pool` drops 2001 children, renames raw codes and refuses unmapped coded columns; `hh_vmt` scope documented.
+* **P2** `Where` compares codes unpadded and refuses type mismatches, `~Where` no longer matches NA; Kendall note; `split_by_household` independent of
+  row order; `sample_characteristics` and plots corrected; four documentation statements corrected.
+* 9 new unit tests and 4 real-data tests (one per fixed finding group).
+
 ## 0.7.0 (2026-10-22)
 
 From access to analysis. No existing behaviour changed; new modules and helpers only.

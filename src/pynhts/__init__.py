@@ -7,6 +7,6 @@ from pynhts.core.validity import answer_status, valid
 
 from pynhts import aggregate, eda, features, quality, transform, trends  # isort: skip
 
-__version__ = "0.7.0"
+__version__ = "0.7.1"
 __all__ = ["NHTSData", "__version__", "aggregate", "answer_status", "concepts", "describe", "dictionary", "eda",
            "features", "harmonize", "load", "quality", "rates", "stats", "transform", "trends", "valid"]

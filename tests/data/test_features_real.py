@@ -107,12 +107,42 @@ def test_trip_shares_are_distributions_and_per_wave():
 def test_wave_means_warns_for_trip_distance_and_pool_refuses_it():
     with pytest.warns(PynhtsWarning, match="NOT comparable"):
         out = trends.wave_means("trip", "TRPMILES", waves=(2009, 2017), min_age=5)
-    assert (
-        out["mean"].iloc[1] > out["mean"].iloc[0]
-    )  # routed 2017 distances are longer than self-reports
+    # the mean rises although routed distances are ~10 % shorter than self-reports: unreadable
+    assert out["mean"].iloc[1] > out["mean"].iloc[0]
     with pytest.raises(ValueError, match="not comparable"):
         trends.pool((2009, 2017), "trip", ["TRPMILES"])
     with pytest.warns(PynhtsWarning):
-        p = trends.pool((2009, 2017), "person", ["R_AGE", "R_SEX"], harmonize_concepts={})
+        p = trends.pool((2009, 2017), "person", ["R_AGE", "R_SEX"], allow_raw_codes=True)
     assert set(p["wave"]) == {2009, 2017}
     assert np.allclose(p.groupby("wave")["w_norm"].mean(), 1.0)
+
+
+def test_no_negative_distances_in_any_wave(wave):
+    """Review of 0.7.0, P0-1: the skip code -1 was summed as a mile in 2001 and 2009."""
+    d, _ = wave
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", PynhtsWarning)
+        p = features.create_person_features(d, groups=["travel"])
+        h = features.create_household_features(d, groups=["travel"])
+    assert (p["p_miles"].dropna() >= 0).all()
+    assert (h["hh_miles"].dropna() >= 0).all() and (h["hh_vmt"].dropna() >= 0).all()
+
+
+def test_purpose_shares_use_the_detailed_purpose_variable():
+    """Review of 0.7.0, P0-2: purpose was read from WHYTRP1S and mapped with the WHYTO crosswalk."""
+    sh = trends.trip_shares("purpose", waves=(2017,))
+    assert len(sh) > 10 and abs(sh["share"].sum() - 1.0) < 1e-9
+    assert sh.set_index("category").loc["home_activities", "share"] < 0.5
+    ps = trends.trip_shares("purpose_summary", waves=(2017,))
+    assert abs(ps["share"].sum() - 1.0) < 1e-9 and "work" in set(ps["category"])
+
+
+def test_pool_drops_2001_children_and_renames_raw_codes():
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", PynhtsWarning)
+        p = trends.pool((2001, 2017), "person", ["R_AGE"])
+        assert (pd.to_numeric(p["R_AGE"]) >= 5).all()
+        t = trends.pool((2009, 2017), "trip", ["TRPTRANS"], harmonize_concepts={"TRPTRANS": "mode"})
+    assert "TRPTRANS_raw" in t.columns and "TRPTRANS_h" in t.columns and "TRPTRANS" not in t.columns
+    with pytest.raises(ValueError, match="no crosswalk"):
+        trends.pool((2009, 2017), "trip", ["TRPTRANS"])

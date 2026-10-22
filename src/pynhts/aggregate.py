@@ -33,6 +33,7 @@ ones; the trip weight (365 x the person weight) annualises totals, not person-le
 
 from __future__ import annotations
 
+import re
 import warnings
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
@@ -95,6 +96,14 @@ class Cond:
         return _Not(self)
 
 
+_PAD = r"^(-?)0+(?=\d)"
+
+
+def _canon_code(value: Any) -> str:
+    """Zero-unpadded code text: 1, "1" and "01" all become "1"; "-1" stays "-1"."""
+    return re.sub(_PAD, r"\1", str(value))
+
+
 _OPS = ("==", "!=", "in", "not in", ">=", ">", "<=", "<", "between", "valid", "notna", "isna")
 
 
@@ -138,7 +147,17 @@ class Where(Cond):
             x = s.astype("string")
         v = self.value
         if x.dtype == "string" and op in {"==", "!=", "in", "not in"}:
-            v = [str(i) for i in v] if op in {"in", "not in"} else str(v)
+            # coded columns compare on zero-unpadded codes, so 1, "1" and "01" are the same code
+            v = [_canon_code(i) for i in v] if op in {"in", "not in"} else _canon_code(v)
+            x = x.str.replace(_PAD, r"\1", regex=True)
+        elif x.dtype == "string":
+            raise TypeError(
+                f"{self.column!r} is a coded (string) column: use ==, !=, in, not in, valid, notna or isna"
+            )
+        elif op in {"==", "!=", "in", "not in"} and any(
+            isinstance(i, str) for i in (list(v) if op in {"in", "not in"} else [v])
+        ):
+            raise TypeError(f"{self.column!r} is numeric: compare it with numbers, not strings")
         if op == "==":
             out = x == v
         elif op == "!=":
@@ -195,7 +214,10 @@ class _Not(Cond):
         return self.inner.columns
 
     def mask(self, frame: pd.DataFrame) -> pd.Series:
-        return ~self.inner.mask(frame)
+        known = pd.Series(True, index=frame.index)
+        for c in self.inner.columns:
+            known &= frame[c].notna()
+        return ~self.inner.mask(frame) & known
 
     def __str__(self) -> str:
         return f"not {self.inner}"
@@ -383,9 +405,10 @@ def aggregate(
     *,
     base_columns: Sequence[str] = (),
     missing: MissingPolicy = "propagate",
-    empty: EmptyPolicy = "auto",
+    empty: EmptyPolicy | None = None,
     orphans: OrphanPolicy = "raise",
     weights: str = "all",
+    allow_duplicates: bool = False,
 ) -> pd.DataFrame:
     """Collapse ``source`` rows onto the rows of ``target`` and return one row per target row.
 
@@ -400,10 +423,16 @@ def aggregate(
             target's weight are always included).
         missing: ``"propagate"`` (default) or ``"skip"`` for sum, mean and the other numeric
             functions; see the module docstring.
-        empty: ``"auto"`` (default: 0 for counts, sums and indicators of targets without source
-            rows) or ``"nan"``.
+        empty: ``"auto"``: 0 for counts, sums and indicators of targets without any source row
+            (the survey records every person's day, so no trip row means no trips); ``"nan"``
+            refuses that inference. Default: ``"auto"`` for a table name, ``"nan"`` for a DataFrame
+            (a frame you filtered may lack rows for reasons other than "no trips"; pass
+            ``empty="auto"`` when the frame is complete). With ``"nan"``, a ``sum`` over a target
+            whose rows all fail ``where`` is NaN as well, while ``n`` stays 0.
         orphans: ``"raise"`` (default) or ``"report"`` source rows whose target row is absent.
         weights: Weight set of the target (see :meth:`pynhts.NHTSData.weight_column`).
+        allow_duplicates: A source frame whose id columns (``HOUSEID``, ``PERSONID``,
+            ``TDTRPNUM``, ``TRIPID``, ``VEHID`` as present) repeat raises unless this is True.
 
     Returns:
         The target rows with the output columns appended, with ``attrs["pynhts"]`` and
@@ -415,7 +444,7 @@ def aggregate(
     """
     if missing not in ("propagate", "skip"):
         raise ValueError("missing must be 'propagate' or 'skip'")
-    if empty not in ("auto", "nan"):
+    if empty not in (None, "auto", "nan"):
         raise ValueError("empty must be 'auto' or 'nan'")
     if not specs:
         raise ValueError("specs is empty")
@@ -429,7 +458,8 @@ def aggregate(
                 f"{_ANCESTORS[source] or 'none (this table has no parent)'}"
             )
         order = list(data.key(source))
-        src = data.table(source, needs, weight=False, missing="nan", skip="keep")
+        # skip="auto": -1 becomes NA in numeric columns (a quantity), stays a code in coded columns
+        src = data.table(source, needs, weight=False, missing="nan", skip="auto")
         src = _in_key_order(src, order)
     else:
         label = "<frame>"
@@ -440,6 +470,27 @@ def aggregate(
         absent = [c for c in needs if c not in src.columns]
         if absent:
             raise KeyError(f"source frame lacks columns {absent}")
+        id_cols = [
+            c for c in ("HOUSEID", "PERSONID", "TDTRPNUM", "TRIPID", "VEHID") if c in src.columns
+        ]
+        if len(id_cols) > len(keys) and not allow_duplicates and src.duplicated(id_cols).any():
+            raise NHTSIntegrityError(
+                f"the source frame has repeated rows for {id_cols}: they would be counted twice "
+                "(allow_duplicates=True to accept)"
+            )
+        if any(s.func in ("first", "last") for s in specs.values()):
+            order_cols = [
+                c
+                for c in ("PERSONID", "TDTRPNUM", "TRIPID", "VEHID")
+                if c in src.columns and c not in keys
+            ]
+            if not order_cols:
+                raise ValueError(
+                    "first/last on a frame need an order column (TDTRPNUM, TRIPID, PERSONID or VEHID)"
+                )
+            src = _in_key_order(src, [*keys, *order_cols])
+    if empty is None:
+        empty = "auto" if isinstance(source, str) else "nan"
     base = data.table(target, list(base_columns), weights=weights)
     if base.duplicated(list(keys)).any():
         raise NHTSIntegrityError(f"target {target} key {list(keys)} is not unique")
@@ -559,7 +610,7 @@ def _one(
         return m.groupby([kdf[c] for c in k], sort=False).any().astype("boolean"), info
     assert spec.column is not None
     col = src[spec.column]
-    ok = valid(col) if not pd.api.types.is_numeric_dtype(col) else col.notna()
+    ok = valid(col)  # negative numbers are skip / non-answer codes, never quantities
     miss = m & ~ok
     info["rows_with_missing_input"] = int(miss.sum())
 

@@ -18,7 +18,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from pynhts.eda import CorrelationResult
+from pynhts.eda import CorrelationResult, weighted_quantile
 
 OKABE_ITO = ("#0072B2", "#E69F00", "#009E73", "#CC79A7", "#56B4E9", "#D55E00", "#F0E442", "#000000")
 
@@ -31,10 +31,11 @@ def _plt() -> Any:
     return plt
 
 
-def _foot(ax: Any, n: int, weighted: bool, n_missing: int = 0, extra: str = "") -> None:
+def _foot(ax: Any, n: int | None, weighted: bool, n_missing: int = 0, extra: str = "") -> None:
     how = "weighted" if weighted else "unweighted sample"
     text = (
-        f"{how}; n = {n:,}"
+        how
+        + (f"; n = {n:,}" if n is not None else "")
         + (f"; {n_missing:,} missing excluded" if n_missing else "")
         + (f"; {extra}" if extra else "")
     )
@@ -65,13 +66,11 @@ def histogram(
     wv: np.ndarray[Any, Any] = w[ok].to_numpy(float)
     note = ""
     if clip_quantile is not None and len(xv):
-        hi = float(np.quantile(xv, clip_quantile))
+        hq = weighted_quantile(pd.Series(xv), pd.Series(wv), clip_quantile)
+        hi = float(hq[0] if isinstance(hq, list) else hq)
         keep = xv <= hi
-        note = (
-            f"values above {hi:.3g} (top {100 * (1 - clip_quantile):.1f}%) not drawn"
-            if (~keep).any()
-            else ""
-        )
+        lost = float(wv[~keep].sum() / wv.sum()) if (~keep).any() else 0.0
+        note = f"values above {hi:.3g} ({100 * lost:.1f}% of the weight) not drawn" if lost else ""
         xv, wv = xv[keep], wv[keep]
     fig = None
     if ax is None:
@@ -125,7 +124,7 @@ def bar_share(
     ax.set_title(title, fontsize=10)
     _foot(
         ax,
-        n or 0,
+        n,
         weighted,
         0,
         "bars: estimate; whiskers: margin of error" if err is not None else "",

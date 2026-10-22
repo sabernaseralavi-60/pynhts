@@ -17,7 +17,7 @@ Conventions that matter:
   whose worker status is unknown for a member has ``hh_n_workers_unknown > 0`` and, with
   ``strict=True``, ``hh_n_workers`` is NaN instead of a lower bound.
 * **Eligibility is explicit.** ``hh_share_univ`` divides by the members whose education was
-  *answered* (the survey asks adults only); members with a skip or a non-answer are neither in the
+  *answered* (universe: persons aged 18 and over; younger respondents, where the survey asked them, are outside it); members with a skip or a non-answer are neither in the
   numerator nor in the denominator, and are counted in ``hh_n_edu_unknown`` / ``..._na``.
 * **The person file is not always a complete roster.** It lists the persons that were interviewed
   (2009 and later: aged 5 and over). Member counts built from it (workers, drivers, adults,
@@ -25,7 +25,7 @@ Conventions that matter:
   positive: 14.5 % of 2001, 19.8 % of 2009, 7.0 % of 2017 and 9.1 % of 2022 households. In
   households with ``hh_n_unlisted == 0`` the counts equal the survey's own ``WRKCOUNT`` and
   ``DRVRCNT`` in all four waves (tests/data/test_features_real.py); elsewhere prefer the official
-  household columns (``WRKCOUNT``, ``DRVRCNT``, ``NUMADLT``, ``YOUNGCHILD``) and treat ours as
+  household columns (``WRKCOUNT``, ``DRVRCNT``, ``NUMADLT``, and from 2017 ``YOUNGCHILD``) and treat ours as
   a check.
 * **Survey-day quantities are observed, not annual.** Household trips and miles are the sums of the
   members' trips on the (shared) travel day. Weight them with the household weight carried in the
@@ -87,7 +87,10 @@ class Feature:
     sources: tuple[str, ...]
     formula: str
     eligibility: str = "all rows"
-    missing: str = "NaN when an input is missing"
+    missing: str = (
+        "counts skip rows with an unknown input; sums are NaN when a contributing value is unknown "
+        "(miles_missing='skip' ignores it); ratios are NaN when the denominator is zero or unknown"
+    )
     denominator: str = "-"
     weighting: str = ""
     waves: tuple[int, ...] = ALL_WAVES
@@ -133,8 +136,8 @@ def _defs() -> list[Feature]:
         "Education: less_than_hs, hs_grad, some_college_assoc, bachelor, graduate",
         ["person.EDUC"],
         'harmonize.apply(EDUC, "education")',
-        eligibility="persons asked (adults)",
-        missing="NaN for skip (-1: not asked) and non-answers; see p_edu_status",
+        eligibility="persons aged 18 and over who answered (the survey asks younger persons in some waves; they are outside the universe)",
+        missing="NaN for skip (-1: not asked), non-answers and persons under 18; see p_edu_status",
         validation="cross-wave: 2001 code 7 maps to bachelor (approximate)",
     )
     add(
@@ -230,10 +233,24 @@ def _defs() -> list[Feature]:
         unit="trips/day",
     )
 
+    add(
+        "p_trips_unknown_purpose",
+        P,
+        "purposes",
+        "Trips whose purpose is unknown",
+        ["trip.WHYTRP1S"],
+        "count of trips with no purpose category",
+        unit="trips/day",
+        missing="p_work_trips and p_nonwork_trips do not include these trips",
+    )
+
     # -- household
     for c, d in (
         ("hh_n_persons_listed", "Persons of the household listed in the person file"),
-        ("hh_n_unlisted", "HHSIZE minus listed persons (children under 5 in 2009 and later)"),
+        (
+            "hh_n_unlisted",
+            "HHSIZE minus listed persons (children under 5 in 2009 and later, and members who were not interviewed)",
+        ),
         ("hh_n_adults", "Listed members aged 18 or more"),
         ("hh_n_children", "Listed members under 18"),
         ("hh_n_older", "Listed members aged 65 or more"),
@@ -374,7 +391,9 @@ def _defs() -> list[Feature]:
         'sum of TRPMILES of trips with DRVR_FLG == yes and mode group "private_vehicle"',
         unit="vehicle miles/day",
         validation="driver trips only: passengers' miles are not vehicle miles; trips whose driver flag is a "
-        "non-answer are not counted (2009: 4.9 % of trips), so hh_vmt is a lower bound there",
+        "non-answer are not counted (2009: 4.9 % of trips); driver trips in other trucks and RVs are outside "
+        "the private-vehicle group while the official VMT_MILE includes them (hh_vmt / VMT_MILE: 0.983 in "
+        "2009, 0.999 in 2017, 0.9995 in 2022)",
     )
     for g in MODE_GROUPS:
         add(
@@ -482,6 +501,37 @@ def _defs() -> list[Feature]:
             f'count of vehicles with harmonize.apply(VEHTYPE, "vehicle_type") == "{g}"',
             unit="vehicles",
         )
+
+    add(
+        "hh_n_age_unknown",
+        H,
+        "composition",
+        "Listed members with an unknown age",
+        ["person.R_AGE"],
+        "count of members with no valid age",
+        unit="persons",
+        missing="these members are in none of the age counts",
+    )
+    add(
+        "hh_n_vehicles_age_unknown",
+        H,
+        "fleet",
+        "Listed vehicles with an unknown age",
+        ["vehicle.VEHAGE"],
+        "count of vehicles with no valid VEHAGE",
+        unit="vehicles",
+        missing="these vehicles are not counted in hh_n_vehicles_new and not in hh_fleet_median_age",
+    )
+    add(
+        "hh_trips_unknown_purpose",
+        H,
+        "purposes",
+        "Household trips whose purpose is unknown",
+        ["trip.WHYTRP1S"],
+        "count of trips with no purpose category",
+        unit="trips/day",
+        missing="the hh_trips_purpose_* counts do not include these trips",
+    )
 
     # -- trip
     add(
@@ -664,6 +714,10 @@ def _person_frame(data: NHTSData, extra: Sequence[str] = ()) -> pd.DataFrame:
         {"skip": "not_applicable", "nonanswer": "unknown", "blank": "unknown"}
     )
     p["p_edu_cat"] = harmonize.apply(p["EDUC"], "education", data.wave)
+    # universe: adults. Younger respondents who answered (14+ in 2017/2022, 16+ in 2001) are outside it
+    under = p["age"].notna() & (p["age"] < 18)
+    p.loc[under, "p_edu_cat"] = pd.NA
+    p.loc[under, "p_edu_status"] = "not_applicable"
     p["p_worker"] = _yes_no(p["WORKER"])
     p["p_driver"] = _yes_no(p["DRIVER"])
     p["univ"] = p["p_edu_cat"].isin(["bachelor", "graduate"]).astype("int64")
@@ -672,7 +726,7 @@ def _person_frame(data: NHTSData, extra: Sequence[str] = ()) -> pd.DataFrame:
 
 def _trip_frame(data: NHTSData, miles_cols: bool = True) -> pd.DataFrame:
     cols = ["TRPMILES", "TRVLCMIN", "STRTTIME", "DRVR_FLG", "TRPTRANS", "WHYTRP1S"]
-    t = data.trips(cols, missing="nan", skip="keep")
+    t = data.trips(cols, missing="nan", skip="auto")
     t["t_mode"] = harmonize.apply(t["TRPTRANS"], "mode", data.wave)
     t["t_mode_group"] = harmonize.apply(t["TRPTRANS"], "mode", data.wave, level="summary")
     t["t_purpose"] = harmonize.apply(t["WHYTRP1S"], "purpose_summary", data.wave)
@@ -749,8 +803,9 @@ def create_person_features(
             specs |= {
                 "p_work_trips": Agg.n(Where("t_purpose", "==", "work")),
                 "p_nonwork_trips": Agg.n(Where("t_purpose", "!=", "work")),
+                "p_trips_unknown_purpose": Agg.n(Where("t_purpose", "isna")),
             }
-        a = aggregate(data, t, "person", specs, missing=miles_missing)
+        a = aggregate(data, t, "person", specs, missing=miles_missing, empty="auto")
         reports.append(a.attrs["pynhts_aggregate"])
         if "travel" in sel:
             a["p_any_trip"] = a["p_n_trips"] > 0
@@ -803,7 +858,9 @@ def create_household_features(
             "hh_n_edu_answered": Agg.n(Where("p_edu_status", "==", "answered")),
             "hh_n_edu_unknown": Agg.n(Where("p_edu_status", "==", "unknown")),
         }
-        a = aggregate(data, p, "household", specs, base_columns=["HHSIZE", "HHVEHCNT"])
+        a = aggregate(
+            data, p, "household", specs, base_columns=["HHSIZE", "HHVEHCNT"], empty="auto"
+        )
         reports.append(a.attrs["pynhts_aggregate"])
         a["hh_n_unlisted"] = a["HHSIZE"] - a["hh_n_persons_listed"]
         a["hh_share_univ"] = a["hh_n_univ"] / a["hh_n_edu_answered"].where(
@@ -847,7 +904,8 @@ def create_household_features(
             }
         if "purposes" in sel:
             specs |= {f"hh_trips_purpose_{g}": Agg.n(Where("t_purpose", "==", g)) for g in PURPOSES}
-        a = aggregate(data, t, "household", specs, missing=miles_missing)
+            specs["hh_trips_unknown_purpose"] = Agg.n(Where("t_purpose", "isna"))
+        a = aggregate(data, t, "household", specs, missing=miles_missing, empty="auto")
         reports.append(a.attrs["pynhts_aggregate"])
         a["hh_zero_trip"] = a["hh_n_trips"] == 0
         if "modes" in sel:
@@ -867,18 +925,19 @@ def create_household_features(
         names += keep
 
     if "fleet" in sel:
-        v = data.vehicles(["VEHAGE", "VEHTYPE"], missing="nan", skip="keep")
+        v = data.vehicles(["VEHAGE", "VEHTYPE"], missing="nan", skip="auto")
         v["vage"] = pd.to_numeric(v["VEHAGE"], errors="coerce")
         v["vtype"] = harmonize.apply(v["VEHTYPE"], "vehicle_type", data.wave)
         specs = {
             "hh_n_vehicles_listed": Agg.n(),
             "hh_fleet_median_age": Agg.median("vage"),
             "hh_n_vehicles_new": Agg.n(Where("vage", "<=", 5)),
+            "hh_n_vehicles_age_unknown": Agg.n(Where("vage", "isna")),
         }
         specs |= {
             f"hh_n_veh_{g}": Agg.n(Where("vtype", "==", g)) for g in ("car", "suv", "van", "pickup")
         }
-        a = aggregate(data, v, "household", specs, missing="skip")
+        a = aggregate(data, v, "household", specs, missing="skip", empty="auto")
         reports.append(a.attrs["pynhts_aggregate"])
         keep = [c for c in a.columns if c.startswith("hh_")]
         out = _merge(out, a[[*keys, *keep]], keys)

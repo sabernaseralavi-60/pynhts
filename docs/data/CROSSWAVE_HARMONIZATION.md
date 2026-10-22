@@ -28,7 +28,7 @@ Status values: `exact` same meaning; `nested` finer categories collapse into the
 
 ## Documented breaks that matter before comparing
 
-* **Trip distance** (`N`): 2001 and 2009 self-reported; 2017 routed shortest path; 2022 route computed for the trip date. In the 2009-2017 pair the mean distance of a trip rises from 9.7 to 10.7 miles with no change in behaviour implied. `TRPMILAD` (2017) scales back for 2001/2009 comparisons.
+* **Trip distance** (`N`): 2001 and 2009 self-reported; 2017 routed shortest path; 2022 route computed for the trip date. The compatibility document says routed 2017 distances are about 10 % shorter than self-reports would be, yet the weighted mean distance of a trip of persons aged 5+ is higher in 2017 (9.75 miles in 2009, 10.71 in 2017; `trends.wave_means`): a change in measurement and a real change cannot be separated. `TRPMILAD` (2017) scales the distance up for comparison with 2001/2009.
 * **Trip counting** (`N`): telephone interview with prompts (2001, 2009), web diary (2017: about 66 % web; 2022: about 99 % web); 2022 trip weights contain a methods adjustment (+9.5 % overall).
 * **Universe**: 2001 includes children aged 0-4; the other waves start at 5 (`min_age=5`).
 * **Weights**: the trip weight is annual (365 x the person weight) in 2001-2017; wave weights have different population bases and must not be pooled as they are.
