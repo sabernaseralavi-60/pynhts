@@ -1,0 +1,28 @@
+item,published,pynhts,status,note
+bicycle trips,8034.0,8034.0,EXACT,
+Segway / golf cart trips,826.0,826.0,EXACT,
+scooter / skateboard trips,503.0,,NOT_COMPUTABLE,"write-in category, not separable in the public file ('Something else' = 3,515 trips)"
+trips in MSAs >= 1 million,,408279.0,INFO,
+trips 1-6 km in those MSAs (unweighted n),,160858.0,INFO,
+"Table 1 mode share, 1-6 km trips, Private vehicle %",76.8,81.9369,GAP,
+"Table 1 mode share, 1-6 km trips, Walk %",12.6,8.6482,GAP,
+"Table 1 mode share, 1-6 km trips, Transit %",5.0,2.9697,GAP,
+"Table 1 mode share, 1-6 km trips, Little vehicles %",1.8,1.645,GAP,
+"Table 1 mode share, 1-6 km trips, Taxi/Rideshare %",1.5,0.9732,GAP,
+"Table 1 mode share, 1-6 km trips, All other %",2.3,3.8271,GAP,
+"variant MSACAT=01: mode share 1-6 km, Private vehicle %",76.8,78.4275,ACCEPTABLE,'large metro' is not defined in the paper; MSACAT=01 is the closest reading
+"variant MSACAT=01: mode share 1-6 km, Walk %",12.6,10.4889,GAP,'large metro' is not defined in the paper; MSACAT=01 is the closest reading
+"variant MSACAT=01: mode share 1-6 km, Transit %",5.0,4.6306,GAP,'large metro' is not defined in the paper; MSACAT=01 is the closest reading
+"variant MSACAT=01: mode share 1-6 km, Little vehicles %",1.8,1.6771,GAP,'large metro' is not defined in the paper; MSACAT=01 is the closest reading
+"variant MSACAT=01: mode share 1-6 km, Taxi/Rideshare %",1.5,1.4679,EXACT,'large metro' is not defined in the paper; MSACAT=01 is the closest reading
+"variant MSACAT=01: mode share 1-6 km, All other %",2.3,3.308,GAP,'large metro' is not defined in the paper; MSACAT=01 is the closest reading
+LV trips: median distance (km) in large metros,2.0,2.0487,EXACT,
+LV trips: 75th percentile (km),4.0,4.1714,ACCEPTABLE,
+private-vehicle trips: 25th percentile (km),3.0,2.8727,ACCEPTABLE,
+walk trips: 75th percentile (km),1.0,1.0992,GAP,
+"purpose share Work, LV, 1-6 km, large MSAs (%)",,14.3,INFO,"paper: LV recreational 32.8, work 28.8, shopping+errands 28; all modes work 11.9, shopping ~50"
+"purpose share Shopping/errands, LV, 1-6 km, large MSAs (%)",,9.8,INFO,"paper: LV recreational 32.8, work 28.8, shopping+errands 28; all modes work 11.9, shopping ~50"
+"purpose share Social/recreational, LV, 1-6 km, large MSAs (%)",,19.8,INFO,"paper: LV recreational 32.8, work 28.8, shopping+errands 28; all modes work 11.9, shopping ~50"
+"purpose share Work, all modes, 1-6 km, large MSAs (%)",,8.3,INFO,"paper: LV recreational 32.8, work 28.8, shopping+errands 28; all modes work 11.9, shopping ~50"
+"purpose share Shopping/errands, all modes, 1-6 km, large MSAs (%)",,20.1,INFO,"paper: LV recreational 32.8, work 28.8, shopping+errands 28; all modes work 11.9, shopping ~50"
+"purpose share Social/recreational, all modes, 1-6 km, large MSAs (%)",,10.0,INFO,"paper: LV recreational 32.8, work 28.8, shopping+errands 28; all modes work 11.9, shopping ~50"

@@ -1,0 +1,22 @@
+item,published,pynhts,status,note
+"mean abs error of the nine shares | all trips | home={01}, work={03,04}",,4.09,INFO,
+"mean abs error of the nine shares | private-vehicle trips (car/SUV/van/pickup) | home={01}, work={03,04}",,4.22,INFO,
+"mean abs error of the nine shares | private-vehicle trips as driver | home={01}, work={03,04}",,4.2,INFO,
+"mean abs error of the nine shares | all trips | home={01,02}, work={03,04}",,3.86,INFO,
+"mean abs error of the nine shares | private-vehicle trips (car/SUV/van/pickup) | home={01,02}, work={03,04}",,4.02,INFO,
+"mean abs error of the nine shares | private-vehicle trips as driver | home={01,02}, work={03,04}",,3.83,INFO,
+best reading for Table 1,,"private-vehicle trips as driver | home={01,02}, work={03,04} | mean abs error 3.83 pts",INFO,
+"Table 1 share H-H % (private-vehicle trips as driver; home={01,02}, work={03,04})",10.83,0.9528,GAP,
+"Table 1 share H-W % (private-vehicle trips as driver; home={01,02}, work={03,04})",11.08,9.1565,GAP,
+"Table 1 share H-O % (private-vehicle trips as driver; home={01,02}, work={03,04})",24.74,23.073,GAP,
+"Table 1 share W-H % (private-vehicle trips as driver; home={01,02}, work={03,04})",9.97,7.7101,GAP,
+"Table 1 share W-W % (private-vehicle trips as driver; home={01,02}, work={03,04})",2.55,2.1925,GAP,
+"Table 1 share W-O % (private-vehicle trips as driver; home={01,02}, work={03,04})",2.8,5.3022,GAP,
+"Table 1 share O-H % (private-vehicle trips as driver; home={01,02}, work={03,04})",26.16,25.0159,ACCEPTABLE,
+"Table 1 share O-W % (private-vehicle trips as driver; home={01,02}, work={03,04})",1.51,3.7575,GAP,
+"Table 1 share O-O % (private-vehicle trips as driver; home={01,02}, work={03,04})",10.35,22.8394,GAP,
+"mean chain length (trips per person-day, private-vehicle drivers)",3.3,3.9237,GAP,paper: 'average trip chain length of EV users in NHTS about 3.3'
+share of chains with 2-6 trips %,94.4,83.8751,GAP,
+most frequent chain length,2.0,2.0,EXACT,
+share of chains starting at home %,93.5,88.0171,GAP,
+"electric vehicles in the 2017 vehicle file (FUELTYPE 03 'hybrid, electric or alternative')",,6416,INFO,"no separate BEV flag in the public file: an 'EV' subset cannot be isolated, so the paper's population is ambiguous"

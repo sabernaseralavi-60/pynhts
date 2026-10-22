@@ -30,3 +30,6 @@ lit/txt/
 
 # small golden reference tables (aggregated estimates, no microdata) are tracked
 !tests/golden/*.csv
+
+# third-party papers under audit (never commit)
+some papers/*.pdf

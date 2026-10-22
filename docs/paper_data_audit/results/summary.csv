@@ -1,0 +1,11 @@
+script,ok,seconds,code_lines,EXACT,CLOSE,GAP,ACCEPTABLE,INFO,error,NOT_COMPUTABLE
+p01_yang2011,True,3.5,130,135,12.0,4,3.0,3.0,,0.0
+p02_zhou_wang2014,True,3.5,62,2,9.0,8,4.0,2.0,,0.0
+p03_quinn2016,True,6.0,84,2,8.0,7,4.0,8.0,,0.0
+p05_deka_fei2019,True,2.5,94,21,39.0,9,17.0,1.0,,9.0
+p06_jia2019_afv,True,2.0,62,18,18.0,2,4.0,2.0,,0.0
+p07_krizek_mcguckin2019,True,2.2,68,4,0.0,11,3.0,8.0,,1.0
+p09_fu2020_evchain,True,5.2,52,1,0.0,11,1.0,8.0,,0.0
+p10_lidbe2021,True,11.4,59,22,4.0,5,1.0,0.0,,0.0
+p11_alberini2021,True,2.2,84,38,9.0,3,0.0,3.0,,0.0
+p12_xue2021,True,2.1,61,4,3.0,10,3.0,3.0,,0.0

@@ -1,0 +1,30 @@
+item,published,pynhts,status,note
+persons in 2009 person file,324184.0,308901.0,ACCEPTABLE,"paper says 324,184; the public file has 308,901 (paper-internal)"
+children < 18 excluded,45329.0,45329.0,EXACT,
+persons with travel-limiting medical condition,33757.0,33423.0,CLOSE,
+persons not working (excluded from commuting),109408.0,169833.0,GAP,
+active-transportation sample,152573.0,230297.0,GAP,adults without condition; sequential counts in the paper do not add up
+adults >= 18,,263572,INFO,
+adults >= 18 with MEDCOND = missing/skip (not excluded),,481,INFO,
+exercise trips (WHYTO 51) excluded,33836.0,45059.0,GAP,"paper counts trips for 'exercise (jogging, walking, biking)'"
+adults without condition who report a usual commute mode (WRKTRANS),,111037,INFO,"paper: 111,808"
+"Active transportation, biking: columns returned",,"estimate, se, moe, ci_low, ci_high, cv, n",INFO,
+"Active transportation, biking prevalence %",1.11,1.0199,GAP,
+"Active transportation, walking: columns returned",,"estimate, se, moe, ci_low, ci_high, cv, n",INFO,
+"Active transportation, walking prevalence %",11.74,10.6679,GAP,
+"Active commuting, biking: columns returned",,"estimate, se, moe, ci_low, ci_high, cv, n",INFO,
+"Active commuting, biking prevalence %",0.8,0.8073,EXACT,
+"Active commuting, walking: columns returned",,"estimate, se, moe, ci_low, ci_high, cv, n",INFO,
+"Active commuting, walking prevalence %",2.76,2.7869,CLOSE,
+"Active transportation, biking, denominator = persons with trips (variant)",1.11,1.1405,ACCEPTABLE,
+"Active transportation, walking, denominator = persons with trips (variant)",11.74,11.9291,CLOSE,
+T1 age 18-24 % (active transportation sample),14.0,13.8946,CLOSE,
+T1 age 25-44 % (active transportation sample),38.8,38.2112,CLOSE,
+T1 age 45-64 % (active transportation sample),34.5,33.884,CLOSE,
+T1 age 65+ % (active transportation sample),12.7,14.0101,GAP,
+T1 female % (active transportation sample),50.1,50.391,CLOSE,
+T1 income 0-24k % (active transportation sample),16.8,18.0836,GAP,
+T1 income 25-49k % (active transportation sample),24.0,24.0522,CLOSE,
+T1 income 50-74k % (active transportation sample),18.0,17.3399,ACCEPTABLE,
+T1 income 75k+ % (active transportation sample),36.0,35.1166,ACCEPTABLE,
+share in urban block-group classes U/C/S (paper's urban/rural split is 76.3 / 23.7),,59.54745943519316,INFO,
