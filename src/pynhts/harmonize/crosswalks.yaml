@@ -666,3 +666,71 @@ hispanic_person:
     - {wave: 2017, code: "02", hint: "No, Not Hispanic", category: not_hispanic, status: exact}
     - {wave: 2022, code: "01", hint: "Hispanic", category: hispanic, status: exact}
     - {wave: 2022, code: "02", hint: "Not Hispanic", category: not_hispanic, status: exact}
+
+# ---- medical condition that makes travel difficult (0.8.0) --------------------------------------
+# Evidence (cross-tabulation of the real files, 2026-10-22; numbers are re-checked by
+# tests/data/test_four_wave_guards.py):
+#   * MEDCOND is a yes/no in all four waves, but it is asked of ages 16+ in 2001 and 2009 (15 and
+#     younger carry the skip -1; one 15-year-old answers in 2009) and of everybody aged 5+ in 2017 and 2022.
+#   * the weighted share of 18+ who do not answer (-7/-8/-9) is 0.1 % (2001), 0.1 % (2009), 0.04 % (2017)
+#     and 5.4 % (2022); the yes share among the valid answers of 18+ is 8.7 %, 10.5 %, 10.0 % and 7.5 %.
+#   * MEDCOND6 is asked of the persons who answered yes, and of nobody else, in all four waves.
+
+medical_condition:
+  variable: MEDCOND
+  table: person
+  source: "codebooks 2001, 2009, 2017 v1.2, 2022 v2.1; cross-tabulation with age and MEDCOND6 in the data"
+  note: >-
+    Does the person have a medical condition (2022: a condition or disability) that makes it hard to travel. Yes/no in every wave and the codes mean the same, but the universe and the 2022 question differ: ages 16+ answer in 2001 and 2009, everybody aged 5+ in 2017 and 2022 (compare adults, 18+, to be safe), and in 2022 5.4 % of the adults (weighted) decline to answer against 0.04 to 0.14 % before, which lowers the yes share among the valid answers from about 10 % to 7.5 %. 2022 is therefore marked approximate: do not read the fall as a trend.
+  rows:
+    - {wave: 2001, code: "1", hint: "Yes", category: "yes", status: exact}
+    - {wave: 2001, code: "2", hint: "No", category: "no", status: exact}
+    - {wave: 2009, code: "01", hint: "Yes", category: "yes", status: exact}
+    - {wave: 2009, code: "02", hint: "No", category: "no", status: exact}
+    - {wave: 2017, code: "01", hint: "Yes", category: "yes", status: exact}
+    - {wave: 2017, code: "02", hint: "No", category: "no", status: exact}
+    - {wave: 2022, code: "01", hint: "Yes", category: "yes", status: approximate, note: "2022 asks about a 'condition or disability' and 5.4 % of the adults (weighted) do not answer, against 0.04 to 0.14 % in 2001 to 2017; the yes share among the valid answers of 18+ is 7.5 % (8.7 %, 10.5 %, 10.0 % before)."}
+    - {wave: 2022, code: "02", hint: "No", category: "no", status: approximate, note: "As code 01: the 'no' share is inflated or deflated by the 5.4 % who decline, so a trend in the yes share is not established."}
+
+condition_duration:
+  variable: MEDCOND6
+  table: person
+  source: "codebooks 2001, 2009, 2017 v1.2, 2022 v2.1; cross-tabulation with MEDCOND in the data"
+  note: >-
+    How long the person has had the condition (asked only of those who answered yes to MEDCOND). 2001 and 2009 give six bands (0-5 months, 6-11 months, 1-4 years, 5-9 years, 10 years or more, all life), 2017 and 2022 three (6 months or less, more than 6 months, all life). The shared categories are up_to_6_months, over_6_months and lifelong; the boundary is the only inexactness (a person with exactly 6 months is in the second 2001/2009 band and in the first 2017/2022 one). In the files 7.2 %, 6.9 %, 7.8 % and 7.0 % of the yes answers (2001, 2009, 2017, 2022) fall in the first band, so the boundary does not move much.
+  rows:
+    - {wave: 2001, code: "1", hint: "0-5 months", category: up_to_6_months, status: approximate, note: "2001 and 2009 cut at 6 months with 'six months' in the second band; 2017 and 2022 put 'six months or less' in the first."}
+    - {wave: 2001, code: "2", hint: "6-11 months", category: over_6_months, status: approximate, note: "See 2001 code 1 (the boundary)."}
+    - {wave: 2001, code: "3", hint: "1-4 years", category: over_6_months, status: nested}
+    - {wave: 2001, code: "4", hint: "5-9 years", category: over_6_months, status: nested}
+    - {wave: 2001, code: "5", hint: "10 years or more", category: over_6_months, status: nested}
+    - {wave: 2001, code: "6", hint: "All his/her", category: lifelong, status: exact}
+    - {wave: 2009, code: "01", hint: "0-5 months", category: up_to_6_months, status: approximate, note: "See 2001 code 1 (the boundary)."}
+    - {wave: 2009, code: "02", hint: "6-11 months", category: over_6_months, status: approximate, note: "See 2001 code 1 (the boundary)."}
+    - {wave: 2009, code: "03", hint: "1-4 years", category: over_6_months, status: nested}
+    - {wave: 2009, code: "04", hint: "5-9 years", category: over_6_months, status: nested}
+    - {wave: 2009, code: "05", hint: "10 years or more", category: over_6_months, status: nested}
+    - {wave: 2009, code: "06", hint: "All his/her", category: lifelong, status: exact}
+    - {wave: 2017, code: "01", hint: "6 months or less", category: up_to_6_months, status: exact}
+    - {wave: 2017, code: "02", hint: "More than 6 months", category: over_6_months, status: exact}
+    - {wave: 2017, code: "03", hint: "All", category: lifelong, status: exact}
+    - {wave: 2022, code: "01", hint: "6 months or less", category: up_to_6_months, status: exact}
+    - {wave: 2022, code: "02", hint: "More than 6 months", category: over_6_months, status: exact}
+    - {wave: 2022, code: "03", hint: "Entire life", category: lifelong, status: exact}
+
+condition_effect:
+  variable: CONDTRAV
+  also: [CONDNIGH, CONDPUB, CONDRIDE, CONDRIVE, CONDSPEC]    # same codes in every wave
+  table: person
+  source: "codebooks 2001, 2009, 2017 v1.2, 2022 v2.1; cross-tabulation with MEDCOND in the data"
+  note: >-
+    What the condition does to the person's travel, one yes/no item each: reduced travel (CONDTRAV), daytime driving only (CONDNIGH), less bus or subway (CONDPUB), asking for rides (CONDRIDE), gave up driving (CONDRIVE), special transport services (CONDSPEC). CONDTAX (reduced-fare taxi) exists in 2009 and 2017 only; CONDSHARE, CONDNONE and CONDRF exist in 2022 only and are not mapped. The codes are the same in 2001, 2009 and 2017, but (a) 2022 turns the items into a select-all list ('Selected' / 'Not Selected'), so 'not selected' is not an answer 'no'; (b) in 2001 and 2009 only persons with MEDCOND = yes are asked, in 2017 and 2022 also every person aged 80+ with MEDCOND = no (9,291 in 2017, 382 in 2022; none below 80), a rule the codebooks do not state: restrict to MEDCOND = yes to keep the 2001 definition; (c) among persons with MEDCOND = yes the share answering yes drops from 2009 to 2017 on every item although the codes did not change (unweighted, yes against yes + no: CONDNIGH 46 % -> 27 %, CONDRIDE 55 % -> 40 %, CONDRIVE 32 % -> 24 %, CONDPUB 16 % -> 8 %, CONDSPEC 9 % -> 7 %, CONDTRAV 83 % -> 72 %), against a small change from 2001 to 2009 (43 % -> 46 %, 56 % -> 55 %, 26 % -> 32 %, 18 % -> 16 %, 10 % -> 9 %, 83 % -> 83 %). The cause is not documented; treat 2017 and 2022 as not comparable with 2001 and 2009.
+  rows:
+    - {wave: 2001, code: "1", hint: "Yes", category: "yes", status: exact}
+    - {wave: 2001, code: "2", hint: "No", category: "no", status: exact}
+    - {wave: 2009, code: "01", hint: "Yes", category: "yes", status: exact}
+    - {wave: 2009, code: "02", hint: "No", category: "no", status: exact}
+    - {wave: 2017, code: "01", hint: "Yes", category: "yes", status: approximate, note: "Same code, but the yes share among persons with a condition falls on all six items from 2009 to 2017 (see the concept note); the cause is not documented."}
+    - {wave: 2017, code: "02", hint: "No", category: "no", status: approximate, note: "See 2017 code 01."}
+    - {wave: 2022, code: "01", hint: "Selected", category: "yes", status: approximate, note: "2022 is a select-all list: 'Selected' is a yes; the yes share among persons with a condition is lower again (CONDTRAV 65 %, CONDNIGH 20 %)."}
+    - {wave: 2022, code: "02", hint: "Not Selected", category: "no", status: approximate, note: "'Not selected' is not an explicit 'no' in a select-all list."}

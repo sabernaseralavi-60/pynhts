@@ -6,12 +6,15 @@ Generated from `pynhts.harmonize` and `pynhts.concepts`. See also `docs/waves.md
 
 | concept | waves | rows | status counts |
 | --- | --- | --- | --- |
+| condition_duration | 2001, 2009, 2017, 2022 | 18 | {'exact': 8, 'nested': 6, 'approximate': 4} |
+| condition_effect | 2001, 2009, 2017, 2022 | 8 | {'exact': 4, 'approximate': 4} |
 | density | 2001, 2009, 2017, 2022 | 20 | {'exact': 18, 'approximate': 1, 'only_here': 1} |
 | education | 2001, 2009, 2017, 2022 | 26 | {'exact': 16, 'nested': 9, 'approximate': 1} |
 | fuel | 2001, 2009, 2017 | 12 | {'approximate': 8, 'exact': 3, 'only_here': 1} |
 | hispanic_household | 2001, 2009, 2017, 2022 | 8 | {'exact': 8} |
 | hispanic_person | 2017, 2022 | 4 | {'exact': 4} |
 | income | 2001, 2009, 2017, 2022 | 58 | {'nested': 40, 'exact': 18} |
+| medical_condition | 2001, 2009, 2017, 2022 | 8 | {'exact': 6, 'approximate': 2} |
 | mode | 2001, 2009, 2017, 2022 | 94 | {'exact': 54, 'merge': 24, 'approximate': 12, 'only_here': 4} |
 | purpose | 2017, 2022 | 40 | {'exact': 29, 'approximate': 6, 'merge': 5} |
 | purpose_1990 | 2001, 2009, 2017, 2022 | 38 | {'exact': 24, 'approximate': 12, 'only_here': 2} |

@@ -10,7 +10,7 @@ below was a real silent error found in the data (see `docs/guards.md`, `docs/opu
 import pynhts
 pynhts.concepts.find("VEHAGE", 2009)     # what the variable means, top-code, national-only, comparability
 pynhts.describe("TRPTRANS", 2017)        # codebook facts + top-code + the concepts that use it
-pynhts.concepts.table()                  # the 41 concepts x 4 waves (grade C / H / N)
+pynhts.concepts.table()                  # the 44 concepts x 4 waves (grade C / H / N)
 pynhts.harmonize.compare_waves(2009, 2017)   # which same-name variables really are the same
 ```
 

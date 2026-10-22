@@ -267,3 +267,55 @@ def test_hispanic_race_codes_named_in_the_crosswalk_really_say_hispanic():
         # and no other code of the wave names Hispanic origin
         others = [c for c, lab in book.items() if "hispanic" in lab.lower() and c not in codes]
         assert not others, (wave, others)
+
+
+# ---- medical condition (0.8.0) --------------------------------------------------------------
+def test_medical_condition_codes_map_to_yes_no_with_the_padding_of_each_wave():
+    assert _py(harmonize.apply(pd.Series(["1", "2", "-1", "-7"], dtype="string"),
+                               "medical_condition", 2001)) == ["yes", "no", None, None]
+    for wave in (2009, 2017, 2022):
+        s = pd.Series(["01", "02", "-1", "-8"], dtype="string")
+        assert _py(harmonize.apply(s, "medical_condition", wave)) == ["yes", "no", None, None]
+
+
+def test_medical_condition_2022_is_marked_not_comparable_but_2001_to_2017_are():
+    for a, b in [(2001, 2009), (2009, 2017), (2001, 2017)]:
+        rep = harmonize.category_report("medical_condition", a, b).set_index("category")
+        assert rep["comparable"].all(), (a, b)
+    for a in (2001, 2009, 2017):
+        rep = harmonize.category_report("medical_condition", a, 2022).set_index("category")
+        assert not rep["comparable"].any() and "do not answer" in rep.loc["yes", "issue"], a
+
+
+def test_condition_duration_six_bands_collapse_into_three_with_an_honest_boundary():
+    old = pd.Series(["1", "2", "3", "4", "5", "6"], dtype="string")
+    assert _py(harmonize.apply(old, "condition_duration", 2001)) == [
+        "up_to_6_months", "over_6_months", "over_6_months", "over_6_months", "over_6_months",
+        "lifelong"]
+    assert _py(harmonize.apply(pd.Series(["01", "06"], dtype="string"),
+                               "condition_duration", 2009)) == ["up_to_6_months", "lifelong"]
+    new = pd.Series(["01", "02", "03", "-1"], dtype="string")
+    for wave in (2017, 2022):
+        assert _py(harmonize.apply(new, "condition_duration", wave)) == [
+            "up_to_6_months", "over_6_months", "lifelong", None]
+    # lifelong is the same in all four waves; the 6-month boundary is not (2001/2009 vs 2017/2022)
+    rep = harmonize.category_report("condition_duration", 2009, 2017).set_index("category")
+    assert rep.loc["lifelong", "comparable"] and not rep.loc["up_to_6_months", "comparable"]
+    rep = harmonize.category_report("condition_duration", 2017, 2022).set_index("category")
+    assert rep["comparable"].all()
+    rep = harmonize.category_report("condition_duration", 2001, 2009).set_index("category")
+    assert rep.loc["lifelong", "comparable"] and not rep.loc["over_6_months", "comparable"]
+
+
+def test_condition_effect_2022_select_all_and_2017_break_are_flagged():
+    rep = harmonize.category_report("condition_effect", 2001, 2009).set_index("category")
+    assert rep["comparable"].all()
+    for a, b in [(2009, 2017), (2017, 2022), (2009, 2022)]:
+        rep = harmonize.category_report("condition_effect", a, b).set_index("category")
+        assert not rep["comparable"].any(), (a, b)
+    s22 = harmonize.apply(pd.Series(["01", "02"], dtype="string"), "condition_effect", 2022)
+    assert _py(s22) == ["yes", "no"]
+    cw = harmonize.crosswalk("condition_effect")
+    assert "select-all" in " ".join(cw.loc[cw["wave"] == 2022, "note"].dropna())
+    assert harmonize.concept_info("condition_effect")["also"] == [
+        "CONDNIGH", "CONDPUB", "CONDRIDE", "CONDRIVE", "CONDSPEC"]

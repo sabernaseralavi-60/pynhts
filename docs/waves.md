@@ -116,10 +116,10 @@ happened, 50 variables for 2001 and 2009). Two examples that would corrupt a poo
   business") has no code from 2017 on; in the 2017 data those trips (WHYTO "other general
   errands", "buy goods" and "buy services") all have `WHYTRP1S` 40.
 
-16 crosswalk concepts are available (`harmonize.concepts()`): `mode`, `purpose_summary`
+19 crosswalk concepts are available (`harmonize.concepts()`): `mode`, `purpose_summary`
 (`WHYTRP1S`), `purpose_1990` (`WHYTRP90`, ORNL's own cross-wave purpose), `trip_class` (`TRIPPURP`),
 `income` (eight nominal bands that nest exactly in all four waves), `education` (five levels), `race_household`, `race_person`,
-`hispanic_household`, `hispanic_person` (see below), `urban_area`
+`hispanic_household`, `hispanic_person` (see below), `medical_condition`, `condition_duration`, `condition_effect` (see below), `urban_area`
 (`URBAN`, codes swapped in 2001), `urban_rural`, `density` (`HBHUR`), `vehicle_type`, `fuel`, and the
 detailed `purpose` (2017/2022). Status `nested` means several codes collapse exactly into the category,
 so the category is comparable. `harmonize.age_bands` ends at 85+ whatever the top-code;
@@ -156,6 +156,25 @@ hh = pynhts.load(2001).households(["HHR_RACE", "HHR_HISP"])
 hh["race_eth"] = harmonize.race_ethnicity(hh)       # same call and same categories in 2009, 2017, 2022
 harmonize.category_report("race_household", 2009, 2017)   # white ... nhpi, multiple: comparable
 ```
+
+### Medical condition that makes travel difficult
+
+`MEDCOND` is a yes/no in all four waves and the codes mean the same, but three things make a naive comparison wrong (person file,
+cross-tabulated against age, `MEDCOND6` and the effect items; the numbers are re-checked by `tests/data/test_four_wave_guards.py`):
+
+* **The universe changes.** Ages 16+ answer in 2001 and 2009 (15 and younger carry the skip `-1`; 6 adults are skipped in 2009), everybody aged 5+ in
+  2017 and 2022. Compare adults (18+).
+* **2022 has 5.4 % non-answers** among adults (weighted; 0.04 to 0.14 % in 2001 to 2017) and asks about a "condition or disability". The yes share among
+  the valid answers of 18+ is 8.7 % (2001), 10.5 % (2009), 10.0 % (2017) and 7.5 % (2022). The crosswalk marks 2022 `approximate`, so
+  `category_report("medical_condition", 2017, 2022)` says not comparable: do not report the fall as a trend.
+* **The effect items (`condition_effect`: `CONDTRAV`, `CONDNIGH`, `CONDPUB`, `CONDRIDE`, `CONDRIVE`, `CONDSPEC`) are asked of different people.**
+  2001 and 2009: only of those who answered yes to `MEDCOND`; 2017 and 2022: also of every person aged 80+ whatever they answered (9,291 and 382
+  persons with `MEDCOND` = no; nobody younger). 2022 turns the items into a select-all list, so "Not Selected" is not a "no". And the share answering yes
+  among persons with a condition falls on every item from 2009 to 2017 although the codes are identical (`CONDNIGH` 46 % to 27 %, `CONDRIDE`
+  55 % to 40 %, `CONDTRAV` 83 % to 72 %); the cause is not documented. Only 2001 to 2009 are marked comparable. Restrict to `MEDCOND` = yes to keep one definition.
+
+`condition_duration` (`MEDCOND6`, asked of the yes answers only) collapses the six bands of 2001/2009 and the three of 2017/2022 into `up_to_6_months`,
+`over_6_months` and `lifelong`; only the six-month boundary is inexact (the first band is 7.2 %, 6.9 %, 7.8 % and 7.0 % of the yes answers, so it moves little).
 
 ## What is not harmonized
 

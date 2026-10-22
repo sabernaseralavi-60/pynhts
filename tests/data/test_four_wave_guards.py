@@ -309,3 +309,77 @@ def test_race_ethnicity_on_real_households_is_complete_and_agrees_with_the_hispa
     share = (out == "hispanic").mean()
     assert 0.05 < share < 0.09, (wave, share)
     assert {"nh_white", "nh_black", "nh_asian"} <= set(out.dropna())
+
+
+# ---- medical condition (0.8.0): the numbers quoted in crosswalks.yaml and concepts.yaml ---------
+def _persons(wave, cols):
+    p = pynhts.load(wave, offline=True).persons(
+        cols, weight=True, skip="keep", missing="keep")
+    for c in cols:
+        if c != "R_AGE":
+            p[c] = p[c].astype("string").str.strip().str.lstrip("0").replace("", "0")
+    p["R_AGE"] = pd.to_numeric(p["R_AGE"], errors="coerce")
+    return p
+
+
+def test_medcond_universe_is_16_plus_in_2001_and_2009_and_everybody_from_2017():
+    for wave in (2001, 2009):
+        p = _persons(wave, ["MEDCOND", "R_AGE"])
+        asked = p["MEDCOND"] != "-1"
+        assert (p.loc[p["R_AGE"].between(5, 14), "MEDCOND"] == "-1").all(), wave
+        assert (~asked[p["R_AGE"] >= 17]).mean() < 1e-4, wave          # (6 adults skipped in 2009)
+        assert asked[p["R_AGE"] == 16].mean() > 0.98, wave            # 16-year-olds answer
+    for wave in (2017, 2022):
+        p = _persons(wave, ["MEDCOND", "R_AGE"])
+        assert (p["MEDCOND"] != "-1").all(), wave                      # nobody is skipped
+        assert (p.loc[p["R_AGE"].between(5, 14), "MEDCOND"] == "1").sum() > 0, wave
+
+
+def test_medcond_2022_nonanswer_share_and_yes_share_are_the_quoted_ones():
+    quoted = {2001: (0.0005, 0.0025, 0.083, 0.092), 2009: (0.0005, 0.0025, 0.100, 0.109),
+              2017: (0.0001, 0.0010, 0.095, 0.104), 2022: (0.045, 0.062, 0.070, 0.079)}
+    for wave, (na_lo, na_hi, y_lo, y_hi) in quoted.items():
+        p = _persons(wave, ["MEDCOND", "R_AGE"])
+        a = p[p["R_AGE"] >= 18]
+        w = a["WTPERFIN"].astype(float)
+        yes, no = w[a["MEDCOND"] == "1"].sum(), w[a["MEDCOND"] == "2"].sum()
+        na = w[a["MEDCOND"].isin(["-7", "-8", "-9"])].sum()
+        assert na_lo < na / (yes + no + na) < na_hi, (wave, na / (yes + no + na))
+        assert y_lo < yes / (yes + no) < y_hi, (wave, yes / (yes + no))
+
+
+@pytest.mark.parametrize("wave", WAVES)
+def test_medcond6_is_asked_exactly_of_the_yes_answers_and_the_first_band_is_7_percent(wave):
+    p = _persons(wave, ["MEDCOND", "MEDCOND6", "R_AGE"])
+    assert ((p["MEDCOND6"] != "-1") == (p["MEDCOND"] == "1")).all()
+    cw = harmonize.crosswalk("condition_duration")
+    first = cw[(cw["wave"] == wave) & (cw["category"] == "up_to_6_months")]["code"].iloc[0]
+    valid = p[(p["MEDCOND"] == "1") & ~p["MEDCOND6"].isin(["-7", "-8", "-9"])]
+    share = (valid["MEDCOND6"] == first.lstrip("0")).mean()
+    assert 0.06 < share < 0.09, (wave, share)                         # 7.2, 6.9, 7.8, 7.0 %
+
+
+def test_condition_effect_universe_and_the_2009_to_2017_fall_are_the_quoted_ones():
+    items = ["CONDNIGH", "CONDPUB", "CONDRIDE", "CONDRIVE", "CONDSPEC", "CONDTRAV"]
+    yes_share = {}
+    for wave in (2001, 2009, 2017, 2022):
+        p = _persons(wave, ["MEDCOND", "R_AGE", *items])
+        asked = p["CONDTRAV"] != "-1"
+        no = p["MEDCOND"] == "2"
+        if wave in (2001, 2009):
+            assert not (asked & no).any(), wave           # only the yes answers are asked
+        else:
+            # every person aged 80+ is asked whatever MEDCOND says; nobody younger is
+            known = p["R_AGE"] >= 0
+            assert (asked & no & known).sum() == (no & (p["R_AGE"] >= 80)).sum() > 300, wave
+            assert not (asked & no & known & (p["R_AGE"] < 80)).any(), wave
+        cond = p[p["MEDCOND"] == "1"]
+        answered = {i: cond[i].isin(["1", "2"]).sum() for i in items}
+        yes_share[wave] = {i: (cond[i] == "1").sum() / answered[i] for i in items}
+    assert yes_share[2017]["CONDNIGH"] < 0.30 < 0.40 < yes_share[2009]["CONDNIGH"]
+    for i in ("CONDNIGH", "CONDPUB", "CONDRIDE", "CONDTRAV"):      # 8 to 19 points
+        assert yes_share[2017][i] < yes_share[2009][i] - 0.05, i
+    for i in items:                                        # falls on every item
+        assert yes_share[2017][i] < yes_share[2009][i], i
+        assert yes_share[2022][i] < yes_share[2017][i], i
+        assert abs(yes_share[2009][i] - yes_share[2001][i]) < 0.08, i

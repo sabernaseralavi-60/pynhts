@@ -112,6 +112,44 @@ concepts:
     pitfalls:
       - "Person-level Hispanic origin exists in 2017 and 2022 only (the 2022 question is asked of persons 5 or older); 2001 and 2009 have the household respondent's answer (hispanic_household)."
     evidence: [data]
+  medical_condition:
+    title: "Medical condition (2022: condition or disability) that makes travel difficult"
+    table: person
+    variables: {2001: MEDCOND, 2009: MEDCOND, 2017: MEDCOND, 2022: MEDCOND}
+    universe: {2001: "16+ (15 and younger skip)", 2009: "16+ (15 and younger skip)", 2017: "all persons aged 5+", 2022: "all persons aged 5+"}
+    unit: yes/no
+    comparability: H
+    harmonize: harmonize.crosswalk("medical_condition")
+    pitfalls:
+      - "Universe: 16+ in 2001 and 2009, everybody aged 5+ in 2017 and 2022: compare adults (18+) only."
+      - "2022 asks about a 'condition or disability' and 5.4 % of the adults (weighted) decline to answer, against 0.04 to 0.14 % in 2001 to 2017: the yes share among the valid answers falls from about 10 % to 7.5 %. The crosswalk marks 2022 approximate (category_report: not comparable); do not report the fall as a trend."
+      - "The skip code -1 (children) is not 'no'; the default skip='auto' masks it and missing='nan' masks -7/-8/-9. Use pynhts.valid() on the coded column."
+    evidence: [data]
+  condition_duration:
+    title: How long the person has had the condition
+    table: person
+    variables: {2001: MEDCOND6, 2009: MEDCOND6, 2017: MEDCOND6, 2022: MEDCOND6}
+    universe: {2001: "MEDCOND = yes", 2009: "MEDCOND = yes", 2017: "MEDCOND = yes", 2022: "MEDCOND = yes"}
+    unit: category
+    comparability: H
+    harmonize: harmonize.crosswalk("condition_duration")
+    pitfalls:
+      - "2001 and 2009 have six bands, 2017 and 2022 three; the shared categories are up_to_6_months, over_6_months and lifelong. Only the 6-month boundary is inexact (approximate rows)."
+      - "Asked of the persons who said yes to MEDCOND and of nobody else; everybody else carries -1."
+    evidence: [data]
+  condition_effect:
+    title: What the condition does to travel (six yes/no items)
+    table: person
+    variables: {2001: CONDTRAV, 2009: CONDTRAV, 2017: CONDTRAV, 2022: CONDTRAV}
+    unit: yes/no
+    comparability: N
+    harmonize: harmonize.crosswalk("condition_effect")
+    pitfalls:
+      - "2022 turns the items into a select-all list: 'Not Selected' is not an answer 'no'."
+      - "The yes share among persons with a condition falls from 2009 to 2017 on every item although the codes are unchanged (CONDNIGH 46 % to 27 %); the cause is not documented."
+      - "In 2017 and 2022 every person aged 80+ with MEDCOND = no is asked too (9,291 in 2017, 382 in 2022; nobody younger): restrict to MEDCOND = yes for the 2001 definition."
+      - "CONDTAX exists in 2009 and 2017 only; CONDSHARE, CONDNONE and CONDRF in 2022 only (not mapped)."
+    evidence: [data]
   worker:
     title: The person has a job
     table: person

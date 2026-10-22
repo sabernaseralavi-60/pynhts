@@ -21,8 +21,17 @@
   and `multiple` are exact from 2009 on.
 * `harmonize.variable_of(concept, wave)` and the `variable_by_wave` key of `concept_info`: some concepts have another column name in one wave
   (2001 `HHR_RACE`, `HHR_HISP`); `crosswalk()["variable"]` is now per wave. Existing concepts are unchanged.
-* `concepts`: `race_household` is now grade H (was N, no crosswalk); new `hispanic_household`, `race_person`, `hispanic_person` (41 concepts).
+* `concepts`: `race_household` is now grade H (was N, no crosswalk); new `hispanic_household`, `race_person`, `hispanic_person` (41 concepts; 44 with the medical-condition ones below).
 * 8 new unit tests and 3 real-data tests (every quoted percentage is re-checked on the files).
+* **Medical-condition crosswalks** (3 new `harmonize` concepts, all four waves): `medical_condition` (`MEDCOND`), `condition_duration` (`MEDCOND6`: six
+  bands of 2001/2009 and three of 2017/2022 into `up_to_6_months` / `over_6_months` / `lifelong`) and `condition_effect` (`CONDTRAV`, `CONDNIGH`,
+  `CONDPUB`, `CONDRIDE`, `CONDRIVE`, `CONDSPEC`). Cross-tabulation of the four files shows: `MEDCOND` is asked of ages 16+ in 2001 and 2009 and of everybody
+  aged 5+ later (the 0.4.0 review table said 15+ for 2001 and 2009; the data say 16+); 2022 has 5.4 % non-answers among adults against 0.04 to 0.14 %
+  before, so 2022 is `approximate` (the yes share of 18+ is 8.7, 10.5, 10.0, 7.5 %); the effect items are asked of every person aged 80+ in 2017 and
+  2022 whatever `MEDCOND` says, 2022 is a select-all list, and the yes share falls on all six items from 2009 to 2017 with unchanged codes (cause
+  undocumented), so only 2001 to 2009 are comparable. `concepts`: `medical_condition` and `condition_duration` grade H, `condition_effect` grade N (44 concepts).
+  Docs: `docs/waves.md`, "Medical condition that makes travel difficult".
+* 4 new unit tests and 4 real-data tests.
 
 ## 0.7.1 (2026-10-22)
 
