@@ -208,7 +208,7 @@ SECTIONS["impact"] = [
           "study module is meant to change the daily practice of analysts by making the sample rules and the missing-value policy part of "
           "the code. We have not measured any change in practice yet."),
     ("h", "Extent of use"),
-    ("p", "The first version was released on PyPI in October 2026 and the package has had 12 releases since; version "
+    ("p", "The first version was released on PyPI in October 2026 and the package has had 13 releases in total; version "
           f"{VERSION} is archived on Zenodo [13]. The package has no known external users, no publication has used it, and it has no "
           "commercial use. PyPI records downloads, but they include automated mirrors, so we do not report them as users. The "
           "evidence of impact is therefore the validation and the audit, which can be repeated by anyone with the public files, "

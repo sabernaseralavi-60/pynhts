@@ -36,3 +36,6 @@ some papers/*.pdf
 
 # third-party journal templates (Elsevier SoftwareX), fetched 2026-10-22, sha256 9fcf40ed...b916d; not redistributed
 paper/softwarex/template/
+# generated manuscript files (contain [[AUTHOR-TODO]] markers until the author fills them)
+paper/softwarex/pynhts_softwarex.docx
+paper/softwarex/pynhts_softwarex.pdf
