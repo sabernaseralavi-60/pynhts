@@ -4,6 +4,11 @@ title: "pynhts: survey-weight-aware access to US National Household Travel Surve
 version: 0.8.0
 date-released: 2026-10-22
 license: BSD-3-Clause
+doi: "10.5281/zenodo.23573454"   # Zenodo concept DOI: always resolves to the latest archived version
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23573455"
+    description: "Zenodo archive of version 0.8.0"
 repository-code: "https://github.com/sabernaseralavi-60/pynhts"
 authors:
   - family-names: Naseralavi

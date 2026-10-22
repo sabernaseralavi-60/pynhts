@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* **Zenodo DOI.** Version 0.8.0 is archived (10.5281/zenodo.23573455); the all-versions DOI is 10.5281/zenodo.23573454 (in `CITATION.cff` and the README). `.zenodo.json` holds the record metadata.
+
 * **Paper audit re-check with the 0.8.0 Study and crosswalks** (`tools/paper_audit/recheck_p01/p02/p10_*.py`; docs only, no package change). Lidbe 2021: 262 of 280
   cells EXACT (Table 3 base = trips of persons with a valid `MEDCOND` answer; Table 4 weekend = `TRAVDAY` Saturday+Sunday, duration = `TRVLCMIN`, 72 of 72 condition-item
   cells via `condition_effect`); Yang 2011 sample reproduced as a `Study`; Zhou & Wang 2014 still partial. Conventions A-25..A-32.

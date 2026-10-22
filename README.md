@@ -156,4 +156,6 @@ pytest -m network -o addopts=-ra   # live ORNL download, manual only
 
 ## Citation
 
-See [CITATION.cff](https://github.com/sabernaseralavi-60/pynhts/blob/main/CITATION.cff). License: BSD-3-Clause.
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23573454.svg)](https://doi.org/10.5281/zenodo.23573454)
+
+Cite the software with the Zenodo DOI [10.5281/zenodo.23573454](https://doi.org/10.5281/zenodo.23573454) (all versions; version 0.8.0 is 10.5281/zenodo.23573455), see [CITATION.cff](https://github.com/sabernaseralavi-60/pynhts/blob/main/CITATION.cff). License: BSD-3-Clause.
