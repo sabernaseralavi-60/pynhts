@@ -61,7 +61,7 @@ None were made. 0.7.0 only adds modules and one top-level helper (`pynhts.valid`
 ## 8. What 0.7.0 adds in response (priority order)
 
 1. `pynhts.aggregate`: explicit, diagnosed aggregation (keys, orphans, missing policy, true zeros, weight of the target table).
-2. `pynhts.features`: 89 documented features at four levels with a registry, eligibility rules and lineage; validated against the survey's own counts in every wave.
+2. `pynhts.features`: 93 documented features (89 in 0.7.0) at four levels with a registry, eligibility rules and lineage; validated against the survey's own counts in every wave.
 3. `pynhts.valid` / `answer_status`.
 4. `pynhts.eda`, `pynhts.quality`: missing-value reasons, weighted descriptives and quantiles, correlation that refuses nominal columns, Cramér's V, distribution comparison, key and weight integrity report.
 5. `pynhts.transform`: leakage-safe transformations (fit on training rows, JSON parameters, split by household) with diagnostics.

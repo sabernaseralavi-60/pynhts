@@ -14,7 +14,7 @@ Read AGENTS.md first.
 - [Concept dictionary (YAML; JSON via pynhts.concepts.to_json())](https://github.com/sabernaseralavi-60/pynhts/blob/main/src/pynhts/concepts.yaml): per-wave variable, universe, comparability, pitfalls
 
 - [Analysis toolkit](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/analysis.md): aggregate, features, eda, transform, trends
-- [Feature registry](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data/FEATURES.md): 89 features with formula, eligibility, denominator, weight
+- [Feature registry](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data/FEATURES.md): 93 features with formula, eligibility, denominator, weight
 
 ## Machine-readable facts
 - `pynhts.concepts.to_json()`, `pynhts.concepts.find(variable, wave)`, `pynhts.describe(variable, wave)`
