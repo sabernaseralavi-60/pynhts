@@ -86,7 +86,27 @@ def test_regimes_and_table_and_compare():
     assert {"estimate", "se", "p", "lower", "upper"} <= set(t.columns)
     assert t.attrs["pynhts"]["regime"] == "design"
     cmp = models.compare_regimes(data, rows, y, X, family="binomial")
-    assert {"se_ratio", "sign_flip", "sig_change"} <= set(cmp.columns)
+    assert {"se_ratio", "se_clustered", "se_ratio_clustering", "sign_flip", "sig_change"} <= set(
+        cmp.columns
+    )
+    assert np.allclose(
+        cmp["b_clustered"], cmp["b_naive"], atol=1e-8
+    )  # same unweighted estimate, different variance
+
+
+def test_clustered_regime_matches_a_brute_force_sandwich():
+    rows, X, y, _ = _make(600)
+    rows = rows.assign(HOUSEID=np.arange(len(rows)) // 5)  # clusters of five
+    res = models.fit(_FakeData(len(rows), 10), rows, y, X, family="binomial", regime="clustered")
+    A = np.column_stack([np.ones(len(y)), X.to_numpy()])
+    b = res.params
+    mu = 1 / (1 + np.exp(-A @ b))
+    bread = np.linalg.inv((A.T * (mu * (1 - mu))) @ A)
+    sc = A * (y - mu)[:, None]
+    tot = np.array([sc[rows["HOUSEID"].to_numpy() == g].sum(0) for g in np.unique(rows["HOUSEID"])])
+    g = len(tot)
+    cov = bread @ (tot.T @ tot * g / (g - 1)) @ bread
+    assert np.allclose(res.se, np.sqrt(np.diag(cov)), rtol=1e-6)
 
 
 def test_refuses_missing_values_instead_of_dropping():
@@ -120,3 +140,12 @@ def test_negative_binomial_replicates_match_exact_refits():
     se = np.sqrt((data.g - 1.0) / data.g * np.sum((reps - full) ** 2, axis=0))
     assert np.allclose(res.params, full, atol=1e-5)
     assert np.allclose(res.se, se, rtol=0.03)
+
+
+def test_weighted_without_clustering_equals_clusters_of_one():
+    rows, X, y, _ = _make(500)
+    data = _FakeData(len(rows), 10)
+    solo = rows.assign(HOUSEID=np.arange(len(rows)))  # every observation its own household
+    a = models.fit(data, solo, y, X, family="binomial", regime="weighted")
+    b = models.fit(data, rows, y, X, family="binomial", regime="weighted", cluster="none")
+    assert np.allclose(a.se, b.se, rtol=1e-9)

@@ -8,7 +8,7 @@
 Typed, survey-weight-aware Python access to US National Household Travel Survey (NHTS)
 microdata.
 
-> **Scope and status (0.8.1, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
+> **Scope and status (0.9.0, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
 > waves are supported. The API may still change. Results are validated against published tables:
 > for 2009, 35 of 40 figures of the *Summary of Travel Trends* reproduce completely (the other 5
 > reproduce the estimate; the report's margin of error uses another multiplier), for 2001 40 of
@@ -88,6 +88,8 @@ pynhts.dictionary(2022)                                     # every variable wit
 | `pynhts.tours` | tour formation (HBW/HBO/NHB, work-tour patterns), FHWA-style chains; flexible home/work rules |
 | `pynhts.ml` | NumPy / PyTorch / graph export (PyTorch optional) |
 | `pynhts.study` | a research statement (wave, sample rules, variables, weighting) to data + sample-flow table + Table 1 + figures + methods text; `compare` grades the result against a paper's printed numbers |
+| `pynhts.models` | design-aware regression (OLS, logit, Poisson, negative binomial): naive, weighted and replicate-weight / Taylor variance side by side, with a warning when the verdicts differ; validated against R `survey::svyglm` |
+| `pynhts.validate` | leakage audit of classifiers: SMOTE before or after the split, rows or households, weighted AUC |
 | `pynhts.aggregate` | trips to persons, persons to households: no row multiplication, stated missing-value policy, true zeros, diagnostics report |
 | `pynhts.features` | 93 documented person, household, trip and vehicle features (formula, eligibility, denominator, weight, waves) with lineage |
 | `pynhts.eda`, `pynhts.quality` | missing-value reasons, weighted descriptives, correlation that refuses nominal columns, key and weight integrity report |
@@ -137,7 +139,7 @@ They are documented in [docs/data_notes.md](https://github.com/sabernaseralavi-6
 
 ## Documentation
 
-[Analysis toolkit](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/analysis.md) · [Feature registry](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data/FEATURES.md) · [Research landscape](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/research/NHTS_RESEARCH_LANDSCAPE.md) · [Comparing waves](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/waves.md) · [Defaults and guards](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/guards.md) · [AGENTS.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/AGENTS.md) · [Methods](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/methods.md) · [Data notes](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data_notes.md) · [Validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md)
+[Analysis toolkit](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/analysis.md) · [Design-aware models and leakage-safe validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/models.md) · [Feature registry](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data/FEATURES.md) · [Research landscape](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/research/NHTS_RESEARCH_LANDSCAPE.md) · [Comparing waves](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/waves.md) · [Defaults and guards](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/guards.md) · [AGENTS.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/AGENTS.md) · [Methods](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/methods.md) · [Data notes](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data_notes.md) · [Validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md)
 · [Roadmap](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/roadmap.md) · [Contributing](https://github.com/sabernaseralavi-60/pynhts/blob/main/CONTRIBUTING.md) · [Changelog](https://github.com/sabernaseralavi-60/pynhts/blob/main/CHANGELOG.md)
 
 ## Data

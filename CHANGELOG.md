@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0 (2026-10-23)
+
+* **`pynhts.models`: design-aware regression.** `fit(data, rows, y, X, family=..., regime=...)` fits OLS (`gaussian`), logit (`binomial`), Poisson and negative binomial (`nb`, needs SciPy) under four regimes: `naive` (unweighted, model-based), `clustered` (unweighted, household-clustered sandwich), `weighted` (weighted, household-clustered sandwich; `cluster="none"` treats every observation as its own cluster) and `design` (the wave's variance: replicate-weight jackknife for 2001, 2009 and 2017, Taylor linearisation over strata and households for 2022). `compare_regimes` returns the four fits side by side with the standard-error ratios, sign flips and significance changes and warns when the design-aware fit changes a verdict. Never drops rows silently. Validated against R `survey::svyglm` (tools/validate_models_r.R, tools/validate_models_taylor_r.R; golden files in tests/golden): coefficients agree to 1e-5 and standard errors to 0.2 % (2017 jackknife) and 0.5 % (2022 Taylor); the negative binomial replicate variance (Newton/chord steps) is checked against exact refits.
+* **`pynhts.validate`: leakage audit of classifiers.** `audit_classifier` scores a model under four pipelines (oversample before or after the split, rows or households, weighted AUC) and warns when the leaky one inflates AUC; `group_split`, `smote`, `weighted_auc` are available separately (NumPy only).
+* **Evidence.** Paper 02 (`papers/02-nhts-ladder`) re-estimated 8 published regression studies (310 coefficients) and re-scored 5 classifiers of vehicle adoption: the design-aware standard error is a median 2.19 times the unweighted one, almost entirely because of the unequal weights; oversampling before splitting inflates the AUC of a random forest by 0.35. AGENTS.md rules 11 and 12, docs/models.md.
+* New optional dependency group `models` (SciPy); `dev` now includes SciPy and scipy-stubs. 25 new tests.
+
 ## 0.8.1 (2026-10-22)
 
 * **Release for citation and journal submission; no change to the package code.** Archived on Zenodo as 10.5281/zenodo.23575312 (all versions: 10.5281/zenodo.23573454). `LICENSE.txt` added (a copy of `LICENSE`, the name journals look for).

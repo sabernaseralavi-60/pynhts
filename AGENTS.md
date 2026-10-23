@@ -41,8 +41,8 @@ pynhts.harmonize.compare_waves(2009, 2017)   # which same-name variables really 
 10. **Say what you computed.** Every result frame carries `result.attrs["pynhts"]` (wave, table, weight, variance
     design, unit). Put the design sentence in a methods footnote (`pynhts.tables.note`) instead of writing your own.
 11. **Fit regressions with the design, not around it.** `pynhts.models.fit(..., regime="design")` (or `compare_regimes`) gives weighted estimates
-    with the wave's own variance; an unweighted fit with model-based standard errors changes signs and significance (median standard-error ratio
-    about 2 over 310 re-estimated coefficients of 8 published model families; see `docs/models.md` and `papers/02-nhts-ladder`).
+    with the wave's own variance; state which estimand you mean (respondents or population). Over 310 re-estimated coefficients of 8 published studies the
+    design-aware standard error was a median 2.2 times the unweighted one, mostly from the unequal weights (see `docs/models.md`, `papers/02-nhts-ladder`).
 12. **Score ML models without leakage.** NHTS rows of one household are dependent and SMOTE invents rows from neighbours: split by household and resample
     the training part only (`pynhts.validate.audit_classifier` reports how much a random-row, resample-first score is inflated).
 

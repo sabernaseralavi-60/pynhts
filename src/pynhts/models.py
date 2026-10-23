@@ -1,9 +1,10 @@
 """Design-aware regression for NHTS rows: weights and the wave's own variance design in one call.
 
 Most published NHTS regressions are fitted unweighted with model-based standard errors. This module fits the same
-models three ways so that the difference becomes a number instead of a debate:
+models four ways so that the difference becomes a number instead of a debate:
 
 * ``"naive"``     unweighted, model-based (iid) standard errors;
+* ``"clustered"`` unweighted point estimates, household-clustered sandwich standard errors;
 * ``"weighted"``  survey-weighted point estimates, household-clustered sandwich standard errors;
 * ``"design"``    survey-weighted point estimates with the variance design of the wave: the jackknife over the
   replicate weights (2001, 2009, 2017) or the Taylor linearisation over strata and households (2022).
@@ -34,7 +35,7 @@ from numpy.typing import NDArray
 from pynhts.core.flags import PynhtsWarning
 
 Family = Literal["gaussian", "binomial", "poisson", "nb"]
-Regime = Literal["naive", "weighted", "design"]
+Regime = Literal["naive", "clustered", "weighted", "design"]
 Floats = NDArray[np.float64]
 
 __all__ = ["ModelResult", "compare_regimes", "fit"]
@@ -58,11 +59,14 @@ class ModelResult:
     extra: dict[str, float] = field(default_factory=dict)
 
     def table(self, *, exp: bool = False, level: float = 0.95) -> pd.DataFrame:
-        """One row per term: estimate, standard error, z, two-sided normal p-value and a confidence interval."""
-        from pynhts.stats.distributions import t_ppf
+        """One row per term: estimate, standard error, z, two-sided p-value (Student t on the degrees of freedom of the design, normal for the model-based fits) and a confidence interval."""
+        from pynhts.stats.distributions import t_cdf, t_ppf
 
         z = self.params / self.se
-        p = np.array([1.0 - erf(abs(v) / sqrt(2.0)) for v in z])
+        if np.isfinite(self.df) and self.df > 0:
+            p = np.array([2.0 * (1.0 - t_cdf(abs(float(v)), self.df)) for v in z])
+        else:
+            p = np.array([1.0 - erf(abs(v) / sqrt(2.0)) for v in z])
         crit = t_ppf(0.5 + level / 2.0, self.df) if np.isfinite(self.df) and self.df > 0 else 1.96
         out: pd.DataFrame = pd.DataFrame(
             {
@@ -242,13 +246,13 @@ def _nb_newton(theta: Floats, X: Floats, y: Floats, reps: Floats, steps: int = 3
         e[j] = h
         ds = (_nb_parts(theta + e, X, y)[1] - _nb_parts(theta - e, X, y)[1]) / (2 * h)
         Hr[:, :, j] = -(reps.T @ ds)
-    Hr = 0.5 * (Hr + Hr.transpose(0, 2, 1))
-    hinv = np.linalg.inv(Hr)
-    out: Floats = theta + np.einsum("gij,gj->gi", hinv, reps.T @ _nb_parts(theta, X, y)[1])
+    Hsym = 0.5 * (Hr + Hr.transpose(0, 2, 1))
+    hinv = np.linalg.inv(Hsym)
+    est: Floats = theta + np.einsum("gij,gj->gi", hinv, reps.T @ _nb_parts(theta, X, y)[1])
     for _ in range(steps - 1):
         for r in range(g):
-            out[r] = out[r] + hinv[r] @ (reps[:, r] @ _nb_parts(out[r], X, y)[1])
-    return out
+            est[r] = est[r] + hinv[r] @ (reps[:, r] @ _nb_parts(est[r], X, y)[1])
+    return est
 
 
 # ------------------------------------------------------------------------------------------ public API
@@ -280,8 +284,9 @@ def fit(
     regime: Regime = "design",
     intercept: bool = True,
     newton_steps: int = 3,
+    cluster: Literal["household", "none"] = "household",
 ) -> ModelResult:
-    """Fit ``y ~ X`` on ``rows`` under one of the three regimes.
+    """Fit ``y ~ X`` on ``rows`` under one of the four regimes.
 
     Args:
         data: The :class:`pynhts.NHTSData` the rows come from (gives the weights and the variance design).
@@ -292,6 +297,8 @@ def fit(
         level: Weight unit of the rows: ``"household"``, ``"person"`` or ``"trip"`` (person-day weight in 2017).
         regime: ``"naive"``, ``"weighted"`` or ``"design"``.
         intercept: Add a constant column named ``const`` (default).
+        cluster: ``"household"`` (default) clusters the sandwich variance of the ``clustered`` and ``weighted`` regimes on
+            ``HOUSEID``; ``"none"`` treats every observation as its own cluster (weights only).
         newton_steps: Negative binomial only: Newton/chord steps for each replicate.
 
     Raises:
@@ -310,6 +317,40 @@ def fit(
         raise ValueError("missing values in y or X: drop or impute them explicitly before fitting")
     terms = list(Xd.columns)
     n = len(yv)
+    if regime == "clustered":
+        if cluster == "household" and "HOUSEID" not in rows.columns:
+            raise KeyError("regime='clustered' needs a HOUSEID column in rows")
+        w1 = np.ones(n)
+        if family == "nb":
+            th = _nb_fit(Xa, yv, w1)
+            sc_rows, hess = _nb_parts(th, Xa, yv)[1], _nb_info(th, Xa, yv, w1)
+            names = terms + ["log_alpha"]
+            extra = {"alpha": float(np.exp(th[-1]))}
+        else:
+            th = _irls(Xa, yv, w1, family)
+            sc_rows, hess = _scores(Xa, yv, th, family), _information(Xa, th, w1, family)
+            names, extra = terms, {}
+        cl = (
+            np.asarray(pd.factorize(rows["HOUSEID"])[0], dtype=np.int64)
+            if cluster == "household"
+            else np.arange(n, dtype=np.int64)
+        )
+        tot = np.zeros((int(np.max(cl)) + 1, sc_rows.shape[1]))
+        np.add.at(tot, cl, sc_rows)
+        g = tot.shape[0]
+        hi = np.linalg.inv(hess)
+        cov = hi @ (tot.T @ tot * (g / (g - 1.0))) @ hi
+        return ModelResult(
+            names,
+            th,
+            np.sqrt(np.diag(cov)),
+            family,
+            regime,
+            n,
+            "unweighted, household-clustered sandwich variance",
+            float(g - 1),
+            extra,
+        )
     if regime == "naive":
         w1 = np.ones(n)
         if family == "nb":
@@ -351,7 +392,11 @@ def fit(
         else:
             s = _scores(Xa, yv, b, family)
             hess = _information(Xa, b, ws, family)
-        cl = np.asarray(pd.factorize(rows["HOUSEID"])[0], dtype=np.int64)
+        cl = (
+            np.asarray(pd.factorize(rows["HOUSEID"])[0], dtype=np.int64)
+            if cluster == "household"
+            else np.arange(n, dtype=np.int64)
+        )
         c = np.zeros((int(np.max(cl)) + 1, s.shape[1]))
         np.add.at(c, cl, s * ws[:, None])
         g = c.shape[0]
@@ -433,14 +478,21 @@ def compare_regimes(
     alpha: float = 0.05,
     **kw: Any,
 ) -> pd.DataFrame:
-    """The three regimes side by side, with the verdict shifts a reader needs.
+    """The four regimes side by side, with the verdict shifts a reader needs.
 
-    Columns: ``b_*`` / ``se_*`` / ``p_*`` for ``naive``, ``weighted`` and ``design``; ``se_ratio`` (design over naive),
-    ``sign_flip`` (naive and design disagree in sign) and ``sig_change`` (significance at ``alpha`` differs).
+    Columns: ``b_*`` / ``se_*`` / ``p_*`` for ``naive``, ``clustered`` (unweighted, household-clustered), ``weighted``
+    (weighted, household-clustered) and ``design``; ``se_ratio`` (design over naive), ``se_weighted_hc`` and ``se_ratio_weights`` (weighted sandwich with every
+    observation its own cluster: the cost of unequal weights alone) and ``se_ratio_clustering`` (clustered over naive), ``sign_flip`` (naive and design disagree in sign) and ``sig_change``
+    (significance at ``alpha`` differs between naive and design).
+
+    A ``PynhtsWarning`` is raised when the design-aware fit changes the sign or the significance of a coefficient. The two
+    fits estimate different things (an association in the sample against one in the population) and the design-aware
+    standard errors also carry the cost of unequal weights; the warning asks for the design-aware result to be reported,
+    not for the unweighted one to be called wrong.
     """
     fits = {
         r: fit(data, rows, y, X, family=family, level=level, regime=r, **kw).table()
-        for r in ("naive", "weighted", "design")
+        for r in ("naive", "clustered", "weighted", "design")
     }
     out: pd.DataFrame = pd.DataFrame({"term": fits["naive"]["term"]})
     for r, t in fits.items():
@@ -449,14 +501,20 @@ def compare_regimes(
             t["se"].to_numpy(),
             t["p"].to_numpy(),
         )
+    hc = fit(
+        data, rows, y, X, family=family, level=level, regime="weighted", cluster="none", **kw
+    ).table()
+    out["se_weighted_hc"] = hc["se"].to_numpy()
     out["se_ratio"] = out["se_design"] / out["se_naive"]
+    out["se_ratio_weights"] = out["se_weighted_hc"] / out["se_naive"]
+    out["se_ratio_clustering"] = out["se_clustered"] / out["se_naive"]
     out["sign_flip"] = np.sign(out["b_naive"]) != np.sign(out["b_design"])
     out["sig_change"] = (out["p_naive"] < alpha) != (out["p_design"] < alpha)
     flips = out[out["term"] != "const"]
     if bool(flips["sign_flip"].any() or flips["sig_change"].any()):
         warnings.warn(
             f"{int(flips['sign_flip'].sum())} sign flip(s) and {int(flips['sig_change'].sum())} significance change(s) "
-            "between the naive and the design-aware fit: report the design-aware one",
+            "between the unweighted and the design-aware fit: report the design-aware one for population claims",
             PynhtsWarning,
             stacklevel=2,
         )

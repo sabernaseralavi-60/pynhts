@@ -163,10 +163,12 @@ def audit_classifier(
         .agg(auc=("auc", "mean"), auc_sd=("auc", "std"), n_test=("n_test", "mean"))
         .reindex(PIPELINES)
     )
-    infl = float(tab.loc["resample_then_split", "auc"] - tab.loc["grouped", "auc"])
+    auc = tab["auc"].to_numpy(dtype=np.float64)  # in PIPELINES order
+    leaky, grouped = float(auc[0]), float(auc[2])
+    infl = leaky - grouped
     note = (
         f"AUC inflation from resampling before the split and splitting rows: {infl:+.3f} "
-        f"({tab.loc['resample_then_split', 'auc']:.3f} versus {tab.loc['grouped', 'auc']:.3f} by household)"
+        f"({leaky:.3f} versus {grouped:.3f} by household)"
     )
     if infl > warn_above:
         warnings.warn(
