@@ -1,0 +1,2392 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="527.958002pt" height="254.953679pt" viewBox="0 0 527.958002 254.953679" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-23T08:00:16.282242</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 254.953679 
+L 527.958002 254.953679 
+L 527.958002 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 43.344063 220.128679 
+L 254.76742 220.128679 
+L 254.76742 30.088699 
+L 43.344063 30.088699 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 43.344063 72.881963 
+L 254.76742 72.881963 
+L 254.76742 62.486322 
+L 43.344063 62.486322 
+z
+" clip-path="url(#pb71f245f28)" style="fill: #fdebd3; opacity: 0.9"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 52.954215 220.128679 
+L 52.954215 30.088699 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="m711566ca5b" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m711566ca5b" x="52.954215" y="220.128679" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <!-- oversample, -->
+      <g transform="translate(35.203824 233.896258) scale(0.066 -0.066)">
+       <defs>
+        <path id="Vazirmatn-Regular-1fe" d="M 288 1653 
+L 288 1725 
+Q 288 2216 475 2603 
+Q 663 2991 1006 3217 
+Q 1350 3444 1822 3444 
+Q 2300 3444 2645 3217 
+Q 2991 2991 3178 2603 
+Q 3366 2216 3366 1725 
+L 3366 1653 
+Q 3366 1166 3178 777 
+Q 2991 388 2647 162 
+Q 2303 -63 1828 -63 
+Q 1353 -63 1008 162 
+Q 663 388 475 777 
+Q 288 1166 288 1653 
+z
+M 866 1725 
+L 866 1653 
+Q 866 1319 972 1036 
+Q 1078 753 1292 583 
+Q 1506 413 1828 413 
+Q 2147 413 2359 583 
+Q 2572 753 2678 1036 
+Q 2784 1319 2784 1653 
+L 2784 1725 
+Q 2784 2056 2676 2339 
+Q 2569 2622 2356 2795 
+Q 2144 2969 1822 2969 
+Q 1503 2969 1290 2795 
+Q 1078 2622 972 2339 
+Q 866 2056 866 1725 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-51d" d="M 697 3381 
+L 1556 791 
+L 2394 3381 
+L 2984 3381 
+L 1769 0 
+L 1328 0 
+L 103 3381 
+L 697 3381 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-17d" d="M 1844 -63 
+Q 1372 -63 1023 146 
+Q 675 356 483 726 
+Q 291 1097 291 1572 
+L 291 1703 
+Q 291 2256 502 2645 
+Q 713 3034 1052 3239 
+Q 1391 3444 1769 3444 
+Q 2253 3444 2561 3226 
+Q 2869 3009 3014 2636 
+Q 3159 2263 3159 1788 
+L 3159 1528 
+L 872 1528 
+Q 881 1219 1003 964 
+Q 1125 709 1345 559 
+Q 1566 409 1875 409 
+Q 2181 409 2393 534 
+Q 2606 659 2766 869 
+L 3116 591 
+Q 2953 341 2650 139 
+Q 2347 -63 1844 -63 
+z
+M 1769 2969 
+Q 1425 2969 1187 2719 
+Q 950 2469 891 2000 
+L 2581 2000 
+L 2581 2044 
+Q 2569 2269 2489 2481 
+Q 2409 2694 2237 2831 
+Q 2066 2969 1769 2969 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-230" d="M 2075 3400 
+L 2072 2863 
+Q 1944 2888 1791 2888 
+Q 1494 2888 1303 2755 
+Q 1113 2622 1019 2400 
+L 1019 0 
+L 441 0 
+L 441 3381 
+L 1003 3381 
+L 1016 2994 
+Q 1144 3200 1342 3322 
+Q 1541 3444 1819 3444 
+Q 1881 3444 1962 3430 
+Q 2044 3416 2075 3400 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-239" d="M 2409 897 
+Q 2409 1022 2354 1130 
+Q 2300 1238 2133 1327 
+Q 1966 1416 1631 1481 
+Q 1066 1600 739 1820 
+Q 413 2041 413 2456 
+Q 413 2725 567 2948 
+Q 722 3172 1005 3308 
+Q 1288 3444 1666 3444 
+Q 2072 3444 2359 3300 
+Q 2647 3156 2800 2917 
+Q 2953 2678 2953 2388 
+L 2375 2388 
+Q 2375 2597 2192 2783 
+Q 2009 2969 1666 2969 
+Q 1306 2969 1150 2812 
+Q 994 2656 994 2472 
+Q 994 2347 1056 2256 
+Q 1119 2166 1286 2094 
+Q 1453 2022 1772 1950 
+Q 2397 1806 2692 1578 
+Q 2988 1350 2988 941 
+Q 2988 497 2630 217 
+Q 2272 -63 1681 -63 
+Q 1234 -63 925 96 
+Q 616 256 456 509 
+Q 297 763 297 1044 
+L 878 1044 
+Q 891 806 1016 667 
+Q 1141 528 1322 470 
+Q 1503 413 1681 413 
+Q 2034 413 2221 550 
+Q 2409 688 2409 897 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-135" d="M 2528 0 
+Q 2500 63 2479 158 
+Q 2459 253 2447 356 
+Q 2284 184 2040 60 
+Q 1797 -63 1484 -63 
+Q 1141 -63 883 71 
+Q 625 206 483 432 
+Q 341 659 341 941 
+Q 341 1484 753 1767 
+Q 1166 2050 1863 2050 
+L 2434 2050 
+L 2434 2319 
+Q 2434 2619 2254 2798 
+Q 2075 2978 1722 2978 
+Q 1394 2978 1192 2817 
+Q 991 2656 991 2444 
+L 413 2444 
+Q 413 2688 578 2917 
+Q 744 3147 1045 3295 
+Q 1347 3444 1756 3444 
+Q 2306 3444 2659 3162 
+Q 3013 2881 3013 2313 
+L 3013 738 
+Q 3013 569 3042 378 
+Q 3072 188 3131 50 
+L 3131 0 
+L 2528 0 
+z
+M 1569 444 
+Q 1881 444 2111 600 
+Q 2341 756 2434 947 
+L 2434 1644 
+L 1956 1644 
+Q 1459 1644 1190 1489 
+Q 922 1334 922 1019 
+Q 922 778 1084 611 
+Q 1247 444 1569 444 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-1e7" d="M 1794 2956 
+Q 1484 2956 1296 2825 
+Q 1109 2694 1016 2478 
+L 1016 0 
+L 434 0 
+L 434 3381 
+L 984 3381 
+L 1000 3013 
+Q 1172 3216 1422 3330 
+Q 1672 3444 2000 3444 
+Q 2325 3444 2579 3314 
+Q 2834 3184 2969 2900 
+Q 3138 3144 3408 3294 
+Q 3678 3444 4044 3444 
+Q 4588 3444 4883 3153 
+Q 5178 2863 5178 2222 
+L 5178 0 
+L 4597 0 
+L 4597 2228 
+Q 4597 2653 4401 2804 
+Q 4206 2956 3875 2956 
+Q 3525 2956 3325 2748 
+Q 3125 2541 3094 2244 
+L 3094 0 
+L 2516 0 
+L 2516 2225 
+Q 2516 2622 2319 2789 
+Q 2122 2956 1794 2956 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-217" d="M 3297 1719 
+L 3297 1653 
+Q 3297 1159 3144 771 
+Q 2991 384 2697 160 
+Q 2403 -63 1984 -63 
+Q 1672 -63 1431 39 
+Q 1191 141 1019 328 
+L 1019 -1300 
+L 438 -1300 
+L 438 3381 
+L 969 3381 
+L 997 3009 
+Q 1169 3219 1412 3331 
+Q 1656 3444 1975 3444 
+Q 2403 3444 2697 3228 
+Q 2991 3013 3144 2623 
+Q 3297 2234 3297 1719 
+z
+M 2716 1653 
+L 2716 1719 
+Q 2716 2056 2620 2337 
+Q 2525 2619 2323 2787 
+Q 2122 2956 1806 2956 
+Q 1513 2956 1322 2823 
+Q 1131 2691 1019 2491 
+L 1019 872 
+Q 1134 672 1323 542 
+Q 1513 413 1813 413 
+Q 2125 413 2325 583 
+Q 2525 753 2620 1036 
+Q 2716 1319 2716 1653 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-1d8" d="M 1069 4800 
+L 1069 0 
+L 488 0 
+L 488 4800 
+L 1069 4800 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-16a" d="M 966 688 
+L 966 222 
+Q 966 -63 822 -380 
+Q 678 -697 419 -909 
+L 91 -681 
+Q 238 -475 319 -258 
+Q 400 -41 400 213 
+L 400 688 
+L 966 688 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Vazirmatn-Regular-1fe"/>
+       <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(56.296875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(104.09375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(157.125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(191.015625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-135" transform="translate(242.625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1e7" transform="translate(297.015625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(384.71875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(440.875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(465.1875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-16a" transform="translate(518.21875 0)"/>
+      </g>
+      <!-- then split rows -->
+      <g transform="translate(31.320137 244.208758) scale(0.066 -0.066)">
+       <defs>
+        <path id="Vazirmatn-Regular-255" d="M 1856 3381 
+L 1856 2938 
+L 1225 2938 
+L 1225 838 
+Q 1225 578 1339 506 
+Q 1453 434 1597 434 
+Q 1669 434 1748 448 
+Q 1828 463 1869 472 
+L 1872 0 
+Q 1803 -22 1692 -42 
+Q 1581 -63 1425 -63 
+Q 1213 -63 1034 21 
+Q 856 106 751 304 
+Q 647 503 647 841 
+L 647 2938 
+L 28 2938 
+L 28 3381 
+L 647 3381 
+L 647 4203 
+L 1225 4203 
+L 1225 3381 
+L 1856 3381 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-1be" d="M 1019 4800 
+L 1019 2978 
+Q 1200 3197 1453 3320 
+Q 1706 3444 2016 3444 
+Q 2516 3444 2808 3162 
+Q 3100 2881 3100 2216 
+L 3100 0 
+L 2519 0 
+L 2519 2222 
+Q 2519 2619 2345 2787 
+Q 2172 2956 1844 2956 
+Q 1566 2956 1353 2806 
+Q 1141 2656 1019 2416 
+L 1019 0 
+L 441 0 
+L 441 4800 
+L 1019 4800 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-1ed" d="M 1844 2956 
+Q 1566 2956 1353 2806 
+Q 1141 2656 1019 2416 
+L 1019 0 
+L 441 0 
+L 441 3381 
+L 988 3381 
+L 1006 2959 
+Q 1188 3188 1444 3316 
+Q 1700 3444 2016 3444 
+Q 2516 3444 2808 3162 
+Q 3100 2881 3100 2216 
+L 3100 0 
+L 2519 0 
+L 2519 2222 
+Q 2519 2619 2345 2787 
+Q 2172 2956 1844 2956 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-250" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-1c7" d="M 444 4278 
+Q 444 4419 530 4516 
+Q 616 4613 784 4613 
+Q 950 4613 1039 4516 
+Q 1128 4419 1128 4278 
+Q 1128 4144 1039 4048 
+Q 950 3953 784 3953 
+Q 616 3953 530 4048 
+Q 444 4144 444 4278 
+z
+M 1069 3381 
+L 1069 0 
+L 488 0 
+L 488 3381 
+L 1069 3381 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-51e" d="M 713 3381 
+L 1378 856 
+L 2166 3381 
+L 2631 3381 
+L 3431 803 
+L 4084 3381 
+L 4659 3381 
+L 3678 0 
+L 3209 0 
+L 2388 2559 
+L 1588 0 
+L 1116 0 
+L 134 3381 
+L 713 3381 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Vazirmatn-Regular-255"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(32.71875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(87.796875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1ed" transform="translate(140.828125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(196.046875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(222.90625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(274.515625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(330.671875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(354.984375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-255" transform="translate(379.296875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(412.015625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(438.875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(471.796875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-51e" transform="translate(528.828125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(603.96875 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 117.021899 220.128679 
+L 117.021899 30.088699 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m711566ca5b" x="117.021899" y="220.128679" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <!-- split rows, -->
+      <g transform="translate(102.094555 233.896258) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-239"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(51.609375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(107.765625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(132.078125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-255" transform="translate(156.390625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(189.109375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(215.96875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(248.890625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-51e" transform="translate(305.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(381.0625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-16a" transform="translate(432.671875 0)"/>
+      </g>
+      <!-- then oversample -->
+      <g transform="translate(92.564774 244.208758) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-255"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(32.71875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(87.796875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1ed" transform="translate(140.828125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(196.046875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(222.90625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(279.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(327 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(380.03125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(413.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-135" transform="translate(465.53125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1e7" transform="translate(519.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(607.625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(663.78125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(688.09375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 181.089583 220.128679 
+L 181.089583 30.088699 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m711566ca5b" x="181.089583" y="220.128679" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <!-- split households, -->
+      <g transform="translate(156.275646 233.896258) scale(0.066 -0.066)">
+       <defs>
+        <path id="Vazirmatn-Regular-26b" d="M 2538 0 
+L 2525 334 
+Q 2369 147 2125 42 
+Q 1881 -63 1538 -63 
+Q 1041 -63 734 231 
+Q 428 525 428 1200 
+L 428 3381 
+L 1006 3381 
+L 1006 1194 
+Q 1006 891 1095 723 
+Q 1184 556 1328 492 
+Q 1472 428 1628 428 
+Q 1981 428 2193 562 
+Q 2406 697 2509 919 
+L 2509 3381 
+L 3091 3381 
+L 3091 0 
+L 2538 0 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-170" d="M 297 1653 
+L 297 1719 
+Q 297 2234 464 2623 
+Q 631 3013 931 3228 
+Q 1231 3444 1634 3444 
+Q 1941 3444 2173 3341 
+Q 2406 3238 2572 3044 
+L 2572 4800 
+L 3153 4800 
+L 3153 0 
+L 2622 0 
+L 2594 363 
+Q 2428 159 2187 48 
+Q 1947 -63 1628 -63 
+Q 1231 -63 931 160 
+Q 631 384 464 771 
+Q 297 1159 297 1653 
+z
+M 878 1719 
+L 878 1653 
+Q 878 1319 972 1039 
+Q 1066 759 1262 593 
+Q 1459 428 1772 428 
+Q 2075 428 2265 565 
+Q 2456 703 2572 919 
+L 2572 2475 
+Q 2459 2684 2267 2820 
+Q 2075 2956 1778 2956 
+Q 1463 2956 1264 2787 
+Q 1066 2619 972 2337 
+Q 878 2056 878 1719 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Vazirmatn-Regular-239"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(51.609375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(107.765625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(132.078125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-255" transform="translate(156.390625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(189.109375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(215.96875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(271.046875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-26b" transform="translate(328.078125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(383.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(434.8125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(487.84375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(542.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(599.953125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-170" transform="translate(624.265625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(680.65625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-16a" transform="translate(732.265625 0)"/>
+      </g>
+      <!-- then oversample -->
+      <g transform="translate(156.632458 244.208758) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-255"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(32.71875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(87.796875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1ed" transform="translate(140.828125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(196.046875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(222.90625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(279.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(327 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(380.03125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(413.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-135" transform="translate(465.53125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1e7" transform="translate(519.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(607.625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(663.78125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(688.09375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 245.157267 220.128679 
+L 245.157267 30.088699 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m711566ca5b" x="245.157267" y="220.128679" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <!-- split households, -->
+      <g transform="translate(220.34333 233.896258) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-239"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(51.609375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(107.765625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(132.078125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-255" transform="translate(156.390625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(189.109375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(215.96875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(271.046875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-26b" transform="translate(328.078125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(383.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(434.8125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(487.84375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(542.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(599.953125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-170" transform="translate(624.265625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(680.65625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-16a" transform="translate(732.265625 0)"/>
+      </g>
+      <!-- no oversampling -->
+      <g transform="translate(220.737783 244.208758) scale(0.066 -0.066)">
+       <defs>
+        <path id="Vazirmatn-Regular-1af" d="M 303 1653 
+L 303 1719 
+Q 303 2234 465 2623 
+Q 628 3013 926 3228 
+Q 1225 3444 1638 3444 
+Q 1959 3444 2198 3331 
+Q 2438 3219 2603 3006 
+L 2631 3381 
+L 3156 3381 
+L 3156 72 
+Q 3156 -375 2975 -690 
+Q 2794 -1006 2470 -1170 
+Q 2147 -1334 1725 -1334 
+Q 1550 -1334 1314 -1279 
+Q 1078 -1225 851 -1095 
+Q 625 -966 472 -747 
+L 775 -403 
+Q 988 -659 1220 -759 
+Q 1453 -859 1681 -859 
+Q 2091 -859 2334 -629 
+Q 2578 -400 2578 44 
+L 2578 341 
+Q 2413 147 2177 42 
+Q 1941 -63 1631 -63 
+Q 1225 -63 926 160 
+Q 628 384 465 771 
+Q 303 1159 303 1653 
+z
+M 881 1719 
+L 881 1653 
+Q 881 1319 973 1039 
+Q 1066 759 1262 593 
+Q 1459 428 1772 428 
+Q 2081 428 2273 568 
+Q 2466 709 2578 928 
+L 2578 2469 
+Q 2469 2678 2275 2817 
+Q 2081 2956 1778 2956 
+Q 1463 2956 1264 2787 
+Q 1066 2619 973 2337 
+Q 881 2056 881 1719 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Vazirmatn-Regular-1ed"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(55.21875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(112.25 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(139.109375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(195.40625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(243.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(296.234375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(330.125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-135" transform="translate(381.734375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1e7" transform="translate(436.125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(523.828125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(579.984375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(604.296875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1ed" transform="translate(628.609375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1af" transform="translate(683.828125 0)"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_9">
+      <path d="M 43.344063 211.490498 
+L 254.76742 211.490498 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <defs>
+       <path id="m1d94089d7b" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m1d94089d7b" x="43.344063" y="211.490498" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <!-- 0.5 -->
+      <g transform="translate(24.48125 215.848409) scale(0.085 -0.085)">
+       <defs>
+        <path id="Vazirmatn-Regular-52f" d="M 3234 2638 
+L 3234 1944 
+Q 3234 1200 3059 759 
+Q 2884 319 2562 128 
+Q 2241 -63 1800 -63 
+Q 1366 -63 1041 128 
+Q 716 319 537 759 
+Q 359 1200 359 1944 
+L 359 2638 
+Q 359 3381 536 3812 
+Q 713 4244 1036 4428 
+Q 1359 4613 1794 4613 
+Q 2234 4613 2557 4428 
+Q 2881 4244 3057 3812 
+Q 3234 3381 3234 2638 
+z
+M 2653 1850 
+L 2653 2734 
+Q 2653 3503 2434 3822 
+Q 2216 4141 1794 4141 
+Q 1381 4141 1161 3822 
+Q 941 3503 941 2734 
+L 941 1850 
+Q 941 1088 1164 750 
+Q 1388 413 1800 413 
+Q 2225 413 2439 750 
+Q 2653 1088 2653 1850 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-21d" d="M 453 416 
+Q 453 588 575 711 
+Q 697 834 869 834 
+Q 1041 834 1162 711 
+Q 1284 588 1284 416 
+Q 1284 244 1162 122 
+Q 1041 0 869 0 
+Q 697 0 575 119 
+Q 453 238 453 416 
+z
+" transform="scale(0.015625)"/>
+        <path id="Vazirmatn-Regular-19f" d="M 1109 2166 
+L 647 2284 
+L 875 4550 
+L 3209 4550 
+L 3209 4016 
+L 1366 4016 
+L 1228 2778 
+Q 1353 2850 1545 2912 
+Q 1738 2975 1988 2975 
+Q 2616 2975 2980 2561 
+Q 3344 2147 3344 1450 
+Q 3344 1016 3186 673 
+Q 3028 331 2709 134 
+Q 2391 -63 1903 -63 
+Q 1534 -63 1226 75 
+Q 919 213 720 492 
+Q 522 772 481 1197 
+L 1031 1197 
+Q 1084 809 1309 611 
+Q 1534 413 1903 413 
+Q 2313 413 2538 691 
+Q 2763 969 2763 1444 
+Q 2763 1872 2527 2164 
+Q 2291 2456 1853 2456 
+Q 1563 2456 1414 2378 
+Q 1266 2300 1109 2166 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Vazirmatn-Regular-52f"/>
+       <use xlink:href="#Vazirmatn-Regular-21d" transform="translate(56.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-19f" transform="translate(83.359375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_11">
+      <path d="M 43.344063 176.838365 
+L 254.76742 176.838365 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="43.344063" y="176.838365" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <!-- 0.6 -->
+      <g transform="translate(24.48125 181.196275) scale(0.085 -0.085)">
+       <defs>
+        <path id="Vazirmatn-Regular-249" d="M 2597 4556 
+L 2647 4556 
+L 2647 4066 
+L 2597 4066 
+Q 2044 4066 1706 3853 
+Q 1369 3641 1205 3302 
+Q 1041 2963 1006 2575 
+Q 1194 2788 1445 2886 
+Q 1697 2984 1984 2984 
+Q 2441 2984 2728 2765 
+Q 3016 2547 3153 2203 
+Q 3291 1859 3291 1484 
+Q 3291 1053 3130 703 
+Q 2969 353 2655 145 
+Q 2341 -63 1878 -63 
+Q 1509 -63 1234 89 
+Q 959 241 778 494 
+Q 597 747 506 1056 
+Q 416 1366 416 1684 
+L 416 1956 
+Q 416 2438 512 2900 
+Q 609 3363 848 3738 
+Q 1088 4113 1513 4334 
+Q 1938 4556 2597 4556 
+z
+M 997 1666 
+Q 997 1263 1122 983 
+Q 1247 703 1448 559 
+Q 1650 416 1878 416 
+Q 2278 416 2498 709 
+Q 2719 1003 2719 1456 
+Q 2719 1728 2630 1968 
+Q 2541 2209 2356 2357 
+Q 2172 2506 1891 2506 
+Q 1588 2506 1341 2325 
+Q 1094 2144 997 1884 
+L 997 1666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Vazirmatn-Regular-52f"/>
+       <use xlink:href="#Vazirmatn-Regular-21d" transform="translate(56.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-249" transform="translate(83.359375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_13">
+      <path d="M 43.344063 142.186231 
+L 254.76742 142.186231 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="43.344063" y="142.186231" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <!-- 0.7 -->
+      <g transform="translate(24.48125 146.544141) scale(0.085 -0.085)">
+       <defs>
+        <path id="Vazirmatn-Regular-242" d="M 3319 4550 
+L 3319 4225 
+L 1434 0 
+L 825 0 
+L 2706 4075 
+L 244 4075 
+L 244 4550 
+L 3319 4550 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Vazirmatn-Regular-52f"/>
+       <use xlink:href="#Vazirmatn-Regular-21d" transform="translate(56.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-242" transform="translate(83.359375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_15">
+      <path d="M 43.344063 107.534097 
+L 254.76742 107.534097 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="43.344063" y="107.534097" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <!-- 0.8 -->
+      <g transform="translate(24.48125 111.892007) scale(0.085 -0.085)">
+       <defs>
+        <path id="Vazirmatn-Regular-185" d="M 3247 1231 
+Q 3247 816 3055 527 
+Q 2863 238 2536 87 
+Q 2209 -63 1800 -63 
+Q 1391 -63 1062 87 
+Q 734 238 543 527 
+Q 353 816 353 1231 
+Q 353 1613 558 1905 
+Q 763 2197 1113 2347 
+Q 809 2494 632 2762 
+Q 456 3031 456 3366 
+Q 456 3763 629 4041 
+Q 803 4319 1106 4466 
+Q 1409 4613 1797 4613 
+Q 2188 4613 2491 4466 
+Q 2794 4319 2967 4041 
+Q 3141 3763 3141 3366 
+Q 3141 3028 2959 2761 
+Q 2778 2494 2475 2347 
+Q 2828 2197 3037 1903 
+Q 3247 1609 3247 1231 
+z
+M 2563 3356 
+Q 2563 3697 2350 3917 
+Q 2138 4138 1797 4138 
+Q 1456 4138 1247 3927 
+Q 1038 3716 1038 3356 
+Q 1038 3003 1247 2790 
+Q 1456 2578 1800 2578 
+Q 2141 2578 2352 2790 
+Q 2563 3003 2563 3356 
+z
+M 2666 1244 
+Q 2666 1625 2425 1865 
+Q 2184 2106 1794 2106 
+Q 1397 2106 1164 1865 
+Q 931 1625 931 1244 
+Q 931 850 1164 631 
+Q 1397 413 1800 413 
+Q 2203 413 2434 631 
+Q 2666 850 2666 1244 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Vazirmatn-Regular-52f"/>
+       <use xlink:href="#Vazirmatn-Regular-21d" transform="translate(56.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-185" transform="translate(83.359375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_17">
+      <path d="M 43.344063 72.881963 
+L 254.76742 72.881963 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="43.344063" y="72.881963" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <!-- 0.9 -->
+      <g transform="translate(24.48125 77.239873) scale(0.085 -0.085)">
+       <defs>
+        <path id="Vazirmatn-Regular-1f4" d="M 953 484 
+L 1013 484 
+Q 1484 484 1787 609 
+Q 2091 734 2264 950 
+Q 2438 1166 2511 1437 
+Q 2584 1709 2597 2006 
+Q 2416 1791 2162 1656 
+Q 1909 1522 1613 1522 
+Q 1163 1522 875 1747 
+Q 588 1972 450 2320 
+Q 313 2669 313 3041 
+Q 313 3475 472 3831 
+Q 631 4188 947 4400 
+Q 1263 4613 1725 4613 
+Q 2116 4613 2391 4456 
+Q 2666 4300 2839 4037 
+Q 3013 3775 3094 3447 
+Q 3175 3119 3175 2772 
+L 3175 2563 
+Q 3175 2209 3129 1845 
+Q 3084 1481 2957 1150 
+Q 2831 819 2590 558 
+Q 2350 297 1964 145 
+Q 1578 -6 1013 -6 
+L 953 -6 
+L 953 484 
+z
+M 881 3072 
+Q 881 2803 972 2558 
+Q 1063 2313 1245 2158 
+Q 1428 2003 1706 2003 
+Q 2003 2003 2245 2181 
+Q 2488 2359 2600 2622 
+L 2600 2850 
+Q 2600 3266 2478 3552 
+Q 2356 3838 2156 3986 
+Q 1956 4134 1725 4134 
+Q 1322 4134 1101 3831 
+Q 881 3528 881 3072 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Vazirmatn-Regular-52f"/>
+       <use xlink:href="#Vazirmatn-Regular-21d" transform="translate(56.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1f4" transform="translate(83.359375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_19">
+      <path d="M 43.344063 38.229829 
+L 254.76742 38.229829 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="43.344063" y="38.229829" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <!-- 1.0 -->
+      <g transform="translate(24.48125 42.587739) scale(0.085 -0.085)">
+       <defs>
+        <path id="Vazirmatn-Regular-209" d="M 2278 4575 
+L 2278 0 
+L 1700 0 
+L 1700 3853 
+L 534 3428 
+L 534 3950 
+L 2188 4575 
+L 2278 4575 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Vazirmatn-Regular-209"/>
+       <use xlink:href="#Vazirmatn-Regular-21d" transform="translate(56.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-52f" transform="translate(83.359375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_11">
+     <!-- Area under the ROC curve (held-out rows) -->
+     <g transform="translate(15.91582 204.38115) rotate(-90) scale(0.085 -0.085)">
+      <defs>
+       <path id="Vazirmatn-Regular-2" d="M 3475 0 
+L 3041 1191 
+L 1138 1191 
+L 706 0 
+L 91 0 
+L 1825 4550 
+L 2353 4550 
+L 4094 0 
+L 3475 0 
+z
+M 1319 1684 
+L 2863 1684 
+L 2091 3806 
+L 1319 1684 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-d9" d="M 3188 0 
+L 2200 1844 
+L 1131 1844 
+L 1131 0 
+L 528 0 
+L 528 4550 
+L 2034 4550 
+Q 2800 4550 3214 4200 
+Q 3628 3850 3628 3184 
+Q 3628 2759 3398 2442 
+Q 3169 2125 2763 1969 
+L 3831 38 
+L 3831 0 
+L 3188 0 
+z
+M 2034 4056 
+L 1131 4056 
+L 1131 2334 
+L 2053 2334 
+Q 2538 2334 2783 2582 
+Q 3028 2831 3028 3184 
+Q 3028 3578 2792 3817 
+Q 2556 4056 2034 4056 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-ba" d="M 4031 2419 
+L 4031 2131 
+Q 4031 1450 3804 958 
+Q 3578 466 3168 201 
+Q 2759 -63 2206 -63 
+Q 1669 -63 1255 201 
+Q 841 466 606 958 
+Q 372 1450 372 2131 
+L 372 2419 
+Q 372 3100 605 3592 
+Q 838 4084 1250 4348 
+Q 1663 4613 2200 4613 
+Q 2753 4613 3165 4348 
+Q 3578 4084 3804 3592 
+Q 4031 3100 4031 2419 
+z
+M 3434 2131 
+L 3434 2425 
+Q 3434 3238 3109 3669 
+Q 2784 4100 2200 4100 
+Q 1641 4100 1305 3669 
+Q 969 3238 969 2425 
+L 969 2131 
+Q 969 1313 1308 880 
+Q 1647 447 2206 447 
+Q 2794 447 3114 880 
+Q 3434 1313 3434 2131 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-2b" d="M 3275 1447 
+L 3875 1447 
+Q 3828 1016 3628 675 
+Q 3428 334 3062 135 
+Q 2697 -63 2150 -63 
+Q 1616 -63 1217 198 
+Q 819 459 597 934 
+Q 375 1409 375 2047 
+L 375 2500 
+Q 375 3138 597 3613 
+Q 819 4088 1230 4350 
+Q 1641 4613 2203 4613 
+Q 2719 4613 3075 4419 
+Q 3431 4225 3629 3883 
+Q 3828 3541 3875 3091 
+L 3275 3091 
+Q 3206 3566 2968 3842 
+Q 2731 4119 2203 4119 
+Q 1600 4119 1287 3675 
+Q 975 3231 975 2506 
+L 975 2047 
+Q 975 1600 1100 1233 
+Q 1225 866 1486 647 
+Q 1747 428 2150 428 
+Q 2534 428 2762 550 
+Q 2991 672 3108 900 
+Q 3225 1128 3275 1447 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-160" d="M 1794 413 
+Q 2103 413 2336 598 
+Q 2569 784 2591 1069 
+L 3141 1069 
+Q 3125 769 2939 511 
+Q 2753 253 2453 95 
+Q 2153 -63 1794 -63 
+Q 1284 -63 951 170 
+Q 619 403 455 787 
+Q 291 1172 291 1625 
+L 291 1756 
+Q 291 2209 455 2593 
+Q 619 2978 953 3211 
+Q 1288 3444 1794 3444 
+Q 2191 3444 2487 3283 
+Q 2784 3122 2954 2845 
+Q 3125 2569 3141 2219 
+L 2591 2219 
+Q 2569 2531 2355 2750 
+Q 2141 2969 1794 2969 
+Q 1438 2969 1236 2787 
+Q 1034 2606 951 2328 
+Q 869 2050 869 1756 
+L 869 1625 
+Q 869 1328 950 1050 
+Q 1031 772 1232 592 
+Q 1434 413 1794 413 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-219" d="M 975 1847 
+Q 975 1259 1100 695 
+Q 1225 131 1467 -328 
+Q 1709 -788 2066 -1059 
+L 1947 -1441 
+Q 1600 -1253 1319 -918 
+Q 1038 -584 836 -145 
+Q 634 294 525 803 
+Q 416 1313 416 1847 
+Q 416 2381 525 2890 
+Q 634 3400 836 3839 
+Q 1038 4278 1319 4612 
+Q 1600 4947 1947 5134 
+L 2066 4753 
+Q 1709 4481 1467 4022 
+Q 1225 3563 1100 2998 
+Q 975 2434 975 1847 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-1c3" d="M 2547 1384 
+L 438 1384 
+L 438 1856 
+L 2547 1856 
+L 2547 1384 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-21a" d="M 1213 1847 
+Q 1213 2434 1089 2998 
+Q 966 3563 722 4022 
+Q 478 4481 122 4753 
+L 241 5134 
+Q 588 4947 869 4612 
+Q 1150 4278 1351 3839 
+Q 1553 3400 1662 2890 
+Q 1772 2381 1772 1847 
+Q 1772 1313 1662 803 
+Q 1553 294 1351 -145 
+Q 1150 -584 869 -918 
+Q 588 -1253 241 -1441 
+L 122 -1059 
+Q 478 -788 722 -328 
+Q 966 131 1089 695 
+Q 1213 1259 1213 1847 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Vazirmatn-Regular-2"/>
+      <use xlink:href="#Vazirmatn-Regular-230" transform="translate(65.234375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(98.203125 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-135" transform="translate(151.234375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-250" transform="translate(205.625 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-26b" transform="translate(232.484375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-1ed" transform="translate(287.609375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-170" transform="translate(342.828125 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(399.21875 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-230" transform="translate(452.25 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-250" transform="translate(486.140625 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-255" transform="translate(513 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(545.71875 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(600.796875 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-250" transform="translate(653.828125 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-d9" transform="translate(680.6875 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-ba" transform="translate(742.3125 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-2b" transform="translate(811.109375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-250" transform="translate(876.203125 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-160" transform="translate(903.0625 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-26b" transform="translate(955.40625 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-230" transform="translate(1010.53125 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(1045.296875 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(1093.09375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-250" transform="translate(1146.125 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-219" transform="translate(1172.984375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(1207.171875 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(1262.25 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(1315.28125 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-170" transform="translate(1339.59375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-1c3" transform="translate(1395.984375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(1442.609375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-26b" transform="translate(1499.640625 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-255" transform="translate(1554.765625 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-250" transform="translate(1587.484375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-230" transform="translate(1614.34375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(1647.265625 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-51e" transform="translate(1704.296875 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-239" transform="translate(1779.4375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-21a" transform="translate(1831.046875 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_21">
+    <path d="M 52.954215 146.657129 
+L 117.021899 153.78384 
+L 181.089583 151.315803 
+L 245.157267 150.776183 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #6a7b8c; stroke-width: 1.4; stroke-linecap: square"/>
+    <defs>
+     <path id="m1f3fe2d5a6" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #6a7b8c"/>
+    </defs>
+    <g clip-path="url(#pb71f245f28)">
+     <use xlink:href="#m1f3fe2d5a6" x="52.954215" y="146.657129" style="fill: #6a7b8c; stroke: #6a7b8c"/>
+     <use xlink:href="#m1f3fe2d5a6" x="117.021899" y="153.78384" style="fill: #6a7b8c; stroke: #6a7b8c"/>
+     <use xlink:href="#m1f3fe2d5a6" x="181.089583" y="151.315803" style="fill: #6a7b8c; stroke: #6a7b8c"/>
+     <use xlink:href="#m1f3fe2d5a6" x="245.157267" y="150.776183" style="fill: #6a7b8c; stroke: #6a7b8c"/>
+    </g>
+   </g>
+   <g id="line2d_22">
+    <path d="M 52.954215 146.252104 
+L 117.021899 153.711916 
+L 181.089583 151.883314 
+L 245.157267 150.524262 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #6a7b8c; stroke-width: 0.9"/>
+    <defs>
+     <path id="ma3d7a8a313" d="M 0 -2.25 
+L -2.25 2.25 
+L 2.25 2.25 
+z
+" style="stroke: #6a7b8c; stroke-linejoin: miter"/>
+    </defs>
+    <g clip-path="url(#pb71f245f28)">
+     <use xlink:href="#ma3d7a8a313" x="52.954215" y="146.252104" style="fill: #ffffff; stroke: #6a7b8c; stroke-linejoin: miter"/>
+     <use xlink:href="#ma3d7a8a313" x="117.021899" y="153.711916" style="fill: #ffffff; stroke: #6a7b8c; stroke-linejoin: miter"/>
+     <use xlink:href="#ma3d7a8a313" x="181.089583" y="151.883314" style="fill: #ffffff; stroke: #6a7b8c; stroke-linejoin: miter"/>
+     <use xlink:href="#ma3d7a8a313" x="245.157267" y="150.524262" style="fill: #ffffff; stroke: #6a7b8c; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_23">
+    <path d="M 52.954215 133.65366 
+L 117.021899 173.615303 
+L 181.089583 163.323133 
+L 245.157267 154.077933 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #56b4e9; stroke-width: 1.4; stroke-linecap: square"/>
+    <defs>
+     <path id="m070edcdf23" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #56b4e9"/>
+    </defs>
+    <g clip-path="url(#pb71f245f28)">
+     <use xlink:href="#m070edcdf23" x="52.954215" y="133.65366" style="fill: #56b4e9; stroke: #56b4e9"/>
+     <use xlink:href="#m070edcdf23" x="117.021899" y="173.615303" style="fill: #56b4e9; stroke: #56b4e9"/>
+     <use xlink:href="#m070edcdf23" x="181.089583" y="163.323133" style="fill: #56b4e9; stroke: #56b4e9"/>
+     <use xlink:href="#m070edcdf23" x="245.157267" y="154.077933" style="fill: #56b4e9; stroke: #56b4e9"/>
+    </g>
+   </g>
+   <g id="line2d_24">
+    <path d="M 52.954215 132.545499 
+L 117.021899 175.76145 
+L 181.089583 169.402928 
+L 245.157267 156.60986 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #56b4e9; stroke-width: 0.9"/>
+    <defs>
+     <path id="ma94d471c45" d="M 0 -2.25 
+L -2.25 2.25 
+L 2.25 2.25 
+z
+" style="stroke: #56b4e9; stroke-linejoin: miter"/>
+    </defs>
+    <g clip-path="url(#pb71f245f28)">
+     <use xlink:href="#ma94d471c45" x="52.954215" y="132.545499" style="fill: #ffffff; stroke: #56b4e9; stroke-linejoin: miter"/>
+     <use xlink:href="#ma94d471c45" x="117.021899" y="175.76145" style="fill: #ffffff; stroke: #56b4e9; stroke-linejoin: miter"/>
+     <use xlink:href="#ma94d471c45" x="181.089583" y="169.402928" style="fill: #ffffff; stroke: #56b4e9; stroke-linejoin: miter"/>
+     <use xlink:href="#ma94d471c45" x="245.157267" y="156.60986" style="fill: #ffffff; stroke: #56b4e9; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_25">
+    <path d="M 52.954215 45.831636 
+L 117.021899 203.389102 
+L 181.089583 203.016497 
+L 245.157267 203.638156 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #e69f00; stroke-width: 1.4; stroke-linecap: square"/>
+    <defs>
+     <path id="m608c32f98c" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #e69f00"/>
+    </defs>
+    <g clip-path="url(#pb71f245f28)">
+     <use xlink:href="#m608c32f98c" x="52.954215" y="45.831636" style="fill: #e69f00; stroke: #e69f00"/>
+     <use xlink:href="#m608c32f98c" x="117.021899" y="203.389102" style="fill: #e69f00; stroke: #e69f00"/>
+     <use xlink:href="#m608c32f98c" x="181.089583" y="203.016497" style="fill: #e69f00; stroke: #e69f00"/>
+     <use xlink:href="#m608c32f98c" x="245.157267" y="203.638156" style="fill: #e69f00; stroke: #e69f00"/>
+    </g>
+   </g>
+   <g id="line2d_26">
+    <path d="M 52.954215 45.304839 
+L 117.021899 169.450037 
+L 181.089583 164.860288 
+L 245.157267 159.461178 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #e69f00; stroke-width: 0.9"/>
+    <defs>
+     <path id="m01801ed7a1" d="M 0 -2.25 
+L -2.25 2.25 
+L 2.25 2.25 
+z
+" style="stroke: #e69f00; stroke-linejoin: miter"/>
+    </defs>
+    <g clip-path="url(#pb71f245f28)">
+     <use xlink:href="#m01801ed7a1" x="52.954215" y="45.304839" style="fill: #ffffff; stroke: #e69f00; stroke-linejoin: miter"/>
+     <use xlink:href="#m01801ed7a1" x="117.021899" y="169.450037" style="fill: #ffffff; stroke: #e69f00; stroke-linejoin: miter"/>
+     <use xlink:href="#m01801ed7a1" x="181.089583" y="164.860288" style="fill: #ffffff; stroke: #e69f00; stroke-linejoin: miter"/>
+     <use xlink:href="#m01801ed7a1" x="245.157267" y="159.461178" style="fill: #ffffff; stroke: #e69f00; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_27">
+    <path d="M 52.954215 41.16134 
+L 117.021899 162.109161 
+L 181.089583 163.899698 
+L 245.157267 163.701176 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #0072b2; stroke-width: 1.4; stroke-linecap: square"/>
+    <defs>
+     <path id="maaa942d2c6" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #0072b2"/>
+    </defs>
+    <g clip-path="url(#pb71f245f28)">
+     <use xlink:href="#maaa942d2c6" x="52.954215" y="41.16134" style="fill: #0072b2; stroke: #0072b2"/>
+     <use xlink:href="#maaa942d2c6" x="117.021899" y="162.109161" style="fill: #0072b2; stroke: #0072b2"/>
+     <use xlink:href="#maaa942d2c6" x="181.089583" y="163.899698" style="fill: #0072b2; stroke: #0072b2"/>
+     <use xlink:href="#maaa942d2c6" x="245.157267" y="163.701176" style="fill: #0072b2; stroke: #0072b2"/>
+    </g>
+   </g>
+   <g id="line2d_28">
+    <path d="M 52.954215 41.305071 
+L 117.021899 159.96678 
+L 181.089583 155.570875 
+L 245.157267 150.88579 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #0072b2; stroke-width: 0.9"/>
+    <defs>
+     <path id="md4ff3f2e37" d="M 0 -2.25 
+L -2.25 2.25 
+L 2.25 2.25 
+z
+" style="stroke: #0072b2; stroke-linejoin: miter"/>
+    </defs>
+    <g clip-path="url(#pb71f245f28)">
+     <use xlink:href="#md4ff3f2e37" x="52.954215" y="41.305071" style="fill: #ffffff; stroke: #0072b2; stroke-linejoin: miter"/>
+     <use xlink:href="#md4ff3f2e37" x="117.021899" y="159.96678" style="fill: #ffffff; stroke: #0072b2; stroke-linejoin: miter"/>
+     <use xlink:href="#md4ff3f2e37" x="181.089583" y="155.570875" style="fill: #ffffff; stroke: #0072b2; stroke-linejoin: miter"/>
+     <use xlink:href="#md4ff3f2e37" x="245.157267" y="150.88579" style="fill: #ffffff; stroke: #0072b2; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_29">
+    <path d="M 52.954215 67.781378 
+L 117.021899 177.032138 
+L 181.089583 171.208345 
+L 245.157267 186.485259 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke: #cc79a7; stroke-width: 1.4; stroke-linecap: square"/>
+    <defs>
+     <path id="mad493772eb" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #cc79a7"/>
+    </defs>
+    <g clip-path="url(#pb71f245f28)">
+     <use xlink:href="#mad493772eb" x="52.954215" y="67.781378" style="fill: #cc79a7; stroke: #cc79a7"/>
+     <use xlink:href="#mad493772eb" x="117.021899" y="177.032138" style="fill: #cc79a7; stroke: #cc79a7"/>
+     <use xlink:href="#mad493772eb" x="181.089583" y="171.208345" style="fill: #cc79a7; stroke: #cc79a7"/>
+     <use xlink:href="#mad493772eb" x="245.157267" y="186.485259" style="fill: #cc79a7; stroke: #cc79a7"/>
+    </g>
+   </g>
+   <g id="line2d_30">
+    <path d="M 52.954215 49.441658 
+L 117.021899 167.69669 
+L 181.089583 158.412317 
+L 245.157267 186.429127 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #cc79a7; stroke-width: 0.9"/>
+    <defs>
+     <path id="m8c222b7af2" d="M 0 -2.25 
+L -2.25 2.25 
+L 2.25 2.25 
+z
+" style="stroke: #cc79a7; stroke-linejoin: miter"/>
+    </defs>
+    <g clip-path="url(#pb71f245f28)">
+     <use xlink:href="#m8c222b7af2" x="52.954215" y="49.441658" style="fill: #ffffff; stroke: #cc79a7; stroke-linejoin: miter"/>
+     <use xlink:href="#m8c222b7af2" x="117.021899" y="167.69669" style="fill: #ffffff; stroke: #cc79a7; stroke-linejoin: miter"/>
+     <use xlink:href="#m8c222b7af2" x="181.089583" y="158.412317" style="fill: #ffffff; stroke: #cc79a7; stroke-linejoin: miter"/>
+     <use xlink:href="#m8c222b7af2" x="245.157267" y="186.429127" style="fill: #ffffff; stroke: #cc79a7; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_31">
+    <path d="M 43.344063 211.490498 
+L 254.76742 211.490498 
+" clip-path="url(#pb71f245f28)" style="fill: none; stroke-dasharray: 0.7,1.155; stroke-dashoffset: 0; stroke: #555555; stroke-width: 0.7"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 43.344063 220.128679 
+L 43.344063 30.088699 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 43.344063 220.128679 
+L 254.76742 220.128679 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_12">
+    <!-- A -->
+    <g transform="translate(33.839204 18.479297) scale(0.11 -0.11)">
+     <defs>
+      <path id="Vazirmatn-Bold-2" d="M 3284 0 
+L 2969 959 
+L 1334 959 
+L 1019 0 
+L 22 0 
+L 1713 4550 
+L 2584 4550 
+L 4284 0 
+L 3284 0 
+z
+M 1575 1694 
+L 2728 1694 
+L 2150 3447 
+L 1575 1694 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Vazirmatn-Bold-2"/>
+    </g>
+   </g>
+   <g id="text_13">
+    <!-- Alternative-fuel vehicles -->
+    <g transform="translate(103.20289 24.088699) scale(0.085 -0.085)">
+     <defs>
+      <path id="Vazirmatn-Regular-198" d="M 1303 0 
+L 725 0 
+L 725 2938 
+L 191 2938 
+L 191 3381 
+L 725 3381 
+L 725 3738 
+Q 725 4284 1020 4575 
+Q 1316 4866 1834 4866 
+Q 2025 4866 2234 4816 
+L 2203 4344 
+Q 2072 4372 1891 4372 
+Q 1613 4372 1458 4208 
+Q 1303 4044 1303 3738 
+L 1303 3381 
+L 2022 3381 
+L 2022 2938 
+L 1303 2938 
+L 1303 0 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Vazirmatn-Regular-2"/>
+     <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(65.234375 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-255" transform="translate(89.546875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(122.265625 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-230" transform="translate(175.296875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1ed" transform="translate(209.1875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-135" transform="translate(264.40625 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-255" transform="translate(318.796875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(351.515625 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(375.828125 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(423.625 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1c3" transform="translate(476.65625 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-198" transform="translate(523.28125 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-26b" transform="translate(558.046875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(613.171875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(666.203125 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-250" transform="translate(690.515625 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(717.375 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(765.171875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(818.203125 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(873.28125 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-160" transform="translate(897.59375 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(949.9375 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(974.25 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-239" transform="translate(1027.28125 0)"/>
+    </g>
+   </g>
+   <g id="text_14">
+    <g id="patch_6">
+     <path d="M 239.967785 76.106695 
+C 242.092062 76.106695 244.12962 75.262711 245.63171 73.760621 
+C 247.133801 72.25853 247.977785 70.220972 247.977785 68.096695 
+C 247.977785 65.972419 247.133801 63.934861 245.63171 62.43277 
+C 244.12962 60.93068 242.092062 60.086695 239.967785 60.086695 
+C 237.843508 60.086695 235.80595 60.93068 234.30386 62.43277 
+C 232.801769 63.934861 231.957785 65.972419 231.957785 68.096695 
+C 231.957785 70.220972 232.801769 72.25853 234.30386 73.760621 
+C 235.80595 75.262711 237.843508 76.106695 239.967785 76.106695 
+z
+" style="fill: #ffffff; stroke: #d55e00; stroke-width: 1.2; stroke-linejoin: miter"/>
+    </g>
+    <!-- L -->
+    <g style="fill: #d55e00" transform="translate(237.80341 70.04982) scale(0.08 -0.08)">
+     <defs>
+      <path id="Vazirmatn-Bold-95" d="M 3331 731 
+L 3331 0 
+L 406 0 
+L 406 4550 
+L 1344 4550 
+L 1344 731 
+L 3331 731 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Vazirmatn-Bold-95"/>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_7">
+    <path d="M 294.13086 220.128679 
+L 505.554217 220.128679 
+L 505.554217 30.088699 
+L 294.13086 30.088699 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_5">
+     <g id="line2d_32">
+      <path d="M 303.741013 220.128679 
+L 303.741013 30.088699 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_33">
+      <g>
+       <use xlink:href="#m711566ca5b" x="303.741013" y="220.128679" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <!-- oversample, -->
+      <g transform="translate(285.990622 233.896258) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-1fe"/>
+       <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(56.296875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(104.09375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(157.125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(191.015625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-135" transform="translate(242.625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1e7" transform="translate(297.015625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(384.71875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(440.875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(465.1875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-16a" transform="translate(518.21875 0)"/>
+      </g>
+      <!-- then split rows -->
+      <g transform="translate(282.106935 244.208758) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-255"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(32.71875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(87.796875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1ed" transform="translate(140.828125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(196.046875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(222.90625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(274.515625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(330.671875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(354.984375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-255" transform="translate(379.296875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(412.015625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(438.875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(471.796875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-51e" transform="translate(528.828125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(603.96875 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_34">
+      <path d="M 367.808697 220.128679 
+L 367.808697 30.088699 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_35">
+      <g>
+       <use xlink:href="#m711566ca5b" x="367.808697" y="220.128679" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <!-- split rows, -->
+      <g transform="translate(352.881353 233.896258) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-239"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(51.609375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(107.765625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(132.078125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-255" transform="translate(156.390625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(189.109375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(215.96875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(248.890625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-51e" transform="translate(305.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(381.0625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-16a" transform="translate(432.671875 0)"/>
+      </g>
+      <!-- then oversample -->
+      <g transform="translate(343.351572 244.208758) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-255"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(32.71875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(87.796875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1ed" transform="translate(140.828125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(196.046875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(222.90625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(279.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(327 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(380.03125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(413.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-135" transform="translate(465.53125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1e7" transform="translate(519.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(607.625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(663.78125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(688.09375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_36">
+      <path d="M 431.876381 220.128679 
+L 431.876381 30.088699 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_37">
+      <g>
+       <use xlink:href="#m711566ca5b" x="431.876381" y="220.128679" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_17">
+      <!-- split households, -->
+      <g transform="translate(407.062443 233.896258) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-239"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(51.609375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(107.765625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(132.078125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-255" transform="translate(156.390625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(189.109375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(215.96875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(271.046875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-26b" transform="translate(328.078125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(383.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(434.8125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(487.84375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(542.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(599.953125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-170" transform="translate(624.265625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(680.65625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-16a" transform="translate(732.265625 0)"/>
+      </g>
+      <!-- then oversample -->
+      <g transform="translate(407.419256 244.208758) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-255"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(32.71875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(87.796875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1ed" transform="translate(140.828125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(196.046875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(222.90625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(279.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(327 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(380.03125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(413.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-135" transform="translate(465.53125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1e7" transform="translate(519.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(607.625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(663.78125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(688.09375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_38">
+      <path d="M 495.944065 220.128679 
+L 495.944065 30.088699 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_39">
+      <g>
+       <use xlink:href="#m711566ca5b" x="495.944065" y="220.128679" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_18">
+      <!-- split households, -->
+      <g transform="translate(471.130127 233.896258) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-239"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(51.609375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(107.765625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(132.078125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-255" transform="translate(156.390625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(189.109375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(215.96875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(271.046875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-26b" transform="translate(328.078125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(383.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(434.8125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(487.84375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(542.921875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(599.953125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-170" transform="translate(624.265625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(680.65625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-16a" transform="translate(732.265625 0)"/>
+      </g>
+      <!-- no oversampling -->
+      <g transform="translate(471.52458 244.208758) scale(0.066 -0.066)">
+       <use xlink:href="#Vazirmatn-Regular-1ed"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(55.21875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-250" transform="translate(112.25 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1fe" transform="translate(139.109375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(195.40625 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(243.203125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-230" transform="translate(296.234375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-239" transform="translate(330.125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-135" transform="translate(381.734375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1e7" transform="translate(436.125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-217" transform="translate(523.828125 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(579.984375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(604.296875 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1ed" transform="translate(628.609375 0)"/>
+       <use xlink:href="#Vazirmatn-Regular-1af" transform="translate(683.828125 0)"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_7">
+     <g id="line2d_40">
+      <path d="M 294.13086 211.490498 
+L 505.554217 211.490498 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_41">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="294.13086" y="211.490498" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_42">
+      <path d="M 294.13086 176.838365 
+L 505.554217 176.838365 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_43">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="294.13086" y="176.838365" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_44">
+      <path d="M 294.13086 142.186231 
+L 505.554217 142.186231 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_45">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="294.13086" y="142.186231" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_46">
+      <path d="M 294.13086 107.534097 
+L 505.554217 107.534097 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_47">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="294.13086" y="107.534097" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_48">
+      <path d="M 294.13086 72.881963 
+L 505.554217 72.881963 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_49">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="294.13086" y="72.881963" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_50">
+      <path d="M 294.13086 38.229829 
+L 505.554217 38.229829 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.22; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_51">
+      <g>
+       <use xlink:href="#m1d94089d7b" x="294.13086" y="38.229829" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_52">
+    <path d="M 303.741013 114.493789 
+L 367.808697 123.295376 
+L 431.876381 117.584044 
+L 495.944065 116.884254 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #6a7b8c; stroke-width: 1.4; stroke-linecap: square"/>
+    <g clip-path="url(#p67db18cded)">
+     <use xlink:href="#m1f3fe2d5a6" x="303.741013" y="114.493789" style="fill: #6a7b8c; stroke: #6a7b8c"/>
+     <use xlink:href="#m1f3fe2d5a6" x="367.808697" y="123.295376" style="fill: #6a7b8c; stroke: #6a7b8c"/>
+     <use xlink:href="#m1f3fe2d5a6" x="431.876381" y="117.584044" style="fill: #6a7b8c; stroke: #6a7b8c"/>
+     <use xlink:href="#m1f3fe2d5a6" x="495.944065" y="116.884254" style="fill: #6a7b8c; stroke: #6a7b8c"/>
+    </g>
+   </g>
+   <g id="line2d_53">
+    <path d="M 303.741013 114.223989 
+L 367.808697 123.985855 
+L 431.876381 116.493044 
+L 495.944065 114.64142 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #6a7b8c; stroke-width: 0.9"/>
+    <g clip-path="url(#p67db18cded)">
+     <use xlink:href="#ma3d7a8a313" x="303.741013" y="114.223989" style="fill: #ffffff; stroke: #6a7b8c; stroke-linejoin: miter"/>
+     <use xlink:href="#ma3d7a8a313" x="367.808697" y="123.985855" style="fill: #ffffff; stroke: #6a7b8c; stroke-linejoin: miter"/>
+     <use xlink:href="#ma3d7a8a313" x="431.876381" y="116.493044" style="fill: #ffffff; stroke: #6a7b8c; stroke-linejoin: miter"/>
+     <use xlink:href="#ma3d7a8a313" x="495.944065" y="114.64142" style="fill: #ffffff; stroke: #6a7b8c; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_54">
+    <path d="M 303.741013 105.48184 
+L 367.808697 131.54583 
+L 431.876381 127.809644 
+L 495.944065 121.520849 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #56b4e9; stroke-width: 1.4; stroke-linecap: square"/>
+    <g clip-path="url(#p67db18cded)">
+     <use xlink:href="#m070edcdf23" x="303.741013" y="105.48184" style="fill: #56b4e9; stroke: #56b4e9"/>
+     <use xlink:href="#m070edcdf23" x="367.808697" y="131.54583" style="fill: #56b4e9; stroke: #56b4e9"/>
+     <use xlink:href="#m070edcdf23" x="431.876381" y="127.809644" style="fill: #56b4e9; stroke: #56b4e9"/>
+     <use xlink:href="#m070edcdf23" x="495.944065" y="121.520849" style="fill: #56b4e9; stroke: #56b4e9"/>
+    </g>
+   </g>
+   <g id="line2d_55">
+    <path d="M 303.741013 104.68023 
+L 367.808697 134.621929 
+L 431.876381 126.86623 
+L 495.944065 123.093588 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #56b4e9; stroke-width: 0.9"/>
+    <g clip-path="url(#p67db18cded)">
+     <use xlink:href="#ma94d471c45" x="303.741013" y="104.68023" style="fill: #ffffff; stroke: #56b4e9; stroke-linejoin: miter"/>
+     <use xlink:href="#ma94d471c45" x="367.808697" y="134.621929" style="fill: #ffffff; stroke: #56b4e9; stroke-linejoin: miter"/>
+     <use xlink:href="#ma94d471c45" x="431.876381" y="126.86623" style="fill: #ffffff; stroke: #56b4e9; stroke-linejoin: miter"/>
+     <use xlink:href="#ma94d471c45" x="495.944065" y="123.093588" style="fill: #ffffff; stroke: #56b4e9; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_56">
+    <path d="M 303.741013 40.960945 
+L 367.808697 199.114272 
+L 431.876381 199.760472 
+L 495.944065 196.083855 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #e69f00; stroke-width: 1.4; stroke-linecap: square"/>
+    <g clip-path="url(#p67db18cded)">
+     <use xlink:href="#m608c32f98c" x="303.741013" y="40.960945" style="fill: #e69f00; stroke: #e69f00"/>
+     <use xlink:href="#m608c32f98c" x="367.808697" y="199.114272" style="fill: #e69f00; stroke: #e69f00"/>
+     <use xlink:href="#m608c32f98c" x="431.876381" y="199.760472" style="fill: #e69f00; stroke: #e69f00"/>
+     <use xlink:href="#m608c32f98c" x="495.944065" y="196.083855" style="fill: #e69f00; stroke: #e69f00"/>
+    </g>
+   </g>
+   <g id="line2d_57">
+    <path d="M 303.741013 40.44647 
+L 367.808697 151.722205 
+L 431.876381 146.894068 
+L 495.944065 141.219644 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #e69f00; stroke-width: 0.9"/>
+    <g clip-path="url(#p67db18cded)">
+     <use xlink:href="#m01801ed7a1" x="303.741013" y="40.44647" style="fill: #ffffff; stroke: #e69f00; stroke-linejoin: miter"/>
+     <use xlink:href="#m01801ed7a1" x="367.808697" y="151.722205" style="fill: #ffffff; stroke: #e69f00; stroke-linejoin: miter"/>
+     <use xlink:href="#m01801ed7a1" x="431.876381" y="146.894068" style="fill: #ffffff; stroke: #e69f00; stroke-linejoin: miter"/>
+     <use xlink:href="#m01801ed7a1" x="495.944065" y="141.219644" style="fill: #ffffff; stroke: #e69f00; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_58">
+    <path d="M 303.741013 38.72688 
+L 367.808697 133.146094 
+L 431.876381 135.594139 
+L 495.944065 135.973689 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #0072b2; stroke-width: 1.4; stroke-linecap: square"/>
+    <g clip-path="url(#p67db18cded)">
+     <use xlink:href="#maaa942d2c6" x="303.741013" y="38.72688" style="fill: #0072b2; stroke: #0072b2"/>
+     <use xlink:href="#maaa942d2c6" x="367.808697" y="133.146094" style="fill: #0072b2; stroke: #0072b2"/>
+     <use xlink:href="#maaa942d2c6" x="431.876381" y="135.594139" style="fill: #0072b2; stroke: #0072b2"/>
+     <use xlink:href="#maaa942d2c6" x="495.944065" y="135.973689" style="fill: #0072b2; stroke: #0072b2"/>
+    </g>
+   </g>
+   <g id="line2d_59">
+    <path d="M 303.741013 38.779103 
+L 367.808697 124.702606 
+L 431.876381 117.663632 
+L 495.944065 116.050471 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #0072b2; stroke-width: 0.9"/>
+    <g clip-path="url(#p67db18cded)">
+     <use xlink:href="#md4ff3f2e37" x="303.741013" y="38.779103" style="fill: #ffffff; stroke: #0072b2; stroke-linejoin: miter"/>
+     <use xlink:href="#md4ff3f2e37" x="367.808697" y="124.702606" style="fill: #ffffff; stroke: #0072b2; stroke-linejoin: miter"/>
+     <use xlink:href="#md4ff3f2e37" x="431.876381" y="117.663632" style="fill: #ffffff; stroke: #0072b2; stroke-linejoin: miter"/>
+     <use xlink:href="#md4ff3f2e37" x="495.944065" y="116.050471" style="fill: #ffffff; stroke: #0072b2; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_60">
+    <path d="M 303.741013 49.700376 
+L 367.808697 143.685051 
+L 431.876381 140.928839 
+L 495.944065 159.162668 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke: #cc79a7; stroke-width: 1.4; stroke-linecap: square"/>
+    <g clip-path="url(#p67db18cded)">
+     <use xlink:href="#mad493772eb" x="303.741013" y="49.700376" style="fill: #cc79a7; stroke: #cc79a7"/>
+     <use xlink:href="#mad493772eb" x="367.808697" y="143.685051" style="fill: #cc79a7; stroke: #cc79a7"/>
+     <use xlink:href="#mad493772eb" x="431.876381" y="140.928839" style="fill: #cc79a7; stroke: #cc79a7"/>
+     <use xlink:href="#mad493772eb" x="495.944065" y="159.162668" style="fill: #cc79a7; stroke: #cc79a7"/>
+    </g>
+   </g>
+   <g id="line2d_61">
+    <path d="M 303.741013 39.306861 
+L 367.808697 129.680703 
+L 431.876381 119.822118 
+L 495.944065 170.203333 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #cc79a7; stroke-width: 0.9"/>
+    <g clip-path="url(#p67db18cded)">
+     <use xlink:href="#m8c222b7af2" x="303.741013" y="39.306861" style="fill: #ffffff; stroke: #cc79a7; stroke-linejoin: miter"/>
+     <use xlink:href="#m8c222b7af2" x="367.808697" y="129.680703" style="fill: #ffffff; stroke: #cc79a7; stroke-linejoin: miter"/>
+     <use xlink:href="#m8c222b7af2" x="431.876381" y="119.822118" style="fill: #ffffff; stroke: #cc79a7; stroke-linejoin: miter"/>
+     <use xlink:href="#m8c222b7af2" x="495.944065" y="170.203333" style="fill: #ffffff; stroke: #cc79a7; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_62">
+    <path d="M 294.13086 211.490498 
+L 505.554217 211.490498 
+" clip-path="url(#p67db18cded)" style="fill: none; stroke-dasharray: 0.7,1.155; stroke-dashoffset: 0; stroke: #555555; stroke-width: 0.7"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 294.13086 220.128679 
+L 294.13086 30.088699 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 294.13086 220.128679 
+L 505.554217 220.128679 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_19">
+    <!-- B -->
+    <g transform="translate(284.997251 18.479297) scale(0.11 -0.11)">
+     <defs>
+      <path id="Vazirmatn-Bold-29" d="M 2147 0 
+L 406 0 
+L 406 4550 
+L 1994 4550 
+Q 2788 4550 3238 4247 
+Q 3688 3944 3688 3309 
+Q 3688 2997 3530 2736 
+Q 3372 2475 3028 2344 
+Q 3434 2244 3612 1956 
+Q 3791 1669 3791 1334 
+Q 3791 675 3366 337 
+Q 2941 0 2147 0 
+z
+M 1994 3816 
+L 1344 3816 
+L 1344 2641 
+L 1994 2641 
+Q 2750 2641 2750 3222 
+Q 2750 3538 2567 3677 
+Q 2384 3816 1994 3816 
+z
+M 2856 1344 
+Q 2856 1644 2701 1820 
+Q 2547 1997 2188 1997 
+L 1344 1997 
+L 1344 731 
+L 2147 731 
+Q 2513 731 2684 904 
+Q 2856 1078 2856 1344 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Vazirmatn-Bold-29"/>
+    </g>
+   </g>
+   <g id="text_20">
+    <!-- Electric vehicles -->
+    <g transform="translate(369.320234 24.088699) scale(0.085 -0.085)">
+     <defs>
+      <path id="Vazirmatn-Regular-3e" d="M 3419 491 
+L 3419 0 
+L 528 0 
+L 528 4550 
+L 3388 4550 
+L 3388 4056 
+L 1131 4056 
+L 1131 2594 
+L 3100 2594 
+L 3100 2103 
+L 1131 2103 
+L 1131 491 
+L 3419 491 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Vazirmatn-Regular-3e"/>
+     <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(56.84375 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(81.15625 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-160" transform="translate(134.1875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-255" transform="translate(186.53125 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-230" transform="translate(219.25 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(253.140625 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-160" transform="translate(277.453125 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-250" transform="translate(329.796875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-51d" transform="translate(356.65625 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(404.453125 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1be" transform="translate(457.484375 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1c7" transform="translate(512.5625 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-160" transform="translate(536.875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-1d8" transform="translate(589.21875 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-17d" transform="translate(613.53125 0)"/>
+     <use xlink:href="#Vazirmatn-Regular-239" transform="translate(666.5625 0)"/>
+    </g>
+   </g>
+   <g id="legend_1">
+    <g id="line2d_63">
+     <path d="M 464.929061 110.695872 
+L 471.929061 110.695872 
+L 478.929061 110.695872 
+" style="fill: none; stroke: #6a7b8c; stroke-width: 1.4; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#m1f3fe2d5a6" x="471.929061" y="110.695872" style="fill: #6a7b8c; stroke: #6a7b8c"/>
+     </g>
+    </g>
+    <g id="text_21">
+     <!-- LR -->
+     <g transform="translate(484.529061 113.145872) scale(0.07 -0.07)">
+      <defs>
+       <path id="Vazirmatn-Regular-95" d="M 3288 491 
+L 3288 0 
+L 528 0 
+L 528 4550 
+L 1131 4550 
+L 1131 491 
+L 3288 491 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Vazirmatn-Regular-95"/>
+      <use xlink:href="#Vazirmatn-Regular-d9" transform="translate(53.859375 0)"/>
+     </g>
+    </g>
+    <g id="line2d_64">
+     <path d="M 464.929061 125.133372 
+L 471.929061 125.133372 
+L 478.929061 125.133372 
+" style="fill: none; stroke: #56b4e9; stroke-width: 1.4; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#m070edcdf23" x="471.929061" y="125.133372" style="fill: #56b4e9; stroke: #56b4e9"/>
+     </g>
+    </g>
+    <g id="text_22">
+     <!-- NB -->
+     <g transform="translate(484.529061 127.583372) scale(0.07 -0.07)">
+      <defs>
+       <path id="Vazirmatn-Regular-a6" d="M 4028 4550 
+L 4028 0 
+L 3422 0 
+L 1131 3509 
+L 1131 0 
+L 528 0 
+L 528 4550 
+L 1131 4550 
+L 3431 1031 
+L 3431 4550 
+L 4028 4550 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-29" d="M 2122 0 
+L 528 0 
+L 528 4550 
+L 2019 4550 
+Q 2719 4550 3111 4261 
+Q 3503 3972 3503 3338 
+Q 3503 3022 3323 2776 
+Q 3144 2531 2831 2397 
+Q 3216 2291 3420 1994 
+Q 3625 1697 3625 1313 
+Q 3625 675 3214 337 
+Q 2803 0 2122 0 
+z
+M 2019 4056 
+L 1131 4056 
+L 1131 2613 
+L 2038 2613 
+Q 2428 2613 2664 2806 
+Q 2900 3000 2900 3344 
+Q 2900 3719 2683 3887 
+Q 2466 4056 2019 4056 
+z
+M 3025 1306 
+Q 3025 1688 2817 1908 
+Q 2609 2128 2150 2128 
+L 1131 2128 
+L 1131 491 
+L 2122 491 
+Q 2550 491 2787 711 
+Q 3025 931 3025 1306 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Vazirmatn-Regular-a6"/>
+      <use xlink:href="#Vazirmatn-Regular-29" transform="translate(71.34375 0)"/>
+     </g>
+    </g>
+    <g id="line2d_65">
+     <path d="M 464.929061 139.570872 
+L 471.929061 139.570872 
+L 478.929061 139.570872 
+" style="fill: none; stroke: #e69f00; stroke-width: 1.4; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#m608c32f98c" x="471.929061" y="139.570872" style="fill: #e69f00; stroke: #e69f00"/>
+     </g>
+    </g>
+    <g id="text_23">
+     <!-- DT -->
+     <g transform="translate(484.529061 142.020872) scale(0.07 -0.07)">
+      <defs>
+       <path id="Vazirmatn-Regular-36" d="M 1759 0 
+L 528 0 
+L 528 4550 
+L 1816 4550 
+Q 2413 4550 2864 4289 
+Q 3316 4028 3569 3548 
+Q 3822 3069 3822 2409 
+L 3822 2138 
+Q 3822 1478 3569 1000 
+Q 3316 522 2853 261 
+Q 2391 0 1759 0 
+z
+M 1816 4056 
+L 1131 4056 
+L 1131 491 
+L 1759 491 
+Q 2488 491 2856 941 
+Q 3225 1391 3225 2138 
+L 3225 2416 
+Q 3225 3200 2856 3628 
+Q 2488 4056 1816 4056 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-ed" d="M 3672 4550 
+L 3672 4056 
+L 2209 4056 
+L 2209 0 
+L 1616 0 
+L 1616 4056 
+L 156 4056 
+L 156 4550 
+L 3672 4550 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Vazirmatn-Regular-36"/>
+      <use xlink:href="#Vazirmatn-Regular-ed" transform="translate(64.3125 0)"/>
+     </g>
+    </g>
+    <g id="line2d_66">
+     <path d="M 464.929061 154.008372 
+L 471.929061 154.008372 
+L 478.929061 154.008372 
+" style="fill: none; stroke: #0072b2; stroke-width: 1.4; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#maaa942d2c6" x="471.929061" y="154.008372" style="fill: #0072b2; stroke: #0072b2"/>
+     </g>
+    </g>
+    <g id="text_24">
+     <!-- RF -->
+     <g transform="translate(484.529061 156.458372) scale(0.07 -0.07)">
+      <defs>
+       <path id="Vazirmatn-Regular-64" d="M 3038 2503 
+L 3038 2009 
+L 1131 2009 
+L 1131 0 
+L 528 0 
+L 528 4550 
+L 3347 4550 
+L 3347 4056 
+L 1131 4056 
+L 1131 2503 
+L 3038 2503 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Vazirmatn-Regular-d9"/>
+      <use xlink:href="#Vazirmatn-Regular-64" transform="translate(61.625 0)"/>
+     </g>
+    </g>
+    <g id="line2d_67">
+     <path d="M 464.929061 168.445872 
+L 471.929061 168.445872 
+L 478.929061 168.445872 
+" style="fill: none; stroke: #cc79a7; stroke-width: 1.4; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#mad493772eb" x="471.929061" y="168.445872" style="fill: #cc79a7; stroke: #cc79a7"/>
+     </g>
+    </g>
+    <g id="text_25">
+     <!-- SVM -->
+     <g transform="translate(484.529061 170.895872) scale(0.07 -0.07)">
+      <defs>
+       <path id="Vazirmatn-Regular-e1" d="M 2953 1150 
+Q 2953 1363 2862 1513 
+Q 2772 1663 2537 1784 
+Q 2303 1906 1872 2031 
+Q 1197 2228 797 2537 
+Q 397 2847 397 3375 
+Q 397 3728 589 4008 
+Q 781 4288 1129 4450 
+Q 1478 4613 1944 4613 
+Q 2456 4613 2814 4417 
+Q 3172 4222 3359 3908 
+Q 3547 3594 3547 3238 
+L 2947 3238 
+Q 2947 3619 2700 3869 
+Q 2453 4119 1944 4119 
+Q 1463 4119 1231 3908 
+Q 1000 3697 1000 3381 
+Q 1000 3097 1251 2905 
+Q 1503 2713 2066 2556 
+Q 2841 2338 3200 2013 
+Q 3559 1688 3559 1156 
+Q 3559 788 3362 513 
+Q 3166 238 2809 87 
+Q 2453 -63 1972 -63 
+Q 1656 -63 1351 25 
+Q 1047 113 798 288 
+Q 550 463 401 720 
+Q 253 978 253 1319 
+L 853 1319 
+Q 853 1009 1011 812 
+Q 1169 616 1425 522 
+Q 1681 428 1972 428 
+Q 2444 428 2698 623 
+Q 2953 819 2953 1150 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-117" d="M 744 4550 
+L 2034 800 
+L 3338 4550 
+L 3991 4550 
+L 2306 0 
+L 1772 0 
+L 91 4550 
+L 744 4550 
+z
+" transform="scale(0.015625)"/>
+       <path id="Vazirmatn-Regular-a3" d="M 528 4550 
+L 1303 4550 
+L 2794 841 
+L 4281 4550 
+L 5056 4550 
+L 5056 0 
+L 4456 0 
+L 4456 1775 
+L 4516 3678 
+L 3019 0 
+L 2563 0 
+L 1069 3684 
+L 1128 1775 
+L 1128 0 
+L 528 0 
+L 528 4550 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Vazirmatn-Regular-e1"/>
+      <use xlink:href="#Vazirmatn-Regular-117" transform="translate(59.375 0)"/>
+      <use xlink:href="#Vazirmatn-Regular-a3" transform="translate(123.046875 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pb71f245f28">
+   <rect x="43.344063" y="30.088699" width="211.423357" height="190.03998"/>
+  </clipPath>
+  <clipPath id="p67db18cded">
+   <rect x="294.13086" y="30.088699" width="211.423357" height="190.03998"/>
+  </clipPath>
+ </defs>
+</svg>

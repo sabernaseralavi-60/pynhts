@@ -5,7 +5,7 @@
 Read AGENTS.md first.
 
 ## Docs
-- [AGENTS.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/AGENTS.md): ten rules, canonical recipes, what not to do
+- [AGENTS.md](https://github.com/sabernaseralavi-60/pynhts/blob/main/AGENTS.md): twelve rules, canonical recipes, what not to do
 - [Defaults and guards](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/guards.md): each silent error and the guard that prevents it
 - [From a study statement to tables](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/study.md): `pynhts.study`, sample flow, Table 1, figures, grading against published numbers
 - [Comparing waves](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/waves.md): codes that change meaning, crosswalks

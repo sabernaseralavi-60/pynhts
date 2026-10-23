@@ -1,0 +1,5 @@
+A four-rung ladder grades how far published NHTS studies can be reproduced
+Design-aware standard errors were 2.2 times the unweighted ones (median)
+32% of coefficients significant without the design were not with it
+Oversampling before splitting inflated a classifier score from 0.64 to 0.99
+Open modules pynhts.models and pynhts.validate run the check in a few lines

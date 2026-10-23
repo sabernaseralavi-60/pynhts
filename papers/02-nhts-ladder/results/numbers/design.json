@@ -1,0 +1,9 @@
+{
+ "jk_2017": 98,
+ "jk_2009": 100,
+ "jk_2001": 99,
+ "trials": 10,
+ "newton_steps": 3,
+ "seeds": 2,
+ "golden_se_pct": 0.2
+}

@@ -65,10 +65,11 @@ ignore = ["D203", "D213", "D105"]
 "tests/*" = ["D"]
 "tests/unit/test_study.py" = ["D", "E501"]  # hand-worked arithmetic in comments and one-line specs
 "tests/data/test_study_real.py" = ["D", "E501"]
+"tests/unit/test_{models,validate}.py" = ["D", "E501"]
 "tools/*" = ["D"]
 "agent_eval/*" = ["D"]
 # documentation-heavy modules of 0.7.0: long prose lines in docstrings and registry strings
-"src/pynhts/{aggregate,eda,features,quality,study,transform,trends,tables,__init__}.py" = ["E501"]
+"src/pynhts/{aggregate,eda,features,quality,study,transform,trends,tables,models,validate,__init__}.py" = ["E501"]
 "src/pynhts/viz/plots.py" = ["E501"]
 "src/pynhts/core/validity.py" = ["E501"]
 "src/pynhts/recipes/stt2017.py" = ["D102", "D103"]  # one-line target functions, see module doc

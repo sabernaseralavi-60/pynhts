@@ -5,8 +5,9 @@ from pynhts.core.data import NHTSData, load
 from pynhts.core.dictionary import describe, dictionary
 from pynhts.core.validity import answer_status, valid
 
-from pynhts import aggregate, eda, features, quality, study, transform, trends  # isort: skip
+from pynhts import aggregate, eda, features, models, quality, study, transform, trends, validate  # isort: skip
 
 __version__ = "0.8.1"
 __all__ = ["NHTSData", "__version__", "aggregate", "answer_status", "concepts", "describe", "dictionary", "eda",
-           "features", "harmonize", "load", "quality", "rates", "stats", "study", "transform", "trends", "valid"]
+           "features", "harmonize", "load", "models", "quality", "rates", "stats", "study", "transform", "trends", "valid",
+           "validate"]

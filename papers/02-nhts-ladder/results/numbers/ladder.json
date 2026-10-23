@@ -1,0 +1,13 @@
+{
+ "n_studies": 22,
+ "n_sufficient": 9,
+ "n_partial": 11,
+ "n_insufficient": 2,
+ "n_l2_attempted": 13,
+ "n_l1_graded": 1454,
+ "n_l1_exact": 879,
+ "n_l1_close": 295,
+ "n_l1_acceptable": 116,
+ "n_l1_gap": 164,
+ "share_l1_exact_close": 0.8074277854195323
+}

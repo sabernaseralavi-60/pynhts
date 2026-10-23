@@ -1,0 +1,98 @@
+{
+ "quinn_edu_gr": {
+  "pub": 0.41,
+  "naive": 1.70564139836085,
+  "weighted": 0.41051115270987865,
+  "p_naive": 0.006065711350354164,
+  "p_design": 0.019063994682616325
+ },
+ "quinn_age": {
+  "pub": 1.24,
+  "naive": 0.6120538034118507,
+  "weighted": 1.2476162292872062
+ },
+ "quinn_n": 60,
+ "quinn_weighted_ok": 34,
+ "quinn_naive_ok": 5,
+ "quinn_weighted_share": 0.5666666666666667,
+ "quinn_naive_share": 0.08333333333333333,
+ "quinn_commute_ok": 29,
+ "quinn_commute_n": 30,
+ "jiao_ride_weekday": {
+  "b": 0.003333420308867932,
+  "se_naive": 0.0008428322879858829,
+  "se_design": 0.0024261801360692657,
+  "p_naive": 2.0446209636482138e-07,
+  "p_design": 0.16946103036698834,
+  "pct": 0.3338982332816487
+ },
+ "jiao_ride_weekend": {
+  "b": 0.00551717249816885,
+  "se_naive": 0.0014936171369446226,
+  "se_design": 0.003481534366696031,
+  "p_naive": 0.0019034976352587663,
+  "p_design": 0.11303549208835029,
+  "pct": 0.5532420122717374
+ },
+ "jiao_n": 32,
+ "jiao_naive_exact": 21,
+ "jiao_naive_ok": 31,
+ "jiao_weighted_ok": 13,
+ "zhang_driver": {
+  "b_naive": -0.4260467594548608,
+  "b_design": -0.18938822220018803,
+  "p_naive": 0.0,
+  "p_design": 0.13587083007189937,
+  "pub": -0.445
+ },
+ "zhang_n": 32,
+ "zhang_naive_ok": 17,
+ "zhang_naive_acc": 26,
+ "yang_midwest": {
+  "pub": 0.67,
+  "naive": 0.8309318220370653,
+  "weighted": 0.6720634847523926
+ },
+ "yang_n": 21,
+ "yang_weighted_ok": 21,
+ "yang_naive_ok": 6,
+ "alberini": {
+  "A_ANNMILES": {
+   "pub": -0.5102,
+   "naive": -0.5149589847316589,
+   "weighted": -0.5589661601598904,
+   "se_naive": 0.013320485152438239,
+   "se_design": 0.020636723353433608
+  },
+  "A_BESTMILE": {
+   "pub": -0.2279,
+   "naive": -0.24099750127759093,
+   "weighted": -0.23252548418204647,
+   "se_naive": 0.009298901870158412,
+   "se_design": 0.019684123033532987
+  },
+  "B_ANNMILES": {
+   "pub": -0.2746,
+   "naive": -0.35167838243202265,
+   "weighted": -0.37310577245487664,
+   "se_naive": 0.010241053927593302,
+   "se_design": 0.016011374155781487
+  },
+  "B_BESTMILE": {
+   "pub": -0.1932,
+   "naive": -0.20458627242420058,
+   "weighted": -0.2089286514172397,
+   "se_naive": 0.008217210430001006,
+   "se_design": 0.02085868158087068
+  }
+ },
+ "alberini_a_ann": {
+  "pub": -0.5102,
+  "naive": -0.5149589847316589,
+  "weighted": -0.5589661601598904,
+  "se_naive": 0.013320485152438239,
+  "se_design": 0.020636723353433608
+ },
+ "n_studies_reproduced_by_naive": 4,
+ "n_studies_reproduced_by_weighted": 2
+}

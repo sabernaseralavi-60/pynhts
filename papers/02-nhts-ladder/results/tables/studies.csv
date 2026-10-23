@@ -1,0 +1,23 @@
+id,study,wave,family,L0_verdict,L1_graded,L1_exact,L1_close,L1_acceptable,L1_gap,L1_share_exact_close,L2_attempted,L2_reason,L3_coef,L3_sig_naive,L3_sig_lost,L3_sign_flips,L3_median_se_ratio,L2_pub,L2_naive_ok,L2_weighted_ok
+P01,Yang 2011,2001,logit,SUFFICIENT,154,135,12,3,4,0.9545454545454546,yes,,50.0,40.0,14.0,5.0,1.862720834127265,21.0,6.0,21.0
+P02,Zhou 2014,2009,SEM,PARTIAL,23,2,9,4,8,0.4782608695652174,yes,,,,,,,,,
+P03,Quinn 2016,2009,logit,PARTIAL,21,2,8,4,7,0.47619047619047616,yes,,72.0,54.0,22.0,9.0,2.3299344713099273,60.0,5.0,34.0
+P05,Deka 2019,2017,ZINB,PARTIAL,86,21,39,17,9,0.6976744186046512,no,neighbourhood variables come from a restricted file,,,,,,,,
+P06,Jia 2019,2017,ML classifiers,SUFFICIENT,42,18,18,4,2,0.8571428571428571,yes,,,,,,,,,
+P07,Krizek 2019,2017,descriptive,PARTIAL,18,4,0,3,11,0.2222222222222222,no,descriptive study without a model,,,,,,,,
+P09,Fu 2020,2017,simulation,INSUFFICIENT,13,1,0,1,11,0.07692307692307693,no,population and simulation rules not stated,,,,,,,,
+P10,Lidbe 2021,2001/2017,descriptive,SUFFICIENT,336,283,20,12,21,0.9017857142857143,no,descriptive tables only,,,,,,,,
+P11,Alberini 2021,2017,OLS,SUFFICIENT,50,38,9,0,3,0.94,yes,,8.0,8.0,0.0,0.0,1.8408912093049858,4.0,1.0,
+P12,Xue 2021,2017,SEM,INSUFFICIENT,20,4,3,3,10,0.35,no,analysis sample not recovered,,,,,,,,
+P13,Zhang 2018a,2017,ZINB,PARTIAL,80,34,21,9,16,0.6875,yes,,30.0,10.0,4.0,2.0,1.9601861500245088,2.0,,
+P14,Zhang 2018b,2017,ZINB,SUFFICIENT,97,83,11,1,2,0.9690721649484536,yes,,32.0,29.0,10.0,3.0,2.538789979107922,32.0,17.0,6.0
+P15,Zhang 2018c,2017,ZINB,SUFFICIENT,85,74,8,1,2,0.9647058823529412,yes,,30.0,27.0,9.0,1.0,2.4155375255379523,2.0,,
+P16,Sabouri 2020,2017,multilevel Poisson,PARTIAL,30,5,16,4,5,0.7,no,built-environment variables are external,,,,,,,,
+P17,Jia 2020,2017,ML classifiers,SUFFICIENT,40,17,17,2,4,0.85,yes,,,,,,,,,
+P18,Jiao 2020,2017,NB,SUFFICIENT,55,24,24,1,6,0.8727272727272727,yes,,32.0,26.0,7.0,3.0,2.446098113681372,32.0,31.0,13.0
+P19,Sadeghvaziri 2020,2009/2017,descriptive,PARTIAL,11,9,0,0,2,0.8181818181818182,no,bar charts only,,,,,,,,
+P20,Shirgaokar 2021,2017,NB,PARTIAL,63,19,7,18,19,0.4126984126984127,yes,,56.0,50.0,12.0,3.0,2.432966290344388,14.0,9.0,7.0
+P21,Barua 2021,2009/2017,GBM,PARTIAL,40,13,6,7,14,0.475,yes,,,,,,,,,
+P22,Wu 2021,2017,PSM,SUFFICIENT,71,46,23,2,0,0.971830985915493,yes,,,,,,,,,
+P23,Su 2021,2017,motif clustering,PARTIAL,65,0,42,15,8,0.6461538461538462,no,origin-destination identifiers are not public,,,,,,,,
+P24,Naseralavi 2025,2017,ML per state,PARTIAL,54,47,2,5,0,0.9074074074074074,no,reserved for a separate paper (state heterogeneity),,,,,,,,

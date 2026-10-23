@@ -14,7 +14,7 @@ pynhts.concepts.table()                  # the 44 concepts x 4 waves (grade C / 
 pynhts.harmonize.compare_waves(2009, 2017)   # which same-name variables really are the same
 ```
 
-## The ten rules
+## The twelve rules
 
 1. **Use `data.survey(...)`, never a plain mean of rows.** It applies the weights and the wave's variance
    design (jackknife 2001/2009/2017, Taylor 2022). Subpopulations: `domain=`, never drop rows.
@@ -40,6 +40,11 @@ pynhts.harmonize.compare_waves(2009, 2017)   # which same-name variables really 
    `pynhts.concepts.get(name)["universe"]` says who is in.
 10. **Say what you computed.** Every result frame carries `result.attrs["pynhts"]` (wave, table, weight, variance
     design, unit). Put the design sentence in a methods footnote (`pynhts.tables.note`) instead of writing your own.
+11. **Fit regressions with the design, not around it.** `pynhts.models.fit(..., regime="design")` (or `compare_regimes`) gives weighted estimates
+    with the wave's own variance; an unweighted fit with model-based standard errors changes signs and significance (median standard-error ratio
+    about 2 over 310 re-estimated coefficients of 8 published model families; see `docs/models.md` and `papers/02-nhts-ladder`).
+12. **Score ML models without leakage.** NHTS rows of one household are dependent and SMOTE invents rows from neighbours: split by household and resample
+    the training part only (`pynhts.validate.audit_classifier` reports how much a random-row, resample-first score is inflated).
 
 ## Canonical recipes
 

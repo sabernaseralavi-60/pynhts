@@ -1,0 +1,15 @@
+# environment of the paper-02 analysis (Python 3.13 was used; see docs/STATE.md for the scratch-venv recipe)
+-e ../..
+numpy
+pandas
+pyarrow
+scipy
+statsmodels
+scikit-learn
+semopy
+matplotlib
+pyyaml
+python-docx
+arabic-reshaper
+python-bidi
+pytest

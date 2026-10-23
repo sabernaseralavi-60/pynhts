@@ -1,0 +1,109 @@
+{
+ "n_coef": 310,
+ "n_coef_published": 167,
+ "median_se_ratio": 2.1904470530205087,
+ "q25_se_ratio": 1.860197834665508,
+ "q75_se_ratio": 2.655640110438957,
+ "share_se_ratio_gt_1_5": 0.9483870967741935,
+ "share_se_ratio_gt_2": 0.632258064516129,
+ "share_sig_lost": 0.319672131147541,
+ "n_sig_lost": 78,
+ "n_sig_naive": 244,
+ "n_sig_gained": 11,
+ "share_sign_flip": 0.08387096774193549,
+ "n_sign_flip": 26,
+ "median_se_ratio_wrob": 0.9857199437520603,
+ "n_sig_wrob": 182,
+ "n_sig_lost_wrob": 16,
+ "share_sig_lost_wrob": 0.08791208791208792,
+ "by_study": [
+  {
+   "study": "P01 Yang 2011",
+   "n_coef": 50,
+   "n_pub": 21,
+   "naive_exact_close": 6,
+   "weighted_exact_close": 21,
+   "median_se_ratio": 1.862720834127265,
+   "sig_lost": 14,
+   "sig_naive": 40,
+   "sign_flips": 5
+  },
+  {
+   "study": "P03 Quinn 2016",
+   "n_coef": 72,
+   "n_pub": 60,
+   "naive_exact_close": 5,
+   "weighted_exact_close": 34,
+   "median_se_ratio": 2.3299344713099273,
+   "sig_lost": 22,
+   "sig_naive": 54,
+   "sign_flips": 9
+  },
+  {
+   "study": "P11 Alberini 2021",
+   "n_coef": 8,
+   "n_pub": 4,
+   "naive_exact_close": 1,
+   "weighted_exact_close": 0,
+   "median_se_ratio": 1.8408912093049858,
+   "sig_lost": 0,
+   "sig_naive": 8,
+   "sign_flips": 0
+  },
+  {
+   "study": "P13 Zhang 2018 (bike)",
+   "n_coef": 30,
+   "n_pub": 2,
+   "naive_exact_close": 0,
+   "weighted_exact_close": 0,
+   "median_se_ratio": 1.9601861500245088,
+   "sig_lost": 4,
+   "sig_naive": 10,
+   "sign_flips": 2
+  },
+  {
+   "study": "P14 Zhang 2018",
+   "n_coef": 32,
+   "n_pub": 32,
+   "naive_exact_close": 17,
+   "weighted_exact_close": 6,
+   "median_se_ratio": 2.538789979107922,
+   "sig_lost": 10,
+   "sig_naive": 29,
+   "sign_flips": 3
+  },
+  {
+   "study": "P15 Zhang 2018 (ride)",
+   "n_coef": 30,
+   "n_pub": 2,
+   "naive_exact_close": 0,
+   "weighted_exact_close": 0,
+   "median_se_ratio": 2.4155375255379523,
+   "sig_lost": 9,
+   "sig_naive": 27,
+   "sign_flips": 1
+  },
+  {
+   "study": "P18 Jiao 2020",
+   "n_coef": 32,
+   "n_pub": 32,
+   "naive_exact_close": 31,
+   "weighted_exact_close": 13,
+   "median_se_ratio": 2.446098113681372,
+   "sig_lost": 7,
+   "sig_naive": 26,
+   "sign_flips": 3
+  },
+  {
+   "study": "P20 Shirgaokar 2021",
+   "n_coef": 56,
+   "n_pub": 14,
+   "naive_exact_close": 9,
+   "weighted_exact_close": 7,
+   "median_se_ratio": 2.432966290344388,
+   "sig_lost": 12,
+   "sig_naive": 50,
+   "sign_flips": 3
+  }
+ ]
+}
