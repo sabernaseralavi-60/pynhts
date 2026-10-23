@@ -62,29 +62,39 @@ def fig_weights() -> None:
 
 
 def fig_se() -> None:
+    """Where the standard-error difference comes from (panel A) and which verdicts change under each study's declared inference (B)."""
     c = pd.read_csv(TAB / "census_coefficients.csv")
     by = pd.read_csv(TAB / "census_by_study.csv")
     fk.style(8.5)
-    fig, (a, b) = plt.subplots(1, 2, figsize=(7.4, 3.4), gridspec_kw=dict(width_ratios=[1, 1.15]))
-    r = c["se_ratio"].dropna().clip(upper=8)
-    a.hist(r, bins=np.linspace(0.5, 8, 46), color=OI["sky"], edgecolor="white")
-    a.axvline(1, color="#555555", lw=0.9)
-    med = float(c["se_ratio"].median())
-    a.axvline(med, color=OI["orange"], lw=1.6)
-    top = a.get_ylim()[1]
-    a.text(med + 0.25, top * 0.92, f"median {med:.2f}", fontsize=8, color=OI["orange"], va="center")
-    a.set_xlabel("Design standard error / unweighted standard error")
-    a.set_ylabel("Coefficients")
+    fig, (a, b) = plt.subplots(1, 2, figsize=(7.6, 3.5), gridspec_kw=dict(width_ratios=[1.05, 1.15]))
+    cols = [("r_weights", "Weighting"), ("r_cluster", "Clustering\n(given\nweights)"), ("r_formula", "Replicate\nformula (given\nclustering)"),
+            ("r_unw_cl", "Clustering,\nunweighted\nfit")]
+    rng = np.random.default_rng(1)
+    for i, (k, lab) in enumerate(cols):
+        v = c[k].dropna().to_numpy()
+        a.scatter(i + rng.uniform(-0.18, 0.18, len(v)), v, s=7, color=OI["sky"], alpha=0.55, linewidths=0, zorder=2)
+        a.plot([i - 0.28, i + 0.28], [np.median(v)] * 2, color=OI["orange"], lw=2.2, zorder=3)
+        a.text(i + 0.31, np.median(v), f"{np.median(v):.2f}", va="center", fontsize=7.5, color=OI["orange"])
+    a.axhline(1, color="#555555", lw=0.9)
+    a.set_yscale("log")
+    a.set_yticks([0.5, 1, 2, 3, 5])
+    a.set_yticklabels(["0.5", "1", "2", "3", "5"])
+    a.yaxis.set_minor_formatter(plt.NullFormatter())
+    a.set_xticks(range(len(cols)))
+    a.set_xticklabels([lab for _, lab in cols], fontsize=6.8)
+    a.set_ylabel("Ratio of standard errors")
+    a.set_xlim(-0.5, len(cols) - 0.2)
     fk.letter(a, "A")
-    by = by.sort_values("median_se_ratio").reset_index(drop=True)
-    share = by["sig_lost"] / by["sig_naive"].clip(lower=1)
-    b.barh(range(len(by)), share * 100, color=OI["orange"], height=0.62)
+    by = by[by["sig_style"] > 0].copy()
+    by["share"] = by["lost_style"] / by["sig_style"]
+    by = by.sort_values("share").reset_index(drop=True)
+    b.barh(range(len(by)), by["share"] * 100, color=OI["orange"], height=0.62)
     for yy, row in by.iterrows():
-        txt = f"{int(row['sig_lost'])} of {int(row['sig_naive'])}" + (f"; {int(row['sign_flips'])} sign flip" + ("s" if row["sign_flips"] > 1 else "") if row["sign_flips"] else "")
-        b.text(share.iloc[yy] * 100 + 1, yy, txt, va="center", fontsize=7)
+        txt = f"{int(row['lost_style'])} of {int(row['sig_style'])}" + (f"; {int(row['sign_flips'])} sign flip" + ("s" if row["sign_flips"] > 1 else "") if row["sign_flips"] else "")
+        b.text(row["share"] * 100 + 1, yy, txt, va="center", fontsize=7)
     b.set_yticks(range(len(by)))
     b.set_yticklabels(by["study"], fontsize=7.5)
-    b.set_xlabel("Significant coefficients that lose significance (%)")
+    b.set_xlabel("Significant coefficients (declared inference)\nthat lose significance under the design (%)")
     b.set_xlim(0, 80)
     fk.letter(b, "B")
     fig.tight_layout()

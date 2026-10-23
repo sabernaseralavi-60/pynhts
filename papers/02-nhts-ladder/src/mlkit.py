@@ -53,8 +53,9 @@ def classify(make_model, X, y, groups, w, scheme: str, seed: int, test_size: flo
         Xtr, ytr = _smote(Xtr, ytr, seed)
         wte = None
     else:
-        gss = GroupShuffleSplit(n_splits=1, test_size=test_size, random_state=seed)
-        tr, te = next(gss.split(X, y, groups))
+        from pynhts.validate import group_split
+
+        tr, te = group_split(groups, test_size=test_size, seed=seed)
         Xtr, Xte, ytr, yte, wte = X[tr], X[te], y[tr], y[te], w[te]
         if scheme == "grouped":
             Xtr, ytr = _smote(Xtr, ytr, seed)

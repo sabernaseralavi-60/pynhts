@@ -21,7 +21,8 @@ def tables(lang, n, md_table):
           "INSUFFICIENT": T(lang, "not rebuilt", "ناکافی")}
     rows = []
     for _, r in st.iterrows():
-        l2 = T(lang, "refitted", "برازش شد") if r["L2_attempted"] == "yes" else T(lang, "not run", "اجرا نشد")
+        l2 = {"good": T(lang, "reproduced", "بازتولید شد"), "mid": T(lang, "partly", "جزئی"), "bad": T(lang, "not reproduced", "بازتولید نشد"),
+              "none": T(lang, "no valid target", "بدون هدف معتبر"), "na": T(lang, "not run", "اجرا نشد")}[r["L2_grade"]]
         rows.append([r["id"], r["study"], r["wave"], r["family"], l0[r["L0_verdict"]],
                      f"{int(r['L1_graded'])} ({r['L1_share_exact_close'] * 100:.0f}%)", l2])
     cols = [T(lang, "ID", "شناسه"), T(lang, "Study", "مطالعه"), T(lang, "Wave", "موج"), T(lang, "Model", "مدل"),
@@ -30,20 +31,22 @@ def tables(lang, n, md_table):
     out["studies"] = md_table(pd.DataFrame(rows, columns=cols),
                               T(lang, "The 22 case studies and the rung each reached. L1 gives the number of printed descriptive values graded and, in brackets, the share graded EXACT or CLOSE.",
                                 "بیست‌ودو مطالعهٔ موردی و پله‌ای که هر یک به آن رسید. L1 شمار عددهای توصیفی چاپی درجه‌بندی‌شده و در پرانتز سهم عددهای EXACT یا CLOSE را می‌دهد."),
-                              "studies", lang, widths=[6, 17, 12, 21, 11, 17, 16], align="llllllr"[:7])
+                              "studies", lang, widths=[8, 16, 12, 19, 10, 16, 19], align="llllllr"[:7])
     by = pd.read_csv(TAB / "census_by_study.csv")
     rows = []
     for _, r in by.iterrows():
-        rows.append([r["study"], int(r["n_coef"]), f"{int(r['naive_exact_close'])} / {int(r['weighted_exact_close'])} / {int(r['n_pub'])}",
-                     f"{r['median_se_ratio']:.2f}", f"{int(r['sig_lost'])} / {int(r['sig_naive'])}", int(r["sign_flips"])])
+        pub = f"{int(r['naive_exact_close'])} / {int(r['weighted_exact_close'])} / {int(r['n_pub'])}" if r["n_pub"] else "-"
+        lost = f"{int(r['lost_style'])} / {int(r['sig_style'])}" if r["sig_style"] else "-"
+        rows.append([r["study"], int(r["n_coef"]), pub, f"{r['r_weights']:.2f}", f"{r['r_cluster']:.2f}", f"{r['r_formula']:.2f}", lost,
+                     int(r["sign_flips"])])
     cols = [T(lang, "Study", "مطالعه"), T(lang, "Coefficients", "ضرایب"),
             T(lang, "Printed values reproduced: unweighted / weighted / printed", "مقدار چاپی بازتولیدشده: بدون وزن / وزنی / چاپی"),
-            T(lang, "Median SE ratio", "میانهٔ نسبت خطای معیار"), T(lang, "Significance lost", "معناداری ازدست‌رفته"),
-            T(lang, "Sign flips", "تغییر علامت")]
+            T(lang, "Weights", "وزن"), T(lang, "Clustering", "خوشه"), T(lang, "Replicate formula", "فرمول تکرار"),
+            T(lang, "Significance lost (declared inference)", "معناداری ازدست‌رفته (استنباط اعلام‌شده)"), T(lang, "Sign flips", "تغییر علامت")]
     out["census"] = md_table(pd.DataFrame(rows, columns=cols),
-                             T(lang, "Re-estimation of eight regression studies. SE ratio: design standard error over unweighted standard error. Significance lost: coefficients significant at 5 % in the unweighted fit that are not under the design-aware fit. Sign flip: unweighted and design-aware estimates differ in sign.",
-                               "برآورد دوبارهٔ هشت مطالعهٔ رگرسیونی. نسبت خطای معیار: خطای معیار طراحی‌آگاه بر خطای معیار بدون وزن. معناداری ازدست‌رفته: ضرایب معنادار در سطح ۵٪ در برازش بدون وزن که در برازش طراحی‌آگاه نیستند. تغییر علامت: علامت برآورد بدون وزن و طراحی‌آگاه فرق دارد."),
-                             "census", lang, widths=[26, 11, 20, 12, 14, 10], align="lrrrrr")
+                             T(lang, "Re-estimation of eight regression studies. The three ratio columns are median ratios of standard errors: weighted model-based over unweighted; weighted household-clustered over weighted model-based; replicate-weight over weighted household-clustered. Significance lost: coefficients significant under the study's declared inference that are not under the design-aware fit (the study that itself used the jackknife has none). Sign flip: unweighted and design-aware estimates differ in sign.",
+                               "برآورد دوبارهٔ هشت مطالعهٔ رگرسیونی. سه ستون نسبت، میانهٔ نسبت خطاهای معیار است: وزنی مبتنی بر مدل بر بدون وزن؛ وزنی خوشه‌ای خانوار بر وزنی مبتنی بر مدل؛ وزن تکرار بر وزنی خوشه‌ای خانوار. معناداری ازدست‌رفته: ضرایب معنادار زیر استنباط اعلام‌شدهٔ مطالعه که در برازش طراحی‌آگاه نیستند (مطالعه‌ای که خود از جک‌نایف استفاده کرد موردی ندارد). تغییر علامت: علامت برآورد بدون وزن و طراحی‌آگاه فرق دارد."),
+                             "census", lang, widths=[22, 9, 17, 8, 8, 9, 15, 8], align="lrrrrrrr")
     # models and hyper-parameters (glossary + search space)
     gl = [
         ("LR", T(lang, "Logistic regression: a weighted sum of the inputs turned into a probability", "رگرسیون لجستیک: جمع وزنی ورودی‌ها که به احتمال تبدیل می‌شود"),

@@ -25,7 +25,10 @@ from zhang_common import COMMON, NINE, p, raw  # noqa: E402
 import pynhts  # noqa: E402
 
 TERMS = ["pt", "female", "age", "edu", "white", "worker", "driver", "inc", "veh", "lndens", "rail", "urban", "spring", "summer", "winter"]
-PUB = {"P13": {"count": 0.0139, "inflate": -0.0408}, "P15": {"count": 0.012, "inflate": -0.059}}  # ln(1.014), -ln(1.04)=-0.0392, 1.2 %, -5.7 %
+# The printed headline effects (percentages in the abstracts) cannot be mapped onto the coefficients of a zero-inflated model
+# without a model-specific conversion, so no printed target is graded here: these two models are re-estimated for their design
+# effects only, with the specification of P14 (review of 2026-10-23, item 9).
+PUB: dict = {"P13": {}, "P15": {}}
 
 
 def build(paper):

@@ -191,6 +191,14 @@ def fit_regimes(Xdf: pd.DataFrame, Zdf: pd.DataFrame | None, y, design: engine.D
         out["b_naive"], out["se_naive"], out["p_naive"] = th0, se, pval(th0 / se)
         out.attrs["naive_converged"] = bool(r0.success)
         out.attrs["ll_naive"] = float(-r0.fun)
+        if design is not None:  # unweighted fit, standard error clustered on households
+            _, S0 = row_scores(th0, X, Z, y)
+            G0 = int(design.cluster.max()) + 1
+            C0 = np.zeros((G0, S0.shape[1]))
+            np.add.at(C0, design.cluster, S0)
+            Hi0 = np.linalg.inv(H)
+            se_c = np.sqrt(np.diag(Hi0 @ (C0.T @ C0 * (G0 / (G0 - 1))) @ Hi0))
+            out["se_naive_cluster"], out["p_naive_cluster"] = se_c, pval(th0 / se_c)
     if design is not None:
         w = design.w * (n / design.w.sum() if weight_scale == "sample" else 1.0)
         thw, rw = fit(X, Z, y, w, start=th0)
@@ -206,6 +214,9 @@ def fit_regimes(Xdf: pd.DataFrame, Zdf: pd.DataFrame | None, y, design: engine.D
             Hi = np.linalg.inv(H)
             se_r = np.sqrt(np.diag(Hi @ meat @ Hi))
             out["b_weighted"], out["se_weighted_model"], out["se_weighted_robust"] = thw, se_m, se_r
+            # weighted sandwich with every observation its own cluster: what the unequal weights alone cost
+            meat_h = sc.T @ sc * (len(y) / (len(y) - 1))
+            out["se_weighted_hc"] = np.sqrt(np.diag(Hi @ meat_h @ Hi))
             out["p_weighted"] = pval(thw / se_r)
         if "design" in regimes and replicates:
             sc = n / design.w.sum()

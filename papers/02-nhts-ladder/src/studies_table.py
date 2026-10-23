@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 HERE = Path(__file__).resolve().parents[1]
@@ -75,10 +76,25 @@ def main() -> None:
         g["L2_naive_ok"] = pub[pub["g_naive"].isin(["EXACT", "CLOSE"])].groupby("id").size()
         g["L2_weighted_ok"] = pub[pub["g_weighted"].isin(["EXACT", "CLOSE"])].groupby("id").size()
         df = df.merge(g.reset_index(), on="id", how="left")
+    # L2 grade: share of printed values reproduced (EXACT/CLOSE) by the better regime; models without a coefficient table are
+    # judged from their printed headline (see the paper); P13 and P15 have no valid printed target
+    override = {"P02": "bad", "P06": "bad", "P17": "bad", "P21": "bad", "P22": "bad", "P13": "none", "P15": "none"}
+
+    def grade2(r):
+        if r["L2_attempted"] != "yes":
+            return "na"
+        if r["id"] in override:
+            return override[r["id"]]
+        pubn = r.get("L2_pub", np.nan)
+        top = np.nanmax([r.get("L2_weighted_ok", np.nan), r.get("L2_naive_ok", np.nan)])
+        share = top / pubn if pubn == pubn and pubn > 0 and top == top else 0.0
+        return "good" if share >= 0.7 else "mid" if share >= 0.25 else "bad"
+
+    df["L2_grade"] = df.apply(grade2, axis=1)
     df.to_csv(TAB / "studies.csv", index=False)
     num = {"n_studies": len(df), "n_sufficient": int((df["L0_verdict"] == "SUFFICIENT").sum()),
            "n_partial": int((df["L0_verdict"] == "PARTIAL").sum()), "n_insufficient": int((df["L0_verdict"] == "INSUFFICIENT").sum()),
-           "n_l2_attempted": int((df["L2_attempted"] == "yes").sum()), "n_l1_graded": int(df["L1_graded"].sum()),
+           "n_l2_attempted": int((df["L2_attempted"] == "yes").sum()), "n_l2_good": int((df["L2_grade"] == "good").sum()), "n_l2_mid": int((df["L2_grade"] == "mid").sum()), "n_l2_bad": int((df["L2_grade"] == "bad").sum()), "n_l2_none": int((df["L2_grade"] == "none").sum()), "n_l1_graded": int(df["L1_graded"].sum()),
            "n_l1_exact": int(df["L1_exact"].sum()), "n_l1_close": int(df["L1_close"].sum()),
            "n_l1_acceptable": int(df["L1_acceptable"].sum()), "n_l1_gap": int(df["L1_gap"].sum()),
            "share_l1_exact_close": float((df["L1_exact"].sum() + df["L1_close"].sum()) / df["L1_graded"].sum())}

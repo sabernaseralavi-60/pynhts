@@ -13,9 +13,9 @@
  },
  "quinn_n": 60,
  "quinn_weighted_ok": 34,
- "quinn_naive_ok": 5,
+ "quinn_naive_ok": 2,
  "quinn_weighted_share": 0.5666666666666667,
- "quinn_naive_share": 0.08333333333333333,
+ "quinn_naive_share": 0.03333333333333333,
  "quinn_commute_ok": 29,
  "quinn_commute_n": 30,
  "jiao_ride_weekday": {
@@ -24,7 +24,11 @@
   "se_design": 0.0024261801360692657,
   "p_naive": 2.0446209636482138e-07,
   "p_design": 0.16946103036698834,
-  "pct": 0.3338982332816487
+  "pct": 0.3338982332816487,
+  "pct_naive": 0.4388311828051217,
+  "p_wrob": 0.045235224938901086,
+  "se_wrob": 0.001664662225281934,
+  "pct_change": -23.87211424406075
  },
  "jiao_ride_weekend": {
   "b": 0.00551717249816885,
@@ -32,26 +36,32 @@
   "se_design": 0.003481534366696031,
   "p_naive": 0.0019034976352587663,
   "p_design": 0.11303549208835029,
-  "pct": 0.5532420122717374
+  "pct": 0.5532420122717374,
+  "pct_naive": 0.4648286922021905,
+  "p_wrob": 0.04818709178821823,
+  "se_wrob": 0.002792494390841014,
+  "pct_change": 18.96824314873813
  },
  "jiao_n": 32,
- "jiao_naive_exact": 21,
- "jiao_naive_ok": 31,
- "jiao_weighted_ok": 13,
+ "jiao_naive_exact": 20,
+ "jiao_naive_ok": 30,
+ "jiao_weighted_ok": 12,
  "zhang_driver": {
   "b_naive": -0.4260467594548608,
   "b_design": -0.18938822220018803,
   "p_naive": 0.0,
   "p_design": 0.13587083007189937,
-  "pub": -0.445
+  "pub": -0.445,
+  "p_wrob": 0.015017152372908571,
+  "pct_change": -55.54755012278094
  },
  "zhang_n": 32,
- "zhang_naive_ok": 17,
- "zhang_naive_acc": 26,
+ "zhang_naive_ok": 15,
+ "zhang_naive_acc": 25,
  "yang_midwest": {
   "pub": 0.67,
-  "naive": 0.8309318220370653,
-  "weighted": 0.6720634847523926
+  "naive": 0.8309318220370635,
+  "weighted": 0.672063484752391
  },
  "yang_n": 21,
  "yang_weighted_ok": 21,
@@ -93,6 +103,12 @@
   "se_naive": 0.013320485152438239,
   "se_design": 0.020636723353433608
  },
+ "alberini_matches_naive": 1,
+ "alberini_matches_weighted": 0,
+ "alberini_n": 4,
+ "r_formula_min": 0.7545215573211472,
+ "r_formula_max": 1.1530645867597038,
+ "h1_discriminating": 4,
  "n_studies_reproduced_by_naive": 4,
  "n_studies_reproduced_by_weighted": 2
 }

@@ -57,4 +57,11 @@ P04 (South Africa, not NHTS), P05/P16/P23 (variables from restricted or external
 simulation studies without a regression to compare), P12 (sample not recovered), P24 (reserved for I-02), duplicates P08.
 
 ## Deviations from this plan
-(none yet)
+Logged 2026-10-23 after the external adversarial review of the draft (review items 3, 4, 13, 16, 17):
+1. **Order of work.** P01 (Yang), P03 (Quinn) and P18 (Jiao) were run during engine development, before this plan was frozen; they hold 154 of the 310 coefficients and all three headline examples (stated in the manuscript).
+2. **Grading tolerance.** The plan said ACCEPTABLE <= 5 %; the manuscript additionally gives a floor of two units of the last printed digit. Printed decimals are now stored per study (trailing zeros had been lost in the first grading; fixed).
+3. **H3 reference estimator.** H3 is evaluated against each study's own declared inference (unweighted model-based for six studies, weighted with household-clustered errors for one); the study that itself used the jackknife (P03) is excluded. The first draft pooled all coefficients against the unweighted fit; both versions are reported. An exact binomial interval (promised in the plan) is added.
+4. **H4 reformulated.** The plan said "the published AUC is reproduced only in a leaky pipeline". The result is that the printed value (0.924) is not reproduced by either pipeline (leaky 0.99, honest 0.64); what holds is the inflation (> 0.15 for three of five models). Reported as such.
+5. **Seeds.** The tuned run uses two master seeds (plan: three); the default run uses three.
+6. **Additional diagnostics not in the plan** (added because the review showed the first interpretation was wrong): decomposition of the standard-error ratio into weights, household clustering and the replicate formula; an unweighted household-clustered fit; a comparison of Newton and exact replicate refits on one real model.
+7. **Targets of P13 and P15** (headline percentages from abstracts) cannot be mapped onto zero-inflated coefficients; they are no longer graded and these two models are re-estimated for design effects only.

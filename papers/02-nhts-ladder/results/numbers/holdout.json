@@ -1,6 +1,7 @@
 {
  "n": 30511,
  "households": 27413,
+ "share_rows_shared_household": 0.19910851823932352,
  "afv": {
   "share_all": 0.04050998000721051,
   "n_train": 21321.666666666668,

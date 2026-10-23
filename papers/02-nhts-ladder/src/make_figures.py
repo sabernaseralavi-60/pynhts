@@ -93,10 +93,6 @@ def fig_flow() -> None:
 
 
 # ------------------------------------------------------------------------------------------ Figure 2: the ladder
-# models that are not a list of printed coefficients: judged from the printed headline (see the text)
-L2_OVERRIDE = {"P02": "mid", "P06": "mid", "P17": "mid", "P21": "bad", "P22": "mid"}
-
-
 def fig_ladder() -> None:
     st = pd.read_csv(TAB / "studies.csv")
     fk.style(8.5)
@@ -108,13 +104,7 @@ def fig_ladder() -> None:
         l0 = {"SUFFICIENT": "good", "PARTIAL": "mid", "INSUFFICIENT": "bad"}[r["L0_verdict"]]
         l1 = "good" if r["L1_share_exact_close"] >= 0.85 else "mid" if r["L1_share_exact_close"] >= 0.5 else "bad"
         if r["L2_attempted"] == "yes":
-            if r["id"] in L2_OVERRIDE:
-                l2 = L2_OVERRIDE[r["id"]]
-            else:
-                pubn = r.get("L2_pub", np.nan)
-                top = np.nanmax([r.get("L2_weighted_ok", np.nan), r.get("L2_naive_ok", np.nan)]) if pubn == pubn else np.nan
-                share = top / pubn if pubn == pubn and pubn > 0 and top == top else 0.0
-                l2 = "good" if share >= 0.7 else "mid" if share >= 0.25 else "bad"
+            l2 = {"good": "good", "mid": "mid", "bad": "bad", "none": "na"}[r["L2_grade"]]
             l3 = "done"
         else:
             l2, l3 = "na", "na"
@@ -123,6 +113,8 @@ def fig_ladder() -> None:
         ax.text(-0.15, y + 0.41, f"{r['id']}  {r['study']}", ha="right", va="center", fontsize=8)
         if r["L2_attempted"] != "yes":
             ax.text(2.46, y + 0.41, "not run", ha="center", va="center", fontsize=6.5, color="#555555")
+        if r["L2_grade"] == "none":
+            ax.text(2.46, y + 0.41, "no valid target", ha="center", va="center", fontsize=6.5, color="#555555")
     ax.set_xlim(0, 4); ax.set_ylim(0, len(st)); ax.axis("off")
     for j, c in enumerate(cols):
         ax.text(j + 0.46, len(st) + 0.25, c, ha="center", va="bottom", fontsize=8.5, fontweight="bold")

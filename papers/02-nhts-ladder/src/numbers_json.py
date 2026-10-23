@@ -69,6 +69,20 @@ def cases() -> dict:
     out["alberini"] = {r_["model"]: dict(pub=r_["pub"], naive=r_["naive"], weighted=r_["weighted"], se_naive=r_["se_naive"],
                                          se_design=r_["se_design"]) for _, r_ in a.iterrows()}
     out["alberini_a_ann"] = out["alberini"]["A_ANNMILES"]
+    out["alberini_matches_naive"] = int(a["g_naive"].isin(["EXACT", "CLOSE"]).sum())
+    out["alberini_matches_weighted"] = int(a["g_weighted"].isin(["EXACT", "CLOSE"]).sum())
+    out["alberini_n"] = int(len(a))
+    for mod in ("weekday", "weekend"):
+        r = row("P18 Jiao 2020", mod, "RIDESHARE")
+        out[f"jiao_ride_{mod}"].update(dict(pct_naive=(np.exp(r["b_naive"]) - 1) * 100, p_wrob=r["p_wrob"], se_wrob=r["se_wrob"],
+                                           pct_change=(r["b_design"] / r["b_naive"] - 1) * 100))
+    r = row("P14 Zhang 2018", None, "driver", "count")
+    out["zhang_driver"].update(dict(p_wrob=r["p_wrob"], pct_change=(r["b_design"] / r["b_naive"] - 1) * 100))
+    st = pd.read_csv(TAB / "census_by_study.csv")
+    out["r_formula_min"] = float(st["r_formula"].min())
+    out["r_formula_max"] = float(st["r_formula"].max())
+    out["h1_discriminating"] = int(((st["naive_exact_close"] - st["weighted_exact_close"]).abs() >= 3).sum())
+
     # who published weighted and who unweighted: where the regime that reproduces most printed values is
     by = pd.read_csv(TAB / "census_by_study.csv")
     out["n_studies_reproduced_by_naive"] = int((by["naive_exact_close"] > by["weighted_exact_close"]).sum())
@@ -79,34 +93,48 @@ def cases() -> dict:
 def ml() -> dict:
     d = pd.read_csv(TAB / "p06_p17_models.csv")
     g = d.groupby(["label", "scheme", "model"])["auc"].mean()
-    out: dict = {"n": int(d["n"].iloc[0]), "afv_pos": int(d[d["label"] == "AFV"]["pos"].iloc[0]), "ev_pos": int(d[d["label"] == "EV"]["pos"].iloc[0])}
+    gw = d[d["scheme"] == "grouped_weighted"].groupby(["label", "model"])["auc_w"].mean()
+    ga = d.groupby(["label", "scheme", "model"])["acc"].mean()
+    out: dict = {"n": int(d["n"].iloc[0]), "afv_pos": int(d[d["label"] == "AFV"]["pos"].iloc[0]),
+                 "ev_pos": int(d[d["label"] == "EV"]["pos"].iloc[0])}
     key = {"resample_then_split": "leaky", "split_then_resample": "rows", "grouped": "grouped", "grouped_weighted": "weighted"}
     for lab in ("AFV", "EV"):
         for sc, k in key.items():
             for m in ("LR", "NB", "DT", "RF", "SVM"):
-                out.setdefault(lab.lower(), {}).setdefault(k, {})[m.lower()] = float(g[(lab, sc, m)])
+                v = float(gw[(lab, m)]) if sc == "grouped_weighted" else float(g[(lab, sc, m)])
+                out.setdefault(lab.lower(), {}).setdefault(k, {})[m.lower()] = v
+                out.setdefault("acc", {}).setdefault(lab.lower(), {}).setdefault(k, {})[m.lower()] = float(ga[(lab, sc, m)])
+        # the unweighted score of the no-oversampling pipeline, kept for the table of default settings
+        out[lab.lower()]["unweighted_noover"] = {m.lower(): float(g[(lab, "grouped_weighted", m)]) for m in ("LR", "NB", "DT", "RF", "SVM")}
     for lab in ("afv", "ev"):
-        out[lab]["infl_rf"] = out[lab]["leaky"]["rf"] - out[lab]["grouped"]["rf"]
-        out[lab]["infl_dt"] = out[lab]["leaky"]["dt"] - out[lab]["grouped"]["dt"]
-        out[lab]["infl_min"] = min(out[lab]["leaky"][m] - out[lab]["grouped"][m] for m in ("lr", "nb", "dt", "rf", "svm"))
-        out[lab]["rows_vs_grouped_rf"] = out[lab]["rows"]["rf"] - out[lab]["grouped"]["rf"]
-        out[lab]["dt_grouped"] = out[lab]["grouped"]["dt"]
-    w = d[(d["scheme"] == "grouped_weighted") & d["auc_w"].notna()].groupby(["label", "model"])["auc_w"].mean()
-    out["afv"]["weighted_rf_w"] = float(w[("AFV", "RF")])
-    out["pub"] = dict(rf=0.924, dt=0.908)
-    out["seed_sd"] = float(d.groupby(["label", "scheme", "model"])["auc"].std().max())
+        L, G = out[lab]["leaky"], out[lab]["grouped"]
+        out[lab]["infl_rf"] = L["rf"] - G["rf"]
+        out[lab]["infl_dt"] = L["dt"] - G["dt"]
+        out[lab]["infl_lr"] = L["lr"] - G["lr"]
+        out[lab]["infl_nb"] = L["nb"] - G["nb"]
+        out[lab]["infl_svm"] = L["svm"] - G["svm"]
+        out[lab]["rows_vs_grouped_rf"] = out[lab]["rows"]["rf"] - G["rf"]
+        out[lab]["dt_grouped"] = G["dt"]
+        out[lab]["n_models_infl_gt_015"] = int(sum(L[m] - G[m] > 0.15 for m in ("lr", "nb", "dt", "rf", "svm")))
+    out["pub"] = dict(rf=0.924, dt=0.908, acc=0.9)
+    sd = d.groupby(["label", "scheme", "model"])["auc"].std()
+    out["seed_sd"] = float(sd.max())
     tf = TAB / "p06_p17_tuned.csv"
     if tf.exists():
         t = pd.read_csv(tf)
         tg = t.groupby(["label", "scheme", "model"])["auc"].mean()
+        tgw = t[t["scheme"] == "grouped_weighted"].groupby(["label", "model"])["auc_w"].mean()
         out["tuned"] = {}
         for lab in ("AFV", "EV"):
             for sc, k in key.items():
                 for m in ("LR", "NB", "DT", "RF", "SVM"):
                     if (lab, sc, m) in tg.index:
-                        out["tuned"].setdefault(lab.lower(), {}).setdefault(k, {})[m.lower()] = float(tg[(lab, sc, m)])
+                        v = float(tgw[(lab, m)]) if sc == "grouped_weighted" else float(tg[(lab, sc, m)])
+                        out["tuned"].setdefault(lab.lower(), {}).setdefault(k, {})[m.lower()] = v
         out["tuned_infl_rf_afv"] = out["tuned"]["afv"]["leaky"]["rf"] - out["tuned"]["afv"]["grouped"]["rf"]
         out["tuned_infl_rf_ev"] = out["tuned"]["ev"]["leaky"]["rf"] - out["tuned"]["ev"]["grouped"]["rf"]
+        out["seed_sd_tuned"] = float(t.groupby(["label", "scheme", "model"])["auc"].std().max())
+        out["seed_sd_tuned_w"] = float(t[t["scheme"] == "grouped_weighted"].groupby(["label", "model"])["auc_w"].std().max())
     return out
 
 
@@ -174,6 +202,7 @@ def holdout() -> dict:
 
     k = J.build(pynhts.load(2017))
     out: dict = {"n": int(len(k)), "households": int(k["HOUSEID"].nunique())}
+    out["share_rows_shared_household"] = float((k.groupby("HOUSEID")["HOUSEID"].transform("size") > 1).mean())
     for lab in ("AFV", "EV"):
         y = k[lab].to_numpy()
         rows = []
@@ -187,13 +216,21 @@ def holdout() -> dict:
     return out
 
 
+def newton() -> dict:
+    f = TAB / "newton_check.csv"
+    if not f.exists():
+        return {}
+    d = pd.read_csv(f)
+    return {"max_rel_se_diff": float(d["rel_diff"].abs().max()), "median_rel_se_diff": float(d["rel_diff"].abs().median()), "n_terms": int(len(d))}
+
+
 def design() -> dict:
-    return {"jk_2017": 98, "jk_2009": 100, "jk_2001": 99, "trials": 10, "newton_steps": 3, "seeds": 2, "golden_se_pct": 0.2}
+    return {"jk_2017": 98, "jk_2009": 100, "jk_2001": 99, "trials": 10, "newton_steps": 3, "seeds": 2, "golden_se_pct": 0.2, "printed_sem_n": 85663}
 
 
 def main() -> None:
     NUM.mkdir(parents=True, exist_ok=True)
-    for name, fn in (("cases", cases), ("ml", ml), ("p21", p21), ("p22", p22), ("p02", p02), ("holdout", holdout), ("design", design)):
+    for name, fn in (("cases", cases), ("ml", ml), ("p21", p21), ("p22", p22), ("p02", p02), ("holdout", holdout), ("newton", newton), ("design", design)):
         dump(name, fn())
         print("wrote", name)
 

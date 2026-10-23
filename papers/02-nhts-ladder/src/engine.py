@@ -148,6 +148,9 @@ def fit_regimes(X: pd.DataFrame, y: np.ndarray, design: Design | None, family: s
         phi = _dispersion(family, Xa, y, np.ones(n), b)
         se = np.sqrt(np.diag(np.linalg.inv(A)) * phi)
         out.update({"b_naive": b, "se_naive": se, "p_naive": pval(b / se)})
+        if design is not None and robust_cluster:  # unweighted fit, standard error clustered on households
+            se_c = _sandwich_cluster(Xa, y, np.ones(n), b, family, design.cluster, A)
+            out.update({"se_naive_cluster": se_c, "p_naive_cluster": pval(b / se_c)})
     if design is not None and ("weighted" in regimes or "design" in regimes):
         w = design.w * (n / design.w.sum() if weight_scale == "sample" else 1.0)
         bw, Aw, _ = irls(Xa, y, w, family)
@@ -159,6 +162,8 @@ def fit_regimes(X: pd.DataFrame, y: np.ndarray, design: Design | None, family: s
             if robust_cluster:
                 se_r = _sandwich_cluster(Xa, y, w, bw, family, design.cluster, Aw)
                 out["se_weighted_robust"] = se_r
+                # weighted sandwich with every observation its own cluster: what the unequal weights alone cost
+                out["se_weighted_hc"] = _sandwich_cluster(Xa, y, w, bw, family, np.arange(n), Aw)
                 out["p_weighted"] = pval(bw / se_r)
         if "design" in regimes and replicates:
             wf = design.w
