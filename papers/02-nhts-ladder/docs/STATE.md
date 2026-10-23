@@ -30,3 +30,6 @@ sample-scaled weights, otherwise the replicate SEs are inflated 10-20x (first P1
 * P22 PSM: matched drivers-with-access mean daily VMT freq 24.82, occ 25.86, non 25.41; non-driver/no access freq 6.25, occ 5.03, non 4.37; veh ownership diffs -0.065/-0.125/-0.190; matched triples 5,161; net +7.8 M VMT/day at alpha 0.6.
 * P21 GBM R2 test 0.72 (2009) / 0.71 (2017); RF 0.66/0.65; SVM 0.59/0.56; LR 0.11/0.11; RMSE GBM 2.78/2.93 (16 vars of 48 by RFE).
 * P02 SEM Table 4: prop_purchase<-prop_shoptrp 0.125, prop_shoptrp<-prop_purchase 0.214 (standardised, n 85,663).
+
+## 2026-10-23 closing
+Package 0.9.0 released (v0.9.0, PyPI). Paper commit 5f513ee. Remaining: AUTHOR-TODOs (co-authors, funding, competing interests), Zenodo new version, journal choice, I-02.
