@@ -12,7 +12,8 @@
 | 8 | NHTS sampling/replicate weights bias | search_papers | Conway 2018, Wang 2022 (NHTS selection); Birrell 2019 via duplication test |
 | 9 | duplication test (full research question) | run_duplication_test | no duplicate; closest = Birrell 2019, Gard 2023 |
 | 10 | 27 classic references by author/title/year | verify_reference and `lit/verify_refs.py --query` | all resolved in Crossref |
+| 11 | LeapSpace review (ScienceDirect, 2026-10-23): how NHTS studies handle design, weights, variance | external AI report, `manuscript/final/improve.md` | 108-reference draft; 49 DOIs new to us, all resolved in Crossref, none retracted (`lit/refs_batch4.txt`); 17 not used (see `SKIP` in `lit/gen_bib.py`: subject did not support the sentence, e.g. BEV economics cited for weights); 4 without DOI not verifiable (Pucher & Renne 2003, Sharp & Murakami 2005, Mei 2005, Erlbaum 2005) left out; one metadata error caught (Korn & Graubard book is 1999, not 2011) |
 Counter-view pass: query 5 (analytic dispersion), 3-4 (leakage), and Bollen 2016 / Miratrix 2018 on when weights are NOT needed.
-Retraction Guard: `lit/verify_refs.py` (Crossref `updated-by` + OpenAlex `is_retracted`), 55 entries, none retracted; two corrections noted
+Retraction Guard: `lit/verify_refs.py` (Crossref `updated-by` + OpenAlex `is_retracted`), 55 entries (2026-10-23 LeapSpace batch: 104 entries resolved, none retracted; 90 in refs.bib, 81 cited in the printed list); two corrections noted
 (Silberzahn 2018, Simonsohn 2020: publisher corrections, original cited).
 Excluded near-misses: Miratrix 2018 (survey *experiments*), Skinner & Mason 2012 (weight modification, not needed here).

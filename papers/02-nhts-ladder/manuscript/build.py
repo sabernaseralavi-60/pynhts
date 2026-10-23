@@ -174,6 +174,7 @@ def main():
     (BUILD / "numbers.json").write_text(json.dumps({k: (v if isinstance(v, (str, bool)) else float(v)) for k, v in n.items()}, indent=0), encoding="utf-8")
     text = render_text(tmpl, n, TBL.tables(a.lang, n, md_table), a.lang)
     shutil.copy(HERE / "refs.bib", out_dir / "refs.bib")
+    shutil.copy(HERE / "typst-template.typ", out_dir / "typst-template.typ")
     csl = HERE / "elsevier-harvard.csl"
     if csl.exists():
         shutil.copy(csl, out_dir / csl.name)

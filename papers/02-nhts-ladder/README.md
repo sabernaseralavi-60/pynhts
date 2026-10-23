@@ -1,6 +1,6 @@
 # Paper 02 - A reproducibility ladder with design-aware re-estimation for survey-based travel research (22 NHTS studies)
 
-Status 2026-10-23: draft complete (English and Persian), not submitted. Idea I-03 of `docs/idea_register.md` widened; analysis plan: `analysis_plan.md` (dated).
+Status 2026-10-23: draft complete (English and Persian, two authors, Related work section added), not submitted. Idea I-03 of `docs/idea_register.md` widened; analysis plan: `analysis_plan.md` (dated).
 
 ## Run
 ```

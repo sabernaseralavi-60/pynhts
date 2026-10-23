@@ -33,3 +33,10 @@ sample-scaled weights, otherwise the replicate SEs are inflated 10-20x (first P1
 
 ## 2026-10-23 closing
 Package 0.9.0 released (v0.9.0, PyPI). Paper commit 5f513ee. Remaining: AUTHOR-TODOs (co-authors, funding, competing interests), Zenodo new version, journal choice, I-02.
+
+## 2026-10-23 (later): revision from `manuscript/final/improve.md` (LeapSpace-based draft)
+* Added: second author (Akram Mazaheri; no ORCID/e-mail printed; CRediT left as AUTHOR-TODO, roles not stated), plural wording, new section "Related work" (survey design/weights/variance; reproducibility and leakage; gap and contribution) in EN and FA, literature-search paragraph in the supplement, weight-variable names and domain analysis in the recommendations, limitation on abstract-level evidence, AI declaration naming LeapSpace.
+* Not taken from improve.md: hand-typed numbers (all numbers stay injected), the invented CRediT roles, references whose subject did not support the claim, unverifiable refs, Highlights/Overleaf text (the template already has Highlights; journal packaging is the `journal-submission` step), the TR Part A choice (suggestion only).
+* References: 90 entries in refs.bib, 81 printed; `lit/gen_bib.py` has a `SKIP` set; `verified.csv` keeps the audit trail.
+* Build note: PDFs/DOCX need the scratch venv (`%TEMP%/ml310/Scripts/python.exe manuscript/build.py --lang en|fa`; python-docx is needed for the Persian tables). `manuscript/typst-template.typ` stacks the author block (two authors collided in the default grid).
+* Open AUTHOR-TODOs (4): AI tools list (Gemini?), CRediT, competing-interests sentence, funding sentence.
