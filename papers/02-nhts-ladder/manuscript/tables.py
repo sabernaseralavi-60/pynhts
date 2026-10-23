@@ -67,6 +67,10 @@ def tables(lang, n, md_table):
                              "search", lang, widths=[8, 45, 47], align="lll")
     out["auc"] = auc_table(lang, md_table)
     out["selected"] = selected_table(lang, md_table)
+    import compendium_tables as CT
+
+    out["compendium_map"] = CT.map_table(lang, md_table)
+    out["compendium_audit"] = CT.audit_table(lang, md_table)
     return out
 
 

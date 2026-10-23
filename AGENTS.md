@@ -72,6 +72,16 @@ pynhts.recipes.run("stt2009", d)                             # reproduce the pub
 - Compare waves with `pynhts.trends` (per-wave estimates); pool only with `trends.pool`, which refuses non-comparable concepts. Trip distance,
   trip counts and trip weights are not comparable across waves.
 
+## Prior literature (0.10.0)
+
+- Before modelling a topic, ask what earlier NHTS studies did and what the audit measured: `print(pynhts.compendium.advise("EV adoption"))`
+  (a topic, an analysis mode such as `"classification"`/`"ZINB"`, or words). It reports the waves named, the model families, how many modelling abstracts name
+  survey weights or a variance estimator, and the design pitfalls with numbers from the 22-study audit (SE inflation, lost significance, sign flips, SMOTE leakage).
+- Find and cite: `compendium.search("bikeshare", wave=2017, model="logit")`, `compendium.to_bibtex(hits)`; `compendium.register()` lists the audited studies (P01-P24).
+- The tags describe **abstracts**, not analyses: "does not name weights" never means "did not use weights". The compendium is the official list, not the literature
+  (it includes grid-optimisation and news items, and most entries do not name the NHTS in their text). Read `docs/compendium.md` before quoting a count.
+
+
 ## What not to do
 
 - Do not add waves before 2001, mask "suspicious" sentinel values without documentation, undo the 2022 trip

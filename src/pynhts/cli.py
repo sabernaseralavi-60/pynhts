@@ -1,4 +1,4 @@
-"""Command line interface: ``pynhts fetch | docs | register | info | validate``."""
+"""Command line interface: ``pynhts fetch | docs | register | info | validate | compendium``."""
 
 from __future__ import annotations
 
@@ -37,7 +37,34 @@ def _build_parser() -> argparse.ArgumentParser:
     v = sub.add_parser("validate", help="reproduce a published table and compare")
     v.add_argument("recipe", nargs="?", default="stt2017")
     v.add_argument("--markdown", action="store_true", help="print the table as Markdown")
+
+    c = sub.add_parser("compendium", help="NHTS Compendium 2006-2025: search, advise, audit")
+    c.add_argument("action", choices=["search", "advise", "audit", "bibtex"])
+    c.add_argument("text", nargs="*", help="query words, or the topic/mode for advise")
+    c.add_argument("--wave", help="NHTS wave named in the text, e.g. 2017")
+    c.add_argument("--model", help="model family or alias, e.g. ZINB, logit, ML")
+    c.add_argument("--limit", type=int, default=15)
     return p
+
+
+def _compendium(args: argparse.Namespace) -> int:
+    from pynhts import compendium
+
+    text = " ".join(args.text)
+    if args.action == "audit":
+        print(compendium.audit_summary())
+    elif args.action == "advise":
+        print(compendium.advise(text or "travel behavior", wave=args.wave))
+    else:
+        hits = compendium.search(text or None, wave=args.wave, model=args.model, limit=args.limit)
+        if args.action == "bibtex":
+            print(compendium.to_bibtex(hits), end="")
+        else:
+            for r in hits.to_dict("records"):
+                yr = "----" if r["pub_year"] != r["pub_year"] else int(r["pub_year"])
+                print(f"{yr}  {str(r['title'])[:110]}  [{r['cid']}]")
+            print(f"{len(hits)} shown")
+    return 0
 
 
 def _info(wave: int, cache: str | None) -> int:
@@ -60,6 +87,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     """Entry point; returns the process exit code."""
     args = _build_parser().parse_args(argv)
     cache: str | None = args.cache
+    if args.command == "compendium":
+        return _compendium(args)
     if args.command == "info":
         return _info(args.wave, cache)
     if args.command == "docs":

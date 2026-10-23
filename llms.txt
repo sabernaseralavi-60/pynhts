@@ -14,10 +14,12 @@ Read AGENTS.md first.
 - [Validation](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/validation.md): published numbers reproduced, gaps reported
 - [Concept dictionary (YAML; JSON via pynhts.concepts.to_json())](https://github.com/sabernaseralavi-60/pynhts/blob/main/src/pynhts/concepts.yaml): per-wave variable, universe, comparability, pitfalls
 
+- [NHTS Compendium of Uses (2006-2025) inside pynhts](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/compendium.md): `pynhts.compendium.search/advise/to_bibtex/audit_summary/register`
 - [Analysis toolkit](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/analysis.md): aggregate, features, eda, transform, trends
 - [Feature registry](https://github.com/sabernaseralavi-60/pynhts/blob/main/docs/data/FEATURES.md): 93 features with formula, eligibility, denominator, weight
 
 ## Machine-readable facts
+- `pynhts.compendium.advise(topic)`, `pynhts.compendium.search(query, wave=, model=)`, `pynhts.compendium.audit_summary()`
 - `pynhts.concepts.to_json()`, `pynhts.concepts.find(variable, wave)`, `pynhts.describe(variable, wave)`
 - `pynhts.harmonize.crosswalk(concept)`, `pynhts.harmonize.compare_waves(a, b)`
 - `pynhts.features.registry()`, `pynhts.features.create_household_features(data)`, `pynhts.aggregate.aggregate(data, source, target, specs)`, `pynhts.valid(series)`

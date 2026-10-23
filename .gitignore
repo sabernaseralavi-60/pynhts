@@ -46,3 +46,15 @@ paper/softwarex/latex/*.out
 paper/softwarex/latex/*.pdf
 paper/softwarex/latex/*.spl
 paper/softwarex/literature/abstracts.json
+
+# NHTS Compendium of Uses (FHWA/ORNL): raw editions, the abstract-bearing master workbook and the parse cache stay local;
+# checksums are in compendium/SOURCES.md. Numbers-only audit files and the shipped package data are tracked.
+compendium/*.pdf
+compendium/*.xlsx
+compendium/_parsed_cache.pkl
+!compendium/extraction_audit.csv
+!compendium/tag_precision_review.csv
+!compendium/tag_precision_sample.csv
+!src/pynhts/_data/*.parquet
+!src/pynhts/_data/*.csv
+!papers/02-nhts-ladder/results/tables/*.csv

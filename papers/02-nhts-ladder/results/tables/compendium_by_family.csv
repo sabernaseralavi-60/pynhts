@@ -1,0 +1,13 @@
+model_family,studies,share_of_all,abstract_available,mention_weights,mention_variance,weights_share,variance_share,first_pub_year,last_pub_year
+Logit/Choice,418,0.0972,418,23,2,0.055,0.0048,2003,2026
+Count (Poisson/NB/ZINB),119,0.0277,118,2,0,0.0169,0.0,2007,2026
+OLS/Linear,257,0.0598,256,12,2,0.0469,0.0078,2003,2026
+SEM/Path,71,0.0165,71,0,0,0.0,0.0,2009,2025
+PSM/Causal,65,0.0151,65,0,0,0.0,0.0,2012,2025
+Hazard/Duration,6,0.0014,6,0,0,0.0,0.0,2011,2024
+Multilevel/Mixed,98,0.0228,98,0,1,0.0,0.0102,2007,2025
+Spatial,26,0.006,26,1,0,0.0385,0.0,2012,2025
+Machine learning,215,0.05,214,1,1,0.0047,0.0047,2007,2026
+Clustering/Segmentation,152,0.0353,150,1,0,0.0067,0.0,2007,2026
+Simulation/Optimisation,969,0.2253,969,6,2,0.0062,0.0021,2001,2026
+Regression (unspecified),71,0.0165,71,2,1,0.0282,0.0141,2009,2025

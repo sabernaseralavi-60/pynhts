@@ -8,7 +8,7 @@
 Typed, survey-weight-aware Python access to US National Household Travel Survey (NHTS)
 microdata.
 
-> **Scope and status (0.9.0, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
+> **Scope and status (0.10.0, alpha).** The **2001**, **2009**, **2017** and **2022** (NextGen)
 > waves are supported. The API may still change. Results are validated against published tables:
 > for 2009, 35 of 40 figures of the *Summary of Travel Trends* reproduce completely (the other 5
 > reproduce the estimate; the report's margin of error uses another multiplier), for 2001 40 of
@@ -101,6 +101,14 @@ pynhts.dictionary(2022)                                     # every variable wit
 from pynhts import features, aggregate as A, valid
 hh = features.create_household_features(d, groups=["composition", "travel", "modes"])
 hh.attrs["pynhts_features"]            # lineage: sources, formula, missing rule per feature
+```
+
+```python
+# 0.10.0: twenty years of NHTS literature (the official Compendium of Uses, 2006-2025) as a searchable corpus (see docs/compendium.md)
+c = pynhts.compendium
+hits = c.search("bikeshare", wave=2017, model="logit")      # words, wave, model family, domain, topic, years, design flags
+print(c.advise("EV adoption"))                               # what earlier studies did + design pitfalls measured on 22 published studies
+print(c.audit_summary()); print(c.to_bibtex(hits.head(3)))   # how the corpus was built and checked; cite what you find
 ```
 
 ## Why a library

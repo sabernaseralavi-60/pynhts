@@ -1,0 +1,16 @@
+edition,file,sha256,layout_family,period,pdf_pages,entries_parsed,abstract_anchors,toc_chain_items,title_labels_div2,intro_stated_total,anchorless_entries,multi_page_entries,toc_page_match_share,max_abs_diff_to_independent_counts,with_abstract,with_availability,with_chapter,chapters,notes
+2006-2011,2006-2011_compendium.pdf,a003e8a18fed2633b0d94b376977deae125f1adfb2f4e0b85e71a07a92da0fc7,A,April 2006 - May 2011,113.0,106,106.0,100.0,,,0,0,0.81,0,106,93,106,11,table-of-contents chain (100) != entries (106)
+2012,2012_compendium.pdf,bf583eece3d7eba5f52585a99d3bf748b62cea0cb538402c076cbf3eb53ab2e0,B,June 2011 - December 2012,226.0,210,208.0,210.0,,210.0,2,0,1.0,0,200,210,210,11,
+2013,2013_compendium.pdf,c7c42d9520eed67565361b889e326f2b2638a535bd9f6f8794bc5efaa0b94122,B,January - December 2013,302.0,283,283.0,278.0,,282.0,0,0,1.0,1,281,271,283,11,table-of-contents chain (278) != entries (283)
+2014,2014_compendium.pdf,99b3abb5ccd3bb284b1c22d15a411bd3540acef038db5ddd6d5849d298cb8f1b,B,2014,343.0,322,321.0,321.0,,322.0,1,0,0.9969,1,317,322,322,11,table-of-contents chain (321) != entries (322)
+2015,2015_compendium.pdf,130d0bef41935d1abfa402604d9b3e29aeb4c7bd60ea0a8d2803dc057f764ffe,B,2015,398.0,377,377.0,38.0,,379.0,0,2,0.8947,2,360,377,377,11,table-of-contents chain (38) != entries (377)
+2016,2016_compendium.pdf,01b2b963277082b68d1be17e50c992df6c9cf5f49d47854ca02c5336dfea9f7c,C,2016,408.0,376,376.0,362.0,376.0,375.0,0,11,0.9586,1,349,376,376,11,table-of-contents chain (362) != entries (376)
+2018,2018_compendium.pdf,88897270e3328e133bece520a01c143fce5bc2f0918c7f06deabae3b9328f7e9,D,January - June 2018,184.0,172,172.0,151.0,172.0,,0,1,0.8874,0,144,172,172,11,table-of-contents chain (151) != entries (172)
+2019,2019_compendium.pdf,d135430a98c13f996e6dff0f00fe0b9af869e61591ff6e10ce8d6c1a7fb7adb9,D,January - December 2019,204.0,192,192.0,185.0,192.0,,0,2,0.9351,0,141,192,192,11,table-of-contents chain (185) != entries (192)
+2020,2020_compendium.pdf,f0148a7ac7d46a82f4c171fb4038261c4d87c731d2bb6a70c2cf1f9978aa8548,D,January - December 2020,440.0,412,412.0,411.0,412.0,,0,9,0.9611,1,379,412,412,11,table-of-contents chain (411) != entries (412)
+2021,2021_compendium.pdf,ed85bd816677cd73d05b5b573adb449838f299f0ac82d08bded3fa8b2d47b46b,D,January - December 2021,493.0,454,454.0,453.0,454.0,,0,18,0.9625,1,419,454,454,12,table-of-contents chain (453) != entries (454)
+2022,2022_compendium.pdf,025503c2896366e412a895f3c8d02a3057ff1eddaef00efe85703ac6f3b8d3e3,D,2022,451.0,420,420.0,419.0,420.0,,0,11,0.9618,1,382,420,420,13,table-of-contents chain (419) != entries (420)
+2023-pdf,2023_compendium.pdf,a8a9b2a0dee25696751b930b370fa9fb4144f4ea37e3010ca65d88517ae5b080,D,January - June 2023,232.0,214,214.0,214.0,214.0,,0,6,0.9626,0,202,214,214,13,
+2023,2023_2024_2025_compendium.csv,6137594c79bbd5a7503a507d770a53567535ca61b8c55c62d3d0e2e1fb7537bb,CSV,2023 (interactive search export),,381,,,,,0,0,,0,354,381,381,13,row count of the CSV is the count
+2024,2023_2024_2025_compendium.csv,6137594c79bbd5a7503a507d770a53567535ca61b8c55c62d3d0e2e1fb7537bb,CSV,2024 (interactive search export),,363,,,,,0,0,,0,334,363,363,13,row count of the CSV is the count
+2025,2023_2024_2025_compendium.csv,6137594c79bbd5a7503a507d770a53567535ca61b8c55c62d3d0e2e1fb7537bb,CSV,2025 (interactive search export),,337,,,,,0,0,,0,318,337,337,12,row count of the CSV is the count

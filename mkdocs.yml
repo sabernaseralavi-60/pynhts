@@ -19,6 +19,7 @@ nav:
   - Data notes: data_notes.md
   - Roadmap: roadmap.md
   - Tours design notes: tours_design_notes.md
+  - NHTS Compendium of Uses: compendium.md
   - Research landscape: research/NHTS_RESEARCH_LANDSCAPE.md
   - Repository audit: development/REPOSITORY_AUDIT.md
   - Paper data audit: paper_data_audit/README.md

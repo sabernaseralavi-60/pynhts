@@ -32,3 +32,14 @@ def test_register_rejects_foreign_files(tmp_path, capsys):
 def test_fetch_offline_without_data_fails_clearly(tmp_path):
     with pytest.raises(FileNotFoundError, match="offline"):
         cli.main(["--cache", str(tmp_path), "fetch", "--offline"])
+
+
+def test_compendium_commands(capsys):
+    assert cli.main(["compendium", "search", "bikeshare", "--limit", "3"]) == 0
+    assert "3 shown" in capsys.readouterr().out
+    assert cli.main(["compendium", "advise", "EV", "adoption"]) == 0
+    assert "Weights and variance" in capsys.readouterr().out
+    assert cli.main(["compendium", "audit"]) == 0
+    assert "unique studies" in capsys.readouterr().out
+    assert cli.main(["compendium", "bibtex", "bikeshare", "--limit", "2"]) == 0
+    assert capsys.readouterr().out.count("@") >= 2
