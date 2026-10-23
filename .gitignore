@@ -58,3 +58,6 @@ compendium/_parsed_cache.pkl
 !src/pynhts/_data/*.parquet
 !src/pynhts/_data/*.csv
 !papers/02-nhts-ladder/results/tables/*.csv
+
+# AI export of the master workbook contains abstracts: local only
+compendium/ai_export/
